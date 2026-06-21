@@ -148,7 +148,7 @@ jobs:
 
   web:
     name: Web - Lint, Test, Build
-    if: ${{ hashFiles('examples/web/package.json') != '' }}
+    if: false # pruned at init (android-only stack)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -183,7 +183,7 @@ jobs:
 
   python:
     name: Python - Lint, Type, Test
-    if: ${{ hashFiles('examples/python/pyproject.toml') != '' }}
+    if: false # pruned at init (android-only stack)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -212,7 +212,7 @@ jobs:
 
   node:
     name: Node - Lint, Test
-    if: ${{ hashFiles('examples/node/package.json') != '' }}
+    if: false # pruned at init (android-only stack)
     runs-on: ubuntu-latest
     defaults:
       run:

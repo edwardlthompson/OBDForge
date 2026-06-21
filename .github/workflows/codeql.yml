@@ -23,7 +23,6 @@ jobs:
       matrix:
         include:
           - language: java-kotlin
-            paths: examples/android
     steps:
       - uses: actions/checkout@v6
       - name: Setup Java (Android)
@@ -48,7 +47,7 @@ jobs:
         uses: github/codeql-action/init@v4
         with:
           languages: java-kotlin
-          paths: examples/android
+          source-root: examples/android
       - name: Build Android (CodeQL traced)
         if: matrix.language == 'java-kotlin'
         working-directory: examples/android

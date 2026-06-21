@@ -1,53 +1,51 @@
-# ADR-0001: Core Application Architecture (Child Repo)
+# ADR-0001: Core Application Architecture
 
-- **Status:** Proposed (fill during Sprint 1)
-- **Date:** YYYY-MM-DD
-- **Deciders:** Project team
-
-> Template for child repositories. Template-repo baseline ADR is `docs/adr/0000-template-baseline.md`.
+- **Status:** Accepted
+- **Date:** 2026-06-21
+- **Deciders:** OBDForge team
 
 ## Context
 
-Choose a primary architecture pattern for the application layer. Document the choice before Golden Path implementation.
+OBDForge is a long-lived Android diagnostics product with multiple transports, protocol plugins, safety interlocks, and on-device AI. The Golden Path must stay testable without hardware and comply with F-Droid FOSS constraints.
 
 ## Decision
 
-**Selected pattern:** 🔲 MVVM  🔲 Clean Architecture  🔲 Hexagonal (Ports & Adapters)
+**Selected pattern:** Clean Architecture (layered, dependency rule inward)
 
-### MVVM
+### Layers
 
-- **View:** UI components (web components, Android Jetpack Compose, CLI output)
-- **ViewModel:** Presentation state, user actions, no platform SDK calls
-- **Model:** Domain + data services
+| Layer | Responsibility | Examples |
+|-------|----------------|----------|
+| **Domain** | Entities, use cases, repository interfaces | `ObdSession`, `ReadPidUseCase`, `Transport` port |
+| **Data** | Room DAOs, adapter I/O, protocol implementations | `SessionRepository`, `Elm327Protocol`, `AuditLogDao` |
+| **UI** | Compose screens, ViewModels | `LiveDataScreen`, `ConnectViewModel` |
 
-**When:** UI-heavy apps with clear screen-level state.
+### Core registries
 
-### Clean Architecture
+- **`TransportRegistry`** — registers BT/USB/WiFi/Ethernet transport implementations; selects by user preference and hardware availability.
+- **`ProtocolRegistry`** — maps detected adapter family + vehicle bus to a `DiagnosticProtocol` implementation (ELM327, STN, STPX, UDS helpers).
 
-- **Entities:** Enterprise business rules
-- **Use cases:** Application-specific rules
-- **Interface adapters:** Controllers, presenters, gateways
-- **Frameworks:** DB, web framework, device APIs
+### Persistence
 
-**When:** Long-lived products with multiple delivery surfaces.
+- **Room** for sessions, DTC snapshots, freeze frames, safety audit log, and cached VIN decode metadata.
+- **DataStore** for user preferences (theme, persona, expert mode, update interval).
 
-### Hexagonal
+### Demo mode
 
-- **Ports:** Interfaces the app exposes or requires
-- **Adapters:** HTTP, DB, CLI, Android Activities wired to ports
-- **Domain core:** No inward dependencies
-
-**When:** Strong testability and swappable infrastructure matter most.
+- Deterministic **mock transport + mock protocol** wired through the same use-case layer.
+- Enables CI unit tests, UI previews, and F-Droid smoke without OBD hardware.
+- Demo data fixtures live under `examples/android/.../demo/`; never bypass safety interlocks in demo — simulate confirmations instead.
 
 ## Consequences
 
-- Golden Path feature must respect layer boundaries chosen above
-- CI coverage and lint gates apply per `examples/{stack}/` conventions
-- Changing this ADR later requires a new ADR and BUILD_PLAN `[HUMAN]` approval
+- Golden Path features respect layer boundaries; ViewModels call use cases only.
+- Protocol and transport additions are registry plugins, not UI conditionals.
+- Changing this ADR requires a new ADR and `[HUMAN]` approval.
 
 ## Alternatives Considered
 
 | Pattern | Rejected because |
 |---------|------------------|
-| Monolith MVC | TBD |
-| No structure | TBD |
+| MVVM-only (no use cases) | Protocol/transport logic would leak into ViewModels |
+| Monolith Activity | Untestable; violates file-size limits |
+| Hexagonal-only naming | Clean Architecture maps cleanly to Android module layout already used in template |

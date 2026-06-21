@@ -299,4 +299,3 @@ fi
 
 
 echo "License compliance check passed"
-

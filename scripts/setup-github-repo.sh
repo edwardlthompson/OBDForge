@@ -161,6 +161,41 @@ if [ "$TRANSIENT" -gt 0 ]; then
   echo "Transient errors after retries ($TRANSIENT); re-run later"
   exit 2
 fi
+ABOUT_FILE="$ROOT/docs/GITHUB_ABOUT.md"
+if [ "${APPLY_GITHUB_ABOUT:-0}" = "1" ] && [ -f "$ABOUT_FILE" ]; then
+  DESC="$(python3 - "$ABOUT_FILE" << 'PY'
+import re, sys
+text = open(sys.argv[1], encoding="utf-8").read()
+m = re.search(r"## (?:Draft )?Description[^\n]*\n\n(.+?)\n\n## Topics", text, re.S)
+print(m.group(1).strip() if m else "")
+PY
+)"
+  TOPICS="$(python3 - "$ABOUT_FILE" << 'PY'
+import re, sys
+text = open(sys.argv[1], encoding="utf-8").read()
+m = re.search(r"## Topics\n\n(.+?)(?:\n\n|$)", text, re.S)
+if not m:
+    sys.exit(0)
+for t in m.group(1).split():
+    print(t)
+PY
+)"
+  if [ -n "$DESC" ]; then
+    echo "Updating repository description..."
+    gh repo edit "$REPO" --description "$DESC"
+  fi
+  if [ -n "$TOPICS" ]; then
+    echo "Adding repository topics..."
+    while IFS= read -r topic; do
+      [ -n "$topic" ] || continue
+      gh repo edit "$REPO" --add-topic "$topic" || true
+    done <<< "$TOPICS"
+  fi
+  if [ -n "$DESC" ]; then
+    echo "OK   GitHub About description synced"
+  fi
+fi
+
 if [ "$FAILED" -gt 0 ]; then
   echo "$FAILED setup step(s) failed"
   exit 1

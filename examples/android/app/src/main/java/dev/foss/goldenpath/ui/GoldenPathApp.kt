@@ -19,6 +19,9 @@ import dev.foss.goldenpath.about.ReleaseAssetSelector
 import dev.foss.goldenpath.about.ReleaseTagFetcher
 import dev.foss.goldenpath.about.UpdateApplyCoordinator
 import dev.foss.goldenpath.about.UpdateStatusEvaluator
+import dev.foss.goldenpath.core.demo.SimulatedObdTransport
+import dev.foss.goldenpath.core.vehicle.VinResolver
+import dev.foss.goldenpath.core.vehicle.VinSourceType
 import dev.foss.goldenpath.network.NetworkStatusMonitor
 import dev.foss.goldenpath.settings.SettingsLogic
 import dev.foss.goldenpath.ui.theme.GoldenPathTheme
@@ -49,6 +52,36 @@ fun GoldenPathApp(
     val donations = remember { DonationsLoader.load(context) }
     val appVersion = BuildConfig.VERSION_NAME
     val activity = context as? ComponentActivity
+
+    var demoModeEnabled by remember { mutableStateOf(true) }
+    var connectionStatus by remember {
+        mutableStateOf(context.getString(R.string.connection_status_disconnected))
+    }
+    var vinDisplay by remember { mutableStateOf(context.getString(R.string.vin_unknown)) }
+    var vinSourceLabel by remember { mutableStateOf("") }
+    val simulatedTransport = remember { SimulatedObdTransport() }
+
+    LaunchedEffect(demoModeEnabled) {
+        if (!demoModeEnabled) {
+            simulatedTransport.disconnect()
+            connectionStatus = context.getString(R.string.connection_status_disconnected)
+            vinDisplay = context.getString(R.string.vin_unknown)
+            vinSourceLabel = ""
+            return@LaunchedEffect
+        }
+        connectionStatus = context.getString(R.string.vin_reading)
+        vinDisplay = context.getString(R.string.vin_unknown)
+        simulatedTransport.connect()
+        connectionStatus = context.getString(R.string.connection_status_connected)
+        val vinResult = VinResolver.readFromEcu(simulatedTransport)
+            ?: VinResolver.demoVin()
+        vinDisplay = context.getString(R.string.vin_label, vinResult.vin)
+        vinSourceLabel = when (vinResult.source) {
+            VinSourceType.EcuObd2 -> context.getString(R.string.vin_source_ecu)
+            VinSourceType.Demo -> context.getString(R.string.vin_source_demo)
+            else -> ""
+        }
+    }
 
     LaunchedEffect(pendingRestart) {
         if (pendingRestart) {
@@ -87,6 +120,10 @@ fun GoldenPathApp(
         GoldenPathScreen(
             themeMode = themeMode,
             isOnline = isOnline,
+            demoModeEnabled = demoModeEnabled,
+            connectionStatus = connectionStatus,
+            vinDisplay = vinDisplay,
+            vinSourceLabel = vinSourceLabel,
             showAbout = showAbout,
             showSettings = showSettings,
             updateCheckEnabled = SettingsLogic.isUpdateCheckEnabled(checkInterval),
@@ -97,6 +134,7 @@ fun GoldenPathApp(
             canApplyUpdate = canApplyUpdate,
             onThemeToggle = { scope.launch { themePreferences.setThemeMode(themeMode.next()) } },
             onThemeModeSelect = { mode -> scope.launch { themePreferences.setThemeMode(mode) } },
+            onDemoModeChange = { enabled -> demoModeEnabled = enabled },
             onAboutOpen = { showAbout = !showAbout; if (showAbout) showSettings = false },
             onAboutClose = { showAbout = false },
             onSettingsOpen = { showSettings = !showSettings; if (showSettings) showAbout = false },

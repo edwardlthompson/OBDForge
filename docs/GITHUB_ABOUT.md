@@ -1,13 +1,9 @@
 # GitHub About Block
 
-## Template Repo Description (350 chars max)
+## Description (<=350 chars)
 
-Cursor agent bootstrap template for FOSS projects. Labeled BUILD_PLAN sprints, configurable GitHub update checker, Dependabot CVE triage, CI guardrails, workspace memory, and Golden Path stubs (Web, Python, Android). MIT.
+Free open-source Android OBD-II diagnostics: multi-transport (BT/USB/WiFi/Ethernet), OBDLink STN/STPX, live data, local AI, bidirectional controls. Kotlin, Jetpack Compose, F-Droid FOSS. GPL-3.0.
 
 ## Topics
 
-cursor, agent, template-repository, foss, mit, github-actions, pwa, python, android
-
-## Child Project Draft
-
-[PROJECT_NAME] — [ONE_LINE_PURPOSE]. Built with agent-project-bootstrap. FOSS MIT.
+android obd2 obd-ii kotlin jetpack-compose fdroid foss vehicle-diagnostics obdlink elm327 automotive diagnostics

@@ -1,1 +1,1 @@
-FOSS Android skeleton for agent-project-bootstrap
+FOSS Android OBD-II diagnostics with multi-transport support and local AI

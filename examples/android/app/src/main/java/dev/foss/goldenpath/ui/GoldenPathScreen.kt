@@ -9,6 +9,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -32,6 +34,10 @@ import dev.foss.goldenpath.ui.theme.ThemeMode
 fun GoldenPathScreen(
     themeMode: ThemeMode,
     isOnline: Boolean,
+    demoModeEnabled: Boolean,
+    connectionStatus: String,
+    vinDisplay: String,
+    vinSourceLabel: String,
     showAbout: Boolean,
     showSettings: Boolean,
     updateCheckEnabled: Boolean,
@@ -42,6 +48,7 @@ fun GoldenPathScreen(
     canApplyUpdate: Boolean,
     onThemeToggle: () -> Unit,
     onThemeModeSelect: (ThemeMode) -> Unit,
+    onDemoModeChange: (Boolean) -> Unit,
     onAboutOpen: () -> Unit,
     onAboutClose: () -> Unit,
     onSettingsOpen: () -> Unit,
@@ -100,7 +107,7 @@ fun GoldenPathScreen(
                     .padding(innerPadding)
                     .padding(SpacingMd),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.spacedBy(SpacingMd),
             ) {
                 Text(
                     text = stringResource(R.string.app_greeting),
@@ -108,12 +115,42 @@ fun GoldenPathScreen(
                     color = MaterialTheme.colorScheme.primary,
                 )
                 Text(
+                    text = connectionStatus,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                Text(
+                    text = vinDisplay,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Text(
+                    text = vinSourceLabel,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Text(
+                    text = stringResource(
+                        if (demoModeEnabled) R.string.demo_mode_on else R.string.demo_mode_off,
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.secondary,
+                )
+                Switch(
+                    checked = demoModeEnabled,
+                    onCheckedChange = onDemoModeChange,
+                    colors = SwitchDefaults.colors(),
+                )
+                Text(
+                    text = stringResource(R.string.demo_mode_label),
+                    style = MaterialTheme.typography.labelMedium,
+                )
+                Text(
                     text = stringResource(
                         if (isOnline) R.string.app_status_online else R.string.app_status_offline,
                     ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(top = SpacingLg),
                 )
                 val currentUpdateLabel = stringResource(R.string.about_update_current)
                 if (updateStatus != currentUpdateLabel) {
@@ -121,7 +158,6 @@ fun GoldenPathScreen(
                         text = updateStatus,
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.tertiary,
-                        modifier = Modifier.padding(top = SpacingMd),
                     )
                 }
             }

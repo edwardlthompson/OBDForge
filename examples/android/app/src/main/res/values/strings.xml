@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Golden Path</string>
-    <string name="app_title">Golden Path</string>
-    <string name="app_greeting">Hello, FOSS!</string>
-    <string name="app_status_online">Online — Golden Path PWA stub</string>
-    <string name="app_status_offline">Offline — Golden Path PWA stub</string>
+    <string name="app_name">OBDForge</string>
+    <string name="app_title">OBDForge</string>
+    <string name="app_greeting">Vehicle diagnostics</string>
+    <string name="app_status_online">Adapter connected</string>
+    <string name="app_status_offline">No adapter connection</string>
+    <string name="connection_status_disconnected">Disconnected</string>
+    <string name="connection_status_connected">Connected (demo)</string>
+    <string name="demo_mode_label">Simulation mode</string>
+    <string name="demo_mode_on">Simulation on — using canned OBD responses</string>
+    <string name="demo_mode_off">Simulation off — connect an adapter to begin</string>
+    <string name="vin_reading">Reading VIN from vehicle…</string>
+    <string name="vin_label">VIN: %1$s</string>
+    <string name="vin_unknown">VIN not available yet</string>
+    <string name="vin_source_demo">Source: demo fixture</string>
+    <string name="vin_source_ecu">Source: ECU (Mode 09)</string>
     <string name="theme_toggle_label">Switch theme</string>
     <string name="theme_mode_system">System theme</string>
     <string name="theme_mode_light">Light theme</string>
@@ -14,6 +24,7 @@
     <string name="about_close">Close</string>
     <string name="about_version">Version: %1$s</string>
     <string name="about_format">Installed format: %1$s</string>
+    <string name="about_license">Licensed under GPL-3.0-or-later</string>
     <string name="about_donations_message">If this project helps you, consider supporting development.</string>
     <string name="about_update_current">You are on the latest version.</string>
     <string name="about_update_available">Update available: %1$s</string>

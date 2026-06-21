@@ -1,0 +1,9 @@
+{
+  "stack": "android",
+  "pruned": true,
+  "active_modules": [
+    "android"
+  ],
+  "parallel_scope_note": "Sprint 1 Parallel: Android FOSS scope only (`examples/android/**`)",
+  "selected_at": "2026-06-21T22:33:30+00:00"
+}

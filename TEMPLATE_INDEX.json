@@ -277,7 +277,7 @@
     },
     {
       "path": ".github/workflows/dependency-review.yml",
-      "purpose": "PR dependency review — fail on new High/Critical vulnerabilities",
+      "purpose": "PR dependency review \u2014 fail on new High/Critical vulnerabilities",
       "read_when": "contributing",
       "update_when": "milestone_boundary",
       "owner": "maintainer"
@@ -465,20 +465,6 @@
       "owner": "maintainer"
     },
     {
-      "path": "modules/node/MODULE.md",
-      "purpose": "Node.js API module guide (Hono Golden Path)",
-      "read_when": "milestone_boundary",
-      "update_when": "milestone_boundary",
-      "owner": "maintainer"
-    },
-    {
-      "path": "examples/node/",
-      "purpose": "Hono + TypeScript + Vitest API stub",
-      "read_when": "milestone_boundary",
-      "update_when": "milestone_boundary",
-      "owner": "maintainer"
-    },
-    {
       "path": "action.yml",
       "purpose": "Composite GitHub Action wrapping validate-bootstrap --quick",
       "read_when": "milestone_boundary",
@@ -631,27 +617,6 @@
       "read_when": "web_hosting",
       "update_when": "layout_change",
       "owner": "agent+human"
-    },
-    {
-      "path": "examples/web/src/panelDialog.ts",
-      "purpose": "Modal a11y: role=dialog, focus trap, Escape, focus restore",
-      "read_when": "ui_work",
-      "update_when": "milestone_boundary",
-      "owner": "agent"
-    },
-    {
-      "path": "examples/web/src/appBootstrap.ts",
-      "purpose": "Web composition root: theme, donations, update check, SW register",
-      "read_when": "ui_work",
-      "update_when": "milestone_boundary",
-      "owner": "agent"
-    },
-    {
-      "path": "examples/web/public/sw.js",
-      "purpose": "PWA service worker; CACHE_NAME stamped from package version at build",
-      "read_when": "web_hosting",
-      "update_when": "milestone_boundary",
-      "owner": "agent"
     },
     {
       "path": ".cursor/rules/design-system.mdc",
@@ -1052,16 +1017,6 @@
       "example": "examples/android",
       "activate_when": "stack includes Android or F-Droid"
     },
-    "web": {
-      "guide": "modules/web/MODULE.md",
-      "example": "examples/web",
-      "activate_when": "stack includes PWA, web, or static site"
-    },
-    "python": {
-      "guide": "modules/python/MODULE.md",
-      "example": "examples/python",
-      "activate_when": "stack includes Python application"
-    },
     "lightroom": {
       "guide": "modules/lightroom/MODULE.md",
       "example": "examples/lightroom",
@@ -1076,15 +1031,10 @@
       "guide": "modules/go/MODULE.md",
       "example": "examples/go",
       "activate_when": "optional stack; see docs/OPTIONAL_STACKS.md"
-    },
-    "node": {
-      "guide": "modules/node/MODULE.md",
-      "example": "examples/node",
-      "activate_when": "stack includes Node.js HTTP API"
     }
   },
   "roadmap": {
-    "active": "BUILD_PLAN.md — maintenance + human open items",
+    "active": "BUILD_PLAN.md \u2014 maintenance + human open items",
     "completed_archive": "COMPLETED_TASKS.md",
     "batch_commands": [
       ".cursor/commands/audit.md",

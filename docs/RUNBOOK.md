@@ -1,72 +1,102 @@
 # Runbook
 
-> Operational guide for deploy, rollback, and incident response.
+> OBDForge operational guide — Android / F-Droid distribution.
 
 ## Health Checks
 
-For services and APIs, expose:
-
-| Endpoint | Purpose | Expected |
-|----------|---------|----------|
-| `/health` | Liveness | `200` when process is up |
-| `/ready` | Readiness | `200` when dependencies are reachable |
-
-Static PWAs and CLIs may skip HTTP endpoints; document stack-specific checks instead.
+| Check | Command / action | Expected |
+|-------|------------------|----------|
+| Unit + compile | `cd examples/android && ./gradlew test assembleDebug` | Exit 0 |
+| Feature gate | `bash scripts/feature-gate.sh --stack android` | Exit 0 |
+| CI on main | `bash scripts/check-github-ci.sh --wait 300` | CI, CodeQL, Security Scan green |
+| Reproducible APK | `bash scripts/verify-reproducible-apk.sh` | Matching hashes |
+| F-Droid metadata | `bash scripts/verify-fdroid-metadata.sh` | No errors |
+| Device smoke | `adb install -r app/build/outputs/apk/release/*.apk` | Cold start, no crash |
 
 ## Structured Logging
 
-- JSON or key-value format in production
-- Include correlation/request ID per request
-- **Never** log passwords, tokens, or PII without explicit consent
-- Log levels: `ERROR` for user-visible failures, `WARN` for recoverable, `INFO` for lifecycle events
+- Android: `Log` tags per feature (`ObdTransport`, `VinResolver`, `SafetyGate`)
+- **Never** log VIN, full adapter serial, or ECU write payloads
+- Use `BuildConfig.DEBUG` guards for verbose adapter transcripts
+- Field debugging: user-initiated export of sanitized session log
 
-## Deploy
+## Deploy (Release)
 
 1. `[AUTO]` CI green on `main`
-2. `[HUMAN]` Approve release (Milestone Gates in `BUILD_PLAN.md`)
-3. `[AUTO]` Tag and publish via GitHub Release workflow
-4. `[HUMAN]` Verify deployment on target platform
+2. `[AGENT]` CHANGELOG + version bump (Release Please)
+3. `[AUTO]` `pre-release-gate.sh` + reproducible APK job
+4. `[HUMAN]` Approve GitHub release tag
+5. `[AUTO]` Attach APK + SBOM to GitHub Release
+6. `[ADB]` Install release APK smoke on physical device
+7. `[ADB]` Trigger or update F-Droid fdroiddata merge request
 
 ## Rollback
 
-1. Revert to previous release tag or artifact
-2. Confirm health checks pass
-3. Log incident in `DECISION_LOG.md` if user-impacting
+1. Yank bad GitHub Release (mark pre-release / advisory)
+2. Revert `main` to previous tag; rebuild reproducible APK
+3. `[ADB]` Confirm previous APK installs over bad version
+4. `[HUMAN]` Notify F-Droid maintainers if bad build reached repo
+5. Log incident in `DECISION_LOG.md`
 
 ## Common Failures
 
 | Symptom | Check | Fix |
 |---------|-------|-----|
-| CI failing on lint | Local `pre-commit run --all-files` | Fix and push |
-| Dependabot alert | `docs/SECURITY_TRIAGE.md` | Merge bump PR |
-| State lost after upgrade | Migration tests | Fix schema migration |
+| Gradle FOSS grep fail | Proprietary dep in `build.gradle.kts` | Remove GMS/Firebase |
+| Reproducible hash drift | `SOURCE_DATE_EPOCH` unset | Pin epoch in CI + local |
+| BT connect timeout | Android 12+ permissions | `BLUETOOTH_CONNECT` manifest + runtime |
+| USB permission loop | Missing intent filter | Fix `device_filter.xml` VID/PID |
+| Adapter garbage responses | Clone ELM firmware | Fall back to Elm327Protocol probe |
+| Room migration crash | Schema bump without test | Add `MigrationTest` |
+| CI emulator flake | API 34 AOSP job | Re-run; check `connectedDebugAndroidTest` logs |
+
+## OBD Adapter Troubleshooting
+
+1. Confirm transport (BT paired **before** in system settings for SPP adapters)
+2. Capture sanitized transcript (Settings → Export debug log) — `[ADB]`
+3. Try demo mode to isolate app vs adapter
+4. Document adapter firmware in GitHub issue template
 
 ## Backup & Restore
 
 | Target | RPO | RTO | Procedure |
 |--------|-----|-----|-----------|
-| User data | _Define_ | _Define_ | _Document per stack_ |
+| User diagnostics data | User responsibility | Uninstall = loss | Export session JSON (Shop) |
+| Signing keys | N/A | Immediate | Offline keystore; never in repo |
 | Repository | N/A (git) | Immediate | `git clone` |
+
+## F-Droid Reproducible Build Procedure
+
+```bash
+export SOURCE_DATE_EPOCH=1700000000  # fixed project epoch
+cd examples/android
+./gradlew clean assembleRelease
+bash ../../scripts/verify-reproducible-apk.sh
+bash ../../scripts/verify-fdroid-metadata.sh
+```
+
+CI `android-release` job runs the same verification on tagged builds.
 
 ## SLOs (`[HUMAN]` defines)
 
-| Service | SLI | Target |
+| Surface | SLI | Target |
 |---------|-----|--------|
-| _Example: API availability_ | Uptime | _99.9%_ |
-| _Example: page load_ | p95 latency | _< 2s_ |
+| App cold start | Time to interactive | < 2s mid-range device |
+| PID refresh | p95 interval accuracy | ±100 ms of configured rate |
+| VIN resolve (ECU) | p95 latency | < 10s on bench |
 
 ## Escalation
 
-1. Check `BUILD_PLAN.md` Ongoing Maintenance
-2. Review `docs/SECURITY_TRIAGE.md` for security issues
-3. Contact maintainers in `.github/CODEOWNERS`
+1. Check `BUILD_PLAN.md` blocked tasks (❌)
+2. Security issues → `docs/SECURITY_TRIAGE.md` + private reporting
+3. Vehicle safety incident → `[HUMAN]` lead; preserve audit log export
+4. Contact maintainers in `.github/CODEOWNERS`
 
 ## Secret Rotation
 
-When credentials leak or a team member with access leaves:
+Applies to GitHub Actions signing secrets and any future update-manifest tokens:
 
-1. **`[HUMAN]`** Revoke compromised tokens/keys in the provider console immediately
-2. **`[AGENT]`** Rotate secrets in GitHub Environments and local `.env` (never commit)
-3. **`[AGENT]`** Update `.env.example` if variable names changed
-4. **`[AUTO]`** Re-run CI with new secrets; confirm deploy health checks pass
-5. **`[HUMAN]`** Log incident in `DECISION_LOG.md`; link advisory if CVE-related
+1. **`[HUMAN]`** Revoke compromised keys in GitHub Environments
+2. **`[AGENT]`** Rotate keystore only with `[HUMAN]` approval (invalidates F-Droid sig chain)
+3. **`[AUTO]`** Re-run release pipeline; verify APK signature
+4. Log in `DECISION_LOG.md`

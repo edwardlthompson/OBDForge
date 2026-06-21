@@ -37,6 +37,7 @@ fun AboutScreen(
         )
         Text(text = stringResource(R.string.about_version, version))
         Text(text = stringResource(R.string.about_format, installedFormat))
+        Text(text = stringResource(R.string.about_license))
         Text(text = updateStatus)
         if (canApplyUpdate) {
             Button(onClick = onApplyUpdate) {

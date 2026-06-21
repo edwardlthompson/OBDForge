@@ -109,27 +109,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-        with:
-          node-version: "22"
-      - uses: astral-sh/setup-uv@v7
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "21"
-      - name: Install web dependencies
-        working-directory: examples/web
-        run: npm ci
-      - name: Install node example dependencies
-        working-directory: examples/node
-        run: npm ci
-      - name: Sync python example
-        working-directory: examples/python
-        run: uv sync --locked --all-extras
       - name: Prepare Android wrapper
         run: chmod +x examples/android/gradlew
-      - name: Run feature gate (strict multi-stack)
-        run: bash scripts/feature-gate.sh --stack multi --strict --json
+      - name: Run feature gate (android stack)
+        run: bash scripts/feature-gate.sh --stack android --strict --json
 
   validate-index:
     name: Validate Template Index
@@ -161,6 +148,7 @@ jobs:
 
   web:
     name: Web - Lint, Test, Build
+    if: ${{ hashFiles('examples/web/package.json') != '' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -195,6 +183,7 @@ jobs:
 
   python:
     name: Python - Lint, Type, Test
+    if: ${{ hashFiles('examples/python/pyproject.toml') != '' }}
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -223,6 +212,7 @@ jobs:
 
   node:
     name: Node - Lint, Test
+    if: ${{ hashFiles('examples/node/package.json') != '' }}
     runs-on: ubuntu-latest
     defaults:
       run:

@@ -1,7 +1,6 @@
 name: CodeQL
 
-# Matrix covers primary stacks (JS/TS, Python, Android). Optional examples/rust and
-# examples/go are excluded — see modules/rust/MODULE.md and modules/go/MODULE.md.
+# Android-only stack after init prune. See .cursor/stack-selection.json.
 
 on:
   push:
@@ -23,8 +22,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - language: javascript-typescript
-          - language: python
           - language: java-kotlin
             paths: examples/android
     steps:

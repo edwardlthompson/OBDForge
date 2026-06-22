@@ -18,15 +18,16 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import dev.foss.goldenpath.R
 import dev.foss.goldenpath.about.DonationsConfig
 import dev.foss.goldenpath.ui.about.AboutScreen
 import dev.foss.goldenpath.ui.components.ThemeToggle
-import dev.foss.goldenpath.ui.settings.SettingsScreen
 import dev.foss.goldenpath.ui.theme.SpacingLg
 import dev.foss.goldenpath.ui.theme.SpacingMd
 import dev.foss.goldenpath.ui.theme.ThemeMode
+import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.transport.BluetoothDeviceOption
 import dev.foss.obdforge.data.transport.UsbDeviceOption
 import dev.foss.obdforge.domain.transport.TransportType
@@ -78,6 +79,8 @@ fun GoldenPathScreen(
     liveDataEnabled: Boolean = false,
     onOpenLiveData: () -> Unit = {},
     onOpenSessionHistory: () -> Unit = {},
+    compositionRoot: ObdForgeCompositionRoot? = null,
+    settingsScope: kotlinx.coroutines.CoroutineScope? = null,
 ) {
     Scaffold(
         topBar = {
@@ -102,18 +105,24 @@ fun GoldenPathScreen(
         },
     ) { innerPadding ->
         when {
-            showSettings -> SettingsScreen(
-                themeMode = themeMode,
-                updateCheckEnabled = updateCheckEnabled,
-                demoModeEnabled = demoModeEnabled,
-                onThemeModeSelect = onThemeModeSelect,
-                onUpdateCheckChange = onUpdateCheckChange,
-                onDemoModeChange = onDemoModeChange,
-                onBack = onSettingsClose,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-            )
+            showSettings && compositionRoot != null && settingsScope != null -> {
+                val settingsContext = LocalContext.current
+                GoldenPathSettingsHost(
+                    context = settingsContext,
+                    scope = settingsScope,
+                    root = compositionRoot,
+                    themeMode = themeMode,
+                    updateCheckEnabled = updateCheckEnabled,
+                    demoModeEnabled = demoModeEnabled,
+                    onThemeModeSelect = onThemeModeSelect,
+                    onUpdateCheckChange = onUpdateCheckChange,
+                    onDemoModeChange = onDemoModeChange,
+                    onBack = onSettingsClose,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                )
+            }
             showAbout -> AboutScreen(
                 version = appVersion,
                 installedFormat = installedFormat,

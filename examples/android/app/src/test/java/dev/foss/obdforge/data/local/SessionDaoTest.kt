@@ -46,9 +46,12 @@ class SessionDaoTest {
         database.auditLogDao().insert(
             AuditLogEntity(
                 timestampEpochMs = 2L,
-                action = "connect",
+                persona = "Diy",
+                protocolId = "elm327",
+                commandType = "connect",
+                commandHash = "deadbeef",
                 outcome = "ok",
-                detail = null,
+                userNote = null,
             ),
         )
         assertEquals(1, database.sessionDao().count())

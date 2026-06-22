@@ -17,7 +17,10 @@ data class SessionEntity(
 data class AuditLogEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val timestampEpochMs: Long,
-    val action: String,
+    val persona: String,
+    val protocolId: String?,
+    val commandType: String,
+    val commandHash: String,
     val outcome: String,
-    val detail: String?,
+    val userNote: String?,
 )

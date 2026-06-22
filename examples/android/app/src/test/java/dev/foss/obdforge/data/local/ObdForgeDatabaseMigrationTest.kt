@@ -46,9 +46,33 @@ class ObdForgeDatabaseMigrationTest {
         room.close()
     }
 
+    @Test
+    fun migrate3To4_expandsAuditLogColumns() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val dbName = "migration-test-3-4"
+        context.deleteDatabase(dbName)
+        createV1Schema(context, dbName)
+        SQLiteDatabase.openOrCreateDatabase(context.getDatabasePath(dbName).absolutePath, null).use {
+            it.execSQL("ALTER TABLE sessions ADD COLUMN endedAtEpochMs INTEGER")
+            it.version = 2
+        }
+
+        val room = buildRoom(context, dbName)
+        room.openHelper.writableDatabase.use { migrated ->
+            assertTrue(hasColumn(migrated, "audit_logs", "persona"))
+            assertTrue(hasColumn(migrated, "audit_logs", "commandHash"))
+            assertTrue(hasColumn(migrated, "audit_logs", "commandType"))
+        }
+        room.close()
+    }
+
     private fun buildRoom(context: Context, dbName: String) =
         Room.databaseBuilder(context, ObdForgeDatabase::class.java, dbName)
-            .addMigrations(ObdForgeDatabase.MIGRATION_1_2, ObdForgeDatabase.MIGRATION_2_3)
+            .addMigrations(
+                ObdForgeDatabase.MIGRATION_1_2,
+                ObdForgeDatabase.MIGRATION_2_3,
+                ObdForgeDatabase.MIGRATION_3_4,
+            )
             .build()
 
     private fun createV1Schema(context: Context, dbName: String) {

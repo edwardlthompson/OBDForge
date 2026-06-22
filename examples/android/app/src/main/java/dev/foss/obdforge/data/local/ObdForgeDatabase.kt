@@ -21,7 +21,7 @@ import dev.foss.obdforge.data.local.entity.SessionEntity
         DtcSnapshotEntity::class,
         FreezeFrameEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = false,
 )
 abstract class ObdForgeDatabase : RoomDatabase() {
@@ -72,6 +72,35 @@ abstract class ObdForgeDatabase : RoomDatabase() {
                 db.execSQL(
                     "CREATE INDEX IF NOT EXISTS index_freeze_frames_sessionId ON freeze_frames(sessionId)",
                 )
+            }
+        }
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS audit_logs_new (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                        timestampEpochMs INTEGER NOT NULL,
+                        persona TEXT NOT NULL,
+                        protocolId TEXT,
+                        commandType TEXT NOT NULL,
+                        commandHash TEXT NOT NULL,
+                        outcome TEXT NOT NULL,
+                        userNote TEXT
+                    )
+                    """.trimIndent(),
+                )
+                db.execSQL(
+                    """
+                    INSERT INTO audit_logs_new (
+                        id, timestampEpochMs, persona, protocolId, commandType, commandHash, outcome, userNote
+                    )
+                    SELECT id, timestampEpochMs, 'Diy', NULL, action, '', outcome, detail
+                    FROM audit_logs
+                    """.trimIndent(),
+                )
+                db.execSQL("DROP TABLE audit_logs")
+                db.execSQL("ALTER TABLE audit_logs_new RENAME TO audit_logs")
             }
         }
     }

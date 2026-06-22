@@ -82,4 +82,15 @@
     <string name="session_detail_dtc_line">DTCs: %1$s</string>
     <string name="session_detail_freeze_line">Freeze %1$s: %2$s</string>
     <string name="session_export_json">Export JSON</string>
+    <string name="settings_expert_mode_label">Expert mode</string>
+    <string name="settings_expert_mode_hint">Required for actuator tests and ECU writes. Unlocks for 30 minutes after PIN entry.</string>
+    <string name="settings_expert_pin_label">Expert PIN</string>
+    <string name="settings_expert_unlock">Unlock expert mode</string>
+    <string name="settings_expert_lock">Lock expert mode</string>
+    <string name="settings_expert_locked">Expert mode locked</string>
+    <string name="settings_expert_unlocked_until">Unlocked until %1$s</string>
+    <string name="settings_expert_pin_invalid">Invalid PIN</string>
+    <string name="settings_audit_log_label">Safety audit log</string>
+    <string name="settings_audit_log_count">%1$d entries recorded locally</string>
+    <string name="settings_audit_export">Export audit log JSON</string>
 </resources>

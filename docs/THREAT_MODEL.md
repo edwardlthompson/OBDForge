@@ -62,7 +62,7 @@
 
 | Task | BUILD_PLAN | Status |
 |------|------------|--------|
-| SafetyGate + audit | Sprint 8 | 🔲 |
+| SafetyGate + audit | Sprint 8 | ✅ |
 | Adapter input validation | Sprint 2–3 | 🔲 |
 | VIN privacy | Sprint 10 + PRIVACY.md | 🔲 |
 | Reproducible APK | Sprint 13 | 🔲 |

@@ -160,9 +160,9 @@ grep '\[AUTO\]' BUILD_PLAN.md
 ### Sequential
 
 1. ✅ [AGENT] Draft ADR-0003 safety interlocks
-2. 🔲 [AGENT] Implement `SafetyGate` + expert unlock
-3. 🔲 [AGENT] Audit log Room table + export
-4. 🔲 [AGENT] Unit tests: blocked/allowed write paths
+2. ✅ [AGENT] Implement `SafetyGate` + expert unlock
+3. ✅ [AGENT] Audit log Room table + export
+4. ✅ [AGENT] Unit tests: blocked/allowed write paths
 
 ---
 
@@ -283,6 +283,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 | OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 2 — Transports (M2) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 8 — Safety & Audit (M8) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 7 — Demo Mode (M7) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 6 — Persistence (M6) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 5 — Live Data (M5) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |

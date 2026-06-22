@@ -197,6 +197,8 @@ fun GoldenPathApp(
             liveDataEnabled = demoModeEnabled && connectionStatus.contains("Connected"),
             onOpenLiveData = { showLiveData = true },
             onOpenSessionHistory = { showSessionHistory = true },
+            compositionRoot = root,
+            settingsScope = scope,
         )
         }
         }

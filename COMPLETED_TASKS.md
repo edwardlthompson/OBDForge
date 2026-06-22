@@ -2,6 +2,14 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 8 — Safety & Audit (M8) (2026-06-21)
+
+- ✅ [AGENT] `SafetyGate` + `PersonaPolicy` — interlocks for stationary vehicle, expert unlock, confirmation, rate limit
+- ✅ [AGENT] `ExpertUnlockPreferences` — 30-minute PIN unlock (default off); Settings UI
+- ✅ [AGENT] Room v4 audit log (`persona`, `protocolId`, `commandHash`, `commandType`, `outcome`, `userNote`) + `MIGRATION_3_4`
+- ✅ [AGENT] `AuditLogRepository` + JSON export; `SafetyGateUseCase` logs every write attempt
+- ✅ [AUTO] `SafetyGateTest`, `PersonaPolicyTest`, `SafetyGateUseCaseTest`, migration test; 108 tests green
+
 ## OBDForge Sprint 7 — Demo Mode (M7) (2026-06-21)
 
 - ✅ [AGENT] `DemoObdFixtures` — deterministic mock transport responses (VIN, DTCs, Mode 01 PIDs)

@@ -4,11 +4,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,14 +28,25 @@ fun SettingsScreen(
     themeMode: ThemeMode,
     updateCheckEnabled: Boolean,
     demoModeEnabled: Boolean,
+    expertUnlocked: Boolean,
+    expertUnlockStatusMessage: String,
+    expertPinErrorMessage: String?,
+    auditEntryCount: Int,
+    auditExportJson: String?,
     onThemeModeSelect: (ThemeMode) -> Unit,
     onUpdateCheckChange: (Boolean) -> Unit,
     onDemoModeChange: (Boolean) -> Unit,
+    onExpertUnlock: (String) -> Unit,
+    onExpertLock: () -> Unit,
+    onAuditExport: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(SpacingMd),
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(SpacingMd),
         verticalArrangement = Arrangement.spacedBy(SpacingMd),
     ) {
         Text(
@@ -55,7 +71,7 @@ fun SettingsScreen(
                 )
             }
         }
-        androidx.compose.foundation.layout.Row(
+        Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SpacingMd),
         ) {
@@ -65,7 +81,7 @@ fun SettingsScreen(
             )
             Switch(checked = demoModeEnabled, onCheckedChange = onDemoModeChange)
         }
-        androidx.compose.foundation.layout.Row(
+        Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(SpacingMd),
         ) {
@@ -75,7 +91,19 @@ fun SettingsScreen(
             )
             Switch(checked = updateCheckEnabled, onCheckedChange = onUpdateCheckChange)
         }
-        androidx.compose.material3.Button(onClick = onBack) {
+        SettingsExpertModeSection(
+            expertUnlocked = expertUnlocked,
+            unlockStatusMessage = expertUnlockStatusMessage,
+            pinErrorMessage = expertPinErrorMessage,
+            onUnlock = onExpertUnlock,
+            onLock = onExpertLock,
+        )
+        SettingsAuditExportSection(
+            auditEntryCount = auditEntryCount,
+            exportJson = auditExportJson,
+            onExport = onAuditExport,
+        )
+        Button(onClick = onBack) {
             Text(stringResource(R.string.settings_close))
         }
     }

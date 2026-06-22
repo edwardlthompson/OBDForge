@@ -1,24 +1,30 @@
 package dev.foss.obdforge.data.registry
 
-import dev.foss.obdforge.data.demo.SimulatedObdTransport
-import dev.foss.obdforge.domain.transport.Transport
+import android.content.Context
+import dev.foss.obdforge.data.transport.TransportFactory
+import dev.foss.obdforge.domain.transport.ObdTransport
+import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
 
-class TransportRegistry {
-    private val factories = linkedMapOf<TransportType, () -> Transport>()
+class TransportRegistry(
+    private val context: Context,
+) {
+    private val supported = setOf(
+        TransportType.Simulated,
+        TransportType.Bluetooth,
+        TransportType.UsbSerial,
+        TransportType.WiFi,
+        TransportType.Ethernet,
+    )
 
-    fun register(type: TransportType, factory: () -> Transport) {
-        factories[type] = factory
+    fun create(type: TransportType, endpoint: TransportEndpoint): ObdTransport? {
+        if (type !in supported) return null
+        return TransportFactory.create(context, type, endpoint)
     }
 
-    fun create(type: TransportType): Transport? = factories[type]?.invoke()
-
-    fun availableTypes(): Set<TransportType> = factories.keys
+    fun availableTypes(): Set<TransportType> = supported
 
     companion object {
-        fun default(): TransportRegistry =
-            TransportRegistry().apply {
-                register(TransportType.Simulated) { SimulatedObdTransport() }
-            }
+        fun default(context: Context): TransportRegistry = TransportRegistry(context.applicationContext)
     }
 }

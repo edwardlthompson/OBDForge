@@ -1,7 +1,9 @@
 package dev.foss.obdforge.domain.protocol
 
 import dev.foss.obdforge.domain.transport.ConnectionState
-import dev.foss.obdforge.domain.transport.Transport
+import dev.foss.obdforge.domain.transport.ObdTransport
+import dev.foss.obdforge.domain.transport.TransportEndpoint
+import dev.foss.obdforge.domain.transport.TransportMetrics
 import dev.foss.obdforge.domain.transport.TransportType
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -13,9 +15,11 @@ class DiagnosticProtocolContractTest {
         assertEquals("stn", ProtocolId.Stn.wireName)
     }
 
-    private class FakeTransport : Transport {
+    private class FakeTransport : ObdTransport {
         override val type = TransportType.Simulated
+        override val endpoint = TransportEndpoint.Simulated
         override var state = ConnectionState.Disconnected
+        override val metrics = TransportMetrics()
         override suspend fun connect(): Result<Unit> {
             state = ConnectionState.Connected
             return Result.success(Unit)
@@ -23,6 +27,8 @@ class DiagnosticProtocolContractTest {
         override suspend fun disconnect() {
             state = ConnectionState.Disconnected
         }
+        override suspend fun write(line: String) = Result.success(Unit)
+        override suspend fun read(timeoutMs: Long) = Result.success("OK")
         override suspend fun send(command: String) = Result.success("OK")
     }
 }

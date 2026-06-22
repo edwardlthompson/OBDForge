@@ -84,11 +84,11 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 ### Sequential
 
-1. 🔲 [AGENT] Define `ObdTransport` port + fake transport for tests
-2. 🔲 [AGENT] Bluetooth SPP transport
-3. 🔲 [AGENT] USB serial transport + permission UX
-4. 🔲 [AGENT] WiFi/Ethernet TCP transport
-5. 🔲 [AGENT] Transport picker UI + DataStore last-used
+1. ✅ [AGENT] Define `ObdTransport` port + fake transport for tests
+2. ✅ [AGENT] Bluetooth SPP transport
+3. ✅ [AGENT] USB serial transport + permission UX
+4. ✅ [AGENT] WiFi/Ethernet TCP transport
+5. ✅ [AGENT] Transport picker UI + DataStore last-used
 6. 🔲 [ADB] Smoke each transport with real adapter hardware
 
 ---
@@ -237,6 +237,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 | Sprint | Task |
 |--------|------|
+| 2 | Smoke each transport (Bluetooth SPP, USB serial, Wi‑Fi/Ethernet TCP) with real OBD adapter hardware |
 | 0 | Fill `donations.json` / `examples/android/app/src/main/assets/app-update.json` URLs for your GitHub org |
 | 1 | Approve ADR-0001 and Sprint 1 scope |
 | 3 | Approve ADR-0002 |
@@ -278,4 +279,5 @@ grep '\[AUTO\]' BUILD_PLAN.md
 |--------|--------|---------|
 | OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 2 — Transports (M2) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
 | Template maintainer M19–M29 | Complete (upstream) | `COMPLETED_TASKS.md` |

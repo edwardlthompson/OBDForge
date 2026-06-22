@@ -1,5 +1,7 @@
 package dev.foss.obdforge.domain.protocol
 
+import dev.foss.obdforge.domain.transport.ObdTransport
+
 enum class ProtocolId(val wireName: String) {
     Elm327("elm327"),
     Stn("stn"),
@@ -15,5 +17,5 @@ enum class ProbeResult {
 
 interface DiagnosticProtocol {
     val id: ProtocolId
-    suspend fun probe(transport: dev.foss.obdforge.domain.transport.Transport): ProbeResult
+    suspend fun probe(transport: ObdTransport): ProbeResult
 }

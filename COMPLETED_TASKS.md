@@ -2,6 +2,15 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 2 — Transports (M2) (2026-06-21)
+
+- ✅ [AGENT] `ObdTransport` port with read/write/metrics; `StreamObdTransport` + `FakeTransportLink` for tests
+- ✅ [AGENT] Bluetooth SPP (`BluetoothSppTransportLink`), USB serial (`UsbSerialTransportLink` + permission UX), TCP Wi‑Fi/Ethernet (`TcpTransportLink`)
+- ✅ [AGENT] `TransportFactory`, `TransportDiscovery`, `TransportPreferences` (DataStore last-used)
+- ✅ [AGENT] Transport picker Compose UI wired into Golden Path shell (simulation off)
+- ✅ [AUTO] `./gradlew test assembleDebug` green locally (usb-serial-for-android via JitPack)
+- 🔲 [ADB] Smoke each transport with real adapter hardware — see Human Backlog
+
 ## OBDForge Sprint 1 — Core Architecture (M1) (2026-06-21)
 
 - ✅ [AGENT] Implement `TransportRegistry` + `ProtocolRegistry` stubs (`dev.foss.obdforge.data.registry`)

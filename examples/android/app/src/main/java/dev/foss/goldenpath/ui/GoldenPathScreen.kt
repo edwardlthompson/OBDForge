@@ -29,7 +29,10 @@ import dev.foss.goldenpath.ui.settings.SettingsScreen
 import dev.foss.goldenpath.ui.theme.SpacingLg
 import dev.foss.goldenpath.ui.theme.SpacingMd
 import dev.foss.goldenpath.ui.theme.ThemeMode
-import dev.foss.obdforge.ui.connect.ConnectPlaceholderCard
+import dev.foss.obdforge.data.transport.BluetoothDeviceOption
+import dev.foss.obdforge.data.transport.UsbDeviceOption
+import dev.foss.obdforge.domain.transport.TransportType
+import dev.foss.obdforge.ui.connect.TransportPickerCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,6 +54,21 @@ fun GoldenPathScreen(
     onThemeToggle: () -> Unit,
     onThemeModeSelect: (ThemeMode) -> Unit,
     onDemoModeChange: (Boolean) -> Unit,
+    transportPickerType: TransportType,
+    transportTcpHost: String,
+    transportTcpPort: String,
+    transportBluetoothAddress: String,
+    transportUsbDeviceName: String,
+    bluetoothDevices: List<BluetoothDeviceOption>,
+    usbDevices: List<UsbDeviceOption>,
+    transportStatusMessage: String,
+    onTransportTypeChange: (TransportType) -> Unit,
+    onTransportTcpHostChange: (String) -> Unit,
+    onTransportTcpPortChange: (String) -> Unit,
+    onBluetoothSelect: (BluetoothDeviceOption) -> Unit,
+    onUsbSelect: (UsbDeviceOption) -> Unit,
+    onSaveTransportSelection: () -> Unit,
+    onRequestUsbPermission: () -> Unit,
     onAboutOpen: () -> Unit,
     onAboutClose: () -> Unit,
     onSettingsOpen: () -> Unit,
@@ -139,7 +157,24 @@ fun GoldenPathScreen(
                     color = MaterialTheme.colorScheme.secondary,
                 )
                 if (!demoModeEnabled) {
-                    ConnectPlaceholderCard(modifier = Modifier.fillMaxWidth())
+                    TransportPickerCard(
+                        selectedType = transportPickerType,
+                        tcpHost = transportTcpHost,
+                        tcpPort = transportTcpPort,
+                        selectedBluetoothAddress = transportBluetoothAddress,
+                        selectedUsbDeviceName = transportUsbDeviceName,
+                        bluetoothDevices = bluetoothDevices,
+                        usbDevices = usbDevices,
+                        statusMessage = transportStatusMessage,
+                        onTypeChange = onTransportTypeChange,
+                        onTcpHostChange = onTransportTcpHostChange,
+                        onTcpPortChange = onTransportTcpPortChange,
+                        onBluetoothSelect = onBluetoothSelect,
+                        onUsbSelect = onUsbSelect,
+                        onSaveSelection = onSaveTransportSelection,
+                        onRequestUsbPermission = onRequestUsbPermission,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
                 }
                 Switch(
                     checked = demoModeEnabled,

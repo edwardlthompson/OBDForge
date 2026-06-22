@@ -27,7 +27,15 @@ import dev.foss.goldenpath.ui.theme.ThemePreferences
 import dev.foss.goldenpath.ui.theme.next
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.domain.vehicle.VinSourceType
+import dev.foss.obdforge.data.preferences.TransportSelection
+import dev.foss.obdforge.data.transport.BluetoothDeviceOption
+import dev.foss.obdforge.data.transport.UsbDeviceOption
+import dev.foss.obdforge.data.transport.displayLabel
+import dev.foss.obdforge.domain.transport.TransportEndpoint
+import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.ui.connect.ConnectDemoCoordinator
+import dev.foss.obdforge.ui.connect.UsbPermissionRequester
+import dev.foss.obdforge.ui.connect.buildEndpoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -61,8 +69,62 @@ fun GoldenPathApp(
     var vinDisplay by remember { mutableStateOf(context.getString(R.string.vin_unknown)) }
     var vinSourceLabel by remember { mutableStateOf("") }
     val root = compositionRoot ?: remember { ObdForgeCompositionRoot.create(context) }
-    val connectDemo = remember(root) {
-        ConnectDemoCoordinator(root.transportRegistry, root.protocolRegistry)
+    val savedTransport by root.transportPreferences.selection.collectAsStateWithLifecycle(
+        initialValue = TransportSelection(
+            type = TransportType.WiFi,
+            endpoint = TransportEndpoint.Tcp(
+                host = TransportEndpoint.Tcp.DEFAULT_OBD_HOST,
+                port = TransportEndpoint.Tcp.DEFAULT_OBD_PORT,
+            ),
+        ),
+    )
+    var pickerType by remember(savedTransport.type) { mutableStateOf(savedTransport.type) }
+    var tcpHost by remember(savedTransport) {
+        mutableStateOf((savedTransport.endpoint as? TransportEndpoint.Tcp)?.host.orEmpty())
+    }
+    var tcpPort by remember(savedTransport) {
+        mutableStateOf(
+            ((savedTransport.endpoint as? TransportEndpoint.Tcp)?.port
+                ?: TransportEndpoint.Tcp.DEFAULT_OBD_PORT).toString(),
+        )
+    }
+    var bluetoothAddress by remember(savedTransport) {
+        mutableStateOf((savedTransport.endpoint as? TransportEndpoint.Bluetooth)?.deviceAddress.orEmpty())
+    }
+    var bluetoothName by remember(savedTransport) {
+        mutableStateOf((savedTransport.endpoint as? TransportEndpoint.Bluetooth)?.displayName)
+    }
+    var usbDeviceName by remember(savedTransport) {
+        mutableStateOf((savedTransport.endpoint as? TransportEndpoint.UsbSerial)?.deviceName.orEmpty())
+    }
+    var transportStatus by remember { mutableStateOf("") }
+    var bluetoothDevices by remember { mutableStateOf(emptyList<BluetoothDeviceOption>()) }
+    var usbDevices by remember { mutableStateOf(emptyList<UsbDeviceOption>()) }
+    val usbPermissionRequester = remember(activity) {
+        activity?.let { UsbPermissionRequester(it) }
+    }
+    val demoSelection = remember {
+        TransportSelection(TransportType.Simulated, TransportEndpoint.Simulated)
+    }
+    val connectDemo = remember(root, demoModeEnabled, savedTransport) {
+        ConnectDemoCoordinator(
+            transportRegistry = root.transportRegistry,
+            protocolRegistry = root.protocolRegistry,
+            selection = if (demoModeEnabled) demoSelection else savedTransport,
+        )
+    }
+
+    LaunchedEffect(pickerType) {
+        bluetoothDevices = if (pickerType == TransportType.Bluetooth) {
+            root.transportDiscovery.pairedBluetoothDevices()
+        } else {
+            emptyList()
+        }
+        usbDevices = if (pickerType == TransportType.UsbSerial) {
+            root.transportDiscovery.attachedUsbSerialDevices()
+        } else {
+            emptyList()
+        }
     }
 
     LaunchedEffect(demoModeEnabled) {
@@ -137,6 +199,62 @@ fun GoldenPathApp(
             onThemeToggle = { scope.launch { themePreferences.setThemeMode(themeMode.next()) } },
             onThemeModeSelect = { mode -> scope.launch { themePreferences.setThemeMode(mode) } },
             onDemoModeChange = { enabled -> demoModeEnabled = enabled },
+            transportPickerType = pickerType,
+            transportTcpHost = tcpHost,
+            transportTcpPort = tcpPort,
+            transportBluetoothAddress = bluetoothAddress,
+            transportUsbDeviceName = usbDeviceName,
+            bluetoothDevices = bluetoothDevices,
+            usbDevices = usbDevices,
+            transportStatusMessage = transportStatus,
+            onTransportTypeChange = { pickerType = it },
+            onTransportTcpHostChange = { tcpHost = it },
+            onTransportTcpPortChange = { tcpPort = it },
+            onBluetoothSelect = { device ->
+                bluetoothAddress = device.address
+                bluetoothName = device.name
+            },
+            onUsbSelect = { device -> usbDeviceName = device.deviceName },
+            onSaveTransportSelection = {
+                val endpoint = buildEndpoint(
+                    type = pickerType,
+                    tcpHost = tcpHost,
+                    tcpPort = tcpPort,
+                    bluetoothAddress = bluetoothAddress,
+                    bluetoothName = bluetoothName,
+                    usbDeviceName = usbDeviceName,
+                )
+                if (endpoint == null) {
+                    transportStatus = context.getString(R.string.transport_status_invalid)
+                } else {
+                    scope.launch {
+                        root.transportPreferences.setSelection(pickerType, endpoint)
+                        transportStatus = context.getString(
+                            R.string.transport_status_saved,
+                            context.getString(
+                                when (pickerType) {
+                                    TransportType.Bluetooth -> R.string.transport_type_bluetooth
+                                    TransportType.UsbSerial -> R.string.transport_type_usb
+                                    TransportType.WiFi -> R.string.transport_type_wifi
+                                    TransportType.Ethernet -> R.string.transport_type_ethernet
+                                    TransportType.Simulated -> R.string.transport_type_simulated
+                                },
+                            ),
+                            endpoint.displayLabel(),
+                        )
+                        connectionStatus = context.getString(R.string.connection_status_adapter_ready)
+                    }
+                }
+            },
+            onRequestUsbPermission = {
+                val requester = usbPermissionRequester ?: return@GoldenPathScreen
+                val device = requester.deviceForName(usbDeviceName) ?: return@GoldenPathScreen
+                requester.requestPermission(device) { granted ->
+                    transportStatus = context.getString(
+                        if (granted) R.string.transport_status_usb_granted else R.string.transport_status_usb_denied,
+                    )
+                }
+            },
             onAboutOpen = { showAbout = !showAbout; if (showAbout) showSettings = false },
             onAboutClose = { showAbout = false },
             onSettingsOpen = { showSettings = !showSettings; if (showSettings) showAbout = false },

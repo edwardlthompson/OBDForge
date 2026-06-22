@@ -1,6 +1,6 @@
 package dev.foss.obdforge.domain.vehicle
 
-import dev.foss.obdforge.domain.transport.Transport
+import dev.foss.obdforge.domain.transport.ObdTransport
 
 enum class VinSourceType {
     EcuObd2,
@@ -22,7 +22,7 @@ data class VinReadResult(
 object VinResolver {
     private const val DEMO_VIN = "1G1JC5444R7251234"
 
-    suspend fun readFromEcu(transport: Transport): VinReadResult? {
+    suspend fun readFromEcu(transport: ObdTransport): VinReadResult? {
         val mode09 = transport.send("0902").getOrNull() ?: return null
         val vin = parseMode09Vin(mode09) ?: return null
         if (vin.length != 17) return null

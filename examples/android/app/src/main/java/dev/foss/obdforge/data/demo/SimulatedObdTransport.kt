@@ -48,12 +48,14 @@ class SimulatedObdTransport : ObdTransport {
         }
         val normalized = command.trim().uppercase()
         val response = when {
+            normalized == "ATZ" -> "ELM327 v2.3"
+            normalized == "ATI" -> "ELM327 v2.3 (OBDForge Demo)"
+            normalized == "ATE0" || normalized == "ATL0" || normalized == "ATSP0" -> "OK"
             normalized.contains("0902") || normalized == "0902" ->
                 "49 02 01 31 47 31 4A 43 35 34 34 34 52 37 32 35 31 32 33 34"
-            normalized.startsWith("03") -> "43 01 33 01 00 00 00 00 00"
+            normalized == "03" -> "43 01 33 00 00 00 00 00"
+            normalized == "04" -> "44"
             normalized.startsWith("010C") || normalized.contains("010C") -> "41 0C 0F A0"
-            normalized.startsWith("ATZ") -> "ELM327 v2.3 (OBDForge Demo)"
-            normalized.startsWith("ATI") -> "OBDForge Simulated Transport"
             else -> "OK"
         }
         _metrics = _metrics.copy(

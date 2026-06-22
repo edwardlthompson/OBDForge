@@ -19,7 +19,7 @@ class ProtocolRegistryTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
 
     @Test
-    fun selectBest_returnsStubElm327ForSimulatedTransport() = runTest {
+    fun selectBest_returnsElm327ForSimulatedTransport() = runTest {
         val registry = ProtocolRegistry.default()
         val transport = TransportRegistry.default(context).create(
             TransportType.Simulated,

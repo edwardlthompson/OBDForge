@@ -1,5 +1,6 @@
 package dev.foss.obdforge.domain.vehicle
 
+import dev.foss.obdforge.domain.protocol.ObdIsoResponseParser
 import dev.foss.obdforge.domain.transport.ObdTransport
 
 enum class VinSourceType {
@@ -32,17 +33,6 @@ object VinResolver {
     fun demoVin(): VinReadResult =
         VinReadResult(vin = DEMO_VIN, source = VinSourceType.Demo, confidence = 1.0f)
 
-    internal fun parseMode09Vin(response: String): String? {
-        val hex = response.replace(" ", "").uppercase()
-        val dataStart = hex.indexOf("4902")
-        if (dataStart < 0) return null
-        val payload = hex.substring(dataStart + 6)
-        if (payload.length < 34) return null
-        return buildString {
-            for (i in 0 until 17) {
-                val byteHex = payload.substring(i * 2, i * 2 + 2)
-                append(byteHex.toInt(16).toChar())
-            }
-        }.filter { it.isLetterOrDigit() }.takeIf { it.length == 17 }
-    }
+    internal fun parseMode09Vin(response: String): String? =
+        ObdIsoResponseParser.parseMode09Vin(response)
 }

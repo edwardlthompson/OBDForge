@@ -2,6 +2,15 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 3 — ELM327 Protocol (M3) (2026-06-21)
+
+- ✅ [AGENT] Extended `DiagnosticProtocol` SPI — `readPid`, `readDtcs`, `clearDtcs`
+- ✅ [AGENT] `Elm327Protocol` with AT init probe (ATZ/ATE0/ATL0/ATSP0/ATI) and Mode 01/03/04/09
+- ✅ [AGENT] `ObdIsoResponseParser` — pure domain parsing for PID, DTC, VIN responses
+- ✅ [AGENT] Transcript fixtures under `src/test/resources/protocol/elm327/` + replay transport tests
+- ✅ [AUTO] `./gradlew test assembleDebug` green locally
+- 🔲 [ADB] Bench read DTC + single PID on ELM327 clone — see Human Backlog
+
 ## OBDForge Sprint 2 — Transports (M2) (2026-06-21)
 
 - ✅ [AGENT] `ObdTransport` port with read/write/metrics; `StreamObdTransport` + `FakeTransportLink` for tests

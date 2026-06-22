@@ -1,6 +1,6 @@
 package dev.foss.obdforge.data.registry
 
-import dev.foss.obdforge.data.protocol.StubElm327Protocol
+import dev.foss.obdforge.data.protocol.Elm327Protocol
 import dev.foss.obdforge.domain.protocol.DiagnosticProtocol
 import dev.foss.obdforge.domain.protocol.ProbeResult
 import dev.foss.obdforge.domain.transport.ObdTransport
@@ -20,7 +20,7 @@ class ProtocolRegistry {
     companion object {
         fun default(): ProtocolRegistry =
             ProtocolRegistry().apply {
-                register(StubElm327Protocol())
+                register(Elm327Protocol())
             }
     }
 }

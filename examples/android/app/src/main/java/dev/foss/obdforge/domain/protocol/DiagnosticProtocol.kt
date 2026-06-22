@@ -17,5 +17,16 @@ enum class ProbeResult {
 
 interface DiagnosticProtocol {
     val id: ProtocolId
+
     suspend fun probe(transport: ObdTransport): ProbeResult
+
+    suspend fun readPid(
+        transport: ObdTransport,
+        mode: ObdMode,
+        pid: Int,
+    ): Result<PidResponse>
+
+    suspend fun readDtcs(transport: ObdTransport): Result<DtcList>
+
+    suspend fun clearDtcs(transport: ObdTransport): Result<Unit>
 }

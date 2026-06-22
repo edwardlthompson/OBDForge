@@ -39,6 +39,8 @@
     <string name="settings_theme_mode_light">Light theme</string>
     <string name="settings_theme_mode_dark">Dark theme</string>
     <string name="settings_update_check_label">Check for updates</string>
+    <string name="settings_demo_mode_label">Simulation mode</string>
+    <string name="demo_mode_banner">Simulation mode — canned OBD responses, no adapter required</string>
     <string name="connect_placeholder_title">Connect adapter</string>
     <string name="connect_placeholder_body">Choose a transport and save your adapter settings. Full connect flow ships in Sprint 3.</string>
     <string name="connect_button_label">Scan for adapters</string>

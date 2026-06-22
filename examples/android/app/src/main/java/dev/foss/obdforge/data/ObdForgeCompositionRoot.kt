@@ -3,6 +3,7 @@ package dev.foss.obdforge.data
 import android.content.Context
 import androidx.room.Room
 import dev.foss.obdforge.data.local.ObdForgeDatabase
+import dev.foss.obdforge.data.preferences.DemoPreferences
 import dev.foss.obdforge.data.preferences.PersonaPreferences
 import dev.foss.obdforge.data.preferences.TransportPreferences
 import dev.foss.obdforge.data.persistence.SessionRecorder
@@ -18,6 +19,7 @@ data class ObdForgeCompositionRoot(
     val transportPreferences: TransportPreferences,
     val transportDiscovery: TransportDiscovery,
     val personaPreferences: PersonaPreferences,
+    val demoPreferences: DemoPreferences,
     val sessionRepository: SessionRepository,
     val sessionRecorder: SessionRecorder,
 ) {
@@ -39,6 +41,7 @@ data class ObdForgeCompositionRoot(
                 transportPreferences = TransportPreferences(appContext),
                 transportDiscovery = TransportDiscovery(appContext),
                 personaPreferences = PersonaPreferences(appContext),
+                demoPreferences = DemoPreferences(appContext),
                 sessionRepository = sessionRepository,
                 sessionRecorder = SessionRecorder(
                     transportRegistry = TransportRegistry.default(appContext),

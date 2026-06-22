@@ -10,8 +10,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -107,8 +105,10 @@ fun GoldenPathScreen(
             showSettings -> SettingsScreen(
                 themeMode = themeMode,
                 updateCheckEnabled = updateCheckEnabled,
+                demoModeEnabled = demoModeEnabled,
                 onThemeModeSelect = onThemeModeSelect,
                 onUpdateCheckChange = onUpdateCheckChange,
+                onDemoModeChange = onDemoModeChange,
                 onBack = onSettingsClose,
                 modifier = Modifier
                     .fillMaxSize()
@@ -154,13 +154,6 @@ fun GoldenPathScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                Text(
-                    text = stringResource(
-                        if (demoModeEnabled) R.string.demo_mode_on else R.string.demo_mode_off,
-                    ),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
                 if (!demoModeEnabled) {
                     TransportPickerCard(
                         selectedType = transportPickerType,
@@ -181,15 +174,6 @@ fun GoldenPathScreen(
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
-                Switch(
-                    checked = demoModeEnabled,
-                    onCheckedChange = onDemoModeChange,
-                    colors = SwitchDefaults.colors(),
-                )
-                Text(
-                    text = stringResource(R.string.demo_mode_label),
-                    style = MaterialTheme.typography.labelMedium,
-                )
                 LiveDataEntryButton(
                     enabled = liveDataEnabled,
                     onOpen = onOpenLiveData,

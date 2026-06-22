@@ -2,6 +2,14 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 7 — Demo Mode (M7) (2026-06-21)
+
+- ✅ [AGENT] `DemoObdFixtures` — deterministic mock transport responses (VIN, DTCs, Mode 01 PIDs)
+- ✅ [AGENT] `DemoDiagnosticFlow` — end-to-end connect → VIN → DTC → PID without hardware
+- ✅ [AGENT] `DemoPreferences` (DataStore) + Settings toggle; removed home-screen switch
+- ✅ [AGENT] `DemoModeBanner` + `DemoModeShell` — persistent banner across all screens when active
+- ✅ [AUTO] `DemoDiagnosticFlowTest` + fixture tests; `./gradlew test assembleDebug` green (87 tests)
+
 ## OBDForge Sprint 6 — Persistence (M6) (2026-06-21)
 
 - ✅ [AGENT] Room schema v3 — `DtcSnapshotEntity`, `FreezeFrameEntity`, `MIGRATION_2_3`

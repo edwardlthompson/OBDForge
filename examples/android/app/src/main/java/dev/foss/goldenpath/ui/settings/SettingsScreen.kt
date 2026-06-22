@@ -22,8 +22,10 @@ import dev.foss.goldenpath.ui.theme.ThemeMode
 fun SettingsScreen(
     themeMode: ThemeMode,
     updateCheckEnabled: Boolean,
+    demoModeEnabled: Boolean,
     onThemeModeSelect: (ThemeMode) -> Unit,
     onUpdateCheckChange: (Boolean) -> Unit,
+    onDemoModeChange: (Boolean) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -52,6 +54,16 @@ fun SettingsScreen(
                     },
                 )
             }
+        }
+        androidx.compose.foundation.layout.Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(SpacingMd),
+        ) {
+            Text(
+                text = stringResource(R.string.settings_demo_mode_label),
+                modifier = Modifier.weight(1f),
+            )
+            Switch(checked = demoModeEnabled, onCheckedChange = onDemoModeChange)
         }
         androidx.compose.foundation.layout.Row(
             verticalAlignment = Alignment.CenterVertically,

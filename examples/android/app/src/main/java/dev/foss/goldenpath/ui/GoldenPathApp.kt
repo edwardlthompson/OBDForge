@@ -26,11 +26,13 @@ import dev.foss.goldenpath.ui.theme.ThemeMode
 import dev.foss.goldenpath.ui.theme.ThemePreferences
 import dev.foss.goldenpath.ui.theme.next
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
+import dev.foss.obdforge.data.preferences.DemoPreferences
 import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.domain.vehicle.VinSourceType
 import dev.foss.obdforge.domain.livedata.PersonaMode
+import dev.foss.obdforge.ui.demo.DemoModeShell
 import dev.foss.obdforge.ui.connect.ConnectDemoCoordinator
 import dev.foss.obdforge.ui.livedata.LiveDataCoordinator
 import dev.foss.obdforge.ui.livedata.LiveDataHost
@@ -64,13 +66,15 @@ fun GoldenPathApp(
 
     var showLiveData by remember { mutableStateOf(false) }
     var showSessionHistory by remember { mutableStateOf(false) }
-    var demoModeEnabled by remember { mutableStateOf(true) }
     var connectionStatus by remember {
         mutableStateOf(context.getString(R.string.connection_status_disconnected))
     }
     var vinDisplay by remember { mutableStateOf(context.getString(R.string.vin_unknown)) }
     var vinSourceLabel by remember { mutableStateOf("") }
     val root = compositionRoot ?: remember { ObdForgeCompositionRoot.create(context) }
+    val demoModeEnabled by root.demoPreferences.enabled.collectAsStateWithLifecycle(
+        initialValue = DemoPreferences.DEFAULT_ENABLED,
+    )
     val savedTransport by root.transportPreferences.selection.collectAsStateWithLifecycle(
         initialValue = TransportSelection(
             type = TransportType.WiFi,
@@ -171,6 +175,7 @@ fun GoldenPathApp(
     val canApplyUpdate = applyAsset != null
 
     GoldenPathTheme(themeMode = themeMode) {
+        DemoModeShell(demoModeEnabled = demoModeEnabled) {
         when {
             showLiveData -> LiveDataHost(
                 coordinator = liveDataCoordinator,
@@ -201,7 +206,9 @@ fun GoldenPathApp(
             canApplyUpdate = canApplyUpdate,
             onThemeToggle = { scope.launch { themePreferences.setThemeMode(themeMode.next()) } },
             onThemeModeSelect = { mode -> scope.launch { themePreferences.setThemeMode(mode) } },
-            onDemoModeChange = { enabled -> demoModeEnabled = enabled },
+            onDemoModeChange = { enabled ->
+                scope.launch { root.demoPreferences.setEnabled(enabled) }
+            },
             transportPickerType = transportUi.pickerType,
             transportTcpHost = transportUi.tcpHost,
             transportTcpPort = transportUi.tcpPort,
@@ -239,6 +246,7 @@ fun GoldenPathApp(
             onOpenLiveData = { showLiveData = true },
             onOpenSessionHistory = { showSessionHistory = true },
         )
+        }
         }
     }
 }

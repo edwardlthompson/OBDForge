@@ -2,7 +2,6 @@ package dev.foss.obdforge
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -15,11 +14,11 @@ class GoldenPathUiTest {
 
     private fun dismissWelcomeIfShown() {
         composeTestRule.waitForIdle()
-        val continueNodes = composeTestRule.onAllNodesWithText("Continue to app")
-            .fetchSemanticsNodes(atLeastOneRootExists = false)
-        if (continueNodes.isNotEmpty()) {
+        try {
             composeTestRule.onNodeWithText("Continue to app").performClick()
             composeTestRule.waitForIdle()
+        } catch (_: AssertionError) {
+            // Welcome already completed on this device profile.
         }
     }
 

@@ -5,6 +5,7 @@ Source: https://github.com/foerbsnavi/OBDex (data: CC0-1.0)
 """
 from __future__ import annotations
 
+import gzip
 import json
 import re
 import sys
@@ -79,9 +80,13 @@ def main() -> int:
     print(f"Fetching {GENERIC_URL} ...")
     generic = fetch_json(GENERIC_URL)
     dtc_compact = [compact_dtc(entry) for entry in generic]
-    dtc_path = OUT / "dtc_catalog.json"
-    dtc_path.write_text(json.dumps(dtc_compact, separators=(",", ":")), encoding="utf-8")
-    print(f"Wrote {len(dtc_compact)} DTCs -> {dtc_path} ({dtc_path.stat().st_size // 1024} KiB)")
+    dtc_path = OUT / "dtc_catalog.json.gz"
+    dtc_bytes = json.dumps(dtc_compact, separators=(",", ":")).encode("utf-8")
+    dtc_path.write_bytes(gzip.compress(dtc_bytes, compresslevel=9))
+    print(
+        f"Wrote {len(dtc_compact)} DTCs -> {dtc_path} "
+        f"({dtc_path.stat().st_size // 1024} KiB gzip, {len(dtc_bytes) // 1024} KiB raw)",
+    )
 
     print(f"Fetching {PIDS_URL} ...")
     pids = fetch_json(PIDS_URL)

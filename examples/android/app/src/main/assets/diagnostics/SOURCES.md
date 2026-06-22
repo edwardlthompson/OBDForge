@@ -4,7 +4,7 @@
 
 | Asset | Source | License |
 |-------|--------|---------|
-| `dtc_catalog.json` | [OBDex generic.json](https://foerbsnavi.github.io/OBDex/generic.json) | [CC0-1.0](https://github.com/foerbsnavi/OBDex/blob/main/LICENSE-DATA) |
+| `dtc_catalog.json.gz` | [OBDex generic.json](https://foerbsnavi.github.io/OBDex/generic.json) | [CC0-1.0](https://github.com/foerbsnavi/OBDex/blob/main/LICENSE-DATA) |
 | `pid_ranges.json` | [OBDex mode01 PIDs](https://foerbsnavi.github.io/OBDex/pids/mode01.min.json) | [CC0-1.0](https://github.com/foerbsnavi/OBDex/blob/main/LICENSE-DATA) |
 
 Regenerate:
@@ -13,4 +13,4 @@ Regenerate:
 python3 scripts/import-obdex-data.py
 ```
 
-Compact JSON keeps English title, summary, category, and severity hint per code (~9.5k generic SAE J2012 entries).
+Compact JSON (gzip-shipped as `dtc_catalog.json.gz`; Android Gradle decompresses to `dtc_catalog.json` at build time) keeps English title, summary, category, and severity hint per code (~9.5k generic SAE J2012 entries).

@@ -27,7 +27,7 @@
 
 | File | Source | License |
 |------|--------|---------|
-| `assets/diagnostics/dtc_catalog.json` | [OBDex generic.json](https://foerbsnavi.github.io/OBDex/generic.json) | CC0-1.0 |
+| `assets/diagnostics/dtc_catalog.json.gz` | [OBDex generic.json](https://foerbsnavi.github.io/OBDex/generic.json) | CC0-1.0 |
 | `assets/diagnostics/pid_ranges.json` | [OBDex mode01.min.json](https://foerbsnavi.github.io/OBDex/pids/mode01.min.json) | CC0-1.0 |
 
 Regenerate:

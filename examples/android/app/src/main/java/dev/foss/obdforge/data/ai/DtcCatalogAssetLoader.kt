@@ -6,6 +6,7 @@ import dev.foss.obdforge.domain.ai.DtcSeverity
 import org.json.JSONArray
 
 object DtcCatalogAssetLoader {
+    // Source in git is dtc_catalog.json.gz; AGP decompresses to this path at merge time.
     private const val ASSET = "diagnostics/dtc_catalog.json"
 
     fun loadIntoCatalog(context: Context): Int {

@@ -871,6 +871,20 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/build-release-apk.sh",
+      "purpose": "assembleRelease with pinned SOURCE_DATE_EPOCH for F-Droid reproducible builds",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/build-release-apk.ps1",
+      "purpose": "Windows wrapper for build-release-apk.sh",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/verify-reproducible-apk.sh",
       "purpose": "Local double-build APK hash check (SOURCE_DATE_EPOCH parity with CI)",
       "read_when": "milestone_boundary",

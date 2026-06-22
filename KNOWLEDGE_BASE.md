@@ -100,3 +100,12 @@
 | **Cause** | PowerShell `.Replace()` on file contents during package rename stripped `d` from substrings (`cd`→`ce`, `dirname`→`eirname`, `design`→`eesign`) |
 | **Fix** | Restore scripts from last good git commit; re-apply path edits with targeted `StrReplace` or `git show REV:path > path` |
 | **Prevention** | Never bulk-replace across shell scripts on Windows; run `bash scripts/check-design-cohesion.sh` before push; CI bootstrap job catches this |
+
+### KB-010 — Welcome screen blocks instrumented UI tests
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | `connectedDebugAndroidTest` fails: cannot find Settings/About content descriptions |
+| **Cause** | First-run `WelcomeHost` covers home until user taps **Continue to app** |
+| **Fix** | In `GoldenPathUiTest`, dismiss welcome via `onNodeWithText("Continue to app").performClick()` (try/catch if already completed) |
+| **Prevention** | Any new first-run gate must update androidTest smoke helpers before `/ship` |

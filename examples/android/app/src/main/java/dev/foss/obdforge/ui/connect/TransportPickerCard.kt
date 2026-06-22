@@ -26,7 +26,6 @@ import dev.foss.goldenpath.R
 import dev.foss.goldenpath.ui.theme.SpacingMd
 import dev.foss.obdforge.data.transport.BluetoothDeviceOption
 import dev.foss.obdforge.data.transport.UsbDeviceOption
-import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,9 +83,7 @@ fun TransportPickerCard(
                     readOnly = true,
                     label = { Text(stringResource(R.string.transport_type_label)) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = typeExpanded) },
-                    modifier = Modifier
-                        .menuAnchor()
-                        .fillMaxWidth(),
+                    modifier = Modifier.menuAnchor().fillMaxWidth(),
                 )
                 ExposedDropdownMenu(
                     expanded = typeExpanded,
@@ -120,88 +117,21 @@ fun TransportPickerCard(
                         singleLine = true,
                     )
                 }
-                TransportType.Bluetooth -> {
-                    ExposedDropdownMenuBox(
-                        expanded = btExpanded,
-                        onExpandedChange = { btExpanded = it },
-                    ) {
-                        TextField(
-                            value = bluetoothDevices.firstOrNull { it.address == selectedBluetoothAddress }
-                                ?.let { it.name ?: it.address }
-                                ?: stringResource(R.string.transport_bluetooth_none),
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text(stringResource(R.string.transport_bluetooth_label)) },
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = btExpanded) },
-                            modifier = Modifier
-                                .menuAnchor()
-                                .fillMaxWidth(),
-                        )
-                        ExposedDropdownMenu(
-                            expanded = btExpanded,
-                            onDismissRequest = { btExpanded = false },
-                        ) {
-                            bluetoothDevices.forEach { device ->
-                                DropdownMenuItem(
-                                    text = { Text(device.name ?: device.address) },
-                                    onClick = {
-                                        onBluetoothSelect(device)
-                                        btExpanded = false
-                                    },
-                                )
-                            }
-                        }
-                    }
-                }
-                TransportType.UsbSerial -> {
-                    ExposedDropdownMenuBox(
-                        expanded = usbExpanded,
-                        onExpandedChange = { usbExpanded = it },
-                    ) {
-                        TextField(
-                            value = usbDevices.firstOrNull { it.deviceName == selectedUsbDeviceName }
-                                ?.deviceName
-                                ?: stringResource(R.string.transport_usb_none),
-                            onValueChange = {},
-                            readOnly = true,
-                            label = { Text(stringResource(R.string.transport_usb_label)) },
-                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = usbExpanded) },
-                            modifier = Modifier
-                                .menuAnchor()
-                                .fillMaxWidth(),
-                        )
-                        ExposedDropdownMenu(
-                            expanded = usbExpanded,
-                            onDismissRequest = { usbExpanded = false },
-                        ) {
-                            usbDevices.forEach { device ->
-                                DropdownMenuItem(
-                                    text = {
-                                        Text(
-                                            stringResource(
-                                                R.string.transport_usb_device_entry,
-                                                device.deviceName,
-                                                device.vendorId,
-                                                device.productId,
-                                            ),
-                                        )
-                                    },
-                                    onClick = {
-                                        onUsbSelect(device)
-                                        usbExpanded = false
-                                    },
-                                )
-                            }
-                        }
-                    }
-                    Button(
-                        onClick = onRequestUsbPermission,
-                        modifier = Modifier.fillMaxWidth(),
-                        enabled = selectedUsbDeviceName.isNotBlank(),
-                    ) {
-                        Text(stringResource(R.string.transport_usb_permission))
-                    }
-                }
+                TransportType.Bluetooth -> BluetoothDevicePickerField(
+                    devices = bluetoothDevices,
+                    selectedAddress = selectedBluetoothAddress,
+                    expanded = btExpanded,
+                    onExpandedChange = { btExpanded = it },
+                    onSelect = onBluetoothSelect,
+                )
+                TransportType.UsbSerial -> UsbDevicePickerField(
+                    devices = usbDevices,
+                    selectedDeviceName = selectedUsbDeviceName,
+                    expanded = usbExpanded,
+                    onExpandedChange = { usbExpanded = it },
+                    onSelect = onUsbSelect,
+                    onRequestPermission = onRequestUsbPermission,
+                )
                 TransportType.Simulated -> Unit
             }
             if (statusMessage.isNotBlank()) {
@@ -211,48 +141,9 @@ fun TransportPickerCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            Button(
-                onClick = onSaveSelection,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
+            Button(onClick = onSaveSelection, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.transport_save_selection))
             }
-        }
-    }
-}
-
-@Composable
-private fun transportTypeLabel(type: TransportType): String =
-    when (type) {
-        TransportType.Bluetooth -> stringResource(R.string.transport_type_bluetooth)
-        TransportType.UsbSerial -> stringResource(R.string.transport_type_usb)
-        TransportType.WiFi -> stringResource(R.string.transport_type_wifi)
-        TransportType.Ethernet -> stringResource(R.string.transport_type_ethernet)
-        TransportType.Simulated -> stringResource(R.string.transport_type_simulated)
-    }
-
-fun buildEndpoint(
-    type: TransportType,
-    tcpHost: String,
-    tcpPort: String,
-    bluetoothAddress: String,
-    bluetoothName: String?,
-    usbDeviceName: String,
-): TransportEndpoint? {
-    return when (type) {
-        TransportType.Simulated -> TransportEndpoint.Simulated
-        TransportType.WiFi, TransportType.Ethernet -> {
-            val port = tcpPort.toIntOrNull() ?: return null
-            if (tcpHost.isBlank()) return null
-            TransportEndpoint.Tcp(host = tcpHost.trim(), port = port)
-        }
-        TransportType.Bluetooth -> {
-            if (bluetoothAddress.isBlank()) return null
-            TransportEndpoint.Bluetooth(deviceAddress = bluetoothAddress, displayName = bluetoothName)
-        }
-        TransportType.UsbSerial -> {
-            if (usbDeviceName.isBlank()) return null
-            TransportEndpoint.UsbSerial(deviceName = usbDeviceName)
         }
     }
 }

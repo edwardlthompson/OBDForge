@@ -843,6 +843,20 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/sign-apk-debug.sh",
+      "purpose": "Sign release APK with debug keystore for local ADB install smoke",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/sign-apk-debug.ps1",
+      "purpose": "Windows sign release APK for ADB device smoke",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/fdroid-device-dry-run.sh",
       "purpose": "ADB device smoke test for F-Droid dry-run (install debug APK, logcat scan)",
       "read_when": "milestone_boundary",

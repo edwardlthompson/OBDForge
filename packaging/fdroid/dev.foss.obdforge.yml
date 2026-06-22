@@ -1,0 +1,35 @@
+# fdroiddata merge-request payload (copy to metadata/dev.foss.obdforge.yml)
+# Source handoff: examples/android/metadata/fdroiddata-handoff.yml
+# Submit: https://gitlab.com/fdroid/fdroiddata/-/merge_requests/new
+
+Categories:
+  - System
+License: GPL-3.0-or-later
+AuthorName: Edward Thompson
+SourceCode: https://github.com/edwardlthompson/OBDForge
+IssueTracker: https://github.com/edwardlthompson/OBDForge/issues
+WebSite: https://github.com/edwardlthompson/OBDForge
+
+RepoType: git
+Repo: https://github.com/edwardlthompson/OBDForge
+
+Builds:
+  - versionName: '1.0.0'
+    versionCode: 14
+    commit: v1.0.0
+    subdir: examples/android
+    gradle:
+      - yes
+    scandelete:
+      - examples/android/app/build
+    build:
+      - export SOURCE_DATE_EPOCH=1700000000
+      - cd examples/android
+      - ./gradlew assembleRelease
+
+AutoUpdateMode: Version v%v
+UpdateCheckMode: Tags
+CurrentVersion: '1.0.0'
+CurrentVersionCode: 14
+
+Fastlane: https://github.com/edwardlthompson/OBDForge/tree/main/examples/android/metadata/en-US

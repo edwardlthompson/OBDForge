@@ -53,6 +53,7 @@
 - ✅ VIN treated as PII — local storage, no cloud upload by default
 - ✅ `SECURITY.md` and private vulnerability reporting enabled
 - 🔲 `[ADB]` Physical adapter fuzzing on real vehicle bench (post-M8)
+- ✅ `[ADB]` Release v1.0.0 device smoke on CPH2583 — see `docs/ADB_BENCH_RESULTS.md`
 
 ## Persistent Context
 

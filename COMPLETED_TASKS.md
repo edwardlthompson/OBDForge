@@ -2,6 +2,13 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge ADB bench session (2026-06-21)
+
+- ✅ [ADB] Release v1.0.0 cold start on OnePlus CPH2583 (Android 16, root)
+- ✅ [ADB] Demo connect → VIN → DTC explain → live data UI smoke; upgrade reinstall PASS
+- ✅ [ADB] F-Droid device dry-run (`fdroid-device-dry-run.ps1`); MR draft at `packaging/fdroid/dev.foss.obdforge.yml`
+- ❌ [ADB] Hardware OBD bench (Sprints 2–5, 9) — no adapter detected; see `docs/ADB_BENCH_RESULTS.md`
+
 ## OBDForge Sprint 14 — Release Polish (2026-06-21)
 
 - ✅ [AGENT] OBDForge `CHANGELOG.md` rewritten for v1.0.0; Release Please manifest + `.template-version` bumped

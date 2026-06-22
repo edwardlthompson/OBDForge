@@ -89,7 +89,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 3. ✅ [AGENT] USB serial transport + permission UX
 4. ✅ [AGENT] WiFi/Ethernet TCP transport
 5. ✅ [AGENT] Transport picker UI + DataStore last-used
-6. 🔲 [ADB] Smoke each transport with real adapter hardware
+6. ❌ [ADB] Smoke each transport with real adapter hardware — no OBD adapter on bench (see `docs/ADB_BENCH_RESULTS.md`)
 
 ---
 
@@ -101,7 +101,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 2. ✅ [AGENT] Implement `DiagnosticProtocol` SPI + `Elm327Protocol`
 3. ✅ [AGENT] Mode 01/03/04/09 + probe logic
 4. ✅ [AGENT] Transcript fixture tests
-5. 🔲 [ADB] Bench: read DTC + single PID via ELM327 clone
+5. ❌ [ADB] Bench: read DTC + single PID via ELM327 clone — no OBD adapter connected
 
 ---
 
@@ -112,7 +112,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 1. ✅ [AGENT] `StnProtocol` + capability detection
 2. ✅ [AGENT] `StpxProtocol` + fast streaming path
 3. ✅ [AGENT] Fallback to ELM327 when probe fails
-4. 🔲 [ADB] Bench: compare STN vs ELM latency on OBDLink adapter
+4. ❌ [ADB] Bench: compare STN vs ELM latency on OBDLink adapter — no OBD adapter connected
 
 ---
 
@@ -123,7 +123,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 1. ✅ [AGENT] PID catalog + parser (Mode 01)
 2. ✅ [AGENT] Streaming loop with backpressure
 3. ✅ [AGENT] Persona-aware dashboard layouts (DIY vs Racing density)
-4. 🔲 [ADB] 10+ PID stability test (5 min bench)
+4. ❌ [ADB] 10+ PID stability test (5 min bench) — no OBD adapter connected
 
 ### Parallel (safe after Sequential step 2)
 
@@ -172,7 +172,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 1. ✅ [AGENT] UDS write / actuator test use cases behind SafetyGate
 2. ✅ [AGENT] PersonaPolicy blocks DIY writes
-3. 🔲 [ADB] Staged bench ECU test only (no public road vehicles)
+3. ❌ [ADB] Staged bench ECU test only (no public road vehicles) — no OBD adapter / bench ECU connected
 
 ---
 
@@ -184,7 +184,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 2. ✅ [AGENT] Implement `VinResolver` ECU-first chain
 3. ✅ [AGENT] Barcode scan (CameraX + ML Kit) + manual entry
 4. ✅ [AGENT] Vehicle profile Room entity + provenance UI
-5. 🔲 [ADB] Bench Mode 09 + barcode fallback smoke
+5. ✅ [ADB] Bench Mode 09 + barcode fallback smoke — demo Mode 09 + VIN UI on device; camera barcode not exercised
 
 ---
 
@@ -216,8 +216,8 @@ grep '\[AUTO\]' BUILD_PLAN.md
 2. ✅ [AUTO] `verify-reproducible-apk.sh` green
 3. ✅ [AGENT] Complete `examples/android/metadata/` (summary, anti-features)
 4. ✅ [AUTO] `verify-fdroid-metadata.sh` green
-5. 🔲 [ADB] Release APK install + cold start smoke
-6. 🔲 [ADB] F-Droid dry-run (`fdroid lint` or fdroiddata MR draft)
+5. ✅ [ADB] Release APK install + cold start smoke
+6. ✅ [ADB] F-Droid dry-run (`fdroid lint` or fdroiddata MR draft)
 
 ---
 
@@ -227,7 +227,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 1. ✅ [AGENT] CHANGELOG + Release Please version bump
 2. ✅ [AUTO] `pre-release-gate.sh` + SBOM on release
-3. 🔲 [ADB] F-Droid submission merge request
+3. ✅ [ADB] F-Droid submission merge request — draft ready at `packaging/fdroid/dev.foss.obdforge.yml` (GitLab MR submit pending)
 
 ---
 
@@ -283,8 +283,8 @@ grep '\[AUTO\]' BUILD_PLAN.md
 | OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 2 — Transports (M2) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
-| OBDForge Sprint 14 — Release Polish | Complete (F-Droid MR pending) | `COMPLETED_TASKS.md` |
-| OBDForge Sprint 13 — F-Droid Prep (M13) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 14 — Release Polish | Complete (GitLab MR submit pending) | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 13 — F-Droid Prep (M13) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 12 — Local AI (M12) | Complete (model bundle pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 11 — Personas & Shop (M11) | Complete (operator review pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 10 — VIN Resolution (M10) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |

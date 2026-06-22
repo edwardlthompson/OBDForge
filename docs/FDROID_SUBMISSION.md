@@ -12,15 +12,14 @@
 ## Device verification (ADB)
 
 1. Build release APK: `bash scripts/build-release-apk.sh --clean`
-2. Install: `adb install -r examples/android/app/build/outputs/apk/release/*.apk`
-3. Cold start smoke: launch app, enable demo mode, connect → DTC → live data flow
-4. Capture logcat: `adb logcat -d | grep -E 'FATAL EXCEPTION'` — expect no matches
-5. Or run: `bash scripts/fdroid-device-dry-run.sh` (Linux/macOS) / `pwsh scripts/fdroid-device-dry-run.ps1` (Windows)
+2. Sign for local install: `pwsh scripts/sign-apk-debug.ps1 -InputApk examples/android/app/build/outputs/apk/release/app-release-unsigned.apk`
+3. Install: `adb install -r examples/android/app/build/outputs/apk/release/app-release-adb-smoke.apk`
+4. Or run: `pwsh scripts/fdroid-device-dry-run.ps1` (Windows) / `bash scripts/fdroid-device-dry-run.sh` (Linux/macOS)
+5. Bench log: `docs/ADB_BENCH_RESULTS.md`
 
 ## fdroiddata merge request
 
-1. Fork [fdroiddata](https://gitlab.com/fdroid/fdroiddata)
-2. Copy/adapt `examples/android/metadata/fdroiddata-handoff.yml` → `metadata/dev.foss.obdforge.yml`
+1. Use ready-to-submit payload: `packaging/fdroid/dev.foss.obdforge.yml`
 3. Fastlane paths: point `Fastlane` metadata URL to this repo's `examples/android/metadata/en-US/`
 4. Verify build recipe matches CI: `SOURCE_DATE_EPOCH=1700000000`, subdir `examples/android`
 5. Add screenshots to `examples/android/metadata/en-US/images/` before MR (phone + feature graphic)

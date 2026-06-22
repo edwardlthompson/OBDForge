@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
-# F-Droid device dry-run: metadata gate + release APK install + smoke launch + logcat scan.
+# F-Droid device dry-run: metadata gate + signed release APK install + smoke launch + logcat scan.
 # Usage: scripts/fdroid-device-dry-run.sh
-# Requires: adb device authorized, JAVA_HOME or Android Studio JBR on PATH.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 ADB="${ADB:-adb}"
-PKG="dev.foss.obdforge"
-ANDROID="$ROOT/examples/android"
-APK_DIR="$ANDROID/app/build/outputs/apk/release"
+LAUNCHER="dev.foss.obdforge/dev.foss.goldenpath.MainActivity"
+APK_DIR="$ROOT/examples/android/app/build/outputs/apk/release"
+UNSIGNED="$APK_DIR/app-release-unsigned.apk"
+SIGNED="$APK_DIR/app-release-adb-smoke.apk"
 LOG="/tmp/fdroid-dry-run-logcat-$$.txt"
 
 if ! command -v "$ADB" >/dev/null 2>&1; then
   if [ -x "${LOCALAPPDATA:-}/Android/Sdk/platform-tools/adb.exe" ]; then
     ADB="${LOCALAPPDATA}/Android/Sdk/platform-tools/adb.exe"
   else
-    echo "ERROR: adb not found; set ADB= path to platform-tools/adb"
+    echo "ERROR: adb not found"
     exit 1
   fi
 fi
@@ -27,37 +27,35 @@ bash scripts/verify-fdroid-metadata.sh
 
 DEVICES="$("$ADB" devices | awk 'NR>1 && $2=="device"{print $1}')"
 if [ -z "$DEVICES" ]; then
-  echo "ERROR: no authorized adb device (check USB debugging + RSA prompt)"
+  echo "ERROR: no authorized adb device"
   "$ADB" devices -l
   exit 1
 fi
 echo "OK   device: $(echo "$DEVICES" | head -1)"
 
-if [ -z "${JAVA_HOME:-}" ] && [ -x "/c/Program Files/Android/Android Studio/jbr/bin/java" ]; then
-  export JAVA_HOME="/c/Program Files/Android/Android Studio/jbr"
+if [ ! -f "$UNSIGNED" ]; then
+  export SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-1700000000}"
+  bash scripts/build-release-apk.sh --clean
 fi
 
-APK="$(find "$APK_DIR" -name '*.apk' 2>/dev/null | head -1 || true)"
-if [ -z "$APK" ]; then
-  echo "Building release APK..."
-  bash scripts/build-release-apk.sh
-  APK="$(find "$APK_DIR" -name '*.apk' | head -1)"
-fi
-echo "OK   APK: $APK"
+bash scripts/sign-apk-debug.sh "$UNSIGNED" "$SIGNED"
+echo "OK   APK: $SIGNED"
 
 "$ADB" logcat -c || true
-echo "Installing..."
-"$ADB" install -r "$APK"
-
-echo "Launching $PKG..."
-"$ADB" shell am start -n "$PKG/.MainActivity" || "$ADB" shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1
+"$ADB" install -r "$SIGNED"
+"$ADB" shell am start -W -n "$LAUNCHER"
 
 sleep 5
 "$ADB" logcat -d > "$LOG" || true
 
-if grep -E 'FATAL EXCEPTION|AndroidRuntime.*E' "$LOG" >/dev/null 2>&1; then
+if ! "$ADB" shell dumpsys window | grep -q "dev.foss.obdforge"; then
+  echo "FAIL: app not in foreground after launch"
+  exit 1
+fi
+
+if grep -E 'FATAL EXCEPTION' "$LOG" >/dev/null 2>&1; then
   echo "FAIL: crash signatures in logcat"
-  grep -E 'FATAL EXCEPTION|AndroidRuntime' "$LOG" | tail -20
+  grep -E 'FATAL EXCEPTION' "$LOG" | tail -20
   exit 1
 fi
 

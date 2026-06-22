@@ -428,27 +428,10 @@ jobs:
             echo "ERROR: Proprietary SDK references found"
             exit 1
           fi
-      - name: assembleRelease with SOURCE_DATE_EPOCH
+      - name: Verify reproducible release APK
         env:
           SOURCE_DATE_EPOCH: "1700000000"
-        run: bash scripts/build-release-apk.sh
-      - name: Compare APK hashes (flake tolerance)
-        env:
-          SOURCE_DATE_EPOCH: "1700000000"
-        run: |
-          APK=$(find examples/android/app/build/outputs/apk/release -name '*.apk' | head -1)
-          HASH1=$(sha256sum "$APK" | awk '{print $1}')
-          bash scripts/build-release-apk.sh --clean
-          APK2=$(find examples/android/app/build/outputs/apk/release -name '*.apk' | head -1)
-          HASH2=$(sha256sum "$APK2" | awk '{print $1}')
-          if [ "$HASH1" != "$HASH2" ]; then
-            echo "FAIL: APK hashes differ between builds (reproducibility regression)"
-            echo "  Run 1: $HASH1"
-            echo "  Run 2: $HASH2"
-            exit 1
-          else
-            echo "OK   Reproducible APK hash: $HASH1"
-          fi
+        run: bash scripts/verify-reproducible-apk.sh --strict
 
   lightroom:
     name: Lightroom - SDK Namespace Check

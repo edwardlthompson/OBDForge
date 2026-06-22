@@ -34,7 +34,7 @@ fi
 export SOURCE_DATE_EPOCH
 
 echo "Building release APK (SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH})..."
-bash "$ROOT/scripts/build-release-apk.sh"
+bash "$ROOT/scripts/build-release-apk.sh" --clean
 
 APK="$(find "$ANDROID/app/build/outputs/apk/release" -name '*.apk' 2>/dev/null | head -1 || true)"
 if [ -z "$APK" ]; then
@@ -52,7 +52,7 @@ else
 fi
 
 echo "Run 1 hash: $HASH1"
-echo "Clean rebuild..."
+echo "Second clean rebuild..."
 bash "$ROOT/scripts/build-release-apk.sh" --clean
 
 APK2="$(find "$ANDROID/app/build/outputs/apk/release" -name '*.apk' 2>/dev/null | head -1 || true)"

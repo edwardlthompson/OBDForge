@@ -175,6 +175,7 @@
     <string name="ai_llm_download_button">Download on-device LLM</string>
     <string name="ai_llm_download_progress">Downloading LLM… %1$d%%</string>
     <string name="ai_source_catalog">Offline catalog</string>
+    <string name="ai_source_manufacturer">Manufacturer catalog</string>
     <string name="ai_source_mediapipe">MediaPipe LLM</string>
     <string name="ai_error_invalid_dtc">Enter a valid OBD-II code (e.g. P0133)</string>
     <string name="ai_error_scan_failed">Could not scan the vehicle — connect an adapter and try again</string>

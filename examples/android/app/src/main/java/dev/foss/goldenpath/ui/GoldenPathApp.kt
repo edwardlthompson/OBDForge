@@ -3,7 +3,6 @@ package dev.foss.goldenpath.ui
 import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -12,13 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.foss.goldenpath.BuildConfig
 import dev.foss.goldenpath.R
 import dev.foss.goldenpath.about.AppUpdatePreferences
-import dev.foss.goldenpath.about.CheckSchedule
 import dev.foss.goldenpath.about.DonationsLoader
-import dev.foss.goldenpath.about.ReleaseAsset
-import dev.foss.goldenpath.about.ReleaseAssetSelector
-import dev.foss.goldenpath.about.ReleaseTagFetcher
-import dev.foss.goldenpath.about.UpdateApplyCoordinator
-import dev.foss.goldenpath.about.UpdateStatusEvaluator
 import dev.foss.goldenpath.network.NetworkStatusMonitor
 import dev.foss.goldenpath.settings.SettingsLogic
 import dev.foss.goldenpath.ui.theme.GoldenPathTheme
@@ -30,7 +23,6 @@ import dev.foss.obdforge.data.preferences.DemoPreferences
 import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
-import dev.foss.obdforge.domain.vehicle.VinSourceType
 import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.ui.demo.DemoModeShell
 import dev.foss.obdforge.ui.connect.ConnectDemoCoordinator
@@ -58,8 +50,6 @@ fun GoldenPathApp(
     val pendingRestart by appUpdatePreferences.pendingRestart.collectAsStateWithLifecycle(initialValue = false)
     var showAbout by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
-    var updateStatus by remember { mutableStateOf(context.getString(R.string.about_update_current)) }
-    var applyAsset by remember { mutableStateOf<ReleaseAsset?>(null) }
     val donations = remember { DonationsLoader.load(context) }
     val appVersion = BuildConfig.VERSION_NAME
     val activity = context as? ComponentActivity
@@ -117,62 +107,30 @@ fun GoldenPathApp(
         SessionHistoryCoordinator(root.sessionRepository)
     }
 
-    LaunchedEffect(demoModeEnabled) {
-        if (!demoModeEnabled) {
-            connectDemo.disconnect()
-            connectionStatus = context.getString(R.string.connection_status_disconnected)
-            vinDisplay = context.getString(R.string.vin_unknown)
-            vinSourceLabel = ""
-            return@LaunchedEffect
-        }
-        connectionStatus = context.getString(R.string.vin_reading)
-        vinDisplay = context.getString(R.string.vin_unknown)
-        val vinResult = connectDemo.connectAndReadVin()
-        connectionStatus = context.getString(R.string.connection_status_connected)
-        vinDisplay = context.getString(R.string.vin_label, vinResult.vin)
-        vinSourceLabel = when (vinResult.source) {
-            VinSourceType.EcuObd2 -> context.getString(R.string.vin_source_ecu)
-            VinSourceType.Demo -> context.getString(R.string.vin_source_demo)
-            else -> ""
-        }
-        root.sessionRecorder.recordFromConnection(
-            selection = if (demoModeEnabled) demoSelection else savedTransport,
-            vinResult = vinResult,
-        )
-    }
+    GoldenPathDemoConnectionEffect(
+        demoModeEnabled = demoModeEnabled,
+        connectDemo = connectDemo,
+        demoSelection = demoSelection,
+        savedTransport = savedTransport,
+        root = root,
+        context = context,
+        onConnectionStatusChange = { connectionStatus = it },
+        onVinDisplayChange = { vinDisplay = it },
+        onVinSourceLabelChange = { vinSourceLabel = it },
+    )
 
-    LaunchedEffect(pendingRestart) {
-        if (pendingRestart) {
-            updateStatus = context.getString(R.string.about_update_restarting)
-        }
-    }
-
-    LaunchedEffect(checkInterval, lastChecked, isOnline, installedFormat, pendingRestart) {
-        if (pendingRestart) return@LaunchedEffect
-        if (!isOnline) return@LaunchedEffect
-        if (!CheckSchedule.shouldCheck(checkInterval, lastChecked, System.currentTimeMillis())) return@LaunchedEffect
-        val repo = ReleaseTagFetcher.loadReleaseRepo(context) ?: return@LaunchedEffect
-        val release = ReleaseTagFetcher.fetchLatestRelease(repo) ?: return@LaunchedEffect
-        val format = installedFormat ?: "apk"
-        if (release.assets.isNotEmpty() && ReleaseAssetSelector.select(release.assets, format) == null) {
-            updateStatus = context.getString(R.string.about_update_no_compatible)
-            return@LaunchedEffect
-        }
-        appUpdatePreferences.setLastChecked(System.currentTimeMillis())
-        val selected = ReleaseAssetSelector.select(release.assets, format)
-        applyAsset = when (val result = UpdateStatusEvaluator.evaluate(appVersion, release.tag)) {
-            is UpdateStatusEvaluator.Result.Current -> {
-                updateStatus = context.getString(R.string.about_update_current)
-                null
-            }
-            is UpdateStatusEvaluator.Result.Available -> {
-                updateStatus = context.getString(R.string.about_update_available, result.version)
-                selected
-            }
-        }
-    }
-
-    val canApplyUpdate = applyAsset != null
+    val updateUi = rememberGoldenPathUpdateUi(
+        context = context,
+        scope = scope,
+        activity = activity,
+        appVersion = appVersion,
+        appUpdatePreferences = appUpdatePreferences,
+        isOnline = isOnline,
+        installedFormat = installedFormat,
+        checkInterval = checkInterval,
+        lastChecked = lastChecked,
+        pendingRestart = pendingRestart,
+    )
 
     GoldenPathTheme(themeMode = themeMode) {
         DemoModeShell(demoModeEnabled = demoModeEnabled) {
@@ -201,9 +159,9 @@ fun GoldenPathApp(
             updateCheckEnabled = SettingsLogic.isUpdateCheckEnabled(checkInterval),
             appVersion = appVersion,
             installedFormat = installedFormat ?: "apk",
-            updateStatus = updateStatus,
+            updateStatus = updateUi.updateStatus,
             donations = donations,
-            canApplyUpdate = canApplyUpdate,
+            canApplyUpdate = updateUi.canApplyUpdate,
             onThemeToggle = { scope.launch { themePreferences.setThemeMode(themeMode.next()) } },
             onThemeModeSelect = { mode -> scope.launch { themePreferences.setThemeMode(mode) } },
             onDemoModeChange = { enabled ->
@@ -235,13 +193,7 @@ fun GoldenPathApp(
                     )
                 }
             },
-            onApplyUpdate = {
-                val asset = applyAsset ?: return@GoldenPathScreen
-                val host = activity ?: return@GoldenPathScreen
-                scope.launch {
-                    UpdateApplyCoordinator.applySideloadUpdate(host, appUpdatePreferences, asset)
-                }
-            },
+            onApplyUpdate = updateUi.onApplyUpdate,
             liveDataEnabled = demoModeEnabled && connectionStatus.contains("Connected"),
             onOpenLiveData = { showLiveData = true },
             onOpenSessionHistory = { showSessionHistory = true },

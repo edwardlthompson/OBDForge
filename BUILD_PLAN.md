@@ -170,8 +170,8 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 ### Sequential
 
-1. 🔲 [AGENT] UDS write / actuator test use cases behind SafetyGate
-2. 🔲 [AGENT] PersonaPolicy blocks DIY writes
+1. ✅ [AGENT] UDS write / actuator test use cases behind SafetyGate
+2. ✅ [AGENT] PersonaPolicy blocks DIY writes
 3. 🔲 [ADB] Staged bench ECU test only (no public road vehicles)
 
 ---
@@ -283,6 +283,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 | OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 2 — Transports (M2) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 9 — Bidirectional Controls (M9) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 8 — Safety & Audit (M8) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 7 — Demo Mode (M7) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 6 — Persistence (M6) | Complete | `COMPLETED_TASKS.md` |

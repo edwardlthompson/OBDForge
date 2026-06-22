@@ -2,6 +2,14 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 9 — Bidirectional Controls (M9) (2026-06-21)
+
+- ✅ [AGENT] `GatedBidirectionalService` — clear DTC, UDS write, actuator test behind `SafetyGate`
+- ✅ [AGENT] `ObdBidirectionalExecutor` — protocol-aware transport I/O for write commands
+- ✅ [AGENT] `PersonaPolicy` enforcement at use-case layer (DIY blocked for UDS/actuator; Clear DTC allowed)
+- ✅ [AGENT] Demo fixtures for Mode 08 actuator + UDS `2F` responses; `DemoBidirectionalFlow` CI test
+- ✅ [AUTO] `GatedBidirectionalServiceTest` + `DemoBidirectionalFlowTest`; 117 tests green
+
 ## OBDForge Sprint 8 — Safety & Audit (M8) (2026-06-21)
 
 - ✅ [AGENT] `SafetyGate` + `PersonaPolicy` — interlocks for stationary vehicle, expert unlock, confirmation, rate limit

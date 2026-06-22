@@ -16,4 +16,14 @@ class DemoObdFixturesTest {
         val response = DemoObdFixtures.responseFor("03")
         assert(response.contains("33"))
     }
+
+    @Test
+    fun udsWriteResponse() {
+        assertEquals("6F 01 00", DemoObdFixtures.responseFor("2F 01 00"))
+    }
+
+    @Test
+    fun actuatorTestResponse() {
+        assertEquals("48 01 00", DemoObdFixtures.responseFor("0801"))
+    }
 }

@@ -31,6 +31,8 @@ object DemoObdFixtures {
             normalized.contains("0902") || normalized == "0902" -> mode09VinResponse()
             normalized == "03" -> "43 01 33 00 00 00 00 00"
             normalized == "04" -> "44"
+            normalized.replace(" ", "").startsWith("2F") -> "6F 01 00"
+            normalized.replace(" ", "").startsWith("08") -> "48 01 00"
             normalized.contains("|") ->
                 normalized.split("|").joinToString(" | ") { mode01CommandResponse(it) }
             normalized.startsWith("STPX D:") -> mode01CommandResponse(normalized.removePrefix("STPX D:"))

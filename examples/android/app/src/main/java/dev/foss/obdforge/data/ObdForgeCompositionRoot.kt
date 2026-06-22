@@ -2,6 +2,8 @@ package dev.foss.obdforge.data
 
 import android.content.Context
 import androidx.room.Room
+import dev.foss.obdforge.data.bidirectional.GatedBidirectionalService
+import dev.foss.obdforge.data.bidirectional.ObdBidirectionalExecutor
 import dev.foss.obdforge.data.local.ObdForgeDatabase
 import dev.foss.obdforge.data.preferences.DemoPreferences
 import dev.foss.obdforge.data.preferences.ExpertUnlockPreferences
@@ -27,6 +29,7 @@ data class ObdForgeCompositionRoot(
     val sessionRepository: SessionRepository,
     val auditLogRepository: AuditLogRepository,
     val safetyGateUseCase: SafetyGateUseCase,
+    val gatedBidirectionalService: GatedBidirectionalService,
     val sessionRecorder: SessionRecorder,
 ) {
     companion object {
@@ -45,9 +48,12 @@ data class ObdForgeCompositionRoot(
                 .build()
             val sessionRepository = SessionRepository(database)
             val auditLogRepository = AuditLogRepository(database)
+            val transportRegistry = TransportRegistry.default(appContext)
+            val protocolRegistry = ProtocolRegistry.default()
+            val safetyGateUseCase = SafetyGateUseCase(auditLogRepository)
             return ObdForgeCompositionRoot(
-                transportRegistry = TransportRegistry.default(appContext),
-                protocolRegistry = ProtocolRegistry.default(),
+                transportRegistry = transportRegistry,
+                protocolRegistry = protocolRegistry,
                 database = database,
                 transportPreferences = TransportPreferences(appContext),
                 transportDiscovery = TransportDiscovery(appContext),
@@ -56,10 +62,14 @@ data class ObdForgeCompositionRoot(
                 expertUnlockPreferences = ExpertUnlockPreferences(appContext),
                 sessionRepository = sessionRepository,
                 auditLogRepository = auditLogRepository,
-                safetyGateUseCase = SafetyGateUseCase(auditLogRepository),
+                safetyGateUseCase = safetyGateUseCase,
+                gatedBidirectionalService = GatedBidirectionalService(
+                    executor = ObdBidirectionalExecutor(transportRegistry, protocolRegistry),
+                    safetyGateUseCase = safetyGateUseCase,
+                ),
                 sessionRecorder = SessionRecorder(
-                    transportRegistry = TransportRegistry.default(appContext),
-                    protocolRegistry = ProtocolRegistry.default(),
+                    transportRegistry = transportRegistry,
+                    protocolRegistry = protocolRegistry,
                     sessionRepository = sessionRepository,
                 ),
             )

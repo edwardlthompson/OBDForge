@@ -19,18 +19,16 @@ $env:SOURCE_DATE_EPOCH = "1700000000"
 Push-Location $Root
 try {
     bash scripts/verify-fdroid-metadata.sh
-    $apkDir = Join-Path $Root "examples\android\app\build\outputs\apk\debug"
+    $apkDir = Join-Path $Root "examples\android\app\build\outputs\apk\release"
     $apk = Get-ChildItem $apkDir -Filter *.apk -ErrorAction SilentlyContinue | Select-Object -First 1
     if (-not $apk) {
-        Push-Location (Join-Path $Root "examples\android")
-        .\gradlew.bat assembleDebug --no-daemon
-        Pop-Location
+        bash scripts/build-release-apk.sh
         $apk = Get-ChildItem $apkDir -Filter *.apk | Select-Object -First 1
     }
     Write-Host "APK: $($apk.FullName)"
     & $adb logcat -c 2>$null
     & $adb install -r $apk.FullName
-    & $adb shell am start -n "dev.foss.goldenpath/.MainActivity"
+    & $adb shell am start -n "dev.foss.obdforge/.MainActivity"
     Start-Sleep -Seconds 5
     $log = Join-Path $env:TEMP "fdroid-dry-run-logcat.txt"
     & $adb logcat -d | Out-File -Encoding utf8 $log

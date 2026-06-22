@@ -1,0 +1,36 @@
+# Draft fdroiddata merge-request handoff for [ADB].
+# Copy/adapt into fdroiddata/metadata/dev.foss.obdforge.yml
+# Fastlane text blocks: examples/android/metadata/en-US/
+
+Categories:
+  - System
+License: GPL-3.0-or-later
+AuthorName: Edward Thompson
+SourceCode: https://github.com/edwardlthompson/OBDForge
+IssueTracker: https://github.com/edwardlthompson/OBDForge/issues
+WebSite: https://github.com/edwardlthompson/OBDForge
+
+# No standard AntiFeatures (Ads, Tracking, NonFreeNet, etc.) — see anti_features.txt.
+# Vehicle ECU interaction risk is documented in full_description.txt (safety section).
+
+RepoType: git
+Repo: https://github.com/edwardlthompson/OBDForge
+
+Builds:
+  - versionName: '0.1.0'
+    versionCode: 1
+    commit: v0.1.0
+    subdir: examples/android
+    gradle:
+      - yes
+    scandelete:
+      - examples/android/app/build
+    build:
+      - export SOURCE_DATE_EPOCH=1700000000
+      - cd examples/android
+      - ./gradlew assembleRelease
+
+AutoUpdateMode: Version v%v
+UpdateCheckMode: Tags
+CurrentVersion: '0.1.0'
+CurrentVersionCode: 1

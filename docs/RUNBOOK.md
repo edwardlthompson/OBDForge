@@ -69,10 +69,9 @@
 
 ```bash
 export SOURCE_DATE_EPOCH=1700000000  # fixed project epoch
-cd examples/android
-./gradlew clean assembleRelease
-bash ../../scripts/verify-reproducible-apk.sh
-bash ../../scripts/verify-fdroid-metadata.sh
+bash scripts/build-release-apk.sh --clean
+bash scripts/verify-reproducible-apk.sh
+bash scripts/verify-fdroid-metadata.sh
 ```
 
 CI `android-release` job runs the same verification on tagged builds.

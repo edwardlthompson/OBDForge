@@ -212,10 +212,10 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 ### Sequential
 
-1. 🔲 [AGENT] `SOURCE_DATE_EPOCH` in release scripts + CI
-2. 🔲 [AUTO] `verify-reproducible-apk.sh` green
-3. 🔲 [AGENT] Complete `examples/android/metadata/` (summary, anti-features)
-4. 🔲 [AUTO] `verify-fdroid-metadata.sh` green
+1. ✅ [AGENT] `SOURCE_DATE_EPOCH` in release scripts + CI
+2. ✅ [AUTO] `verify-reproducible-apk.sh` green
+3. ✅ [AGENT] Complete `examples/android/metadata/` (summary, anti-features)
+4. ✅ [AUTO] `verify-fdroid-metadata.sh` green
 5. 🔲 [ADB] Release APK install + cold start smoke
 6. 🔲 [ADB] F-Droid dry-run (`fdroid lint` or fdroiddata MR draft)
 
@@ -283,6 +283,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 | OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 2 — Transports (M2) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 13 — F-Droid Prep (M13) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 12 — Local AI (M12) | Complete (model bundle pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 11 — Personas & Shop (M11) | Complete (operator review pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 10 — VIN Resolution (M10) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |

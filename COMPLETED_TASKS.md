@@ -2,6 +2,13 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 13 — F-Droid Prep (M13) (2026-06-21)
+
+- ✅ [AGENT] `scripts/build-release-apk.sh` — pinned `SOURCE_DATE_EPOCH=1700000000`; CI `android-release` uses same script
+- ✅ [AGENT] Complete F-Droid metadata — `full_description.txt`, `anti_features.txt`, changelog, `fdroiddata-handoff.yml`
+- ✅ [AUTO] `verify-fdroid-metadata.sh` enhanced (placeholder guard, GPL check, release script gate); wired in CI
+- ✅ [AUTO] `verify-reproducible-apk.sh` delegates to `build-release-apk.sh`; `fdroid-device-dry-run.sh` uses release APK + `dev.foss.obdforge`
+
 ## OBDForge Sprint 12 — Local AI (M12) (2026-06-21)
 
 - ✅ [AGENT] `MediaPipeLlmEngine` — optional `ai/llm_model.task` asset with catalog fallback

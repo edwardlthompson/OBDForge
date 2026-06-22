@@ -65,7 +65,7 @@
 | SafetyGate + audit | Sprint 8 | ✅ |
 | Adapter input validation | Sprint 2–3 | 🔲 |
 | VIN privacy | Sprint 10 + PRIVACY.md | 🔲 |
-| Reproducible APK | Sprint 13 | 🔲 |
+| Reproducible APK | Sprint 13 | ✅ |
 | Weekly CVE triage | Ongoing | 🔲 |
 
 ## Review Cadence

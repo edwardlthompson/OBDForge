@@ -1,0 +1,7 @@
+Standard F-Droid AntiFeatures: none apply.
+
+OBDForge contains no advertising, no user tracking, no non-free network dependencies, and no proprietary SDKs (no Google Play Services or Firebase).
+
+Network use is limited to optional adapter Wi-Fi/TCP connections and optional GitHub release update checks for sideload APK users. F-Droid builds show an informational update link only.
+
+Vehicle safety (not an F-Droid AntiFeature flag): bidirectional OBD/UDS commands can modify ECU state. Safety interlocks, persona gating, expert unlock, and audit logging are documented in the app and full store description. Use at your own risk on vehicles you are authorized to service.

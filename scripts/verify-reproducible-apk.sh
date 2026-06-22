@@ -32,13 +32,11 @@ if ! command -v java >/dev/null 2>&1 && [ -z "${JAVA_HOME:-}" ]; then
 fi
 
 export SOURCE_DATE_EPOCH
-cd "$ANDROID"
-chmod +x gradlew
 
 echo "Building release APK (SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH})..."
-./gradlew assembleRelease --no-daemon
+bash "$ROOT/scripts/build-release-apk.sh"
 
-APK="$(find app/build/outputs/apk/release -name '*.apk' 2>/dev/null | head -1 || true)"
+APK="$(find "$ANDROID/app/build/outputs/apk/release" -name '*.apk' 2>/dev/null | head -1 || true)"
 if [ -z "$APK" ]; then
   echo "FAIL: no release APK found"
   exit 1
@@ -55,9 +53,9 @@ fi
 
 echo "Run 1 hash: $HASH1"
 echo "Clean rebuild..."
-./gradlew clean assembleRelease --no-daemon -q
+bash "$ROOT/scripts/build-release-apk.sh" --clean
 
-APK2="$(find app/build/outputs/apk/release -name '*.apk' 2>/dev/null | head -1 || true)"
+APK2="$(find "$ANDROID/app/build/outputs/apk/release" -name '*.apk' 2>/dev/null | head -1 || true)"
 if [ -z "$APK2" ]; then
   echo "FAIL: no release APK after clean rebuild"
   exit 1

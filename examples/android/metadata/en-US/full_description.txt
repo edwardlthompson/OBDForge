@@ -1,5 +1,22 @@
-Golden Path Android is a minimal FOSS application stub shipped with agent-project-bootstrap.
+OBDForge is a free, open-source Android OBD-II diagnostics app for DIY enthusiasts, semi-professional technicians, and shop workflows. Connect ELM327 or OBDLink STN/STPX adapters over Bluetooth, USB, Wi-Fi, or Ethernet to read and clear diagnostic trouble codes (DTCs), stream live engine data, resolve VIN ECU-first, and manage work orders — all on-device with no proprietary SDKs.
 
-It demonstrates Gradle structure, assembleDebug CI, and Fastlane metadata patterns without proprietary SDKs.
+<b>Features</b>
+<ul>
+<li>Multi-transport adapter support (Bluetooth SPP, USB serial, TCP)</li>
+<li>Protocol plugins: ELM327, OBDLink STN/STPX, with graceful fallback</li>
+<li>Live PID dashboards with persona-aware layouts (DIY, Semi-pro, Shop, Racing)</li>
+<li>Session history, DTC snapshots, freeze frames, and JSON export</li>
+<li>ECU-first VIN resolution with barcode scan fallback</li>
+<li>Shop mode: customer intake, work orders, session attach, close-out</li>
+<li>On-device DTC explanations via optional local AI (no cloud inference)</li>
+<li>Demo mode for full UI flow without hardware</li>
+</ul>
 
-Replace this text with your application description before F-Droid submission.
+<b>Privacy</b>
+All diagnostics data stays on your device. VIN and session records are stored locally in Room. No ads, no analytics trackers, and no mandatory network services. Optional GitHub release update checks match APK format only; F-Droid builds show an informational store listing link.
+
+<b>Safety and vehicle interaction</b>
+Bidirectional commands (actuator tests, UDS writes, clear DTC) can affect vehicle ECUs. OBDForge enforces safety interlocks: stationary vehicle check, expert mode unlock, confirmation dialogs, and a local audit log. DIY persona blocks writes by default; shop and racing personas require explicit unlock. Use only on vehicles you own or are authorized to service. Never operate bidirectional features on public roads or running engines unless you fully understand the risk.
+
+<b>License</b>
+GPL-3.0-or-later. Source: https://github.com/edwardlthompson/OBDForge

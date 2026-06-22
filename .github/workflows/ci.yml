@@ -263,6 +263,10 @@ jobs:
           test -f examples/android/gradle/wrapper/gradle-wrapper.jar
           test -f examples/android/gradle.properties
           grep -q "SOURCE_DATE_EPOCH" examples/android/README.md
+          test -f scripts/build-release-apk.sh
+          grep -q "SOURCE_DATE_EPOCH" scripts/build-release-apk.sh
+      - name: Verify F-Droid metadata
+        run: bash scripts/verify-fdroid-metadata.sh
 
   android-build:
     name: Android - assembleDebug
@@ -425,19 +429,17 @@ jobs:
             exit 1
           fi
       - name: assembleRelease with SOURCE_DATE_EPOCH
-        working-directory: examples/android
         env:
           SOURCE_DATE_EPOCH: "1700000000"
-        run: chmod +x gradlew && ./gradlew assembleRelease --no-daemon
+        run: bash scripts/build-release-apk.sh
       - name: Compare APK hashes (flake tolerance)
-        working-directory: examples/android
         env:
           SOURCE_DATE_EPOCH: "1700000000"
         run: |
-          APK=$(find app/build/outputs/apk/release -name '*.apk' | head -1)
+          APK=$(find examples/android/app/build/outputs/apk/release -name '*.apk' | head -1)
           HASH1=$(sha256sum "$APK" | awk '{print $1}')
-          ./gradlew clean assembleRelease --no-daemon -q
-          APK2=$(find app/build/outputs/apk/release -name '*.apk' | head -1)
+          bash scripts/build-release-apk.sh --clean
+          APK2=$(find examples/android/app/build/outputs/apk/release -name '*.apk' | head -1)
           HASH2=$(sha256sum "$APK2" | awk '{print $1}')
           if [ "$HASH1" != "$HASH2" ]; then
             echo "FAIL: APK hashes differ between builds (reproducibility regression)"

@@ -8,10 +8,9 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 ADB="${ADB:-adb}"
-PKG="dev.foss.goldenpath"
+PKG="dev.foss.obdforge"
 ANDROID="$ROOT/examples/android"
-APK_DIR="$ANDROID/app/build/outputs/apk/debug"
-BUILD_TASK="assembleDebug"
+APK_DIR="$ANDROID/app/build/outputs/apk/release"
 LOG="/tmp/fdroid-dry-run-logcat-$$.txt"
 
 if ! command -v "$ADB" >/dev/null 2>&1; then
@@ -41,8 +40,7 @@ fi
 APK="$(find "$APK_DIR" -name '*.apk' 2>/dev/null | head -1 || true)"
 if [ -z "$APK" ]; then
   echo "Building release APK..."
-  export SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-1700000000}"
-  (cd "$ANDROID" && chmod +x gradlew && ./gradlew "$BUILD_TASK" --no-daemon)
+  bash scripts/build-release-apk.sh
   APK="$(find "$APK_DIR" -name '*.apk' | head -1)"
 fi
 echo "OK   APK: $APK"

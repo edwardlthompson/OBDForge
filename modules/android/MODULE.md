@@ -10,11 +10,11 @@
 ## Activation Checklist
 
 - 🔲 Confirm no proprietary SDKs in `build.gradle.kts` / `build.gradle` dependencies
-- 🔲 Set SOURCE_DATE_EPOCH in build scripts and CI
-- 🔲 Pin Gradle wrapper (`gradlew`, `gradle-wrapper.jar`, `gradle-wrapper.properties`) and dependency versions
-- 🔲 Review `examples/android/` Golden Path stub
+- ✅ Set SOURCE_DATE_EPOCH in build scripts and CI
+- ✅ Pin Gradle wrapper (`gradlew`, `gradle-wrapper.jar`, `gradle-wrapper.properties`) and dependency versions
+- ✅ Review `examples/android/` Golden Path stub
 - 🔲 Add [ADB] tasks to BUILD_PLAN for device/emulator verification
-- 🔲 Document F-Droid metadata path (Fastlane or manual) — validate with `bash scripts/verify-fdroid-metadata.sh`
+- ✅ Document F-Droid metadata path (Fastlane or manual) — validate with `bash scripts/verify-fdroid-metadata.sh`
 
 ## Operations Checklist
 
@@ -89,17 +89,17 @@ Requires `JAVA_HOME` locally; gate exits `2` when Java is missing.
 
 ### Build reproducibility
 
-- 🔲 Set `SOURCE_DATE_EPOCH` (fixed Unix timestamp) in release build scripts and CI
-- 🔲 Run `bash scripts/verify-reproducible-apk.sh` locally (or rely on CI `android-release` job; CI fails on hash drift)
+- ✅ Set `SOURCE_DATE_EPOCH` (fixed Unix timestamp) in release build scripts and CI
+- ✅ Run `bash scripts/verify-reproducible-apk.sh` locally (or rely on CI `android-release` job; CI fails on hash drift)
 - 🔲 Confirm no proprietary SDK grep failures match CI (`android-structure` job)
 - 🔲 Verify Gradle wrapper and dependency lockfiles committed
 
 ### Metadata and policy
 
-- 🔲 Complete F-Droid `metadata/` (`summary`, `description`, `license`, `sourceCode`, `build` blocks)
+- ✅ Complete F-Droid `metadata/` (`summary`, `description`, `license`, `sourceCode`, `build` blocks)
 - 🔲 Screenshots and feature graphic paths valid (Fastlane or manual `metadata/en-US/`)
 - 🔲 Version code/name align with `CHANGELOG` and tag
-- 🔲 Anti-feature flags accurate (ads, tracking, non-free network services)
+- ✅ Anti-feature flags accurate (ads, tracking, non-free network services)
 
 ### Device verification (ADB)
 

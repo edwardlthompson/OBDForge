@@ -91,3 +91,12 @@
 | **Cause** | Usually a reproducibility regression (non-hermetic timestamp, path, or dependency drift). Rare runner flakes are possible but treated as failures to catch real regressions early |
 | **Fix** | Rebuild locally with `SOURCE_DATE_EPOCH=1700000000 ./gradlew clean assembleRelease` twice; compare `sha256sum` of release APK. Align `build.gradle.kts`, `gradle.properties`, and dependency lockfiles with `modules/android/MODULE.md` |
 | **Prevention** | Keep `SOURCE_DATE_EPOCH` pinned in CI; use `scripts/verify-reproducible-apk.sh --strict` before release tags. Do not downgrade the job to WARN — strict compare is intentional (M17 P2) |
+
+### KB-009 — PowerShell bulk replace corrupts bash gate scripts
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | CI `Validate Bootstrap Artifacts` / `Template Upgrade Simulation` fail: `ce: command not found`, `eirname: command not found` in `check-design-cohesion.sh` |
+| **Cause** | PowerShell `.Replace()` on file contents during package rename stripped `d` from substrings (`cd`→`ce`, `dirname`→`eirname`, `design`→`eesign`) |
+| **Fix** | Restore scripts from last good git commit; re-apply path edits with targeted `StrReplace` or `git show REV:path > path` |
+| **Prevention** | Never bulk-replace across shell scripts on Windows; run `bash scripts/check-design-cohesion.sh` before push; CI bootstrap job catches this |

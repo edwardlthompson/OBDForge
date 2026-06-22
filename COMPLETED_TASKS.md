@@ -2,6 +2,15 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 6 — Persistence (M6) (2026-06-21)
+
+- ✅ [AGENT] Room schema v3 — `DtcSnapshotEntity`, `FreezeFrameEntity`, `MIGRATION_2_3`
+- ✅ [AGENT] `SessionRepository` + `SessionRecorder` — auto-persist demo connect with DTCs and freeze frames
+- ✅ [AGENT] `SessionJsonExporter` — pretty-printed session JSON export
+- ✅ [AGENT] Session history UI — list, detail, export; wired into Golden Path shell
+- ✅ [AGENT] Migration tests v1→2 and v2→3; repository and codec unit tests
+- ✅ [AUTO] `./gradlew test assembleDebug` green locally (85 tests)
+
 ## OBDForge Sprint 5 — Live Data (M5) (2026-06-21)
 
 - ✅ [AGENT] `PidCatalog` + `PidValueParser` — 11 standard Mode 01 PIDs with SAE decode formulas

@@ -138,10 +138,10 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 ### Sequential
 
-1. 🔲 [AGENT] Room: sessions, DTC snapshots, freeze frames
-2. 🔲 [AGENT] Session export JSON
-3. 🔲 [AGENT] Schema migration tests
-4. 🔲 [AGENT] Session history UI
+1. ✅ [AGENT] Room: sessions, DTC snapshots, freeze frames
+2. ✅ [AGENT] Session export JSON
+3. ✅ [AGENT] Schema migration tests
+4. ✅ [AGENT] Session history UI
 
 ---
 
@@ -283,6 +283,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 | OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 2 — Transports (M2) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 6 — Persistence (M6) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 5 — Live Data (M5) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 4 — OBDLink STN/STPX (M4) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 3 — ELM327 Protocol (M3) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |

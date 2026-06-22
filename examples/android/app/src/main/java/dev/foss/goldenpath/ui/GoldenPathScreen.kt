@@ -34,6 +34,7 @@ import dev.foss.obdforge.data.transport.UsbDeviceOption
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.ui.connect.TransportPickerCard
 import dev.foss.obdforge.ui.livedata.LiveDataEntryButton
+import dev.foss.obdforge.ui.session.SessionHistoryEntryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,6 +79,7 @@ fun GoldenPathScreen(
     onApplyUpdate: () -> Unit,
     liveDataEnabled: Boolean = false,
     onOpenLiveData: () -> Unit = {},
+    onOpenSessionHistory: () -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -191,6 +193,10 @@ fun GoldenPathScreen(
                 LiveDataEntryButton(
                     enabled = liveDataEnabled,
                     onOpen = onOpenLiveData,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                SessionHistoryEntryButton(
+                    onOpen = onOpenSessionHistory,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Text(

@@ -5,6 +5,8 @@ import androidx.room.Room
 import dev.foss.obdforge.data.local.ObdForgeDatabase
 import dev.foss.obdforge.data.preferences.PersonaPreferences
 import dev.foss.obdforge.data.preferences.TransportPreferences
+import dev.foss.obdforge.data.persistence.SessionRecorder
+import dev.foss.obdforge.data.persistence.SessionRepository
 import dev.foss.obdforge.data.registry.ProtocolRegistry
 import dev.foss.obdforge.data.registry.TransportRegistry
 import dev.foss.obdforge.data.transport.TransportDiscovery
@@ -16,6 +18,8 @@ data class ObdForgeCompositionRoot(
     val transportPreferences: TransportPreferences,
     val transportDiscovery: TransportDiscovery,
     val personaPreferences: PersonaPreferences,
+    val sessionRepository: SessionRepository,
+    val sessionRecorder: SessionRecorder,
 ) {
     companion object {
         fun create(context: Context): ObdForgeCompositionRoot {
@@ -25,8 +29,9 @@ data class ObdForgeCompositionRoot(
                 ObdForgeDatabase::class.java,
                 ObdForgeDatabase.DB_NAME,
             )
-                .addMigrations(ObdForgeDatabase.MIGRATION_1_2)
+                .addMigrations(ObdForgeDatabase.MIGRATION_1_2, ObdForgeDatabase.MIGRATION_2_3)
                 .build()
+            val sessionRepository = SessionRepository(database)
             return ObdForgeCompositionRoot(
                 transportRegistry = TransportRegistry.default(appContext),
                 protocolRegistry = ProtocolRegistry.default(),
@@ -34,6 +39,12 @@ data class ObdForgeCompositionRoot(
                 transportPreferences = TransportPreferences(appContext),
                 transportDiscovery = TransportDiscovery(appContext),
                 personaPreferences = PersonaPreferences(appContext),
+                sessionRepository = sessionRepository,
+                sessionRecorder = SessionRecorder(
+                    transportRegistry = TransportRegistry.default(appContext),
+                    protocolRegistry = ProtocolRegistry.default(),
+                    sessionRepository = sessionRepository,
+                ),
             )
         }
     }

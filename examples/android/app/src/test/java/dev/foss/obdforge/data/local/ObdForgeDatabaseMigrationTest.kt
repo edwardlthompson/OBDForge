@@ -16,9 +16,42 @@ class ObdForgeDatabaseMigrationTest {
     @Test
     fun migrate1To2_addsEndedAtColumn() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        val dbName = "migration-test"
+        val dbName = "migration-test-1-2"
         context.deleteDatabase(dbName)
+        createV1Schema(context, dbName)
 
+        val room = buildRoom(context, dbName)
+        room.openHelper.writableDatabase.use { migrated ->
+            assertTrue(hasColumn(migrated, "sessions", "endedAtEpochMs"))
+        }
+        room.close()
+    }
+
+    @Test
+    fun migrate2To3_addsDtcAndFreezeTables() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val dbName = "migration-test-2-3"
+        context.deleteDatabase(dbName)
+        createV1Schema(context, dbName)
+        SQLiteDatabase.openOrCreateDatabase(context.getDatabasePath(dbName).absolutePath, null).use {
+            it.execSQL("ALTER TABLE sessions ADD COLUMN endedAtEpochMs INTEGER")
+            it.version = 2
+        }
+
+        val room = buildRoom(context, dbName)
+        room.openHelper.writableDatabase.use { migrated ->
+            assertTrue(tableExists(migrated, "dtc_snapshots"))
+            assertTrue(tableExists(migrated, "freeze_frames"))
+        }
+        room.close()
+    }
+
+    private fun buildRoom(context: Context, dbName: String) =
+        Room.databaseBuilder(context, ObdForgeDatabase::class.java, dbName)
+            .addMigrations(ObdForgeDatabase.MIGRATION_1_2, ObdForgeDatabase.MIGRATION_2_3)
+            .build()
+
+    private fun createV1Schema(context: Context, dbName: String) {
         val file = context.getDatabasePath(dbName)
         file.parentFile?.mkdirs()
         SQLiteDatabase.openOrCreateDatabase(file.absolutePath, null).use { sqlite ->
@@ -46,19 +79,20 @@ class ObdForgeDatabaseMigrationTest {
             )
             sqlite.version = 1
         }
+    }
 
-        val room = Room.databaseBuilder(context, ObdForgeDatabase::class.java, dbName)
-            .addMigrations(ObdForgeDatabase.MIGRATION_1_2)
-            .build()
-        room.openHelper.writableDatabase.use { migrated ->
-            val cursor = migrated.query("PRAGMA table_info(sessions)")
-            var found = false
+    private fun hasColumn(db: androidx.sqlite.db.SupportSQLiteDatabase, table: String, column: String): Boolean {
+        db.query("PRAGMA table_info($table)").use { cursor ->
             while (cursor.moveToNext()) {
-                if (cursor.getString(1) == "endedAtEpochMs") found = true
+                if (cursor.getString(1) == column) return true
             }
-            cursor.close()
-            assertTrue(found)
         }
-        room.close()
+        return false
+    }
+
+    private fun tableExists(db: androidx.sqlite.db.SupportSQLiteDatabase, table: String): Boolean {
+        db.query("SELECT name FROM sqlite_master WHERE type='table' AND name='$table'").use { cursor ->
+            return cursor.moveToFirst()
+        }
     }
 }

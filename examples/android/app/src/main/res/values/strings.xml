@@ -71,4 +71,13 @@
     <string name="livedata_layout_label">Dashboard density</string>
     <string name="livedata_persona_diy">DIY</string>
     <string name="livedata_persona_racing">Racing</string>
+    <string name="session_history_title">Session history</string>
+    <string name="session_history_open">Session history</string>
+    <string name="session_history_back">Back</string>
+    <string name="session_history_empty">No saved sessions yet. Connect in simulation mode to record one.</string>
+    <string name="session_history_row_meta">%1$s · %2$s · %3$d DTC snapshots</string>
+    <string name="session_detail_title">Session detail</string>
+    <string name="session_detail_dtc_line">DTCs: %1$s</string>
+    <string name="session_detail_freeze_line">Freeze %1$s: %2$s</string>
+    <string name="session_export_json">Export JSON</string>
 </resources>

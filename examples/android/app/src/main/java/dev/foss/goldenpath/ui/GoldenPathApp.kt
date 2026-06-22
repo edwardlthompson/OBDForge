@@ -34,6 +34,8 @@ import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.ui.connect.ConnectDemoCoordinator
 import dev.foss.obdforge.ui.livedata.LiveDataCoordinator
 import dev.foss.obdforge.ui.livedata.LiveDataHost
+import dev.foss.obdforge.ui.session.SessionHistoryCoordinator
+import dev.foss.obdforge.ui.session.SessionHistoryHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -61,6 +63,7 @@ fun GoldenPathApp(
     val activity = context as? ComponentActivity
 
     var showLiveData by remember { mutableStateOf(false) }
+    var showSessionHistory by remember { mutableStateOf(false) }
     var demoModeEnabled by remember { mutableStateOf(true) }
     var connectionStatus by remember {
         mutableStateOf(context.getString(R.string.connection_status_disconnected))
@@ -106,6 +109,10 @@ fun GoldenPathApp(
         )
     }
 
+    val sessionHistoryCoordinator = remember(root) {
+        SessionHistoryCoordinator(root.sessionRepository)
+    }
+
     LaunchedEffect(demoModeEnabled) {
         if (!demoModeEnabled) {
             connectDemo.disconnect()
@@ -124,6 +131,10 @@ fun GoldenPathApp(
             VinSourceType.Demo -> context.getString(R.string.vin_source_demo)
             else -> ""
         }
+        root.sessionRecorder.recordFromConnection(
+            selection = if (demoModeEnabled) demoSelection else savedTransport,
+            vinResult = vinResult,
+        )
     }
 
     LaunchedEffect(pendingRestart) {
@@ -160,16 +171,20 @@ fun GoldenPathApp(
     val canApplyUpdate = applyAsset != null
 
     GoldenPathTheme(themeMode = themeMode) {
-        if (showLiveData) {
-            LiveDataHost(
+        when {
+            showLiveData -> LiveDataHost(
                 coordinator = liveDataCoordinator,
                 scope = scope,
                 persona = personaMode,
                 onPersonaChange = { mode -> scope.launch { root.personaPreferences.setPersona(mode) } },
                 onBack = { showLiveData = false },
             )
-        } else {
-        GoldenPathScreen(
+            showSessionHistory -> SessionHistoryHost(
+                coordinator = sessionHistoryCoordinator,
+                scope = scope,
+                onBack = { showSessionHistory = false },
+            )
+            else -> GoldenPathScreen(
             themeMode = themeMode,
             isOnline = isOnline,
             demoModeEnabled = demoModeEnabled,
@@ -222,6 +237,7 @@ fun GoldenPathApp(
             },
             liveDataEnabled = demoModeEnabled && connectionStatus.contains("Connected"),
             onOpenLiveData = { showLiveData = true },
+            onOpenSessionHistory = { showSessionHistory = true },
         )
         }
     }

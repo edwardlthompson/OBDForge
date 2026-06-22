@@ -14,7 +14,6 @@ import dev.foss.obdforge.data.ai.MediaPipeLlmEngine
 import dev.foss.obdforge.data.ai.TfliteDtcClassifier
 import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.domain.livedata.PersonaMode
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -35,6 +34,7 @@ fun DtcExplainHost(
         DtcExplainCoordinator(
             explainDtcUseCase = root.explainDtcUseCase,
             vehicleHealthScanUseCase = root.vehicleHealthScanUseCase,
+            vinProfileRepository = root.vinProfileRepository,
             transportSelection = transportSelection,
         )
     }

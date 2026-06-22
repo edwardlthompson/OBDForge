@@ -18,6 +18,7 @@ import dev.foss.obdforge.data.registry.TransportRegistry
 import dev.foss.obdforge.data.diagnostics.VehicleHealthScanUseCase
 import dev.foss.obdforge.data.transport.BluetoothReconnectUseCase
 import dev.foss.obdforge.data.transport.TransportDiscovery
+import dev.foss.obdforge.data.ai.DtcManufacturerOverlayLoader
 import dev.foss.obdforge.data.ai.DtcCatalogAssetLoader
 import dev.foss.obdforge.data.ai.ExplainDtcUseCase
 import dev.foss.obdforge.data.ai.LocalAiEngineFactory
@@ -74,6 +75,7 @@ data class ObdForgeCompositionRoot(
             val transportPreferences = TransportPreferences(appContext)
             val safetyGateUseCase = SafetyGateUseCase(auditLogRepository)
             DtcCatalogAssetLoader.loadIntoCatalog(appContext)
+            DtcManufacturerOverlayLoader.loadIntoCatalog(appContext)
             PidRangeAssetLoader.loadIntoEvaluator(appContext)
             return ObdForgeCompositionRoot(
                 transportRegistry = transportRegistry,

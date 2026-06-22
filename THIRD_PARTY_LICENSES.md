@@ -11,9 +11,10 @@ This project is licensed under **GPL-3.0-or-later**. See [`LICENSE`](LICENSE).
 | Asset | Source | License |
 |-------|--------|---------|
 | `examples/android/app/src/main/assets/diagnostics/dtc_catalog.json` | [OBDex](https://github.com/foerbsnavi/OBDex) generic DTC dataset | [CC0-1.0](https://github.com/foerbsnavi/OBDex/blob/main/LICENSE-DATA) |
+| `examples/android/app/src/main/assets/diagnostics/dtc_manufacturer_overlay.json.gz` | [Wal33D/dtc-database](https://github.com/Wal33D/dtc-database) manufacturer DTC overlay | [MIT](https://github.com/Wal33D/dtc-database/blob/main/LICENSE) |
 | `examples/android/app/src/main/assets/diagnostics/pid_ranges.json` | [OBDex](https://github.com/foerbsnavi/OBDex) Mode 01 PID ranges | [CC0-1.0](https://github.com/foerbsnavi/OBDex/blob/main/LICENSE-DATA) |
 
-Regenerate via `python3 scripts/import-obdex-data.py`. See [`docs/DIAGNOSTIC_DATA.md`](docs/DIAGNOSTIC_DATA.md).
+Regenerate via `python3 scripts/import-obdex-data.py` and `python3 scripts/import-wal33d-data.py`. See [`docs/DIAGNOSTIC_DATA.md`](docs/DIAGNOSTIC_DATA.md).
 
 ## Dependencies
 

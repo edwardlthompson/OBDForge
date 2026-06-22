@@ -13,7 +13,7 @@
 | Freeze frames | Stored in sessions | UI + export | N/A |
 | CSV/session export | JSON + CSV sessions | CSV + plugins | N/A |
 | Plugin ecosystem | No | MQTT, GPS, sensors | N/A |
-| Manufacturer DTCs | Not yet | Partial via plugins | Generic only in OBDex |
+| Manufacturer DTCs | Wal33D overlay (VIN-aware) | Partial via plugins | Generic only in OBDex |
 
 ### What was off in OBDForge (addressed)
 
@@ -21,19 +21,21 @@
 2. **PID normal ranges** — 6 hand-tuned values vs standard tables → imported **95 OBDex Mode 01 ranges**.
 3. **No import pipeline** — peers ship bundled DBs → added `scripts/import-obdex-data.py`.
 4. **Addressed in Sprint 17:** PID 0x00 capability discovery, CSV session export.
-5. **Still open vs AndrOBD:** charting plugins, manufacturer-specific DTC DB ([Wal33D/dtc-database](https://github.com/Wal33D/dtc-database), MIT, ~12k unique codes).
+5. **Still open vs AndrOBD:** charting plugins.
 
 ## Imported assets
 
 | File | Source | License |
 |------|--------|---------|
 | `assets/diagnostics/dtc_catalog.json.gz` | [OBDex generic.json](https://foerbsnavi.github.io/OBDex/generic.json) | CC0-1.0 |
+| `assets/diagnostics/dtc_manufacturer_overlay.json.gz` | [Wal33D/dtc-database](https://github.com/Wal33D/dtc-database) | MIT |
 | `assets/diagnostics/pid_ranges.json` | [OBDex mode01.min.json](https://foerbsnavi.github.io/OBDex/pids/mode01.min.json) | CC0-1.0 |
 
 Regenerate:
 
 ```bash
 python3 scripts/import-obdex-data.py
+python3 scripts/import-wal33d-data.py
 ```
 
 Loaded at app start in `ObdForgeCompositionRoot.create()`.

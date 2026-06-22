@@ -3,10 +3,12 @@ package dev.foss.obdforge.ui.ai
 import dev.foss.obdforge.data.ai.ExplainDtcUseCase
 import dev.foss.obdforge.data.diagnostics.VehicleHealthScanUseCase
 import dev.foss.obdforge.data.preferences.TransportSelection
+import dev.foss.obdforge.data.vin.VinProfileRepository
 import dev.foss.obdforge.domain.ai.DtcExplanation
 import dev.foss.obdforge.domain.ai.ExplainDtcOutcome
 import dev.foss.obdforge.domain.diagnostics.VehicleHealthSnapshot
 import dev.foss.obdforge.domain.livedata.PersonaMode
+import dev.foss.obdforge.domain.vehicle.VinManufacturerGuesser
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class DtcExplainCoordinator(
     private val explainDtcUseCase: ExplainDtcUseCase,
     private val vehicleHealthScanUseCase: VehicleHealthScanUseCase,
+    private val vinProfileRepository: VinProfileRepository,
     private val transportSelection: TransportSelection,
 ) {
     private val _snapshot = MutableStateFlow<VehicleHealthSnapshot?>(null)
@@ -40,12 +43,13 @@ class DtcExplainCoordinator(
     suspend fun scanVehicle(persona: PersonaMode) {
         _scanning.value = true
         _statusMessage.value = null
+        val manufacturer = VinManufacturerGuesser.resolve(vinProfileRepository.latest())
         vehicleHealthScanUseCase.scan(transportSelection, persona).fold(
             onSuccess = { health ->
                 _snapshot.value = health
                 val explained = linkedMapOf<String, DtcExplanation>()
                 for (code in health.dtcs) {
-                    when (val outcome = explainDtcUseCase.explain(code, persona)) {
+                    when (val outcome = explainDtcUseCase.explain(code, persona, manufacturer)) {
                         is ExplainDtcOutcome.Success -> explained[code] = outcome.explanation
                         else -> Unit
                     }
@@ -71,7 +75,8 @@ class DtcExplainCoordinator(
     suspend fun explainManual(code: String, persona: PersonaMode) {
         _loading.value = true
         _statusMessage.value = null
-        when (val outcome = explainDtcUseCase.explain(code, persona)) {
+        val manufacturer = VinManufacturerGuesser.resolve(vinProfileRepository.latest())
+        when (val outcome = explainDtcUseCase.explain(code, persona, manufacturer)) {
             is ExplainDtcOutcome.Success -> {
                 _selectedCode.value = outcome.explanation.code
                 _explanation.value = outcome.explanation

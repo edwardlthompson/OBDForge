@@ -34,7 +34,7 @@
 1. ✅ [AGENT] Import OBDex CC0 DTC catalog (~9.5k codes) + 95 Mode 01 PID ranges
 2. ✅ [AGENT] PID 0x00 bitmap discovery — filter live-data PIDs to ECU-supported subset
 3. ✅ [AGENT] CSV session export (AndrOBD-style flat export alongside JSON)
-4. 🔲 [AGENT] Wal33D manufacturer DTC import ([MIT, ~12k codes](https://github.com/Wal33D/dtc-database)) — optional overlay
+4. ✅ [AGENT] Wal33D manufacturer DTC import ([MIT, ~9.4k entries](https://github.com/Wal33D/dtc-database)) — VIN-aware overlay
 5. 🔲 [AGENT] Live-data charting / time-series dashboard — defer until hardware bench validates polling
 
 Detail: `docs/DIAGNOSTIC_DATA.md`

@@ -2,6 +2,7 @@ package dev.foss.obdforge.domain.ai
 
 enum class AiExplanationSource {
     Catalog,
+    Manufacturer,
     MediaPipe,
 }
 

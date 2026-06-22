@@ -26,27 +26,55 @@ object DtcCatalog {
     )
 
     private var assetEntries: Map<String, CatalogEntry>? = null
+    private var manufacturerOverlay: Map<String, Map<String, CatalogEntry>> = emptyMap()
 
     fun install(entries: Map<String, CatalogEntry>) {
         assetEntries = entries
     }
 
-    fun resetForTests() {
-        assetEntries = null
+    fun installManufacturerOverlay(entries: Map<String, Map<String, CatalogEntry>>) {
+        manufacturerOverlay = entries
     }
 
-    fun lookup(code: String): CatalogEntry? {
+    fun resetForTests() {
+        assetEntries = null
+        manufacturerOverlay = emptyMap()
+    }
+
+    fun lookup(code: String, manufacturer: String? = null): CatalogEntry? {
         val normalized = code.uppercase()
+        lookupManufacturerOverlay(normalized, manufacturer)?.let { return it }
         return assetEntries?.get(normalized) ?: fallback[normalized]
     }
 
-    fun explain(code: String): DtcExplanation? {
-        val entry = lookup(code) ?: return null
-        return DtcExplanation(
-            code = code.uppercase(),
+    private fun lookupManufacturerOverlay(code: String, manufacturer: String?): CatalogEntry? {
+        if (manufacturerOverlay.isEmpty() || manufacturer.isNullOrBlank()) return null
+        for (key in DtcManufacturerNormalizer.lookupKeys(manufacturer)) {
+            manufacturerOverlay[key]?.get(code)?.let { return it }
+        }
+        return null
+    }
+
+    fun explain(code: String, manufacturer: String? = null): DtcExplanation? {
+        val normalized = code.uppercase()
+        val manufacturerEntry = lookupManufacturerOverlay(normalized, manufacturer)
+        if (manufacturerEntry != null) {
+            return explanationFor(normalized, manufacturerEntry, AiExplanationSource.Manufacturer)
+        }
+        val entry = assetEntries?.get(normalized) ?: fallback[normalized] ?: return null
+        return explanationFor(normalized, entry, AiExplanationSource.Catalog)
+    }
+
+    private fun explanationFor(
+        code: String,
+        entry: CatalogEntry,
+        source: AiExplanationSource,
+    ): DtcExplanation =
+        DtcExplanation(
+            code = code,
             title = entry.title,
             summary = entry.summary,
-            source = AiExplanationSource.Catalog,
+            source = source,
             severity = entry.severity,
             classification = DtcClassification(
                 severity = entry.severity,
@@ -54,7 +82,6 @@ object DtcCatalog {
                 confidence = 1.0f,
             ),
         )
-    }
 
     data class CatalogEntry(
         val title: String,

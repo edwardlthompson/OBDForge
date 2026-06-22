@@ -88,6 +88,7 @@ internal fun DtcExplanationCard(explanation: DtcExplanation) {
 
 internal fun sourceLabelRes(source: AiExplanationSource): Int = when (source) {
     AiExplanationSource.Catalog -> R.string.ai_source_catalog
+    AiExplanationSource.Manufacturer -> R.string.ai_source_manufacturer
     AiExplanationSource.MediaPipe -> R.string.ai_source_mediapipe
 }
 

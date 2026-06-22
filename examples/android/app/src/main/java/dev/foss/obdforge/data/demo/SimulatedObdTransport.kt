@@ -1,8 +1,8 @@
-package dev.foss.goldenpath.core.demo
+package dev.foss.obdforge.data.demo
 
-import dev.foss.goldenpath.core.transport.ConnectionState
-import dev.foss.goldenpath.core.transport.Transport
-import dev.foss.goldenpath.core.transport.TransportType
+import dev.foss.obdforge.domain.transport.ConnectionState
+import dev.foss.obdforge.domain.transport.Transport
+import dev.foss.obdforge.domain.transport.TransportType
 
 class SimulatedObdTransport : Transport {
     override val type: TransportType = TransportType.Simulated

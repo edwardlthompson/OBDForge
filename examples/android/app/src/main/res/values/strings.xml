@@ -39,4 +39,7 @@
     <string name="settings_theme_mode_light">Light theme</string>
     <string name="settings_theme_mode_dark">Dark theme</string>
     <string name="settings_update_check_label">Check for updates</string>
+    <string name="connect_placeholder_title">Connect adapter</string>
+    <string name="connect_placeholder_body">Bluetooth, USB, and Wi‑Fi transports arrive in Sprint 2. Enable simulation mode to preview ECU-first VIN read.</string>
+    <string name="connect_button_label">Scan for adapters</string>
 </resources>

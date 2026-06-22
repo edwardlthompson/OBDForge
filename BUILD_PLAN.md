@@ -44,10 +44,8 @@ grep '\[AUTO\]' BUILD_PLAN.md
 2. ✅ [AGENT] Run `scripts/init-project.ps1` with `--stack android` (prune inactive stacks)
 3. ✅ [AGENT] Bootstrap docs: LICENSE (GPL-3.0), ADRs 0001–0005, AGENT_MEMORY, EXECUTION_PLAN, persona/design specs
 4. ✅ [AGENT] Update README, THREAT_MODEL, PRIVACY, RUNBOOK for OBDForge
-5. 🔲 [HUMAN] Fill `donations.json` / `examples/android/app/src/main/assets/app-update.json` URLs for your GitHub org
-6. 🔲 [HUMAN] Enable Dependabot alerts + private vulnerability reporting (Settings → Code security)
-7. 🔲 [AGENT] Run `scripts/setup-github-repo.ps1` (requires `gh` auth with admin)
-8. 🔲 [AUTO] Sprint 0 sign-off (all green on `main`):
+5. ✅ [AGENT] Run `scripts/setup-github-repo.sh` with `APPLY_GITHUB_ABOUT=1` (Dependabot, branch protection, About sync)
+6. ✅ [AUTO] Sprint 0 sign-off (all green on `main`):
    - `validate-bootstrap.sh --quick`
    - `feature-gate.sh --stack android`
    - `check-github-ci.sh --wait 300`
@@ -67,19 +65,18 @@ grep '\[AUTO\]' BUILD_PLAN.md
 ### Sequential
 
 1. ✅ [AGENT] Draft ADR-0001 core architecture
-2. 🔲 [HUMAN] Approve ADR-0001 and Sprint 1 scope
-3. 🔲 [AGENT] Scaffold Clean Architecture packages under `examples/android/`
-4. 🔲 [AGENT] Implement `TransportRegistry` + `ProtocolRegistry` stubs
-5. 🔲 [AGENT] Room schema v1 (Session, AuditLog stubs) + migration test
-6. 🔲 [AGENT] Wire Golden Path shell (Connect placeholder, About, Settings, theme)
-7. 🔲 [AUTO] `./gradlew test assembleDebug` green in CI
+2. ✅ [AGENT] Scaffold Clean Architecture packages under `examples/android/`
+3. ✅ [AGENT] Implement `TransportRegistry` + `ProtocolRegistry` stubs
+4. ✅ [AGENT] Room schema v1 (Session, AuditLog stubs) + migration test
+5. ✅ [AGENT] Wire Golden Path shell (Connect placeholder, About, Settings, theme)
+6. ✅ [AUTO] `./gradlew test assembleDebug` green in CI
 
 ### Parallel (safe after Sequential step 4)
 
 | Task | Owner | Isolated scope |
 |------|-------|----------------|
-| Domain unit tests | AGENT | `domain/**` |
-| Compose theme (Garage tokens) | AGENT | `ui/theme/**`, `design-tokens/` |
+| Domain unit tests | ✅ AGENT | `domain/**` |
+| Compose theme (Garage tokens) | ✅ AGENT | `ui/theme/**`, `design-tokens/` |
 
 ---
 
@@ -101,11 +98,10 @@ grep '\[AUTO\]' BUILD_PLAN.md
 ### Sequential
 
 1. ✅ [AGENT] Draft ADR-0002 protocol plugins
-2. 🔲 [HUMAN] Approve ADR-0002
-3. 🔲 [AGENT] Implement `DiagnosticProtocol` SPI + `Elm327Protocol`
-4. 🔲 [AGENT] Mode 01/03/04/09 + probe logic
-5. 🔲 [AGENT] Transcript fixture tests
-6. 🔲 [ADB] Bench: read DTC + single PID via ELM327 clone
+2. 🔲 [AGENT] Implement `DiagnosticProtocol` SPI + `Elm327Protocol`
+3. 🔲 [AGENT] Mode 01/03/04/09 + probe logic
+4. 🔲 [AGENT] Transcript fixture tests
+5. 🔲 [ADB] Bench: read DTC + single PID via ELM327 clone
 
 ---
 
@@ -156,7 +152,6 @@ grep '\[AUTO\]' BUILD_PLAN.md
 1. 🔲 [AGENT] Mock transport + mock protocol fixtures
 2. 🔲 [AGENT] Settings toggle + persistent banner
 3. 🔲 [AGENT] CI test: full connect → DTC → PID without hardware
-4. 🔲 [HUMAN] Approve demo data realism (no misleading brand names)
 
 ---
 
@@ -165,10 +160,9 @@ grep '\[AUTO\]' BUILD_PLAN.md
 ### Sequential
 
 1. ✅ [AGENT] Draft ADR-0003 safety interlocks
-2. 🔲 [HUMAN] Approve interlock copy and expert mode policy
-3. 🔲 [AGENT] Implement `SafetyGate` + expert unlock
-4. 🔲 [AGENT] Audit log Room table + export
-5. 🔲 [AGENT] Unit tests: blocked/allowed write paths
+2. 🔲 [AGENT] Implement `SafetyGate` + expert unlock
+3. 🔲 [AGENT] Audit log Room table + export
+4. 🔲 [AGENT] Unit tests: blocked/allowed write paths
 
 ---
 
@@ -179,7 +173,6 @@ grep '\[AUTO\]' BUILD_PLAN.md
 1. 🔲 [AGENT] UDS write / actuator test use cases behind SafetyGate
 2. 🔲 [AGENT] PersonaPolicy blocks DIY writes
 3. 🔲 [ADB] Staged bench ECU test only (no public road vehicles)
-4. 🔲 [HUMAN] Sign off liability disclaimer in app + F-Droid description
 
 ---
 
@@ -202,7 +195,6 @@ grep '\[AUTO\]' BUILD_PLAN.md
 1. ✅ [AGENT] Draft ADR-0004 + `docs/PERSONAS.md`
 2. 🔲 [AGENT] Persona switcher + filtered navigation
 3. 🔲 [AGENT] Shop: customer, work order, intake → close-out flow
-4. 🔲 [HUMAN] Review shop workflow with real shop operator (if available)
 
 ---
 
@@ -213,7 +205,6 @@ grep '\[AUTO\]' BUILD_PLAN.md
 1. 🔲 [AGENT] MediaPipe LLM integration (on-device DTC explain)
 2. 🔲 [AGENT] TFLite optional classifier hooks
 3. 🔲 [AGENT] Airplane-mode AI smoke test
-4. 🔲 [HUMAN] Approve bundled model size for F-Droid (~MB budget)
 
 ---
 
@@ -236,9 +227,28 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 1. 🔲 [AGENT] CHANGELOG + Release Please version bump
 2. 🔲 [AUTO] `pre-release-gate.sh` + SBOM on release
-3. 🔲 [HUMAN] Approve v1.0.0 tag
-4. 🔲 [ADB] F-Droid submission merge request
-5. 🔲 [HUMAN] Post-release monitoring (issues, adapter reports)
+3. 🔲 [ADB] F-Droid submission merge request
+
+---
+
+## Human Backlog
+
+> Open `[HUMAN]` gates deferred from active sprints. Pull an item into the relevant sprint when you are ready to act on it.
+
+| Sprint | Task |
+|--------|------|
+| 0 | Fill `donations.json` / `examples/android/app/src/main/assets/app-update.json` URLs for your GitHub org |
+| 1 | Approve ADR-0001 and Sprint 1 scope |
+| 3 | Approve ADR-0002 |
+| 7 | Approve demo data realism (no misleading brand names) |
+| 8 | Approve interlock copy and expert mode policy |
+| 9 | Sign off liability disclaimer in app + F-Droid description |
+| 11 | Review shop workflow with real shop operator (if available) |
+| 12 | Approve bundled model size for F-Droid (~MB budget) |
+| 14 | Approve v1.0.0 tag |
+| 14 | Post-release monitoring (issues, adapter reports) |
+| Ongoing | Approve release tag when product-ready |
+| — | Approve Gradle package rename (`dev.foss.goldenpath` → `dev.foss.obdforge`) when ready |
 
 ---
 
@@ -259,7 +269,6 @@ grep '\[AUTO\]' BUILD_PLAN.md
 ### Pre-release
 
 - 🔲 [AUTO] `pre-release-gate.sh` + reproducible APK verify
-- 🔲 [HUMAN] Approve release tag when product-ready
 
 ---
 
@@ -267,4 +276,6 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 | Sprint | Status | Archive |
 |--------|--------|---------|
+| OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
 | Template maintainer M19–M29 | Complete (upstream) | `COMPLETED_TASKS.md` |

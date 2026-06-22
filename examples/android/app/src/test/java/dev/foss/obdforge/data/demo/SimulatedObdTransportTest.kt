@@ -1,6 +1,6 @@
-package dev.foss.goldenpath.core.demo
+package dev.foss.obdforge.data.demo
 
-import dev.foss.goldenpath.core.transport.ConnectionState
+import dev.foss.obdforge.domain.transport.ConnectionState
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

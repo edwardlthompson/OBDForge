@@ -2,6 +2,24 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 1 — Core Architecture (M1) (2026-06-21)
+
+- ✅ [AGENT] Implement `TransportRegistry` + `ProtocolRegistry` stubs (`dev.foss.obdforge.data.registry`)
+- ✅ [AGENT] Room schema v2 (Session, AuditLog) + `MIGRATION_1_2` + Robolectric migration test
+- ✅ [AGENT] Wire Golden Path shell — `ObdForgeCompositionRoot`, Connect placeholder, demo coordinator via registries
+- ✅ [AGENT] Domain unit tests — VinResolver, DiagnosticProtocol contract, registry probes
+- ✅ [AGENT] Compose diagnostic theme tokens — `DiagnosticColors.kt`
+- ✅ [AUTO] `./gradlew test assembleDebug` green locally (KSP 2.3.6 + Room 2.7.2)
+
+## OBDForge Sprint 0 — Bootstrap & Customization (2026-06-21)
+
+- ✅ [HUMAN] Create repo from agent-project-bootstrap template (OBDForge)
+- ✅ [AGENT] Run `scripts/init-project.ps1` with `--stack android` (prune inactive stacks)
+- ✅ [AGENT] Bootstrap docs: LICENSE (GPL-3.0), ADRs 0001–0005, AGENT_MEMORY, EXECUTION_PLAN, persona/design specs
+- ✅ [AGENT] Update README, THREAT_MODEL, PRIVACY, RUNBOOK for OBDForge
+- ✅ [AGENT] Run `scripts/setup-github-repo.sh` with `APPLY_GITHUB_ABOUT=1`
+- ✅ [AUTO] Sprint 0 sign-off — validate-bootstrap, feature-gate, CI green @ `8845232`
+
 ## v0.11.0 release (2026-06-18)
 
 - ✅ [HUMAN] Merge Release Please PR #14 — [v0.11.0](https://github.com/edwardlthompson/agent-project-bootstrap/releases/tag/v0.11.0) published

@@ -3,6 +3,7 @@ package dev.foss.goldenpath.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -28,6 +29,7 @@ import dev.foss.goldenpath.ui.settings.SettingsScreen
 import dev.foss.goldenpath.ui.theme.SpacingLg
 import dev.foss.goldenpath.ui.theme.SpacingMd
 import dev.foss.goldenpath.ui.theme.ThemeMode
+import dev.foss.obdforge.ui.connect.ConnectPlaceholderCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -136,6 +138,9 @@ fun GoldenPathScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.secondary,
                 )
+                if (!demoModeEnabled) {
+                    ConnectPlaceholderCard(modifier = Modifier.fillMaxWidth())
+                }
                 Switch(
                     checked = demoModeEnabled,
                     onCheckedChange = onDemoModeChange,

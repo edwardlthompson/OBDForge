@@ -1,4 +1,4 @@
-package dev.foss.goldenpath.core.vehicle
+package dev.foss.obdforge.domain.vehicle
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

@@ -1,6 +1,6 @@
-package dev.foss.goldenpath.core.vehicle
+package dev.foss.obdforge.domain.vehicle
 
-import dev.foss.goldenpath.core.transport.Transport
+import dev.foss.obdforge.domain.transport.Transport
 
 enum class VinSourceType {
     EcuObd2,

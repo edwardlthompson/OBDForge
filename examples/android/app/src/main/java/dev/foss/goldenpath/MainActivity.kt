@@ -9,6 +9,7 @@ import dev.foss.goldenpath.about.AppUpdatePreferences
 import dev.foss.goldenpath.network.NetworkStatusMonitor
 import dev.foss.goldenpath.ui.GoldenPathApp
 import dev.foss.goldenpath.ui.theme.ThemePreferences
+import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -26,6 +27,8 @@ class MainActivity : ComponentActivity() {
             appUpdatePreferences.ensureInstalledFormat()
         }
 
+        val compositionRoot = ObdForgeCompositionRoot.create(applicationContext)
+
         setContent {
             GoldenPathApp(
                 context = this,
@@ -33,6 +36,7 @@ class MainActivity : ComponentActivity() {
                 themePreferences = themePreferences,
                 appUpdatePreferences = appUpdatePreferences,
                 networkStatusMonitor = networkStatusMonitor!!,
+                compositionRoot = compositionRoot,
             )
         }
     }

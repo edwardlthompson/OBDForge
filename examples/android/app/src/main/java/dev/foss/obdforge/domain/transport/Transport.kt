@@ -1,4 +1,4 @@
-package dev.foss.goldenpath.core.transport
+package dev.foss.obdforge.domain.transport
 
 enum class TransportType {
     Bluetooth,

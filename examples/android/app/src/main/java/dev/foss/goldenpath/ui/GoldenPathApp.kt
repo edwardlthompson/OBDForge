@@ -30,7 +30,10 @@ import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.domain.vehicle.VinSourceType
+import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.ui.connect.ConnectDemoCoordinator
+import dev.foss.obdforge.ui.livedata.LiveDataCoordinator
+import dev.foss.obdforge.ui.livedata.LiveDataHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -57,6 +60,7 @@ fun GoldenPathApp(
     val appVersion = BuildConfig.VERSION_NAME
     val activity = context as? ComponentActivity
 
+    var showLiveData by remember { mutableStateOf(false) }
     var demoModeEnabled by remember { mutableStateOf(true) }
     var connectionStatus by remember {
         mutableStateOf(context.getString(R.string.connection_status_disconnected))
@@ -85,6 +89,17 @@ fun GoldenPathApp(
     }
     val connectDemo = remember(root, demoModeEnabled, savedTransport) {
         ConnectDemoCoordinator(
+            transportRegistry = root.transportRegistry,
+            protocolRegistry = root.protocolRegistry,
+            selection = if (demoModeEnabled) demoSelection else savedTransport,
+        )
+    }
+
+    val personaMode by root.personaPreferences.persona.collectAsStateWithLifecycle(
+        initialValue = PersonaMode.Diy,
+    )
+    val liveDataCoordinator = remember(root, demoModeEnabled, savedTransport) {
+        LiveDataCoordinator(
             transportRegistry = root.transportRegistry,
             protocolRegistry = root.protocolRegistry,
             selection = if (demoModeEnabled) demoSelection else savedTransport,
@@ -145,6 +160,15 @@ fun GoldenPathApp(
     val canApplyUpdate = applyAsset != null
 
     GoldenPathTheme(themeMode = themeMode) {
+        if (showLiveData) {
+            LiveDataHost(
+                coordinator = liveDataCoordinator,
+                scope = scope,
+                persona = personaMode,
+                onPersonaChange = { mode -> scope.launch { root.personaPreferences.setPersona(mode) } },
+                onBack = { showLiveData = false },
+            )
+        } else {
         GoldenPathScreen(
             themeMode = themeMode,
             isOnline = isOnline,
@@ -196,6 +220,9 @@ fun GoldenPathApp(
                     UpdateApplyCoordinator.applySideloadUpdate(host, appUpdatePreferences, asset)
                 }
             },
+            liveDataEnabled = demoModeEnabled && connectionStatus.contains("Connected"),
+            onOpenLiveData = { showLiveData = true },
         )
+        }
     }
 }

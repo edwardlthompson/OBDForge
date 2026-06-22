@@ -2,6 +2,16 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 5 — Live Data (M5) (2026-06-21)
+
+- ✅ [AGENT] `PidCatalog` + `PidValueParser` — 11 standard Mode 01 PIDs with SAE decode formulas
+- ✅ [AGENT] `LiveDataStreamEngine` — polling loop with in-flight backpressure, pause/resume, STPX batch path
+- ✅ [AGENT] `LiveDataLayoutResolver` — DIY (2-col, 500 ms) vs Racing (4-col compact, 100 ms) layouts
+- ✅ [AGENT] `PidFormatter` + dashboard composables under `ui/livedata/`; wired into Golden Path shell
+- ✅ [AGENT] `PersonaPreferences` (DataStore) + live data screen with persona chips
+- ✅ [AUTO] `./gradlew test assembleDebug` green locally (80 tests)
+- 🔲 [ADB] 10+ PID stability test (5 min bench) — see Human Backlog
+
 ## OBDForge Sprint 4 — OBDLink STN/STPX (M4) (2026-06-21)
 
 - ✅ [AGENT] `StnProtocol` — STI probe, `STP 0` init, Mode 01/03/04/09 via shared ST-link OBD commands

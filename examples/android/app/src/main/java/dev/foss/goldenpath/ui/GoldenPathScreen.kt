@@ -33,6 +33,7 @@ import dev.foss.obdforge.data.transport.BluetoothDeviceOption
 import dev.foss.obdforge.data.transport.UsbDeviceOption
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.ui.connect.TransportPickerCard
+import dev.foss.obdforge.ui.livedata.LiveDataEntryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,6 +76,8 @@ fun GoldenPathScreen(
     onSettingsClose: () -> Unit,
     onUpdateCheckChange: (Boolean) -> Unit,
     onApplyUpdate: () -> Unit,
+    liveDataEnabled: Boolean = false,
+    onOpenLiveData: () -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -184,6 +187,11 @@ fun GoldenPathScreen(
                 Text(
                     text = stringResource(R.string.demo_mode_label),
                     style = MaterialTheme.typography.labelMedium,
+                )
+                LiveDataEntryButton(
+                    enabled = liveDataEnabled,
+                    onOpen = onOpenLiveData,
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 Text(
                     text = stringResource(

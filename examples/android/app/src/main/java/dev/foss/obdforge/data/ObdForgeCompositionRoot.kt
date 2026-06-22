@@ -3,6 +3,7 @@ package dev.foss.obdforge.data
 import android.content.Context
 import androidx.room.Room
 import dev.foss.obdforge.data.local.ObdForgeDatabase
+import dev.foss.obdforge.data.preferences.PersonaPreferences
 import dev.foss.obdforge.data.preferences.TransportPreferences
 import dev.foss.obdforge.data.registry.ProtocolRegistry
 import dev.foss.obdforge.data.registry.TransportRegistry
@@ -14,6 +15,7 @@ data class ObdForgeCompositionRoot(
     val database: ObdForgeDatabase,
     val transportPreferences: TransportPreferences,
     val transportDiscovery: TransportDiscovery,
+    val personaPreferences: PersonaPreferences,
 ) {
     companion object {
         fun create(context: Context): ObdForgeCompositionRoot {
@@ -31,6 +33,7 @@ data class ObdForgeCompositionRoot(
                 database = database,
                 transportPreferences = TransportPreferences(appContext),
                 transportDiscovery = TransportDiscovery(appContext),
+                personaPreferences = PersonaPreferences(appContext),
             )
         }
     }

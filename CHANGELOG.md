@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- BLE GATT transport with Auto link mode (BLE first, Classic SPP fallback)
+- One-click **Connect** button to reconnect to the last saved Bluetooth OBD-II adapter
+- DTC assistant: automatic vehicle scan on open, active code list, out-of-range PID highlights, theme-aware UI
+- Venmo donation link in About screen
+
 ## [1.0.0] - 2026-06-21
 
 First public release — product milestones M1–M13 (Sprints 0–14).

@@ -1,5 +1,6 @@
 package dev.foss.obdforge.data.transport
 
+import dev.foss.obdforge.domain.transport.BluetoothLinkKind
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
 
@@ -10,6 +11,7 @@ fun buildTransportEndpoint(
     bluetoothAddress: String,
     bluetoothName: String?,
     usbDeviceName: String,
+    bluetoothLinkKind: BluetoothLinkKind = BluetoothLinkKind.Auto,
 ): TransportEndpoint? {
     return when (type) {
         TransportType.Simulated -> TransportEndpoint.Simulated
@@ -20,7 +22,11 @@ fun buildTransportEndpoint(
         }
         TransportType.Bluetooth -> {
             if (bluetoothAddress.isBlank()) return null
-            TransportEndpoint.Bluetooth(deviceAddress = bluetoothAddress, displayName = bluetoothName)
+            TransportEndpoint.Bluetooth(
+                deviceAddress = bluetoothAddress,
+                displayName = bluetoothName,
+                linkKind = bluetoothLinkKind,
+            )
         }
         TransportType.UsbSerial -> {
             if (usbDeviceName.isBlank()) return null

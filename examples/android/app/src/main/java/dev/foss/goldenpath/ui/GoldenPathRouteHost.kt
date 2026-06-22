@@ -66,6 +66,7 @@ fun GoldenPathRouteHost(
             root = root,
             scope = scope,
             persona = personaMode,
+            transportSelection = activeTransportSelection,
             onBack = { onRouteChange(GoldenPathRoute.Home) },
         )
         GoldenPathRoute.Home -> homeContent()

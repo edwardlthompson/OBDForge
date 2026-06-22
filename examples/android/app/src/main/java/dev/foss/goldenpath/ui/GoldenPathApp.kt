@@ -78,6 +78,15 @@ fun GoldenPathApp(
         activity = activity,
         onConnectionStatusChange = { connectionStatus = it },
     )
+    val bluetoothConnectUi = rememberBluetoothConnectUi(
+        context = context,
+        scope = scope,
+        root = root,
+        demoModeEnabled = demoModeEnabled,
+        onConnectionStatusChange = { connectionStatus = it },
+        onVinDisplayChange = { vinDisplay = it },
+        onVinSourceLabelChange = { vinSourceLabel = it },
+    )
     val demoSelection = remember {
         TransportSelection(TransportType.Simulated, TransportEndpoint.Simulated)
     }
@@ -185,6 +194,11 @@ fun GoldenPathApp(
                         onUsbSelect = transportUi.onUsbSelect,
                         onSaveTransportSelection = transportUi.onSaveSelection,
                         onRequestUsbPermission = transportUi.onRequestUsbPermission,
+                        bluetoothConnectEnabled = bluetoothConnectUi.canConnect,
+                        bluetoothConnectConnecting = bluetoothConnectUi.isConnecting,
+                        bluetoothLastAdapterLabel = bluetoothConnectUi.lastAdapterLabel,
+                        bluetoothConnectStatusMessage = bluetoothConnectUi.statusMessage,
+                        onBluetoothConnect = bluetoothConnectUi.onConnect,
                         onAboutOpen = { showAbout = !showAbout; if (showAbout) showSettings = false },
                         onAboutClose = { showAbout = false },
                         onSettingsOpen = { showSettings = !showSettings; if (showSettings) showAbout = false },
@@ -197,7 +211,7 @@ fun GoldenPathApp(
                             }
                         },
                         onApplyUpdate = updateUi.onApplyUpdate,
-                        liveDataEnabled = demoModeEnabled && connectionStatus.contains("Connected"),
+                        liveDataEnabled = connectionStatus.contains("Connected"),
                         onOpenLiveData = { route = GoldenPathRoute.LiveData },
                         onOpenSessionHistory = { route = GoldenPathRoute.SessionHistory },
                         onOpenVinResolve = { route = GoldenPathRoute.VinResolve },

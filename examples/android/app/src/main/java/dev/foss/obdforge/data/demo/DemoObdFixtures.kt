@@ -9,7 +9,7 @@ object DemoObdFixtures {
     val mode01Responses: Map<Int, String> = mapOf(
         0x00 to "41 00 BE 1F A8 13",
         0x04 to "41 04 50",
-        0x05 to "41 05 7D",
+        0x05 to "41 05 92",
         0x0C to "41 0C 0F A0",
         0x0D to "41 0D 32",
         0x0F to "41 0F 55",
@@ -32,7 +32,7 @@ object DemoObdFixtures {
             normalized.replace(" ", "") == "22F190" -> udsF190VinResponse()
             normalized.replace(" ", "") == "1A90" -> kwpVinResponse()
             normalized == "J1939VIN" -> DemoObdFixtures.DEMO_VIN
-            normalized == "03" -> "43 01 33 00 00 00 00 00"
+            normalized == "03" -> "43 01 33 01 71 00 00 00"
             normalized == "04" -> "44"
             normalized.replace(" ", "").startsWith("2F") -> "6F 01 00"
             normalized.replace(" ", "").startsWith("08") -> "48 01 00"

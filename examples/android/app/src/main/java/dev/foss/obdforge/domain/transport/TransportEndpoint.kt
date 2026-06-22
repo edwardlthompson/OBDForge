@@ -16,6 +16,7 @@ sealed interface TransportEndpoint {
     data class Bluetooth(
         val deviceAddress: String,
         val displayName: String? = null,
+        val linkKind: BluetoothLinkKind = BluetoothLinkKind.Auto,
     ) : TransportEndpoint
 
     data class UsbSerial(

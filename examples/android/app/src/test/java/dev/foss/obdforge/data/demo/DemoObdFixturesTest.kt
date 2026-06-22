@@ -8,7 +8,7 @@ class DemoObdFixturesTest {
     fun responseFor_isDeterministic() {
         assertEquals("ELM327 v2.3", DemoObdFixtures.responseFor("ATZ"))
         assertEquals("41 0C 0F A0", DemoObdFixtures.responseFor("010C"))
-        assertEquals("43 01 33 00 00 00 00 00", DemoObdFixtures.responseFor("03"))
+        assertEquals("43 01 33 01 71 00 00 00", DemoObdFixtures.responseFor("03"))
     }
 
     @Test

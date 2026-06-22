@@ -7,6 +7,14 @@
     <string name="app_status_offline">No adapter connection</string>
     <string name="connection_status_disconnected">Disconnected</string>
     <string name="connection_status_connected">Connected (demo)</string>
+    <string name="connection_status_connected_adapter">Connected to adapter</string>
+    <string name="bluetooth_connect">Connect</string>
+    <string name="bluetooth_connect_to">Connect to %1$s</string>
+    <string name="bluetooth_connecting">Connecting to adapter…</string>
+    <string name="bluetooth_connect_error_no_saved">No saved Bluetooth adapter — pick one below</string>
+    <string name="bluetooth_connect_error_failed">Could not connect: %1$s</string>
+    <string name="bluetooth_connect_error_unknown">unknown error</string>
+    <string name="bluetooth_connect_permission_denied">Bluetooth permission required</string>
     <string name="demo_mode_label">Simulation mode</string>
     <string name="demo_mode_on">Simulation on — using canned OBD responses</string>
     <string name="demo_mode_off">Simulation off — connect an adapter to begin</string>
@@ -63,7 +71,7 @@
     <string name="connect_button_label">Scan for adapters</string>
     <string name="transport_picker_title">Adapter transport</string>
     <string name="transport_type_label">Transport type</string>
-    <string name="transport_type_bluetooth">Bluetooth SPP</string>
+    <string name="transport_type_bluetooth">Bluetooth</string>
     <string name="transport_type_usb">USB serial</string>
     <string name="transport_type_wifi">Wi‑Fi TCP</string>
     <string name="transport_type_ethernet">Ethernet TCP</string>
@@ -81,7 +89,7 @@
     <string name="transport_status_invalid">Enter valid adapter settings</string>
     <string name="transport_status_usb_granted">USB permission granted</string>
     <string name="transport_status_usb_denied">USB permission denied</string>
-    <string name="connection_status_adapter_ready">Adapter settings saved — connect in Sprint 3</string>
+    <string name="connection_status_adapter_ready">Adapter settings saved</string>
     <string name="livedata_title">Live data</string>
     <string name="livedata_open">Open live data</string>
     <string name="livedata_back">Back</string>
@@ -147,6 +155,16 @@
     <string name="ai_dtc_explain_submit">Explain code</string>
     <string name="ai_dtc_explain_loading">Explaining…</string>
     <string name="ai_dtc_code_label">DTC code</string>
+    <string name="ai_dtc_scanning">Scanning vehicle…</string>
+    <string name="ai_dtc_scan_ready">Vehicle scan complete</string>
+    <string name="ai_dtc_active_codes">Active trouble codes</string>
+    <string name="ai_dtc_no_codes">No active trouble codes found</string>
+    <string name="ai_dtc_out_of_range">Out of range readings</string>
+    <string name="ai_dtc_no_abnormal">All sampled readings are within expected range</string>
+    <string name="ai_dtc_rescan">Rescan vehicle</string>
+    <string name="ai_dtc_out_of_range_high">%1$s — above expected range</string>
+    <string name="ai_dtc_out_of_range_low">%1$s — below expected range</string>
+    <string name="ai_dtc_manual_section">Look up another code</string>
     <string name="ai_offline_notice">On-device only — works in airplane mode with no cloud inference.</string>
     <string name="ai_engine_status">LLM: %1$s · Classifier: %2$s</string>
     <string name="ai_engine_ready">bundled</string>
@@ -155,5 +173,6 @@
     <string name="ai_source_catalog">Offline catalog</string>
     <string name="ai_source_mediapipe">MediaPipe LLM</string>
     <string name="ai_error_invalid_dtc">Enter a valid OBD-II code (e.g. P0133)</string>
+    <string name="ai_error_scan_failed">Could not scan the vehicle — connect an adapter and try again</string>
     <string name="ai_error_unavailable">No local explanation available for this code yet</string>
 </resources>

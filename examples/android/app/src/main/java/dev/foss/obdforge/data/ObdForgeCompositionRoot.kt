@@ -15,6 +15,8 @@ import dev.foss.obdforge.data.persistence.SessionRecorder
 import dev.foss.obdforge.data.persistence.SessionRepository
 import dev.foss.obdforge.data.registry.ProtocolRegistry
 import dev.foss.obdforge.data.registry.TransportRegistry
+import dev.foss.obdforge.data.diagnostics.VehicleHealthScanUseCase
+import dev.foss.obdforge.data.transport.BluetoothReconnectUseCase
 import dev.foss.obdforge.data.transport.TransportDiscovery
 import dev.foss.obdforge.data.ai.ExplainDtcUseCase
 import dev.foss.obdforge.data.ai.LocalAiEngineFactory
@@ -40,6 +42,8 @@ data class ObdForgeCompositionRoot(
     val shopRepository: ShopRepository,
     val explainDtcUseCase: ExplainDtcUseCase,
     val sessionRecorder: SessionRecorder,
+    val bluetoothReconnectUseCase: BluetoothReconnectUseCase,
+    val vehicleHealthScanUseCase: VehicleHealthScanUseCase,
 ) {
     companion object {
         fun create(context: Context): ObdForgeCompositionRoot {
@@ -65,12 +69,13 @@ data class ObdForgeCompositionRoot(
             val explainDtcUseCase = LocalAiEngineFactory.createExplainDtcUseCase(appContext)
             val transportRegistry = TransportRegistry.default(appContext)
             val protocolRegistry = ProtocolRegistry.default()
+            val transportPreferences = TransportPreferences(appContext)
             val safetyGateUseCase = SafetyGateUseCase(auditLogRepository)
             return ObdForgeCompositionRoot(
                 transportRegistry = transportRegistry,
                 protocolRegistry = protocolRegistry,
                 database = database,
-                transportPreferences = TransportPreferences(appContext),
+                transportPreferences = transportPreferences,
                 transportDiscovery = TransportDiscovery(appContext),
                 personaPreferences = PersonaPreferences(appContext),
                 demoPreferences = DemoPreferences(appContext),
@@ -90,6 +95,15 @@ data class ObdForgeCompositionRoot(
                     transportRegistry = transportRegistry,
                     protocolRegistry = protocolRegistry,
                     sessionRepository = sessionRepository,
+                ),
+                bluetoothReconnectUseCase = BluetoothReconnectUseCase(
+                    transportRegistry = transportRegistry,
+                    protocolRegistry = protocolRegistry,
+                    transportPreferences = transportPreferences,
+                ),
+                vehicleHealthScanUseCase = VehicleHealthScanUseCase(
+                    transportRegistry = transportRegistry,
+                    protocolRegistry = protocolRegistry,
                 ),
             )
         }

@@ -1,9 +1,7 @@
 package dev.foss.obdforge.data.transport
 
-import android.bluetooth.BluetoothManager
 import android.content.Context
 import dev.foss.obdforge.data.demo.SimulatedObdTransport
-import dev.foss.obdforge.data.transport.io.BluetoothSppTransportLink
 import dev.foss.obdforge.data.transport.io.TcpTransportLink
 import dev.foss.obdforge.data.transport.io.UsbSerialTransportLink
 import dev.foss.obdforge.domain.transport.ObdTransport
@@ -28,11 +26,11 @@ object TransportFactory {
             }
             TransportType.Bluetooth -> {
                 val bt = endpoint as? TransportEndpoint.Bluetooth ?: return null
-                val adapter = context.getSystemService(BluetoothManager::class.java)?.adapter ?: return null
+                val link = BluetoothTransportLinks.create(context, bt) ?: return null
                 StreamObdTransport(
                     type = type,
                     endpoint = endpoint,
-                    link = BluetoothSppTransportLink(adapter, bt.deviceAddress),
+                    link = link,
                 )
             }
             TransportType.UsbSerial -> {

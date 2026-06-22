@@ -1,10 +1,14 @@
 package dev.foss.obdforge.data.transport
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothManager
+import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanResult
 import android.content.Context
 import android.hardware.usb.UsbManager
 import com.hoho.android.usbserial.driver.UsbSerialProber
 import dev.foss.obdforge.domain.transport.TransportEndpoint
+import kotlinx.coroutines.delay
 
 data class BluetoothDeviceOption(
     val address: String,
@@ -29,6 +33,36 @@ class TransportDiscovery(private val context: Context) {
             )
         }.sortedBy { it.name ?: it.address }
     }
+
+    @SuppressLint("MissingPermission")
+    suspend fun discoverBluetoothDevices(scanDurationMs: Long = 4000L): List<BluetoothDeviceOption> {
+        val devices = pairedBluetoothDevices().associateBy { it.address }.toMutableMap()
+        val manager = context.getSystemService(BluetoothManager::class.java) ?: return devices.values.toSortedList()
+        val adapter = manager.adapter ?: return devices.values.toSortedList()
+        if (!adapter.isEnabled) return devices.values.toSortedList()
+        val scanner = adapter.bluetoothLeScanner ?: return devices.values.toSortedList()
+        val callback = object : ScanCallback() {
+            override fun onScanResult(callbackType: Int, result: ScanResult) {
+                val device = result.device ?: return
+                devices.getOrPut(device.address) {
+                    BluetoothDeviceOption(
+                        address = device.address,
+                        name = device.name ?: result.scanRecord?.deviceName,
+                    )
+                }
+            }
+        }
+        return try {
+            scanner.startScan(callback)
+            delay(scanDurationMs)
+            devices.values.toSortedList()
+        } finally {
+            scanner.stopScan(callback)
+        }
+    }
+
+    private fun Collection<BluetoothDeviceOption>.toSortedList(): List<BluetoothDeviceOption> =
+        sortedBy { it.name ?: it.address }
 
     fun attachedUsbSerialDevices(): List<UsbDeviceOption> {
         val usbManager = context.getSystemService(Context.USB_SERVICE) as UsbManager

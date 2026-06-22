@@ -34,6 +34,25 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 ---
 
+## Sprint 15 — Post-Release Audit (2026-06-22)
+
+> Findings: `CODE_REVIEW.md` (local, gitignored). Addresses F-001, F-005, F-006 from audit.
+
+### Sequential
+
+1. ✅ [AGENT] Ship post-v1.0.0 feature batch — BLE GATT (BLE-first Auto), one-click Connect, DTC assistant auto-scan + theme, Venmo donations
+2. ✅ [AGENT] Update README + CHANGELOG `[Unreleased]`; mark donations Human Backlog done
+3. ✅ [AUTO] `./gradlew testDebugUnitTest assembleDebug` green locally; push + CI verify
+
+---
+
+## Completed product sprints (0–14)
+
+> Full task lists archived in [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Summary table at [Archived Sprints](#archived-sprints) below.
+
+<details>
+<summary>Sprint 0–14 detail (collapsed)</summary>
+
 ## Sprint 0 — Bootstrap & Customization
 
 > Android stack selected; inactive stacks pruned. Most doc scaffold complete after agent bootstrap.
@@ -229,6 +248,8 @@ grep '\[AUTO\]' BUILD_PLAN.md
 2. ✅ [AUTO] `pre-release-gate.sh` + SBOM on release
 3. ✅ [ADB] F-Droid submission merge request — draft ready at `packaging/fdroid/dev.foss.obdforge.yml` (GitLab MR submit pending)
 
+</details>
+
 ---
 
 ## Human Backlog
@@ -241,7 +262,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 | 3 | Bench: read DTC + single PID via ELM327 clone adapter |
 | 4 | Bench: compare STN vs ELM latency on OBDLink adapter |
 | 5 | 10+ PID stability test (5 min bench) |
-| 0 | Fill `donations.json` / `examples/android/app/src/main/assets/app-update.json` URLs for your GitHub org |
+| 0 | ~~Fill `donations.json` / `examples/android/app/src/main/assets/app-update.json` URLs for your GitHub org~~ — Venmo configured; app-update URL still pending |
 | 1 | Approve ADR-0001 and Sprint 1 scope |
 | 3 | Approve ADR-0002 |
 | 7 | Approve demo data realism (no misleading brand names) |
@@ -280,6 +301,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 | Sprint | Status | Archive |
 |--------|--------|---------|
+| OBDForge Sprint 15 — Post-Release Audit | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 2 — Transports (M2) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |

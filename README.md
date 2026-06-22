@@ -17,13 +17,13 @@ OBDForge connects to ELM327 and OBDLink STN/STPX adapters over Bluetooth, USB, W
 
 | Area | Capability |
 |------|------------|
-| Transports | BT SPP, USB serial, WiFi TCP, Ethernet TCP |
+| Transports | BLE GATT + Classic SPP (Auto: BLE first), USB serial, Wi‑Fi/Ethernet TCP, one-click reconnect |
 | Protocols | ELM327, OBDLink STN/STPX, UDS, KWP, J1939 (plugin SPI) |
 | Live data | Customizable PID dashboards per persona |
 | Safety | Interlocks, expert mode, local audit log (ADR-0003) |
 | VIN | ECU-first chain with barcode fallback (ADR-0005) |
 | Personas | DIY, Semi-pro, Shop, Racing (`docs/PERSONAS.md`) |
-| AI | On-device MediaPipe LLM — no cloud inference |
+| AI | On-device DTC assistant — auto vehicle scan, code list, out-of-range PIDs, local explain |
 | Demo mode | Full UI flow without hardware |
 
 ## Stack

@@ -2,6 +2,16 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 15 — Post-Release Audit (2026-06-22)
+
+- ✅ [AGENT] BLE GATT transport (`BleGattTransportLink`, FFF0 + Nordic UART profiles) with `FallbackTransportLink` (BLE-first Auto)
+- ✅ [AGENT] One-click Bluetooth **Connect** — `BluetoothReconnectUseCase`, permission gate, last-adapter persistence
+- ✅ [AGENT] DTC assistant overhaul — automatic `VehicleHealthScanUseCase`, active codes + out-of-range PIDs, Material3 Scaffold theme fix
+- ✅ [AGENT] Venmo donation URL in `donations.json.example` and Android assets
+- ✅ [AGENT] README + CHANGELOG `[Unreleased]` updated; BUILD_PLAN Sprint 15 archived
+- ✅ [AUTO] 157 unit tests + `assembleDebug` green locally
+- ⚠️ Bash gate scripts skipped on Windows host (no WSL) — CI remains source of truth
+
 ## OBDForge ADB bench session (2026-06-21)
 
 - ✅ [ADB] Release v1.0.0 cold start on OnePlus CPH2583 (Android 16, root)

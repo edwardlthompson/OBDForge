@@ -18,6 +18,7 @@ import dev.foss.obdforge.data.transport.buildTransportEndpoint
 import dev.foss.obdforge.data.transport.displayLabel
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
+import dev.foss.obdforge.ui.connect.BluetoothPermissionGate
 import dev.foss.obdforge.ui.connect.UsbPermissionRequester
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -84,10 +85,15 @@ fun rememberGoldenPathTransportUi(
     }
 
     LaunchedEffect(pickerType) {
-        bluetoothDevices = if (pickerType == TransportType.Bluetooth) {
-            root.transportDiscovery.pairedBluetoothDevices()
+        if (pickerType == TransportType.Bluetooth) {
+            val hasBlePermission = BluetoothPermissionGate.hasAllPermissions(context)
+            bluetoothDevices = if (hasBlePermission) {
+                root.transportDiscovery.discoverBluetoothDevices()
+            } else {
+                root.transportDiscovery.pairedBluetoothDevices()
+            }
         } else {
-            emptyList()
+            bluetoothDevices = emptyList()
         }
         usbDevices = if (pickerType == TransportType.UsbSerial) {
             root.transportDiscovery.attachedUsbSerialDevices()

@@ -74,7 +74,8 @@ class Elm327ProtocolTest {
         val rpm = protocol.readPid(transport, ObdMode.Mode01, 0x0C).getOrThrow()
         assertEquals(0x0C, rpm.pid)
         val dtcs = protocol.readDtcs(transport).getOrThrow()
-        assertEquals(1, dtcs.entries.size)
+        assertEquals(2, dtcs.entries.size)
+        assertEquals("P0133", dtcs.entries.first().code)
         assertTrue(protocol.clearDtcs(transport).isSuccess)
     }
 }

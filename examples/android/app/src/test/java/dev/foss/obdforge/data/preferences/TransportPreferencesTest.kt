@@ -2,6 +2,7 @@ package dev.foss.obdforge.data.preferences
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import dev.foss.obdforge.domain.transport.BluetoothLinkKind
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
 import kotlinx.coroutines.flow.first
@@ -25,5 +26,18 @@ class TransportPreferencesTest {
         val saved = prefs.selection.first()
         assertEquals(TransportType.WiFi, saved.type)
         assertEquals(endpoint, saved.endpoint)
+    }
+
+    @Test
+    fun setSelection_persistsLastBluetoothEndpoint() = runTest {
+        val prefs = TransportPreferences(context)
+        val endpoint = TransportEndpoint.Bluetooth(
+            deviceAddress = "AA:BB:CC:DD:EE:FF",
+            displayName = "OBDLink",
+            linkKind = BluetoothLinkKind.Auto,
+        )
+        prefs.setSelection(TransportType.Bluetooth, endpoint)
+        val last = prefs.lastBluetoothEndpoint()
+        assertEquals(endpoint, last)
     }
 }

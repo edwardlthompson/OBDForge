@@ -33,6 +33,7 @@ import dev.foss.obdforge.data.transport.UsbDeviceOption
 import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.domain.vehicle.VehicleProfile
+import dev.foss.obdforge.ui.connect.BluetoothConnectButton
 import dev.foss.obdforge.ui.connect.TransportPickerCard
 import dev.foss.obdforge.ui.vin.VinBadge
 
@@ -74,6 +75,11 @@ fun GoldenPathScreen(
     onUsbSelect: (UsbDeviceOption) -> Unit,
     onSaveTransportSelection: () -> Unit,
     onRequestUsbPermission: () -> Unit,
+    bluetoothConnectEnabled: Boolean = false,
+    bluetoothConnectConnecting: Boolean = false,
+    bluetoothLastAdapterLabel: String? = null,
+    bluetoothConnectStatusMessage: String = "",
+    onBluetoothConnect: () -> Unit = {},
     onAboutOpen: () -> Unit,
     onAboutClose: () -> Unit,
     onSettingsOpen: () -> Unit,
@@ -174,6 +180,21 @@ fun GoldenPathScreen(
                 )
                 savedVehicleProfile?.let { profile ->
                     VinBadge(source = profile.source)
+                }
+                if (!demoModeEnabled) {
+                    BluetoothConnectButton(
+                        enabled = bluetoothConnectEnabled,
+                        isConnecting = bluetoothConnectConnecting,
+                        lastAdapterLabel = bluetoothLastAdapterLabel,
+                        onConnect = onBluetoothConnect,
+                    )
+                    if (bluetoothConnectStatusMessage.isNotBlank()) {
+                        Text(
+                            text = bluetoothConnectStatusMessage,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
                 }
                 GoldenPathHomeNav(
                     persona = personaMode,

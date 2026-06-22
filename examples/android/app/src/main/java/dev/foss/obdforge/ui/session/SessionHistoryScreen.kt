@@ -36,8 +36,10 @@ fun SessionHistoryScreen(
     summaries: List<SessionSummary>,
     selectedDetail: SessionDetail?,
     exportJson: String?,
+    exportCsv: String?,
     onSelectSession: (Long) -> Unit,
-    onExport: () -> Unit,
+    onExportJson: () -> Unit,
+    onExportCsv: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -88,7 +90,9 @@ fun SessionHistoryScreen(
                 SessionDetailPanel(
                     detail = detail,
                     exportJson = exportJson,
-                    onExport = onExport,
+                    exportCsv = exportCsv,
+                    onExportJson = onExportJson,
+                    onExportCsv = onExportCsv,
                 )
             }
         }

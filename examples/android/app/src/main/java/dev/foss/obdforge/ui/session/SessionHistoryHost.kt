@@ -15,13 +15,16 @@ fun SessionHistoryHost(
     val summaries by coordinator.summaries.collectAsStateWithLifecycle(initialValue = emptyList())
     val selectedDetail by coordinator.selectedDetail.collectAsStateWithLifecycle(initialValue = null)
     val exportJson by coordinator.exportJson.collectAsStateWithLifecycle(initialValue = null)
+    val exportCsv by coordinator.exportCsv.collectAsStateWithLifecycle(initialValue = null)
 
     SessionHistoryScreen(
         summaries = summaries,
         selectedDetail = selectedDetail,
         exportJson = exportJson,
+        exportCsv = exportCsv,
         onSelectSession = { sessionId -> scope.launch { coordinator.selectSession(sessionId) } },
-        onExport = { scope.launch { coordinator.exportSelected() } },
+        onExportJson = { scope.launch { coordinator.exportSelectedJson() } },
+        onExportCsv = { scope.launch { coordinator.exportSelectedCsv() } },
         onBack = {
             coordinator.clearSelection()
             onBack()

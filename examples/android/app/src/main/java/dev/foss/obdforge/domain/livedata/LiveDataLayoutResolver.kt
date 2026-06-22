@@ -16,36 +16,39 @@ data class LiveDataLayoutConfig(
 )
 
 object LiveDataLayoutResolver {
-    fun resolve(persona: PersonaMode): LiveDataLayoutConfig {
+    fun resolve(persona: PersonaMode, supportedPids: Set<Int>? = null): LiveDataLayoutConfig {
         val definitions = PidCatalog.forPersona(persona)
+        val pids = definitions.map { it.pid }.let { requested ->
+            supportedPids?.let { requested.filter { pid -> pid in supportedPids } } ?: requested
+        }
         return when (persona) {
             PersonaMode.Diy -> LiveDataLayoutConfig(
                 persona = persona,
                 columns = 2,
                 compact = false,
                 pollIntervalMs = 500L,
-                pids = definitions.map { it.pid },
+                pids = pids,
             )
             PersonaMode.SemiPro -> LiveDataLayoutConfig(
                 persona = persona,
                 columns = 3,
                 compact = false,
                 pollIntervalMs = 300L,
-                pids = definitions.map { it.pid },
+                pids = pids,
             )
             PersonaMode.Shop -> LiveDataLayoutConfig(
                 persona = persona,
                 columns = 4,
                 compact = true,
                 pollIntervalMs = 400L,
-                pids = definitions.map { it.pid },
+                pids = pids,
             )
             PersonaMode.Racing -> LiveDataLayoutConfig(
                 persona = persona,
                 columns = 4,
                 compact = true,
                 pollIntervalMs = 100L,
-                pids = definitions.map { it.pid },
+                pids = pids,
             )
         }
     }

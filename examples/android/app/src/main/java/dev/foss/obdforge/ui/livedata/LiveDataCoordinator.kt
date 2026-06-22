@@ -1,6 +1,7 @@
 package dev.foss.obdforge.ui.livedata
 
 import dev.foss.obdforge.data.livedata.LiveDataStreamEngine
+import dev.foss.obdforge.data.livedata.PidSupportDiscovery
 import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.data.registry.ProtocolRegistry
 import dev.foss.obdforge.data.registry.TransportRegistry
@@ -42,7 +43,11 @@ class LiveDataCoordinator(
         activeTransport.connect().getOrElse { return Result.failure(it) }
         val activeProtocol = protocolRegistry.selectBest(activeTransport)
             ?: return Result.failure(IllegalStateException("No supported protocol"))
-        val layout = LiveDataLayoutResolver.resolve(persona)
+        val supportedPids = PidSupportDiscovery().discoverSupportedCatalogPids(
+            protocol = activeProtocol,
+            transport = activeTransport,
+        )
+        val layout = LiveDataLayoutResolver.resolve(persona, supportedPids)
         val streamEngine = LiveDataStreamEngine(
             protocol = activeProtocol,
             transport = activeTransport,

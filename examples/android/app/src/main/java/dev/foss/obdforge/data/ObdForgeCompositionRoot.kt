@@ -18,8 +18,10 @@ import dev.foss.obdforge.data.registry.TransportRegistry
 import dev.foss.obdforge.data.diagnostics.VehicleHealthScanUseCase
 import dev.foss.obdforge.data.transport.BluetoothReconnectUseCase
 import dev.foss.obdforge.data.transport.TransportDiscovery
+import dev.foss.obdforge.data.ai.DtcCatalogAssetLoader
 import dev.foss.obdforge.data.ai.ExplainDtcUseCase
 import dev.foss.obdforge.data.ai.LocalAiEngineFactory
+import dev.foss.obdforge.data.diagnostics.PidRangeAssetLoader
 import dev.foss.obdforge.data.shop.ShopRepository
 import dev.foss.obdforge.data.vin.ResolveVinUseCase
 import dev.foss.obdforge.data.vin.VinProfileRepository
@@ -71,6 +73,8 @@ data class ObdForgeCompositionRoot(
             val protocolRegistry = ProtocolRegistry.default()
             val transportPreferences = TransportPreferences(appContext)
             val safetyGateUseCase = SafetyGateUseCase(auditLogRepository)
+            DtcCatalogAssetLoader.loadIntoCatalog(appContext)
+            PidRangeAssetLoader.loadIntoEvaluator(appContext)
             return ObdForgeCompositionRoot(
                 transportRegistry = transportRegistry,
                 protocolRegistry = protocolRegistry,

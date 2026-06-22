@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - One-click **Connect** button to reconnect to the last saved Bluetooth OBD-II adapter
 - DTC assistant: automatic vehicle scan on open, active code list, out-of-range PID highlights, theme-aware UI
 - Venmo donation link in About screen
+- OBDex (CC0) import: ~9,500 generic DTC explanations + 95 Mode 01 PID normal ranges (`scripts/import-obdex-data.py`)
+- PID 0x00 bitmap discovery filters live-data dashboard to ECU-supported PIDs
+- CSV session export alongside JSON (AndrOBD-style flat rows)
 
 ## [1.0.0] - 2026-06-21
 

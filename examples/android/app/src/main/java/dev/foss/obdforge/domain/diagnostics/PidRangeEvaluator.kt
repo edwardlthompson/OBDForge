@@ -4,9 +4,9 @@ import dev.foss.obdforge.domain.livedata.ParsedPidValue
 import dev.foss.obdforge.feature.livedata.logic.PidFormatter
 
 object PidRangeEvaluator {
-    private data class Range(val min: Double, val max: Double)
+    data class Range(val min: Double, val max: Double)
 
-    private val ranges: Map<Int, Range> = mapOf(
+    private val builtinRanges: Map<Int, Range> = mapOf(
         0x05 to Range(min = 60.0, max = 105.0),
         0x0F to Range(min = -40.0, max = 80.0),
         0x42 to Range(min = 11.5, max = 15.0),
@@ -14,6 +14,18 @@ object PidRangeEvaluator {
         0x5C to Range(min = 70.0, max = 130.0),
         0x46 to Range(min = -40.0, max = 55.0),
     )
+
+    private var assetRanges: Map<Int, Range> = emptyMap()
+
+    fun install(ranges: Map<Int, Range>) {
+        assetRanges = ranges
+    }
+
+    fun resetForTests() {
+        assetRanges = emptyMap()
+    }
+
+    private fun rangeFor(pid: Int): Range? = builtinRanges[pid] ?: assetRanges[pid]
 
     fun evaluateAll(parsed: List<ParsedPidValue>): List<AbnormalPidReading> {
         val byPid = parsed.associateBy { it.pid }
@@ -33,7 +45,7 @@ object PidRangeEvaluator {
 
     private fun evaluateSingle(sample: ParsedPidValue): AbnormalPidReading? {
         val value = sample.numericValue ?: return null
-        val range = ranges[sample.pid] ?: return null
+        val range = rangeFor(sample.pid) ?: return null
         return when {
             value < range.min -> abnormal(sample, AbnormalReason.BelowMin)
             value > range.max -> abnormal(sample, AbnormalReason.AboveMax)

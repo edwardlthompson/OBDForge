@@ -2,6 +2,7 @@ package dev.foss.obdforge.ui.session
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.rememberScrollState
@@ -22,7 +23,9 @@ import dev.foss.obdforge.domain.session.SessionDetail
 fun SessionDetailPanel(
     detail: SessionDetail,
     exportJson: String?,
-    onExport: () -> Unit,
+    exportCsv: String?,
+    onExportJson: () -> Unit,
+    onExportCsv: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -53,12 +56,30 @@ fun SessionDetailPanel(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        Button(onClick = onExport, modifier = Modifier.fillMaxWidth()) {
-            Text(stringResource(R.string.session_export_json))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(SpacingSm),
+        ) {
+            Button(onClick = onExportJson, modifier = Modifier.weight(1f)) {
+                Text(stringResource(R.string.session_export_json))
+            }
+            Button(onClick = onExportCsv, modifier = Modifier.weight(1f)) {
+                Text(stringResource(R.string.session_export_csv))
+            }
         }
         exportJson?.let { json ->
             Text(
                 text = json,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 180.dp)
+                    .verticalScroll(rememberScrollState()),
+            )
+        }
+        exportCsv?.let { csv ->
+            Text(
+                text = csv,
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
                     .fillMaxWidth()

@@ -19,20 +19,32 @@ class SessionHistoryCoordinator(
     private val _exportJson = MutableStateFlow<String?>(null)
     val exportJson: StateFlow<String?> = _exportJson.asStateFlow()
 
+    private val _exportCsv = MutableStateFlow<String?>(null)
+    val exportCsv: StateFlow<String?> = _exportCsv.asStateFlow()
+
     suspend fun selectSession(sessionId: Long) {
         _selectedDetail.value = sessionRepository.getDetail(sessionId)
         _exportJson.value = null
+        _exportCsv.value = null
     }
 
-    suspend fun exportSelected(): String? {
+    suspend fun exportSelectedJson(): String? {
         val sessionId = _selectedDetail.value?.summary?.id ?: return null
         val json = sessionRepository.exportJson(sessionId)
         _exportJson.value = json
         return json
     }
 
+    suspend fun exportSelectedCsv(): String? {
+        val sessionId = _selectedDetail.value?.summary?.id ?: return null
+        val csv = sessionRepository.exportCsv(sessionId)
+        _exportCsv.value = csv
+        return csv
+    }
+
     fun clearSelection() {
         _selectedDetail.value = null
         _exportJson.value = null
+        _exportCsv.value = null
     }
 }

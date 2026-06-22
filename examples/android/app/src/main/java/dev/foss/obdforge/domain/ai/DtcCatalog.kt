@@ -1,7 +1,7 @@
 package dev.foss.obdforge.domain.ai
 
 object DtcCatalog {
-    private val entries = mapOf(
+    private val fallback = mapOf(
         "P0133" to CatalogEntry(
             title = "O2 sensor slow response (Bank 1 Sensor 1)",
             summary = "The upstream oxygen sensor is responding slower than expected. " +
@@ -25,7 +25,20 @@ object DtcCatalog {
         ),
     )
 
-    fun lookup(code: String): CatalogEntry? = entries[code.uppercase()]
+    private var assetEntries: Map<String, CatalogEntry>? = null
+
+    fun install(entries: Map<String, CatalogEntry>) {
+        assetEntries = entries
+    }
+
+    fun resetForTests() {
+        assetEntries = null
+    }
+
+    fun lookup(code: String): CatalogEntry? {
+        val normalized = code.uppercase()
+        return assetEntries?.get(normalized) ?: fallback[normalized]
+    }
 
     fun explain(code: String): DtcExplanation? {
         val entry = lookup(code) ?: return null

@@ -112,4 +112,7 @@ class SessionRepository(
 
     suspend fun exportJson(sessionId: Long): String? =
         getDetail(sessionId)?.let { SessionJsonExporter.export(it) }
+
+    suspend fun exportCsv(sessionId: Long): String? =
+        getDetail(sessionId)?.let { SessionCsvExporter.export(it) }
 }

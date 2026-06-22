@@ -53,7 +53,7 @@
 ## OBD Adapter Troubleshooting
 
 1. Confirm transport (BT paired **before** in system settings for SPP adapters)
-2. Capture sanitized transcript (Settings → Export debug log) — `[ADB]`
+2. Capture sanitized transcript (**Settings → Export diagnostic log**, or USB: `Android/data/<package>/files/logs/latest-diagnostic-log.json`) — `[ADB]`
 3. Try demo mode to isolate app vs adapter
 4. Document adapter firmware in GitHub issue template
 

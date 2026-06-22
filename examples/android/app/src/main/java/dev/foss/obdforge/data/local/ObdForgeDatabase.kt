@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import dev.foss.obdforge.data.local.dao.AuditLogDao
 import dev.foss.obdforge.data.local.dao.CustomerDao
+import dev.foss.obdforge.data.local.dao.DiagnosticEventDao
 import dev.foss.obdforge.data.local.dao.DtcSnapshotDao
 import dev.foss.obdforge.data.local.dao.FreezeFrameDao
 import dev.foss.obdforge.data.local.dao.SessionDao
@@ -12,6 +13,7 @@ import dev.foss.obdforge.data.local.dao.VehicleProfileDao
 import dev.foss.obdforge.data.local.dao.WorkOrderDao
 import dev.foss.obdforge.data.local.entity.AuditLogEntity
 import dev.foss.obdforge.data.local.entity.CustomerEntity
+import dev.foss.obdforge.data.local.entity.DiagnosticEventEntity
 import dev.foss.obdforge.data.local.entity.DtcSnapshotEntity
 import dev.foss.obdforge.data.local.entity.FreezeFrameEntity
 import dev.foss.obdforge.data.local.entity.SessionEntity
@@ -27,8 +29,9 @@ import dev.foss.obdforge.data.local.entity.WorkOrderEntity
         VehicleProfileEntity::class,
         CustomerEntity::class,
         WorkOrderEntity::class,
+        DiagnosticEventEntity::class,
     ],
-    version = 6,
+    version = 7,
     exportSchema = false,
 )
 abstract class ObdForgeDatabase : RoomDatabase() {
@@ -40,6 +43,7 @@ abstract class ObdForgeDatabase : RoomDatabase() {
     abstract fun vehicleProfileDao(): VehicleProfileDao
     abstract fun customerDao(): CustomerDao
     abstract fun workOrderDao(): WorkOrderDao
+    abstract fun diagnosticEventDao(): DiagnosticEventDao
 
     companion object {
         const val DB_NAME = "obdforge.db"
@@ -49,5 +53,6 @@ abstract class ObdForgeDatabase : RoomDatabase() {
         val MIGRATION_3_4 get() = ObdForgeDatabaseMigrations.MIGRATION_3_4
         val MIGRATION_4_5 get() = ObdForgeDatabaseMigrations.MIGRATION_4_5
         val MIGRATION_5_6 get() = ObdForgeDatabaseMigrations.MIGRATION_5_6
+        val MIGRATION_6_7 get() = ObdForgeDatabaseMigrations.MIGRATION_6_7
     }
 }

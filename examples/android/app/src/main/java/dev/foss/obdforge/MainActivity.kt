@@ -9,7 +9,11 @@ import dev.foss.obdforge.about.AppUpdatePreferences
 import dev.foss.obdforge.network.NetworkStatusMonitor
 import dev.foss.obdforge.ui.shell.GoldenPathApp
 import dev.foss.obdforge.ui.theme.ThemePreferences
+import dev.foss.obdforge.BuildConfig
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
+import dev.foss.obdforge.data.diagnostics.CrashLogHandler
+import dev.foss.obdforge.domain.diagnostics.DiagnosticEventCategory
+import dev.foss.obdforge.domain.diagnostics.DiagnosticEventSeverity
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -27,7 +31,15 @@ class MainActivity : ComponentActivity() {
             appUpdatePreferences.ensureInstalledFormat()
         }
 
-        val compositionRoot = ObdForgeCompositionRoot.create(applicationContext)
+        val compositionRoot = ObdForgeCompositionRoot.create(applicationContext, lifecycleScope)
+        CrashLogHandler.install(applicationContext, compositionRoot.diagnosticEventRepository, lifecycleScope)
+        lifecycleScope.launch {
+            compositionRoot.diagnosticEventRecorder.recordNow(
+                category = DiagnosticEventCategory.App,
+                severity = DiagnosticEventSeverity.Info,
+                message = "App started (${BuildConfig.VERSION_NAME})",
+            )
+        }
 
         setContent {
             GoldenPathApp(

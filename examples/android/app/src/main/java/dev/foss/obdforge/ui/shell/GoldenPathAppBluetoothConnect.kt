@@ -45,6 +45,12 @@ fun rememberBluetoothConnectUi(
         val endpoint = root.transportPreferences.lastBluetoothEndpoint()
             ?: run {
                 statusMessage = context.getString(R.string.bluetooth_connect_error_no_saved)
+                root.diagnosticEventRecorder.record(
+                    category = dev.foss.obdforge.domain.diagnostics.DiagnosticEventCategory.Connection,
+                    severity = dev.foss.obdforge.domain.diagnostics.DiagnosticEventSeverity.Warn,
+                    message = "Bluetooth connect aborted: no saved adapter",
+                    transportType = TransportType.Bluetooth,
+                )
                 return
             }
         isConnecting = true
@@ -76,6 +82,12 @@ fun rememberBluetoothConnectUi(
                     R.string.bluetooth_connect_error_failed,
                     error.message ?: context.getString(R.string.bluetooth_connect_error_unknown),
                 )
+                root.diagnosticEventRecorder.record(
+                    category = dev.foss.obdforge.domain.diagnostics.DiagnosticEventCategory.Connection,
+                    severity = dev.foss.obdforge.domain.diagnostics.DiagnosticEventSeverity.Error,
+                    message = "Bluetooth reconnect failed: ${error.message ?: "unknown"}",
+                    transportType = TransportType.Bluetooth,
+                )
                 onConnectionStatusChange(context.getString(R.string.connection_status_disconnected))
             },
         )
@@ -90,6 +102,12 @@ fun rememberBluetoothConnectUi(
         } else if (pendingConnect) {
             pendingConnect = false
             statusMessage = context.getString(R.string.bluetooth_connect_permission_denied)
+            root.diagnosticEventRecorder.record(
+                category = dev.foss.obdforge.domain.diagnostics.DiagnosticEventCategory.Connection,
+                severity = dev.foss.obdforge.domain.diagnostics.DiagnosticEventSeverity.Warn,
+                message = "Bluetooth connect aborted: permission denied",
+                transportType = TransportType.Bluetooth,
+            )
         }
     }
 

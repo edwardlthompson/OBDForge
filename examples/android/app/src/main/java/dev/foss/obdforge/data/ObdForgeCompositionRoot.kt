@@ -6,10 +6,14 @@ import dev.foss.obdforge.data.bidirectional.GatedBidirectionalService
 import dev.foss.obdforge.data.bidirectional.ObdBidirectionalExecutor
 import dev.foss.obdforge.data.local.ObdForgeDatabase
 import dev.foss.obdforge.data.preferences.DemoPreferences
+import dev.foss.obdforge.data.preferences.DiagnosticLogPreferences
 import dev.foss.obdforge.data.preferences.ExpertUnlockPreferences
 import dev.foss.obdforge.data.preferences.PersonaPreferences
 import dev.foss.obdforge.data.preferences.TransportPreferences
+import dev.foss.obdforge.data.diagnostics.CrashLogHandler
+import dev.foss.obdforge.data.diagnostics.DiagnosticEventRecorder
 import dev.foss.obdforge.data.persistence.AuditLogRepository
+import dev.foss.obdforge.data.persistence.DiagnosticEventRepository
 import dev.foss.obdforge.data.persistence.SafetyGateUseCase
 import dev.foss.obdforge.data.persistence.SessionRecorder
 import dev.foss.obdforge.data.persistence.SessionRepository
@@ -27,6 +31,8 @@ import dev.foss.obdforge.data.shop.ShopRepository
 import dev.foss.obdforge.data.vin.ResolveVinUseCase
 import dev.foss.obdforge.data.vin.VinProfileRepository
 
+import kotlinx.coroutines.CoroutineScope
+
 data class ObdForgeCompositionRoot(
     val transportRegistry: TransportRegistry,
     val protocolRegistry: ProtocolRegistry,
@@ -38,6 +44,9 @@ data class ObdForgeCompositionRoot(
     val expertUnlockPreferences: ExpertUnlockPreferences,
     val sessionRepository: SessionRepository,
     val auditLogRepository: AuditLogRepository,
+    val diagnosticEventRepository: DiagnosticEventRepository,
+    val diagnosticLogPreferences: DiagnosticLogPreferences,
+    val diagnosticEventRecorder: DiagnosticEventRecorder,
     val safetyGateUseCase: SafetyGateUseCase,
     val gatedBidirectionalService: GatedBidirectionalService,
     val vinProfileRepository: VinProfileRepository,
@@ -49,7 +58,7 @@ data class ObdForgeCompositionRoot(
     val vehicleHealthScanUseCase: VehicleHealthScanUseCase,
 ) {
     companion object {
-        fun create(context: Context): ObdForgeCompositionRoot {
+        fun create(context: Context, scope: CoroutineScope? = null): ObdForgeCompositionRoot {
             val appContext = context.applicationContext
             val database = Room.databaseBuilder(
                 appContext,
@@ -62,15 +71,23 @@ data class ObdForgeCompositionRoot(
                     ObdForgeDatabase.MIGRATION_3_4,
                     ObdForgeDatabase.MIGRATION_4_5,
                     ObdForgeDatabase.MIGRATION_5_6,
+                    ObdForgeDatabase.MIGRATION_6_7,
                 )
                 .build()
             val sessionRepository = SessionRepository(database)
             val auditLogRepository = AuditLogRepository(database)
+            val diagnosticEventRepository = DiagnosticEventRepository(database)
+            val diagnosticLogPreferences = DiagnosticLogPreferences(appContext)
+            val diagnosticEventRecorder = DiagnosticEventRecorder(
+                repository = diagnosticEventRepository,
+                preferences = diagnosticLogPreferences,
+                scope = scope ?: CoroutineScope(kotlinx.coroutines.Dispatchers.IO),
+            )
             val vinProfileRepository = VinProfileRepository(database)
             val resolveVinUseCase = ResolveVinUseCase(vinProfileRepository)
             val shopRepository = ShopRepository(database)
             val explainDtcUseCase = LocalAiEngineFactory.createExplainDtcUseCase(appContext)
-            val transportRegistry = TransportRegistry.default(appContext)
+            val transportRegistry = TransportRegistry.default(appContext, diagnosticEventRecorder)
             val protocolRegistry = ProtocolRegistry.default()
             val transportPreferences = TransportPreferences(appContext)
             val safetyGateUseCase = SafetyGateUseCase(auditLogRepository)
@@ -88,6 +105,9 @@ data class ObdForgeCompositionRoot(
                 expertUnlockPreferences = ExpertUnlockPreferences(appContext),
                 sessionRepository = sessionRepository,
                 auditLogRepository = auditLogRepository,
+                diagnosticEventRepository = diagnosticEventRepository,
+                diagnosticLogPreferences = diagnosticLogPreferences,
+                diagnosticEventRecorder = diagnosticEventRecorder,
                 safetyGateUseCase = safetyGateUseCase,
                 gatedBidirectionalService = GatedBidirectionalService(
                     executor = ObdBidirectionalExecutor(transportRegistry, protocolRegistry),
@@ -106,6 +126,7 @@ data class ObdForgeCompositionRoot(
                     transportRegistry = transportRegistry,
                     protocolRegistry = protocolRegistry,
                     transportPreferences = transportPreferences,
+                    eventRecorder = diagnosticEventRecorder,
                 ),
                 vehicleHealthScanUseCase = VehicleHealthScanUseCase(
                     transportRegistry = transportRegistry,

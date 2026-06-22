@@ -84,6 +84,7 @@ fun GoldenPathScreen(
     onAboutClose: () -> Unit,
     onSettingsOpen: () -> Unit,
     onSettingsClose: () -> Unit,
+    onReviewPermissions: () -> Unit,
     onUpdateCheckChange: (Boolean) -> Unit,
     onApplyUpdate: () -> Unit,
     liveDataEnabled: Boolean = false,
@@ -133,6 +134,7 @@ fun GoldenPathScreen(
                     onDemoModeChange = onDemoModeChange,
                     onPersonaChange = onPersonaChange,
                     onBack = onSettingsClose,
+                    onReviewPermissions = onReviewPermissions,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(innerPadding),

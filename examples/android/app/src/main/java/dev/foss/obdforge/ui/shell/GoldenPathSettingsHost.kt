@@ -12,6 +12,7 @@ import dev.foss.obdforge.ui.theme.ThemeMode
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.domain.persona.PersonaNavigation
+import dev.foss.obdforge.ui.settings.SettingsDiagnosticsCoordinator
 import dev.foss.obdforge.ui.settings.SettingsSafetyCoordinator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -32,18 +33,30 @@ fun GoldenPathSettingsHost(
     onDemoModeChange: (Boolean) -> Unit,
     onPersonaChange: (PersonaMode) -> Unit,
     onBack: () -> Unit,
+    onReviewPermissions: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val coordinator = androidx.compose.runtime.remember(root) {
         SettingsSafetyCoordinator(root)
     }
+    val diagnosticsCoordinator = androidx.compose.runtime.remember(context, root) {
+        SettingsDiagnosticsCoordinator(context, root)
+    }
     val unlockExpiresAtMs by coordinator.unlockExpiresAtMs.collectAsStateWithLifecycle(initialValue = null)
     val auditEntryCount by coordinator.auditEntryCount.collectAsStateWithLifecycle(initialValue = 0)
     val auditExportJson by coordinator.auditExportJson.collectAsStateWithLifecycle(initialValue = null)
     val expertPinErrorKey by coordinator.expertPinError.collectAsStateWithLifecycle(initialValue = null)
+    val diagnosticLoggingEnabled by diagnosticsCoordinator.loggingEnabled.collectAsStateWithLifecycle(
+        initialValue = dev.foss.obdforge.data.preferences.DiagnosticLogPreferences.DEFAULT_ENABLED,
+    )
+    val diagnosticEntryCount by diagnosticsCoordinator.entryCount.collectAsStateWithLifecycle(initialValue = 0)
+    val diagnosticExportStatus by diagnosticsCoordinator.exportStatusMessage.collectAsStateWithLifecycle(
+        initialValue = null,
+    )
 
-    LaunchedEffect(coordinator) {
+    LaunchedEffect(coordinator, diagnosticsCoordinator) {
         coordinator.refreshAuditCount()
+        diagnosticsCoordinator.refreshEntryCount()
     }
 
     val expertUnlocked = coordinator.isExpertUnlocked(unlockExpiresAtMs)
@@ -70,6 +83,10 @@ fun GoldenPathSettingsHost(
         expertPinErrorMessage = pinErrorMessage,
         auditEntryCount = auditEntryCount,
         auditExportJson = auditExportJson,
+        diagnosticLoggingEnabled = diagnosticLoggingEnabled,
+        diagnosticEntryCount = diagnosticEntryCount,
+        diagnosticExportPathHint = diagnosticsCoordinator.exportPathHint(),
+        diagnosticExportStatusMessage = diagnosticExportStatus,
         onThemeModeSelect = onThemeModeSelect,
         onPersonaSelect = { mode -> scope.launch { onPersonaChange(mode) } },
         onUpdateCheckChange = onUpdateCheckChange,
@@ -82,6 +99,13 @@ fun GoldenPathSettingsHost(
                 coordinator.refreshAuditCount()
             }
         },
+        onDiagnosticLoggingEnabledChange = { enabled ->
+            scope.launch { diagnosticsCoordinator.setLoggingEnabled(enabled) }
+        },
+        onDiagnosticExport = {
+            scope.launch { diagnosticsCoordinator.exportAndShare() }
+        },
+        onReviewPermissions = onReviewPermissions,
         onBack = onBack,
         modifier = modifier,
     )

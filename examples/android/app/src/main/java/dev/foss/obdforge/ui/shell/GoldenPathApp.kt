@@ -21,6 +21,7 @@ import dev.foss.obdforge.ui.theme.next
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.preferences.DemoPreferences
 import dev.foss.obdforge.data.preferences.TransportSelection
+import dev.foss.obdforge.data.preferences.WelcomePreferences
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.domain.livedata.PersonaMode
@@ -28,6 +29,7 @@ import dev.foss.obdforge.ui.demo.DemoModeShell
 import dev.foss.obdforge.ui.connect.ConnectDemoCoordinator
 import dev.foss.obdforge.ui.livedata.LiveDataCoordinator
 import dev.foss.obdforge.ui.session.SessionHistoryCoordinator
+import dev.foss.obdforge.ui.welcome.WelcomeHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -52,6 +54,9 @@ fun GoldenPathApp(
     val donations = remember { DonationsLoader.load(context) }
     val appVersion = BuildConfig.VERSION_NAME
     val activity = context as? ComponentActivity
+    val welcomePreferences = remember { WelcomePreferences(context) }
+    val welcomeCompleted by welcomePreferences.completed.collectAsStateWithLifecycle(initialValue = false)
+    var showWelcomeReview by remember { mutableStateOf(false) }
 
     var connectionStatus by remember {
         mutableStateOf(context.getString(R.string.connection_status_disconnected))
@@ -106,6 +111,7 @@ fun GoldenPathApp(
             transportRegistry = root.transportRegistry,
             protocolRegistry = root.protocolRegistry,
             selection = if (demoModeEnabled) demoSelection else savedTransport,
+            eventRecorder = root.diagnosticEventRecorder,
         )
     }
 
@@ -143,6 +149,18 @@ fun GoldenPathApp(
     )
 
     GoldenPathTheme(themeMode = themeMode) {
+        if (!welcomeCompleted || showWelcomeReview) {
+            WelcomeHost(
+                activity = activity,
+                onContinue = {
+                    scope.launch {
+                        welcomePreferences.setCompleted(true)
+                        showWelcomeReview = false
+                    }
+                },
+            )
+            return@GoldenPathTheme
+        }
         DemoModeShell(demoModeEnabled = demoModeEnabled) {
             GoldenPathRouteHost(
                 route = route,
@@ -203,6 +221,10 @@ fun GoldenPathApp(
                         onAboutClose = { showAbout = false },
                         onSettingsOpen = { showSettings = !showSettings; if (showSettings) showAbout = false },
                         onSettingsClose = { showSettings = false },
+                        onReviewPermissions = {
+                            showSettings = false
+                            showWelcomeReview = true
+                        },
                         onUpdateCheckChange = { enabled ->
                             scope.launch {
                                 appUpdatePreferences.setCheckInterval(

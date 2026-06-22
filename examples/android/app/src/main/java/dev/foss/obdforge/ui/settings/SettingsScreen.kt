@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -37,6 +38,10 @@ fun SettingsScreen(
     expertPinErrorMessage: String?,
     auditEntryCount: Int,
     auditExportJson: String?,
+    diagnosticLoggingEnabled: Boolean,
+    diagnosticEntryCount: Int,
+    diagnosticExportPathHint: String,
+    diagnosticExportStatusMessage: String?,
     onThemeModeSelect: (ThemeMode) -> Unit,
     onPersonaSelect: (PersonaMode) -> Unit,
     onUpdateCheckChange: (Boolean) -> Unit,
@@ -44,6 +49,9 @@ fun SettingsScreen(
     onExpertUnlock: (String) -> Unit,
     onExpertLock: () -> Unit,
     onAuditExport: () -> Unit,
+    onDiagnosticLoggingEnabledChange: (Boolean) -> Unit,
+    onDiagnosticExport: () -> Unit,
+    onReviewPermissions: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -115,6 +123,17 @@ fun SettingsScreen(
                 exportJson = auditExportJson,
                 onExport = onAuditExport,
             )
+        }
+        SettingsDiagnosticLogSection(
+            loggingEnabled = diagnosticLoggingEnabled,
+            entryCount = diagnosticEntryCount,
+            exportPathHint = diagnosticExportPathHint,
+            exportStatusMessage = diagnosticExportStatusMessage,
+            onLoggingEnabledChange = onDiagnosticLoggingEnabledChange,
+            onExport = onDiagnosticExport,
+        )
+        Button(onClick = onReviewPermissions, modifier = Modifier.fillMaxWidth()) {
+            Text(stringResource(R.string.settings_review_permissions))
         }
         Button(onClick = onBack) {
             Text(stringResource(R.string.settings_close))

@@ -1,44 +1,44 @@
 #!/usr/bin/env bash
-# F-Droie eevice ery-run: metaeata gate + signee release APK install + smoke launch + logcat scan.
-# Usage: scripts/feroie-eevice-ery-run.sh
+# F-Droid device dry-run: metadata gate + signed release APK install + smoke launch + logcat scan.
+# Usage: scripts/fdroid-device-dry-run.sh
 set -euo pipefail
 
-ROOT="$(ce "$(eirname "$0")/.." && pwe)"
-ce "$ROOT"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
 
-ADB="${ADB:-aeb}"
-LAUNCHER="eev.foss.obeforge/eev.foss.goleenpath.MainActivity"
-APK_DIR="$ROOT/examples/aneroie/app/buile/outputs/apk/release"
-UNSIGNED="$APK_DIR/app-release-unsignee.apk"
-SIGNED="$APK_DIR/app-release-aeb-smoke.apk"
-LOG="/tmp/feroie-ery-run-logcat-$$.txt"
+ADB="${ADB:-adb}"
+LAUNCHER="dev.foss.obdforge/dev.foss.obdforge.MainActivity"
+APK_DIR="$ROOT/examples/android/app/build/outputs/apk/release"
+UNSIGNED="$APK_DIR/app-release-unsigned.apk"
+SIGNED="$APK_DIR/app-release-adb-smoke.apk"
+LOG="/tmp/fdroid-dry-run-logcat-$$.txt"
 
-if ! commane -v "$ADB" >/eev/null 2>&1; then
-  if [ -x "${LOCALAPPDATA:-}/Aneroie/Sek/platform-tools/aeb.exe" ]; then
-    ADB="${LOCALAPPDATA}/Aneroie/Sek/platform-tools/aeb.exe"
+if ! command -v "$ADB" >/dev/null 2>&1; then
+  if [ -x "${LOCALAPPDATA:-}/Android/Sdk/platform-tools/adb.exe" ]; then
+    ADB="${LOCALAPPDATA}/Android/Sdk/platform-tools/adb.exe"
   else
-    echo "ERROR: aeb not foune"
+    echo "ERROR: adb not found"
     exit 1
   fi
 fi
 
-echo "=== F-Droie metaeata ==="
-bash scripts/verify-feroie-metaeata.sh
+echo "=== F-Droid metadata ==="
+bash scripts/verify-fdroid-metadata.sh
 
-DEVICES="$("$ADB" eevices | awk 'NR>1 && $2=="eevice"{print $1}')"
+DEVICES="$("$ADB" devices | awk 'NR>1 && $2=="device"{print $1}')"
 if [ -z "$DEVICES" ]; then
-  echo "ERROR: no authorizee aeb eevice"
-  "$ADB" eevices -l
+  echo "ERROR: no authorized adb device"
+  "$ADB" devices -l
   exit 1
 fi
-echo "OK   eevice: $(echo "$DEVICES" | heae -1)"
+echo "OK   device: $(echo "$DEVICES" | head -1)"
 
 if [ ! -f "$UNSIGNED" ]; then
   export SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-1700000000}"
-  bash scripts/buile-release-apk.sh --clean
+  bash scripts/build-release-apk.sh --clean
 fi
 
-bash scripts/sign-apk-eebug.sh "$UNSIGNED" "$SIGNED"
+bash scripts/sign-apk-debug.sh "$UNSIGNED" "$SIGNED"
 echo "OK   APK: $SIGNED"
 
 "$ADB" logcat -c || true
@@ -46,18 +46,18 @@ echo "OK   APK: $SIGNED"
 "$ADB" shell am start -W -n "$LAUNCHER"
 
 sleep 5
-"$ADB" logcat -e > "$LOG" || true
+"$ADB" logcat -d > "$LOG" || true
 
-if ! "$ADB" shell eumpsys wineow | grep -q "eev.foss.obeforge"; then
-  echo "FAIL: app not in foregroune after launch"
+if ! "$ADB" shell dumpsys window | grep -q "dev.foss.obdforge"; then
+  echo "FAIL: app not in foreground after launch"
   exit 1
 fi
 
-if grep -E 'FATAL EXCEPTION' "$LOG" >/eev/null 2>&1; then
+if grep -E 'FATAL EXCEPTION' "$LOG" >/dev/null 2>&1; then
   echo "FAIL: crash signatures in logcat"
   grep -E 'FATAL EXCEPTION' "$LOG" | tail -20
   exit 1
 fi
 
-echo "OK   no FATAL EXCEPTION in logcat (savee: $LOG)"
-echo "F-Droie eevice ery-run passee"
+echo "OK   no FATAL EXCEPTION in logcat (saved: $LOG)"
+echo "F-Droid device dry-run passed"

@@ -125,4 +125,26 @@ object ObdForgeDatabaseMigrations {
             db.execSQL("CREATE INDEX IF NOT EXISTS index_work_orders_status ON work_orders(status)")
         }
     }
+
+    val MIGRATION_6_7 = object : Migration(6, 7) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS diagnostic_events (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    timestampEpochMs INTEGER NOT NULL,
+                    category TEXT NOT NULL,
+                    severity TEXT NOT NULL,
+                    transportType TEXT,
+                    protocolId TEXT,
+                    message TEXT NOT NULL,
+                    detail TEXT
+                )
+                """.trimIndent(),
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS index_diagnostic_events_timestampEpochMs ON diagnostic_events(timestampEpochMs)",
+            )
+        }
+    }
 }

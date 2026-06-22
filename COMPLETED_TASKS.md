@@ -2,6 +2,30 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge ADB bench session (2026-06-22)
+
+- ✅ [ADB] Release v1.1.0 smoke on OnePlus CPH2583 (Android 16) — install, cold start, upgrade reinstall
+- ✅ [ADB] Welcome / permissions screen — grant buttons, Continue → demo home
+- ✅ [ADB] Restored `fdroid-device-dry-run.ps1` / `.sh` (corrupted launcher paths)
+- ✅ [AUTO] `verify-fdroid-metadata.sh` on bench host
+- ❌ [ADB] Hardware OBD bench — no adapter on phone OTG/BT; see `docs/ADB_BENCH_RESULTS.md`
+
+## OBDForge Sprint 17 — Diagnostic data parity (2026-06-22)
+
+- ✅ [AGENT] OBDex CC0 DTC catalog (~9.5k codes) + 95 Mode 01 PID ranges (`scripts/import-obdex-data.py`)
+- ✅ [AGENT] PID 0x00 bitmap discovery — ECU-supported live-data PID filter
+- ✅ [AGENT] CSV session export (AndrOBD-style flat rows alongside JSON)
+- ✅ [AGENT] Wal33D manufacturer DTC overlay (~9.4k entries, 33 makes, VIN-aware) — `scripts/import-wal33d-data.py`
+- ✅ [AGENT] On-device connection/crash diagnostic log with Settings export + USB file path
+- 🔲 Live-data charting deferred — blocked on hardware bench (`docs/DIAGNOSTIC_DATA.md`)
+
+## OBDForge Sprint 16 — v1.1.0 release (2026-06-22)
+
+- ✅ [AGENT] Package rename `dev.foss.goldenpath` → `dev.foss.obdforge`
+- ✅ [AGENT] Gemma 3 1B IT optional on-device LLM (`docs/LOCAL_AI.md`)
+- ✅ [HUMAN] v1.1.0 tag + GitHub Release (APK + SBOMs)
+- ✅ [AUTO] `pre-release-gate.sh` + reproducible APK verify on tag
+
 ## OBDForge Sprint 15 — Post-Release Audit (2026-06-22)
 
 - ✅ [AGENT] BLE GATT transport (`BleGattTransportLink`, FFF0 + Nordic UART profiles) with `FallbackTransportLink` (BLE-first Auto)

@@ -89,4 +89,22 @@ class ObdForgeDatabaseMigrationTest {
         }
         room.close()
     }
+
+    @Test
+    fun migrate6To7_addsDiagnosticEventsTable() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val dbName = "migration-test-6-7"
+        context.deleteDatabase(dbName)
+        ObdForgeDatabaseMigrationFixtures.createV1Schema(context, dbName)
+        ObdForgeDatabaseMigrationFixtures.bumpToVersion2(context, dbName)
+
+        val room = ObdForgeDatabaseMigrationFixtures.buildRoom(context, dbName)
+        room.openHelper.writableDatabase.use { migrated ->
+            assertTrue(ObdForgeDatabaseMigrationFixtures.tableExists(migrated, "diagnostic_events"))
+            assertTrue(
+                ObdForgeDatabaseMigrationFixtures.hasColumn(migrated, "diagnostic_events", "category"),
+            )
+        }
+        room.close()
+    }
 }

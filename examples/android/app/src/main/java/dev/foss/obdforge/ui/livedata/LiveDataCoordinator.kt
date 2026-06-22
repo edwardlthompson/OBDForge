@@ -1,5 +1,6 @@
 package dev.foss.obdforge.ui.livedata
 
+import dev.foss.obdforge.data.diagnostics.DiagnosticEventRecorder
 import dev.foss.obdforge.data.livedata.LiveDataStreamEngine
 import dev.foss.obdforge.data.livedata.PidSupportDiscovery
 import dev.foss.obdforge.data.preferences.TransportSelection
@@ -21,6 +22,7 @@ class LiveDataCoordinator(
     private val transportRegistry: TransportRegistry,
     private val protocolRegistry: ProtocolRegistry,
     private val selection: TransportSelection,
+    private val eventRecorder: DiagnosticEventRecorder? = null,
 ) {
     private val _snapshot = MutableStateFlow(LiveDataSnapshot(emptyMap(), 0))
     val snapshot: StateFlow<LiveDataSnapshot> = _snapshot.asStateFlow()
@@ -42,7 +44,13 @@ class LiveDataCoordinator(
             ?: return Result.failure(IllegalStateException("Transport unavailable"))
         activeTransport.connect().getOrElse { return Result.failure(it) }
         val activeProtocol = protocolRegistry.selectBest(activeTransport)
-            ?: return Result.failure(IllegalStateException("No supported protocol"))
+            ?: run {
+                eventRecorder?.recordProtocolFailure(
+                    transportType = selection.type,
+                    message = "No supported protocol for live data",
+                )
+                return Result.failure(IllegalStateException("No supported protocol"))
+            }
         val supportedPids = PidSupportDiscovery().discoverSupportedCatalogPids(
             protocol = activeProtocol,
             transport = activeTransport,

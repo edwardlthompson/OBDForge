@@ -1,6 +1,7 @@
 package dev.foss.obdforge.data.transport
 
 import android.content.Context
+import dev.foss.obdforge.data.diagnostics.DiagnosticEventRecorder
 import dev.foss.obdforge.data.preferences.TransportPreferences
 import dev.foss.obdforge.data.registry.ProtocolRegistry
 import dev.foss.obdforge.data.registry.TransportRegistry
@@ -20,6 +21,7 @@ class BluetoothReconnectUseCase(
     private val transportRegistry: TransportRegistry,
     private val protocolRegistry: ProtocolRegistry,
     private val transportPreferences: TransportPreferences,
+    private val eventRecorder: DiagnosticEventRecorder? = null,
 ) {
     suspend fun connectLastKnown(): Result<BluetoothConnectOutcome> {
         val endpoint = transportPreferences.lastBluetoothEndpoint()
@@ -34,7 +36,14 @@ class BluetoothReconnectUseCase(
         if (transport.state != ConnectionState.Connected) {
             return Result.failure(IllegalStateException("Adapter not connected"))
         }
-        protocolRegistry.selectBest(transport)
+        val protocol = protocolRegistry.selectBest(transport)
+        if (protocol == null) {
+            eventRecorder?.recordProtocolFailure(
+                transportType = TransportType.Bluetooth,
+                message = "No supported protocol after Bluetooth connect",
+            )
+            return Result.failure(IllegalStateException("No supported protocol"))
+        }
         val vinResult = VinResolver.readFromEcu(transport) ?: VinResolver.demoVin()
         transportPreferences.setSelection(TransportType.Bluetooth, endpoint)
         return Result.success(

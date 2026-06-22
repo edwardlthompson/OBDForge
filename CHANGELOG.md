@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-06-22
+
 ### Added
 
 - Wal33D (MIT) manufacturer DTC overlay (~9.4k entries, 33 makes) with VIN-aware lookup in DTC assistant
+- On-device connection/crash diagnostic log (Room-backed, sanitized) with Settings export and USB file path for PC inspection
+- First-run **Welcome** screen explaining Bluetooth, Camera, Network, and USB permissions with per-permission **Grant access** buttons
+- Settings → **Review app permissions** to reopen the welcome flow
 
 ## [1.1.0] - 2026-06-22
 
@@ -52,5 +57,7 @@ First public release — product milestones M1–M13 (Sprints 0–14).
 - Architecture ADRs 0001–0005, personas spec, threat model, privacy policy, and runbook
 - F-Droid submission checklist in `docs/FDROID_SUBMISSION.md`
 
+[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.0
 [1.1.0]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.1.0
 [1.0.0]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.0.0

@@ -14,6 +14,7 @@ internal object ObdForgeDatabaseMigrationFixtures {
                 ObdForgeDatabase.MIGRATION_3_4,
                 ObdForgeDatabase.MIGRATION_4_5,
                 ObdForgeDatabase.MIGRATION_5_6,
+                ObdForgeDatabase.MIGRATION_6_7,
             )
             .build()
 

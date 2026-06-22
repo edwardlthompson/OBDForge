@@ -31,9 +31,12 @@ import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.transport.BluetoothDeviceOption
 import dev.foss.obdforge.data.transport.UsbDeviceOption
 import dev.foss.obdforge.domain.transport.TransportType
+import dev.foss.obdforge.domain.vehicle.VehicleProfile
 import dev.foss.obdforge.ui.connect.TransportPickerCard
 import dev.foss.obdforge.ui.livedata.LiveDataEntryButton
 import dev.foss.obdforge.ui.session.SessionHistoryEntryButton
+import dev.foss.obdforge.ui.vin.VinBadge
+import dev.foss.obdforge.ui.vin.VinResolveEntryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,6 +47,7 @@ fun GoldenPathScreen(
     connectionStatus: String,
     vinDisplay: String,
     vinSourceLabel: String,
+    savedVehicleProfile: VehicleProfile? = null,
     showAbout: Boolean,
     showSettings: Boolean,
     updateCheckEnabled: Boolean,
@@ -79,6 +83,7 @@ fun GoldenPathScreen(
     liveDataEnabled: Boolean = false,
     onOpenLiveData: () -> Unit = {},
     onOpenSessionHistory: () -> Unit = {},
+    onOpenVinResolve: () -> Unit = {},
     compositionRoot: ObdForgeCompositionRoot? = null,
     settingsScope: kotlinx.coroutines.CoroutineScope? = null,
 ) {
@@ -162,6 +167,13 @@ fun GoldenPathScreen(
                     text = vinSourceLabel,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                savedVehicleProfile?.let { profile ->
+                    VinBadge(source = profile.source)
+                }
+                VinResolveEntryButton(
+                    onOpen = onOpenVinResolve,
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 if (!demoModeEnabled) {
                     TransportPickerCard(

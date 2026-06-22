@@ -181,9 +181,9 @@ grep '\[AUTO\]' BUILD_PLAN.md
 ### Sequential
 
 1. ✅ [AGENT] Draft ADR-0005 + `docs/features/vin-resolution.md`
-2. 🔲 [AGENT] Implement `VinResolver` ECU-first chain
-3. 🔲 [AGENT] Barcode scan (CameraX + ML Kit) + manual entry
-4. 🔲 [AGENT] Vehicle profile Room entity + provenance UI
+2. ✅ [AGENT] Implement `VinResolver` ECU-first chain
+3. ✅ [AGENT] Barcode scan (CameraX + ML Kit) + manual entry
+4. ✅ [AGENT] Vehicle profile Room entity + provenance UI
 5. 🔲 [ADB] Bench Mode 09 + barcode fallback smoke
 
 ---
@@ -283,6 +283,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 | OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 2 — Transports (M2) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 10 — VIN Resolution (M10) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 9 — Bidirectional Controls (M9) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 8 — Safety & Audit (M8) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 7 — Demo Mode (M7) | Complete | `COMPLETED_TASKS.md` |

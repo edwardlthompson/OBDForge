@@ -30,6 +30,7 @@ import dev.foss.obdforge.ui.livedata.LiveDataCoordinator
 import dev.foss.obdforge.ui.livedata.LiveDataHost
 import dev.foss.obdforge.ui.session.SessionHistoryCoordinator
 import dev.foss.obdforge.ui.session.SessionHistoryHost
+import dev.foss.obdforge.ui.vin.VinResolveHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -56,6 +57,7 @@ fun GoldenPathApp(
 
     var showLiveData by remember { mutableStateOf(false) }
     var showSessionHistory by remember { mutableStateOf(false) }
+    var showVinResolve by remember { mutableStateOf(false) }
     var connectionStatus by remember {
         mutableStateOf(context.getString(R.string.connection_status_disconnected))
     }
@@ -107,6 +109,10 @@ fun GoldenPathApp(
         SessionHistoryCoordinator(root.sessionRepository)
     }
 
+    val savedVehicleProfile by root.vinProfileRepository.observeLatest()
+        .collectAsStateWithLifecycle(initialValue = null)
+    val activeTransportSelection = if (demoModeEnabled) demoSelection else savedTransport
+
     GoldenPathDemoConnectionEffect(
         demoModeEnabled = demoModeEnabled,
         connectDemo = connectDemo,
@@ -147,6 +153,13 @@ fun GoldenPathApp(
                 scope = scope,
                 onBack = { showSessionHistory = false },
             )
+            showVinResolve -> VinResolveHost(
+                root = root,
+                scope = scope,
+                demoModeEnabled = demoModeEnabled,
+                transportSelection = activeTransportSelection,
+                onBack = { showVinResolve = false },
+            )
             else -> GoldenPathScreen(
             themeMode = themeMode,
             isOnline = isOnline,
@@ -154,6 +167,7 @@ fun GoldenPathApp(
             connectionStatus = connectionStatus,
             vinDisplay = vinDisplay,
             vinSourceLabel = vinSourceLabel,
+            savedVehicleProfile = savedVehicleProfile,
             showAbout = showAbout,
             showSettings = showSettings,
             updateCheckEnabled = SettingsLogic.isUpdateCheckEnabled(checkInterval),
@@ -197,6 +211,7 @@ fun GoldenPathApp(
             liveDataEnabled = demoModeEnabled && connectionStatus.contains("Connected"),
             onOpenLiveData = { showLiveData = true },
             onOpenSessionHistory = { showSessionHistory = true },
+            onOpenVinResolve = { showVinResolve = true },
             compositionRoot = root,
             settingsScope = scope,
         )

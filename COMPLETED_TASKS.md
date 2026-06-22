@@ -2,6 +2,15 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 10 — VIN Resolution (M10) (2026-06-21)
+
+- ✅ [AGENT] `VinValidator` — ISO 3779 normalize, charset, check digit validation
+- ✅ [AGENT] `VinResolver` ECU-first chain — Mode 09 → UDS F190 → KWP → J1939
+- ✅ [AGENT] Room v5 `vehicle_profiles` + `MIGRATION_4_5`; `VinProfileRepository` with source priority
+- ✅ [AGENT] `ResolveVinUseCase` — ECU, manual, barcode paths with validation on save
+- ✅ [AGENT] VIN resolution UI — manual entry, ECU resolve, CameraX + ML Kit barcode scanner, `VinBadge` provenance
+- ✅ [AUTO] `VinValidatorTest`, `VinResolverTest`, `ResolveVinUseCaseTest`, `VinProfileRepositoryTest`, `DemoVinResolutionFlowTest`, migration v4→5; demo VIN check digit corrected
+
 ## OBDForge Sprint 9 — Bidirectional Controls (M9) (2026-06-21)
 
 - ✅ [AGENT] `GatedBidirectionalService` — clear DTC, UDS write, actuator test behind `SafetyGate`

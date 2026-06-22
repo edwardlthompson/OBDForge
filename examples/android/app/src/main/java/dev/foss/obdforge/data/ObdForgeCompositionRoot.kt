@@ -16,6 +16,8 @@ import dev.foss.obdforge.data.persistence.SessionRepository
 import dev.foss.obdforge.data.registry.ProtocolRegistry
 import dev.foss.obdforge.data.registry.TransportRegistry
 import dev.foss.obdforge.data.transport.TransportDiscovery
+import dev.foss.obdforge.data.vin.ResolveVinUseCase
+import dev.foss.obdforge.data.vin.VinProfileRepository
 
 data class ObdForgeCompositionRoot(
     val transportRegistry: TransportRegistry,
@@ -30,6 +32,8 @@ data class ObdForgeCompositionRoot(
     val auditLogRepository: AuditLogRepository,
     val safetyGateUseCase: SafetyGateUseCase,
     val gatedBidirectionalService: GatedBidirectionalService,
+    val vinProfileRepository: VinProfileRepository,
+    val resolveVinUseCase: ResolveVinUseCase,
     val sessionRecorder: SessionRecorder,
 ) {
     companion object {
@@ -44,10 +48,13 @@ data class ObdForgeCompositionRoot(
                     ObdForgeDatabase.MIGRATION_1_2,
                     ObdForgeDatabase.MIGRATION_2_3,
                     ObdForgeDatabase.MIGRATION_3_4,
+                    ObdForgeDatabase.MIGRATION_4_5,
                 )
                 .build()
             val sessionRepository = SessionRepository(database)
             val auditLogRepository = AuditLogRepository(database)
+            val vinProfileRepository = VinProfileRepository(database)
+            val resolveVinUseCase = ResolveVinUseCase(vinProfileRepository)
             val transportRegistry = TransportRegistry.default(appContext)
             val protocolRegistry = ProtocolRegistry.default()
             val safetyGateUseCase = SafetyGateUseCase(auditLogRepository)
@@ -67,6 +74,8 @@ data class ObdForgeCompositionRoot(
                     executor = ObdBidirectionalExecutor(transportRegistry, protocolRegistry),
                     safetyGateUseCase = safetyGateUseCase,
                 ),
+                vinProfileRepository = vinProfileRepository,
+                resolveVinUseCase = resolveVinUseCase,
                 sessionRecorder = SessionRecorder(
                     transportRegistry = transportRegistry,
                     protocolRegistry = protocolRegistry,

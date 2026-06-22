@@ -3,7 +3,7 @@ package dev.foss.obdforge.data.demo
 object DemoObdFixtures {
     const val ADAPTER_RESET: String = "ELM327 v2.3"
     const val ADAPTER_ID: String = "ELM327 v2.3 (OBDForge Demo)"
-    const val DEMO_VIN: String = "1G1JC5444R7251234"
+    const val DEMO_VIN: String = "1G1JC5442R7251234"
     const val PRIMARY_DTC: String = "P0133"
 
     val mode01Responses: Map<Int, String> = mapOf(
@@ -29,6 +29,9 @@ object DemoObdFixtures {
             normalized == "ATE0" || normalized == "ATL0" || normalized == "ATSP0" -> "OK"
             normalized == "STBC 1" || normalized == "STBC 0" || normalized == "STBCOF 1" -> "OK"
             normalized.contains("0902") || normalized == "0902" -> mode09VinResponse()
+            normalized.replace(" ", "") == "22F190" -> udsF190VinResponse()
+            normalized.replace(" ", "") == "1A90" -> kwpVinResponse()
+            normalized == "J1939VIN" -> DemoObdFixtures.DEMO_VIN
             normalized == "03" -> "43 01 33 00 00 00 00 00"
             normalized == "04" -> "44"
             normalized.replace(" ", "").startsWith("2F") -> "6F 01 00"
@@ -41,7 +44,13 @@ object DemoObdFixtures {
     }
 
     private fun mode09VinResponse(): String =
-        "49 02 01 31 47 31 4A 43 35 34 34 34 52 37 32 35 31 32 33 34"
+        "49 02 01 31 47 31 4A 43 35 34 34 32 52 37 32 35 31 32 33 34"
+
+    private fun udsF190VinResponse(): String =
+        "62 F1 90 31 47 31 4A 43 35 34 34 32 52 37 32 35 31 32 33 34"
+
+    private fun kwpVinResponse(): String =
+        "5A 90 31 47 31 4A 43 35 34 34 32 52 37 32 35 31 32 33 34"
 
     private fun mode01CommandResponse(command: String): String {
         val pidHex = command.filter { it.isDigit() || it in 'A'..'F' }

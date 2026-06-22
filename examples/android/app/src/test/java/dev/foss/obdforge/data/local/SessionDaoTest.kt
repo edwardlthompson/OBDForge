@@ -40,7 +40,7 @@ class SessionDaoTest {
                 startedAtEpochMs = 1L,
                 transportType = "Simulated",
                 protocolId = "elm327",
-                vin = "1G1JC5444R7251234",
+                vin = "1G1JC5442R7251234",
             ),
         )
         database.auditLogDao().insert(

@@ -23,7 +23,7 @@ class SessionJsonExporterTest {
                     endedAtEpochMs = 2000L,
                     transportType = "Simulated",
                     protocolId = "elm327",
-                    vin = "1G1JC5444R7251234",
+                    vin = "1G1JC5442R7251234",
                     dtcCount = 1,
                 ),
                 dtcSnapshots = listOf(
@@ -42,7 +42,7 @@ class SessionJsonExporterTest {
                 ),
             ),
         )
-        assertTrue(json.contains("\"vin\": \"1G1JC5444R7251234\""))
+        assertTrue(json.contains("\"vin\": \"1G1JC5442R7251234\""))
         assertTrue(json.contains("P0133"))
         assertTrue(json.contains("freezeFrames"))
     }

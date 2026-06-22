@@ -30,9 +30,9 @@ class ObdIsoResponseParserTest {
     @Test
     fun parseMode09Vin() {
         val vin = ObdIsoResponseParser.parseMode09Vin(
-            "49 02 01 31 47 31 4A 43 35 34 34 34 52 37 32 35 31 32 33 34",
+            "49 02 01 31 47 31 4A 43 35 34 34 32 52 37 32 35 31 32 33 34",
         )
-        assertEquals("1G1JC5444R7251234", vin)
+        assertEquals("1G1JC5442R7251234", vin)
     }
 
     @Test

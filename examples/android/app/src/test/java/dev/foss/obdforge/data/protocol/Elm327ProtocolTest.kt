@@ -63,7 +63,7 @@ class Elm327ProtocolTest {
         transport.connect()
         protocol.probe(transport)
         val vin = protocol.readPid(transport, ObdMode.Mode09, 0x02).getOrThrow()
-        assertEquals("1G1JC5444R7251234", String(vin.payload))
+        assertEquals("1G1JC5442R7251234", String(vin.payload))
     }
 
     @Test

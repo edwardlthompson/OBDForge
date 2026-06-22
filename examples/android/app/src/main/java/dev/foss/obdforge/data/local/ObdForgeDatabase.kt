@@ -9,6 +9,8 @@ import dev.foss.obdforge.data.local.dao.DtcSnapshotDao
 import dev.foss.obdforge.data.local.dao.FreezeFrameDao
 import dev.foss.obdforge.data.local.dao.SessionDao
 import dev.foss.obdforge.data.local.dao.SessionSummaryQuery
+import dev.foss.obdforge.data.local.dao.VehicleProfileDao
+import dev.foss.obdforge.data.local.entity.VehicleProfileEntity
 import dev.foss.obdforge.data.local.entity.AuditLogEntity
 import dev.foss.obdforge.data.local.entity.DtcSnapshotEntity
 import dev.foss.obdforge.data.local.entity.FreezeFrameEntity
@@ -20,8 +22,9 @@ import dev.foss.obdforge.data.local.entity.SessionEntity
         AuditLogEntity::class,
         DtcSnapshotEntity::class,
         FreezeFrameEntity::class,
+        VehicleProfileEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = false,
 )
 abstract class ObdForgeDatabase : RoomDatabase() {
@@ -30,6 +33,7 @@ abstract class ObdForgeDatabase : RoomDatabase() {
     abstract fun auditLogDao(): AuditLogDao
     abstract fun dtcSnapshotDao(): DtcSnapshotDao
     abstract fun freezeFrameDao(): FreezeFrameDao
+    abstract fun vehicleProfileDao(): VehicleProfileDao
 
     companion object {
         const val DB_NAME = "obdforge.db"
@@ -101,6 +105,22 @@ abstract class ObdForgeDatabase : RoomDatabase() {
                 )
                 db.execSQL("DROP TABLE audit_logs")
                 db.execSQL("ALTER TABLE audit_logs_new RENAME TO audit_logs")
+            }
+        }
+
+        val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL(
+                    """
+                    CREATE TABLE IF NOT EXISTS vehicle_profiles (
+                        vin TEXT NOT NULL PRIMARY KEY,
+                        sourceType TEXT NOT NULL,
+                        resolvedAtEpochMs INTEGER NOT NULL,
+                        adapterIdHash TEXT,
+                        label TEXT
+                    )
+                    """.trimIndent(),
+                )
             }
         }
     }

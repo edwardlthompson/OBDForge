@@ -7,6 +7,7 @@ enum class AppDestination {
     LiveData,
     SessionHistory,
     Shop,
+    DtcExplain,
 }
 
 object PersonaNavigation {
@@ -18,17 +19,20 @@ object PersonaNavigation {
             AppDestination.VinResolve,
             AppDestination.LiveData,
             AppDestination.SessionHistory,
+            AppDestination.DtcExplain,
         )
         PersonaMode.SemiPro -> setOf(
             AppDestination.VinResolve,
             AppDestination.LiveData,
             AppDestination.SessionHistory,
+            AppDestination.DtcExplain,
         )
         PersonaMode.Shop -> setOf(
             AppDestination.Shop,
             AppDestination.VinResolve,
             AppDestination.LiveData,
             AppDestination.SessionHistory,
+            AppDestination.DtcExplain,
         )
         PersonaMode.Racing -> setOf(
             AppDestination.LiveData,

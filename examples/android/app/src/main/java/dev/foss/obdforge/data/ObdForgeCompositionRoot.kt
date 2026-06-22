@@ -16,6 +16,8 @@ import dev.foss.obdforge.data.persistence.SessionRepository
 import dev.foss.obdforge.data.registry.ProtocolRegistry
 import dev.foss.obdforge.data.registry.TransportRegistry
 import dev.foss.obdforge.data.transport.TransportDiscovery
+import dev.foss.obdforge.data.ai.ExplainDtcUseCase
+import dev.foss.obdforge.data.ai.LocalAiEngineFactory
 import dev.foss.obdforge.data.shop.ShopRepository
 import dev.foss.obdforge.data.vin.ResolveVinUseCase
 import dev.foss.obdforge.data.vin.VinProfileRepository
@@ -36,6 +38,7 @@ data class ObdForgeCompositionRoot(
     val vinProfileRepository: VinProfileRepository,
     val resolveVinUseCase: ResolveVinUseCase,
     val shopRepository: ShopRepository,
+    val explainDtcUseCase: ExplainDtcUseCase,
     val sessionRecorder: SessionRecorder,
 ) {
     companion object {
@@ -59,6 +62,7 @@ data class ObdForgeCompositionRoot(
             val vinProfileRepository = VinProfileRepository(database)
             val resolveVinUseCase = ResolveVinUseCase(vinProfileRepository)
             val shopRepository = ShopRepository(database)
+            val explainDtcUseCase = LocalAiEngineFactory.createExplainDtcUseCase(appContext)
             val transportRegistry = TransportRegistry.default(appContext)
             val protocolRegistry = ProtocolRegistry.default()
             val safetyGateUseCase = SafetyGateUseCase(auditLogRepository)
@@ -81,6 +85,7 @@ data class ObdForgeCompositionRoot(
                 vinProfileRepository = vinProfileRepository,
                 resolveVinUseCase = resolveVinUseCase,
                 shopRepository = shopRepository,
+                explainDtcUseCase = explainDtcUseCase,
                 sessionRecorder = SessionRecorder(
                     transportRegistry = transportRegistry,
                     protocolRegistry = protocolRegistry,

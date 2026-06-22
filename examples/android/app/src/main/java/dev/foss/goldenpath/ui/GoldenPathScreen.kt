@@ -85,6 +85,7 @@ fun GoldenPathScreen(
     onOpenSessionHistory: () -> Unit = {},
     onOpenVinResolve: () -> Unit = {},
     onOpenShop: () -> Unit = {},
+    onOpenDtcExplain: () -> Unit = {},
     compositionRoot: ObdForgeCompositionRoot? = null,
     settingsScope: kotlinx.coroutines.CoroutineScope? = null,
 ) {
@@ -181,6 +182,7 @@ fun GoldenPathScreen(
                     onOpenSessionHistory = onOpenSessionHistory,
                     onOpenVinResolve = onOpenVinResolve,
                     onOpenShop = onOpenShop,
+                    onOpenDtcExplain = onOpenDtcExplain,
                 )
                 if (!demoModeEnabled) {
                     TransportPickerCard(

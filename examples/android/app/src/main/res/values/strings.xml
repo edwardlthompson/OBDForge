@@ -141,4 +141,19 @@
     <string name="shop_close_out">Close work order</string>
     <string name="shop_error_invalid_intake">Enter customer name and a 17-character VIN</string>
     <string name="shop_error_no_session">No saved session to attach yet</string>
+    <string name="ai_dtc_explain_open">Explain DTC (local AI)</string>
+    <string name="ai_dtc_explain_title">DTC assistant</string>
+    <string name="ai_dtc_explain_back">Back</string>
+    <string name="ai_dtc_explain_submit">Explain code</string>
+    <string name="ai_dtc_explain_loading">Explaining…</string>
+    <string name="ai_dtc_code_label">DTC code</string>
+    <string name="ai_offline_notice">On-device only — works in airplane mode with no cloud inference.</string>
+    <string name="ai_engine_status">LLM: %1$s · Classifier: %2$s</string>
+    <string name="ai_engine_ready">bundled</string>
+    <string name="ai_engine_catalog_fallback">catalog fallback</string>
+    <string name="ai_engine_optional_off">optional (off)</string>
+    <string name="ai_source_catalog">Offline catalog</string>
+    <string name="ai_source_mediapipe">MediaPipe LLM</string>
+    <string name="ai_error_invalid_dtc">Enter a valid OBD-II code (e.g. P0133)</string>
+    <string name="ai_error_unavailable">No local explanation available for this code yet</string>
 </resources>

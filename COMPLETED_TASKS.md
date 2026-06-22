@@ -2,6 +2,14 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 12 — Local AI (M12) (2026-06-21)
+
+- ✅ [AGENT] `MediaPipeLlmEngine` — optional `ai/llm_model.task` asset with catalog fallback
+- ✅ [AGENT] `TfliteDtcClassifier` — optional `ai/dtc_classifier.tflite` hook via `DtcClassifier` SPI
+- ✅ [AGENT] `ExplainDtcUseCase` + offline `DtcCatalog`; persona-aware prompts via `LocalAiPolicy`
+- ✅ [AGENT] DTC explain UI with airplane-mode notice; navigation gated by persona (hidden in Racing)
+- ✅ [AUTO] `DemoAiFlowTest` airplane-mode smoke; catalog/policy/use-case unit tests
+
 ## OBDForge Sprint 11 — Personas & Shop (M11) (2026-06-21)
 
 - ✅ [AGENT] Expanded `PersonaMode` to DIY, Semi-pro, Shop, Racing with `PersonaNavigation` filtered destinations

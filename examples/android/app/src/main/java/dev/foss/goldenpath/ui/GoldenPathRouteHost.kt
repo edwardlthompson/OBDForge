@@ -10,6 +10,7 @@ import dev.foss.obdforge.ui.livedata.LiveDataHost
 import dev.foss.obdforge.ui.session.SessionHistoryCoordinator
 import dev.foss.obdforge.ui.session.SessionHistoryHost
 import dev.foss.obdforge.ui.shop.ShopHost
+import dev.foss.obdforge.ui.ai.DtcExplainHost
 import dev.foss.obdforge.ui.vin.VinResolveHost
 import kotlinx.coroutines.CoroutineScope
 
@@ -19,6 +20,7 @@ enum class GoldenPathRoute {
     SessionHistory,
     VinResolve,
     Shop,
+    DtcExplain,
 }
 
 @Composable
@@ -58,6 +60,12 @@ fun GoldenPathRouteHost(
             root = root,
             scope = scope,
             savedVehicleProfile = savedVehicleProfile,
+            onBack = { onRouteChange(GoldenPathRoute.Home) },
+        )
+        GoldenPathRoute.DtcExplain -> DtcExplainHost(
+            root = root,
+            scope = scope,
+            persona = personaMode,
             onBack = { onRouteChange(GoldenPathRoute.Home) },
         )
         GoldenPathRoute.Home -> homeContent()

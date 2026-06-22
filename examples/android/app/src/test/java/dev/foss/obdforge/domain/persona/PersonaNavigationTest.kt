@@ -25,4 +25,10 @@ class PersonaNavigationTest {
         assertFalse(PersonaNavigation.showsExpertMode(PersonaMode.Diy))
         assertTrue(PersonaNavigation.showsExpertMode(PersonaMode.SemiPro))
     }
+
+    @Test
+    fun dtcExplain_hiddenForRacing() {
+        assertTrue(PersonaNavigation.isVisible(PersonaMode.Diy, AppDestination.DtcExplain))
+        assertFalse(PersonaNavigation.isVisible(PersonaMode.Racing, AppDestination.DtcExplain))
+    }
 }

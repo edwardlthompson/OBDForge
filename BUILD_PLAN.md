@@ -202,9 +202,9 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 ### Sequential
 
-1. 🔲 [AGENT] MediaPipe LLM integration (on-device DTC explain)
-2. 🔲 [AGENT] TFLite optional classifier hooks
-3. 🔲 [AGENT] Airplane-mode AI smoke test
+1. ✅ [AGENT] MediaPipe LLM integration (on-device DTC explain)
+2. ✅ [AGENT] TFLite optional classifier hooks
+3. ✅ [AGENT] Airplane-mode AI smoke test
 
 ---
 
@@ -283,6 +283,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 | OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 2 — Transports (M2) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 12 — Local AI (M12) | Complete (model bundle pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 11 — Personas & Shop (M11) | Complete (operator review pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 10 — VIN Resolution (M10) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 9 — Bidirectional Controls (M9) | Complete (ADB bench pending) | `COMPLETED_TASKS.md` |

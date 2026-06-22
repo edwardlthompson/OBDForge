@@ -202,6 +202,7 @@ fun GoldenPathApp(
                         onOpenSessionHistory = { route = GoldenPathRoute.SessionHistory },
                         onOpenVinResolve = { route = GoldenPathRoute.VinResolve },
                         onOpenShop = { route = GoldenPathRoute.Shop },
+                        onOpenDtcExplain = { route = GoldenPathRoute.DtcExplain },
                         compositionRoot = root,
                         settingsScope = scope,
                     )

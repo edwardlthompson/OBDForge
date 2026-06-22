@@ -1,9 +1,22 @@
-package dev.foss.obdforge.ui.theme
+// GENERATED — do not edit; run scripts/sync-design-tokens.py
+// source-hash: 12784a526aa5
+package dev.foss.goldenpath.ui.theme
 
 import androidx.compose.material3.ColorScheme
 import androidx.compose.ui.graphics.Color
 
-/** OBDForge diagnostic semantic colors (Garage theme extensions). */
+// Raw diagnostic palette
+private val GpLightDiagnosticOk = Color(0xFF2E7D32)
+private val GpDarkDiagnosticOk = Color(0xFF81C784)
+private val GpLightDiagnosticWarn = Color(0xFFF9A825)
+private val GpDarkDiagnosticWarn = Color(0xFFFFD54F)
+private val GpLightDiagnosticFault = Color(0xFFC62828)
+private val GpDarkDiagnosticFault = Color(0xFFEF5350)
+private val GpLightDiagnosticLive = Color(0xFF1565C0)
+private val GpDarkDiagnosticLive = Color(0xFF64B5F6)
+private val GpLightDiagnosticInterlock = Color(0xFF6D6D7A)
+private val GpDarkDiagnosticInterlock = Color(0xFF9E9EAE)
+
 data class DiagnosticPalette(
     val ok: Color,
     val warn: Color,
@@ -13,19 +26,19 @@ data class DiagnosticPalette(
 )
 
 val LightDiagnosticPalette = DiagnosticPalette(
-    ok = Color(0xFF2E7D32),
-    warn = Color(0xFFF9A825),
-    fault = Color(0xFFC62828),
-    live = Color(0xFF1565C0),
-    interlock = Color(0xFF6D6D7A),
+    ok = GpLightDiagnosticOk,
+    warn = GpLightDiagnosticWarn,
+    fault = GpLightDiagnosticFault,
+    live = GpLightDiagnosticLive,
+    interlock = GpLightDiagnosticInterlock,
 )
 
 val DarkDiagnosticPalette = DiagnosticPalette(
-    ok = Color(0xFF81C784),
-    warn = Color(0xFFFFD54F),
-    fault = Color(0xFFEF5350),
-    live = Color(0xFF64B5F6),
-    interlock = Color(0xFF9E9EAE),
+    ok = GpDarkDiagnosticOk,
+    warn = GpDarkDiagnosticWarn,
+    fault = GpDarkDiagnosticFault,
+    live = GpDarkDiagnosticLive,
+    interlock = GpDarkDiagnosticInterlock,
 )
 
 val ColorScheme.diagnosticOk: Color

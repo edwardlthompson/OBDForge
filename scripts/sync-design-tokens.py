@@ -211,6 +211,74 @@ def generate_dimens_kt(tokens: dict, digest: str) -> str:
     return "\n".join(lines)
 
 
+def generate_diagnostic_colors_kt(tokens: dict, digest: str) -> str:
+    diagnostic = tokens.get("diagnostic")
+    if not diagnostic:
+        return ""
+
+    light_fields = []
+    dark_fields = []
+    for key in diagnostic:
+        cap = key[0].upper() + key[1:]
+        light_fields.append(hex_to_compose(f"GpLightDiagnostic{cap}", diagnostic[key]["light"], private=True))
+        dark_fields.append(hex_to_compose(f"GpDarkDiagnostic{cap}", diagnostic[key]["dark"], private=True))
+
+    palette_fields = []
+    for key in diagnostic:
+        cap = key[0].upper() + key[1:]
+        palette_fields.append(f"    {key} = GpLightDiagnostic{cap},")
+
+    dark_palette_fields = []
+    for key in diagnostic:
+        cap = key[0].upper() + key[1:]
+        dark_palette_fields.append(f"    {key} = GpDarkDiagnostic{cap},")
+
+    ext_lines = []
+    for key in diagnostic:
+        cap = key[0].upper() + key[1:]
+        ext_lines.extend([
+            f"val ColorScheme.diagnostic{cap}: Color",
+            f"    get() = if (this.background.luminance() > 0.5f) "
+            f"LightDiagnosticPalette.{key} else DarkDiagnosticPalette.{key}",
+            "",
+        ])
+
+    lines = [
+        f"// {HEADER}",
+        f"// source-hash: {digest}",
+        "package dev.foss.goldenpath.ui.theme",
+        "",
+        "import androidx.compose.material3.ColorScheme",
+        "import androidx.compose.ui.graphics.Color",
+        "",
+        "// Raw diagnostic palette",
+    ]
+    for key in diagnostic:
+        cap = key[0].upper() + key[1:]
+        lines.append(hex_to_compose(f"GpLightDiagnostic{cap}", diagnostic[key]["light"], private=True))
+        lines.append(hex_to_compose(f"GpDarkDiagnostic{cap}", diagnostic[key]["dark"], private=True))
+    lines.extend([
+        "",
+        "data class DiagnosticPalette(",
+        *[f"    val {key}: Color," for key in diagnostic],
+        ")",
+        "",
+        "val LightDiagnosticPalette = DiagnosticPalette(",
+        *[f"    {key} = GpLightDiagnostic{key[0].upper()}{key[1:]}," for key in diagnostic],
+        ")",
+        "",
+        "val DarkDiagnosticPalette = DiagnosticPalette(",
+        *[f"    {key} = GpDarkDiagnostic{key[0].upper()}{key[1:]}," for key in diagnostic],
+        ")",
+        "",
+        *ext_lines,
+        "private fun Color.luminance(): Float =",
+        "    0.299f * red + 0.587f * green + 0.114f * blue",
+        "",
+    ])
+    return "\n".join(lines)
+
+
 def generate_theme_meta(tokens: dict) -> str:
     meta = tokens["meta"]
     payload = {
@@ -253,6 +321,9 @@ def write_outputs(root: Path) -> None:
         (android_theme / "Color.kt").write_text(generate_color_kt(tokens, digest), encoding="utf-8")
         (android_theme / "Type.kt").write_text(generate_type_kt(tokens, digest), encoding="utf-8")
         (android_theme / "Dimens.kt").write_text(generate_dimens_kt(tokens, digest), encoding="utf-8")
+        diagnostic_kt = generate_diagnostic_colors_kt(tokens, digest)
+        if diagnostic_kt:
+            (android_theme / "DiagnosticColors.kt").write_text(diagnostic_kt, encoding="utf-8")
         synced.append("android")
 
     if not synced:

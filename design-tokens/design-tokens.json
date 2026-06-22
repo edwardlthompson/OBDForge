@@ -25,6 +25,13 @@
     "onSurfaceVariant": { "light": "#45465A", "dark": "#C4C4D4" },
     "outline": { "light": "#767680", "dark": "#8E8EA0" }
   },
+  "diagnostic": {
+    "ok": { "light": "#2E7D32", "dark": "#81C784" },
+    "warn": { "light": "#F9A825", "dark": "#FFD54F" },
+    "fault": { "light": "#C62828", "dark": "#EF5350" },
+    "live": { "light": "#1565C0", "dark": "#64B5F6" },
+    "interlock": { "light": "#6D6D7A", "dark": "#9E9EAE" }
+  },
   "typography": {
     "fontFamily": { "sans": "system-ui, -apple-system, sans-serif" },
     "scale": {

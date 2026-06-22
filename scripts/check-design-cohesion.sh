@@ -29,7 +29,7 @@ fi
 if [ -d examples/android/app/src/main/java ]; then
   while IFS= read -r -d '' file; do
     rel="${file#examples/android/app/src/main/java/}"
-    if [[ "$rel" == *"/ui/theme/Color.kt" ]]; then
+    if [[ "$rel" == *"/ui/theme/Color.kt" ]] || [[ "$rel" == *"/ui/theme/DiagnosticColors.kt" ]]; then
       continue
     fi
     if [[ "$rel" != *"/ui/"* ]]; then

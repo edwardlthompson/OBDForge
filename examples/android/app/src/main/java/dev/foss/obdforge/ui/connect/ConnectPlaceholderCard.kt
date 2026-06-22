@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.foss.goldenpath.R
 import dev.foss.goldenpath.ui.theme.SpacingMd
-import dev.foss.obdforge.ui.theme.diagnosticInterlock
+import dev.foss.goldenpath.ui.theme.diagnosticInterlock
 
 @Composable
 fun ConnectPlaceholderCard(

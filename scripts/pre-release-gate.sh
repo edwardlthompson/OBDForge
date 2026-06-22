@@ -60,6 +60,33 @@ else
   echo "OK   check-license-compliance.sh passed"
 fi
 
+if [ -f examples/android/metadata/en-US/title.txt ]; then
+  if ! bash scripts/verify-fdroid-metadata.sh; then
+    echo "FAIL: verify-fdroid-metadata.sh"
+    ERRORS=$((ERRORS + 1))
+  else
+    echo "OK   verify-fdroid-metadata.sh passed"
+  fi
+fi
+
+if [ -n "$VERSION" ] && [ -f CHANGELOG.md ]; then
+  if ! grep -q "^## \\[${VERSION}\\]" CHANGELOG.md; then
+    echo "FAIL: CHANGELOG.md missing ## [${VERSION}] section"
+    ERRORS=$((ERRORS + 1))
+  else
+    echo "OK   CHANGELOG.md contains [${VERSION}] section"
+  fi
+fi
+
+if [ -f CHANGELOG.md ]; then
+  if ! bash scripts/check-changelog-unreleased.sh; then
+    echo "FAIL: check-changelog-unreleased.sh"
+    ERRORS=$((ERRORS + 1))
+  else
+    echo "OK   check-changelog-unreleased.sh passed"
+  fi
+fi
+
 echo ""
 echo "REMINDER: Before tagging, trigger the Release workflow via workflow_dispatch:"
 echo "  GitHub -> Actions -> Release -> Run workflow"

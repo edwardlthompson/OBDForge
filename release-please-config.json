@@ -6,7 +6,9 @@
       "changelog-path": "CHANGELOG.md",
       "extra-files": [
         ".template-version",
-        "TEMPLATE_INDEX.json"
+        "TEMPLATE_INDEX.json",
+        "examples/android/app/build.gradle.kts",
+        "examples/android/metadata/fdroiddata-handoff.yml"
       ],
       "include-component-in-tag": false,
       "include-v-in-tag": true

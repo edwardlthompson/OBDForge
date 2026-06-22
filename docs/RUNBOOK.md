@@ -28,7 +28,7 @@
 4. `[HUMAN]` Approve GitHub release tag
 5. `[AUTO]` Attach APK + SBOM to GitHub Release
 6. `[ADB]` Install release APK smoke on physical device
-7. `[ADB]` Trigger or update F-Droid fdroiddata merge request
+7. `[ADB]` Trigger or update F-Droid fdroiddata merge request — see `docs/FDROID_SUBMISSION.md`
 
 ## Rollback
 

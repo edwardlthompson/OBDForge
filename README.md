@@ -1,5 +1,6 @@
 # OBDForge
 
+![Version](https://img.shields.io/badge/version-1.0.0-blue?style=flat-square)
 ![GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)
 ![Android](https://img.shields.io/badge/platform-Android-3DDC84?style=flat-square)
 ![FOSS](https://img.shields.io/badge/FOSS-F--Droid-2ea043?style=flat-square)
@@ -72,6 +73,7 @@ Sprints **0â€“14** in [`BUILD_PLAN.md`](BUILD_PLAN.md). Product milestones **M1â
 | [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) | STRIDE + adapter trust |
 | [`docs/PRIVACY.md`](docs/PRIVACY.md) | VIN privacy, local-first |
 | [`docs/RUNBOOK.md`](docs/RUNBOOK.md) | Release + F-Droid ops |
+| [`docs/FDROID_SUBMISSION.md`](docs/FDROID_SUBMISSION.md) | F-Droid fdroiddata MR checklist |
 | [`AGENT_MEMORY.md`](AGENT_MEMORY.md) | Stack index for agents |
 
 ## Security

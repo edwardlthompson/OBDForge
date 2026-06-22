@@ -98,7 +98,7 @@ Requires `JAVA_HOME` locally; gate exits `2` when Java is missing.
 
 - ✅ Complete F-Droid `metadata/` (`summary`, `description`, `license`, `sourceCode`, `build` blocks)
 - 🔲 Screenshots and feature graphic paths valid (Fastlane or manual `metadata/en-US/`)
-- 🔲 Version code/name align with `CHANGELOG` and tag
+- ✅ Version code/name align with `CHANGELOG` and tag
 - ✅ Anti-feature flags accurate (ads, tracking, non-free network services)
 
 ### Device verification (ADB)

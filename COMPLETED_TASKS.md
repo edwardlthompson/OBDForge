@@ -2,6 +2,13 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 14 — Release Polish (2026-06-21)
+
+- ✅ [AGENT] OBDForge `CHANGELOG.md` rewritten for v1.0.0; Release Please manifest + `.template-version` bumped
+- ✅ [AGENT] Android `versionName` 1.0.0 / `versionCode` 14; F-Droid changelog + handoff YAML aligned
+- ✅ [AUTO] `pre-release-gate.sh` — F-Droid metadata + CHANGELOG version checks; `release.yml` uploads reproducible APK + SBOM
+- ✅ [AGENT] `docs/FDROID_SUBMISSION.md` — ADB checklist for fdroiddata MR
+
 ## OBDForge Sprint 13 — F-Droid Prep (M13) (2026-06-21)
 
 - ✅ [AGENT] `scripts/build-release-apk.sh` — pinned `SOURCE_DATE_EPOCH=1700000000`; CI `android-release` uses same script

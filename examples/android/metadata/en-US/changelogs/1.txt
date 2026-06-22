@@ -1,1 +1,0 @@
-Initial OBDForge release: multi-transport OBD diagnostics, live data, safety-gated bidirectional controls, VIN resolution, shop workflows, and on-device DTC explain with catalog fallback.

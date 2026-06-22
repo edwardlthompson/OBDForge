@@ -225,8 +225,8 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 ### Sequential
 
-1. 🔲 [AGENT] CHANGELOG + Release Please version bump
-2. 🔲 [AUTO] `pre-release-gate.sh` + SBOM on release
+1. ✅ [AGENT] CHANGELOG + Release Please version bump
+2. ✅ [AUTO] `pre-release-gate.sh` + SBOM on release
 3. 🔲 [ADB] F-Droid submission merge request
 
 ---
@@ -272,7 +272,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 
 ### Pre-release
 
-- 🔲 [AUTO] `pre-release-gate.sh` + reproducible APK verify
+- ✅ `pre-release-gate.sh` + reproducible APK verify
 
 ---
 
@@ -283,6 +283,7 @@ grep '\[AUTO\]' BUILD_PLAN.md
 | OBDForge Sprint 0 — Bootstrap | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 1 — Core Architecture (M1) | Complete | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 2 — Transports (M2) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
+| OBDForge Sprint 14 — Release Polish | Complete (F-Droid MR pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 13 — F-Droid Prep (M13) | Complete (ADB smoke pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 12 — Local AI (M12) | Complete (model bundle pending) | `COMPLETED_TASKS.md` |
 | OBDForge Sprint 11 — Personas & Shop (M11) | Complete (operator review pending) | `COMPLETED_TASKS.md` |

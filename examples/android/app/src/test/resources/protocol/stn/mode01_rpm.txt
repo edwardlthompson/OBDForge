@@ -1,0 +1,12 @@
+> ATZ
+< STN1170 v4.20.1
+> ATE0
+< OK
+> ATL0
+< OK
+> STI
+< STN1170 v4.20.1
+> STP 0
+< OK
+> 010C
+< 41 0C 0F A0

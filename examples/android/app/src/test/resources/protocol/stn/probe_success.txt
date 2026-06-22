@@ -1,0 +1,11 @@
+# STN1170 probe — legacy chip without STPX
+> ATZ
+< STN1170 v4.20.1
+> ATE0
+< OK
+> ATL0
+< OK
+> STI
+< STN1170 v4.20.1
+> STP 0
+< OK

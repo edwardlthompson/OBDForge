@@ -2,6 +2,16 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 4 — OBDLink STN/STPX (M4) (2026-06-21)
+
+- ✅ [AGENT] `StnProtocol` — STI probe, `STP 0` init, Mode 01/03/04/09 via shared ST-link OBD commands
+- ✅ [AGENT] `StnResponseParser` — STN chip ID + STPX capability detection (STN21xx/22xx)
+- ✅ [AGENT] `StpxProtocol` — STPX probe ping, `STPX d:` single-PID path, batched streaming via `STBC`/`STBCOF`
+- ✅ [AGENT] `FastStreamingCapable` SPI + `BatchedObdResponseParser`
+- ✅ [AGENT] `ProtocolRegistry` ranks Stpx → Stn → Elm327 with transcript fixture tests
+- ✅ [AUTO] `./gradlew test assembleDebug` green locally
+- 🔲 [ADB] Bench compare STN vs ELM latency on OBDLink adapter — see Human Backlog
+
 ## OBDForge Sprint 3 — ELM327 Protocol (M3) (2026-06-21)
 
 - ✅ [AGENT] Extended `DiagnosticProtocol` SPI — `readPid`, `readDtcs`, `clearDtcs`

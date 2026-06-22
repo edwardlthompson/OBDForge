@@ -13,6 +13,7 @@ class DiagnosticProtocolContractTest {
     fun protocolId_wireNamesAreStable() {
         assertEquals("elm327", ProtocolId.Elm327.wireName)
         assertEquals("stn", ProtocolId.Stn.wireName)
+        assertEquals("stpx", ProtocolId.Stpx.wireName)
     }
 
     private class FakeTransport : ObdTransport {

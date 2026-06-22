@@ -1,0 +1,15 @@
+# STN2232 probe — STPX-capable OBDLink
+> ATZ
+< STN2232 v5.10.3
+> ATE0
+< OK
+> ATL0
+< OK
+> STI
+< STN2232 v5.10.3
+> STIX
+< STN2232 v5.10.3 [2024.02.01]
+> STP 0
+< OK
+> STPX d:0100
+< 7E8 06 41 00 BE 1F A8 13

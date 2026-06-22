@@ -67,6 +67,8 @@ object ObdIsoResponseParser {
         return "$type$d1${d2.toString(16)}${d3.toString(16)}${d4.toString(16)}".uppercase()
     }
 
+    internal fun normalizeHexForTest(response: String): String = normalizeHex(response)
+
     private fun normalizeHex(response: String): String =
         response.replace(" ", "").replace("\r", "").replace("\n", "").uppercase()
 

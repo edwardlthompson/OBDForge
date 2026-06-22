@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.foss.goldenpath.R
-import dev.foss.goldenpath.ui.theme.SpacingMd
-import dev.foss.goldenpath.ui.theme.SpacingSm
+import dev.foss.obdforge.R
+import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.SpacingSm
 import dev.foss.obdforge.domain.session.SessionDetail
 
 @Composable

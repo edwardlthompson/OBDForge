@@ -2,10 +2,9 @@ package dev.foss.obdforge.data.ai
 
 import android.content.Context
 import com.google.mediapipe.tasks.genai.llminference.LlmInference
+import dev.foss.obdforge.domain.ai.LocalAiConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.IOException
 
 class MediaPipeLlmEngine(
     private val context: Context,
@@ -13,7 +12,7 @@ class MediaPipeLlmEngine(
     private var inference: LlmInference? = null
 
     override val isAvailable: Boolean
-        get() = resolveModelPath(context) != null
+        get() = LlmModelProvisioner.isModelPresent(context)
 
     override suspend fun generate(prompt: String): Result<String> = withContext(Dispatchers.Default) {
         runCatching {
@@ -28,30 +27,18 @@ class MediaPipeLlmEngine(
     }
 
     private fun createInference(): LlmInference {
-        val modelPath = requireNotNull(resolveModelPath(context)) { "LLM model asset missing" }
+        val modelPath = requireNotNull(LlmModelProvisioner.resolveModelPath(context)) {
+            "LLM model missing"
+        }
         val options = LlmInference.LlmInferenceOptions.builder()
             .setModelPath(modelPath)
-            .setMaxTokens(256)
+            .setMaxTokens(LocalAiConfig.MAX_OUTPUT_TOKENS)
+            .setPreferredBackend(LlmInference.Backend.CPU)
             .build()
         return LlmInference.createFromOptions(context, options)
     }
 
     companion object {
-        const val MODEL_ASSET = "ai/llm_model.task"
-
-        fun resolveModelPath(context: Context): String? {
-            return try {
-                context.assets.open(MODEL_ASSET).close()
-                val outFile = File(context.filesDir, "llm_model.task")
-                if (!outFile.exists()) {
-                    context.assets.open(MODEL_ASSET).use { input ->
-                        outFile.outputStream().use { output -> input.copyTo(output) }
-                    }
-                }
-                outFile.absolutePath
-            } catch (_: IOException) {
-                null
-            }
-        }
+        fun resolveModelPath(context: Context): String? = LlmModelProvisioner.resolveModelPath(context)
     }
 }

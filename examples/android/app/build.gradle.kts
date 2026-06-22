@@ -11,15 +11,15 @@ kotlin {
 }
 
 android {
-    namespace = "dev.foss.goldenpath"
+    namespace = "dev.foss.obdforge"
     compileSdk = 37
 
     defaultConfig {
         applicationId = "dev.foss.obdforge"
         minSdk = 26
         targetSdk = 37
-        versionCode = 14
-        versionName = "1.0.0"
+        versionCode = 15
+        versionName = "1.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

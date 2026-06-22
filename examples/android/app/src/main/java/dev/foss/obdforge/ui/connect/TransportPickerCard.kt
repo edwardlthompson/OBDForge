@@ -22,8 +22,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import dev.foss.goldenpath.R
-import dev.foss.goldenpath.ui.theme.SpacingMd
+import dev.foss.obdforge.R
+import dev.foss.obdforge.ui.theme.SpacingMd
 import dev.foss.obdforge.data.transport.BluetoothDeviceOption
 import dev.foss.obdforge.data.transport.UsbDeviceOption
 import dev.foss.obdforge.domain.transport.TransportType

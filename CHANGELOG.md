@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-06-22
+
 ### Added
 
 - BLE GATT transport with Auto link mode (BLE first, Classic SPP fallback)
@@ -16,6 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - OBDex (CC0) import: ~9,500 generic DTC explanations + 95 Mode 01 PID normal ranges (`scripts/import-obdex-data.py`)
 - PID 0x00 bitmap discovery filters live-data dashboard to ECU-supported PIDs
 - CSV session export alongside JSON (AndrOBD-style flat rows)
+- On-device LLM: **Gemma 3 1B IT** (MediaPipe INT4) with optional in-app download; OBDex catalog fallback when absent (`docs/LOCAL_AI.md`)
+
+### Changed
+
+- Android namespace unified: `dev.foss.goldenpath` → `dev.foss.obdforge` (applicationId unchanged)
 
 ## [1.0.0] - 2026-06-21
 
@@ -41,4 +48,5 @@ First public release — product milestones M1–M13 (Sprints 0–14).
 - Architecture ADRs 0001–0005, personas spec, threat model, privacy policy, and runbook
 - F-Droid submission checklist in `docs/FDROID_SUBMISSION.md`
 
+[1.1.0]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.1.0
 [1.0.0]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.0.0

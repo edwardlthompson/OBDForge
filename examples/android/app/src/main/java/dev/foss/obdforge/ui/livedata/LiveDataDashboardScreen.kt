@@ -22,9 +22,9 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import dev.foss.goldenpath.R
-import dev.foss.goldenpath.ui.theme.SpacingMd
-import dev.foss.goldenpath.ui.theme.SpacingSm
+import dev.foss.obdforge.R
+import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.SpacingSm
 import dev.foss.obdforge.domain.livedata.LiveDataLayoutConfig
 import dev.foss.obdforge.domain.livedata.LiveDataLayoutResolver
 import dev.foss.obdforge.domain.livedata.LiveDataSnapshot

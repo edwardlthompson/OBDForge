@@ -171,6 +171,9 @@
     <string name="ai_engine_ready">bundled</string>
     <string name="ai_engine_catalog_fallback">catalog fallback</string>
     <string name="ai_engine_optional_off">optional (off)</string>
+    <string name="ai_llm_download_note">Optional: download Gemma 3 1B (~530 MB, Wi‑Fi recommended) for richer DTC explanations.</string>
+    <string name="ai_llm_download_button">Download on-device LLM</string>
+    <string name="ai_llm_download_progress">Downloading LLM… %1$d%%</string>
     <string name="ai_source_catalog">Offline catalog</string>
     <string name="ai_source_mediapipe">MediaPipe LLM</string>
     <string name="ai_error_invalid_dtc">Enter a valid OBD-II code (e.g. P0133)</string>

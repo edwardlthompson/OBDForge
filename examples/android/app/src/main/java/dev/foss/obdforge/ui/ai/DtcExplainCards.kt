@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Button
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -12,9 +14,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import dev.foss.goldenpath.R
-import dev.foss.goldenpath.ui.theme.SpacingMd
-import dev.foss.goldenpath.ui.theme.SpacingSm
+import dev.foss.obdforge.R
+import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.SpacingSm
 import dev.foss.obdforge.domain.ai.AiExplanationSource
 import dev.foss.obdforge.domain.ai.DtcExplanation
 import dev.foss.obdforge.domain.diagnostics.AbnormalPidReading
@@ -87,4 +89,41 @@ internal fun DtcExplanationCard(explanation: DtcExplanation) {
 internal fun sourceLabelRes(source: AiExplanationSource): Int = when (source) {
     AiExplanationSource.Catalog -> R.string.ai_source_catalog
     AiExplanationSource.MediaPipe -> R.string.ai_source_mediapipe
+}
+
+@Composable
+internal fun LlmDownloadCard(
+    downloadProgress: Float?,
+    onDownload: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Card(modifier = modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.padding(SpacingMd),
+            verticalArrangement = Arrangement.spacedBy(SpacingSm),
+        ) {
+            Text(
+                text = stringResource(R.string.ai_llm_download_note),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (downloadProgress != null) {
+                LinearProgressIndicator(
+                    progress = { downloadProgress },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Text(
+                    text = stringResource(
+                        R.string.ai_llm_download_progress,
+                        (downloadProgress * 100).toInt(),
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                )
+            } else {
+                Button(onClick = onDownload, modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.ai_llm_download_button))
+                }
+            }
+        }
+    }
 }

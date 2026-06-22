@@ -10,8 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.foss.goldenpath.ui.theme.SpacingMd
-import dev.foss.goldenpath.ui.theme.SpacingSm
+import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.SpacingSm
 
 @Composable
 fun PidValueCardContent(

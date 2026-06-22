@@ -8,7 +8,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.foss.goldenpath.R
+import dev.foss.obdforge.R
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.domain.vehicle.VehicleProfile
 import kotlinx.coroutines.CoroutineScope

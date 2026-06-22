@@ -6,7 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import dev.foss.goldenpath.R
+import dev.foss.obdforge.R
 import dev.foss.obdforge.domain.vehicle.VinSourceType
 
 @Composable

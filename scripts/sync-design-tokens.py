@@ -129,7 +129,7 @@ def generate_color_kt(tokens: dict, digest: str) -> str:
     lines = [
         f"// {HEADER}",
         f"// source-hash: {digest}",
-        "package dev.foss.goldenpath.ui.theme",
+        "package dev.foss.obdforge.ui.theme",
         "",
         "import androidx.compose.material3.darkColorScheme",
         "import androidx.compose.material3.lightColorScheme",
@@ -170,7 +170,7 @@ def generate_type_kt(tokens: dict, digest: str) -> str:
     return "\n".join([
         f"// {HEADER}",
         f"// source-hash: {digest}",
-        "package dev.foss.goldenpath.ui.theme",
+        "package dev.foss.obdforge.ui.theme",
         "",
         "import androidx.compose.material3.Typography",
         "import androidx.compose.ui.text.TextStyle",
@@ -191,7 +191,7 @@ def generate_dimens_kt(tokens: dict, digest: str) -> str:
     lines = [
         f"// {HEADER}",
         f"// source-hash: {digest}",
-        "package dev.foss.goldenpath.ui.theme",
+        "package dev.foss.obdforge.ui.theme",
         "",
         "import androidx.compose.ui.unit.dp",
         "",
@@ -246,7 +246,7 @@ def generate_diagnostic_colors_kt(tokens: dict, digest: str) -> str:
     lines = [
         f"// {HEADER}",
         f"// source-hash: {digest}",
-        "package dev.foss.goldenpath.ui.theme",
+        "package dev.foss.obdforge.ui.theme",
         "",
         "import androidx.compose.material3.ColorScheme",
         "import androidx.compose.ui.graphics.Color",
@@ -313,7 +313,7 @@ def write_outputs(root: Path) -> None:
             / "java"
             / "dev"
             / "foss"
-            / "goldenpath"
+            / "obdforge"
             / "ui"
             / "theme"
         )

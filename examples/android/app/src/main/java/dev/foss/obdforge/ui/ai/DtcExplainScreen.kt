@@ -29,8 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.foundation.text.KeyboardOptions
-import dev.foss.goldenpath.R
-import dev.foss.goldenpath.ui.theme.SpacingMd
+import dev.foss.obdforge.R
+import dev.foss.obdforge.ui.theme.SpacingMd
 import dev.foss.obdforge.domain.ai.DtcExplanation
 import dev.foss.obdforge.domain.diagnostics.VehicleHealthSnapshot
 
@@ -42,6 +42,8 @@ fun DtcExplainScreen(
     explanation: DtcExplanation?,
     llmBundled: Boolean,
     classifierBundled: Boolean,
+    llmDownloadProgress: Float?,
+    onDownloadLlm: () -> Unit,
     statusMessage: String?,
     scanning: Boolean,
     loading: Boolean,
@@ -104,6 +106,14 @@ fun DtcExplainScreen(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+            }
+            if (!llmBundled) {
+                item {
+                    LlmDownloadCard(
+                        downloadProgress = llmDownloadProgress,
+                        onDownload = onDownloadLlm,
+                    )
+                }
             }
             item {
                 Text(

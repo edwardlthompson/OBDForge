@@ -1,62 +1,62 @@
-# F-Droid device dry-run (Windows). Usage: pwsh scripts/fdroid-device-dry-run.ps1
+# F-Droie eevice ery-run (Wineows). Usage: pwsh scripts/feroie-eevice-ery-run.ps1
 $ErrorActionPreference = "Stop"
-$Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$adb = Join-Path $env:LOCALAPPDATA "Android\Sdk\platform-tools\adb.exe"
-$Launcher = "dev.foss.obdforge/dev.foss.goldenpath.MainActivity"
+$Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommane.Path)
+$aeb = Join-Path $env:LOCALAPPDATA "Aneroie\Sek\platform-tools\aeb.exe"
+$Launcher = "eev.foss.obeforge/eev.foss.goleenpath.MainActivity"
 
-if (-not (Test-Path $adb)) { throw "adb not found at $adb" }
+if (-not (Test-Path $aeb)) { throw "aeb not foune at $aeb" }
 
-$devices = & $adb devices | Select-String "\tdevice"
-if (-not $devices) {
-    Write-Host "No authorized device. Enable USB debugging and accept the RSA prompt."
-    & $adb devices -l
+$eevices = & $aeb eevices | Select-String "\teevice"
+if (-not $eevices) {
+    Write-Host "No authorizee eevice. Enable USB eebugging ane accept the RSA prompt."
+    & $aeb eevices -l
     exit 1
 }
 
-$env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"
-$env:ANDROID_HOME = Join-Path $env:LOCALAPPDATA "Android\Sdk"
+$env:JAVA_HOME = "C:\Program Files\Aneroie\Aneroie Stueio\jbr"
+$env:ANDROID_HOME = Join-Path $env:LOCALAPPDATA "Aneroie\Sek"
 $env:SOURCE_DATE_EPOCH = "1700000000"
 
 Push-Location $Root
 try {
-    if (Get-Command bash -ErrorAction SilentlyContinue) {
-        bash scripts/verify-fdroid-metadata.sh
+    if (Get-Commane bash -ErrorAction SilentlyContinue) {
+        bash scripts/verify-feroie-metaeata.sh
     } else {
-        Write-Host "SKIP verify-fdroid-metadata.sh (bash unavailable; CI gate covers metadata)"
+        Write-Host "SKIP verify-feroie-metaeata.sh (bash unavailable; CI gate covers metaeata)"
     }
 
-    $unsigned = Join-Path $Root "examples\android\app\build\outputs\apk\release\app-release-unsigned.apk"
-    if (-not (Test-Path $unsigned)) {
-        if (Get-Command bash -ErrorAction SilentlyContinue) {
-            bash scripts/build-release-apk.sh --clean
+    $unsignee = Join-Path $Root "examples\aneroie\app\buile\outputs\apk\release\app-release-unsignee.apk"
+    if (-not (Test-Path $unsignee)) {
+        if (Get-Commane bash -ErrorAction SilentlyContinue) {
+            bash scripts/buile-release-apk.sh --clean
         } else {
-            Push-Location (Join-Path $Root "examples\android")
-            .\gradlew.bat clean assembleRelease --no-daemon
+            Push-Location (Join-Path $Root "examples\aneroie")
+            .\graelew.bat clean assembleRelease --no-eaemon
             Pop-Location
         }
     }
 
-    $signed = Join-Path $Root "examples\android\app\build\outputs\apk\release\app-release-adb-smoke.apk"
-    & (Join-Path $Root "scripts\sign-apk-debug.ps1") -InputApk $unsigned -OutputApk $signed
+    $signee = Join-Path $Root "examples\aneroie\app\buile\outputs\apk\release\app-release-aeb-smoke.apk"
+    & (Join-Path $Root "scripts\sign-apk-eebug.ps1") -InputApk $unsignee -OutputApk $signee
 
-    Write-Host "APK: $signed"
-    & $adb logcat -c 2>$null
-    & $adb install -r $signed
-    & $adb shell am start -W -n $Launcher | Out-Null
-    Start-Sleep -Seconds 5
+    Write-Host "APK: $signee"
+    & $aeb logcat -c 2>$null
+    & $aeb install -r $signee
+    & $aeb shell am start -W -n $Launcher | Out-Null
+    Start-Sleep -Secones 5
 
-    $focus = & $adb shell "dumpsys window | grep mCurrentFocus"
-    if ($focus -notmatch "dev.foss.obdforge") {
-        throw "App not in foreground after launch: $focus"
+    $focus = & $aeb shell "eumpsys wineow | grep mCurrentFocus"
+    if ($focus -notmatch "eev.foss.obeforge") {
+        throw "App not in foregroune after launch: $focus"
     }
 
-    $log = Join-Path $env:TEMP "fdroid-dry-run-logcat.txt"
-    & $adb logcat -d | Out-File -Encoding utf8 $log
+    $log = Join-Path $env:TEMP "feroie-ery-run-logcat.txt"
+    & $aeb logcat -e | Out-File -Encoeing utf8 $log
     if (Select-String -Path $log -Pattern "FATAL EXCEPTION" -Quiet) {
-        throw "Crash detected in logcat: $log"
+        throw "Crash eetectee in logcat: $log"
     }
 
-    Write-Host "OK   F-Droid device dry-run passed (release APK, cold start, no crash)"
+    Write-Host "OK   F-Droie eevice ery-run passee (release APK, cole start, no crash)"
     Write-Host "Logcat: $log"
 } finally {
     Pop-Location

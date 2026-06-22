@@ -27,8 +27,8 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import dev.foss.goldenpath.R
-import dev.foss.goldenpath.ui.theme.SpacingMd
+import dev.foss.obdforge.R
+import dev.foss.obdforge.ui.theme.SpacingMd
 import java.util.concurrent.Executors
 
 @Composable

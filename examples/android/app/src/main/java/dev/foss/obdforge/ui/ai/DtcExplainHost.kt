@@ -7,12 +7,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.foss.goldenpath.R
+import dev.foss.obdforge.R
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
+import dev.foss.obdforge.data.ai.LlmModelProvisioner
 import dev.foss.obdforge.data.ai.MediaPipeLlmEngine
 import dev.foss.obdforge.data.ai.TfliteDtcClassifier
 import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.domain.livedata.PersonaMode
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -39,7 +44,8 @@ fun DtcExplainHost(
     val statusKey by coordinator.statusMessage.collectAsStateWithLifecycle(initialValue = null)
     val scanning by coordinator.scanning.collectAsStateWithLifecycle(initialValue = false)
     val loading by coordinator.loading.collectAsStateWithLifecycle(initialValue = false)
-    val llmBundled = remember { MediaPipeLlmEngine.resolveModelPath(context) != null }
+    var llmBundled by remember { mutableStateOf(MediaPipeLlmEngine.resolveModelPath(context) != null) }
+    var llmDownloadProgress by remember { mutableFloatStateOf(-1f) }
     val classifierBundled = remember { TfliteDtcClassifier.isAssetBundled(context) }
 
     LaunchedEffect(persona, transportSelection) {
@@ -64,6 +70,15 @@ fun DtcExplainHost(
         explanation = explanation,
         llmBundled = llmBundled,
         classifierBundled = classifierBundled,
+        llmDownloadProgress = llmDownloadProgress.takeIf { it >= 0f },
+        onDownloadLlm = {
+            scope.launch {
+                llmDownloadProgress = 0f
+                LlmModelProvisioner.downloadModel(context) { llmDownloadProgress = it }
+                    .onSuccess { llmBundled = true }
+                llmDownloadProgress = -1f
+            }
+        },
         statusMessage = statusMessage,
         scanning = scanning,
         loading = loading,

@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.foss.goldenpath.R
+import dev.foss.obdforge.R
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.preferences.TransportSelection
 import kotlinx.coroutines.CoroutineScope

@@ -30,13 +30,11 @@ import dev.foss.goldenpath.ui.theme.ThemeMode
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.transport.BluetoothDeviceOption
 import dev.foss.obdforge.data.transport.UsbDeviceOption
+import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.domain.vehicle.VehicleProfile
 import dev.foss.obdforge.ui.connect.TransportPickerCard
-import dev.foss.obdforge.ui.livedata.LiveDataEntryButton
-import dev.foss.obdforge.ui.session.SessionHistoryEntryButton
 import dev.foss.obdforge.ui.vin.VinBadge
-import dev.foss.obdforge.ui.vin.VinResolveEntryButton
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,6 +42,7 @@ fun GoldenPathScreen(
     themeMode: ThemeMode,
     isOnline: Boolean,
     demoModeEnabled: Boolean,
+    personaMode: PersonaMode,
     connectionStatus: String,
     vinDisplay: String,
     vinSourceLabel: String,
@@ -59,6 +58,7 @@ fun GoldenPathScreen(
     onThemeToggle: () -> Unit,
     onThemeModeSelect: (ThemeMode) -> Unit,
     onDemoModeChange: (Boolean) -> Unit,
+    onPersonaChange: (PersonaMode) -> Unit,
     transportPickerType: TransportType,
     transportTcpHost: String,
     transportTcpPort: String,
@@ -84,6 +84,7 @@ fun GoldenPathScreen(
     onOpenLiveData: () -> Unit = {},
     onOpenSessionHistory: () -> Unit = {},
     onOpenVinResolve: () -> Unit = {},
+    onOpenShop: () -> Unit = {},
     compositionRoot: ObdForgeCompositionRoot? = null,
     settingsScope: kotlinx.coroutines.CoroutineScope? = null,
 ) {
@@ -119,9 +120,11 @@ fun GoldenPathScreen(
                     themeMode = themeMode,
                     updateCheckEnabled = updateCheckEnabled,
                     demoModeEnabled = demoModeEnabled,
+                    personaMode = personaMode,
                     onThemeModeSelect = onThemeModeSelect,
                     onUpdateCheckChange = onUpdateCheckChange,
                     onDemoModeChange = onDemoModeChange,
+                    onPersonaChange = onPersonaChange,
                     onBack = onSettingsClose,
                     modifier = Modifier
                         .fillMaxSize()
@@ -171,9 +174,13 @@ fun GoldenPathScreen(
                 savedVehicleProfile?.let { profile ->
                     VinBadge(source = profile.source)
                 }
-                VinResolveEntryButton(
-                    onOpen = onOpenVinResolve,
-                    modifier = Modifier.fillMaxWidth(),
+                GoldenPathHomeNav(
+                    persona = personaMode,
+                    liveDataEnabled = liveDataEnabled,
+                    onOpenLiveData = onOpenLiveData,
+                    onOpenSessionHistory = onOpenSessionHistory,
+                    onOpenVinResolve = onOpenVinResolve,
+                    onOpenShop = onOpenShop,
                 )
                 if (!demoModeEnabled) {
                     TransportPickerCard(
@@ -195,15 +202,6 @@ fun GoldenPathScreen(
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
-                LiveDataEntryButton(
-                    enabled = liveDataEnabled,
-                    onOpen = onOpenLiveData,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                SessionHistoryEntryButton(
-                    onOpen = onOpenSessionHistory,
-                    modifier = Modifier.fillMaxWidth(),
-                )
                 Text(
                     text = stringResource(
                         if (isOnline) R.string.app_status_online else R.string.app_status_offline,

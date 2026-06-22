@@ -27,10 +27,7 @@ import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.ui.demo.DemoModeShell
 import dev.foss.obdforge.ui.connect.ConnectDemoCoordinator
 import dev.foss.obdforge.ui.livedata.LiveDataCoordinator
-import dev.foss.obdforge.ui.livedata.LiveDataHost
 import dev.foss.obdforge.ui.session.SessionHistoryCoordinator
-import dev.foss.obdforge.ui.session.SessionHistoryHost
-import dev.foss.obdforge.ui.vin.VinResolveHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -51,13 +48,11 @@ fun GoldenPathApp(
     val pendingRestart by appUpdatePreferences.pendingRestart.collectAsStateWithLifecycle(initialValue = false)
     var showAbout by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
+    var route by remember { mutableStateOf(GoldenPathRoute.Home) }
     val donations = remember { DonationsLoader.load(context) }
     val appVersion = BuildConfig.VERSION_NAME
     val activity = context as? ComponentActivity
 
-    var showLiveData by remember { mutableStateOf(false) }
-    var showSessionHistory by remember { mutableStateOf(false) }
-    var showVinResolve by remember { mutableStateOf(false) }
     var connectionStatus by remember {
         mutableStateOf(context.getString(R.string.connection_status_disconnected))
     }
@@ -140,82 +135,78 @@ fun GoldenPathApp(
 
     GoldenPathTheme(themeMode = themeMode) {
         DemoModeShell(demoModeEnabled = demoModeEnabled) {
-        when {
-            showLiveData -> LiveDataHost(
-                coordinator = liveDataCoordinator,
-                scope = scope,
-                persona = personaMode,
-                onPersonaChange = { mode -> scope.launch { root.personaPreferences.setPersona(mode) } },
-                onBack = { showLiveData = false },
-            )
-            showSessionHistory -> SessionHistoryHost(
-                coordinator = sessionHistoryCoordinator,
-                scope = scope,
-                onBack = { showSessionHistory = false },
-            )
-            showVinResolve -> VinResolveHost(
+            GoldenPathRouteHost(
+                route = route,
                 root = root,
                 scope = scope,
+                personaMode = personaMode,
                 demoModeEnabled = demoModeEnabled,
-                transportSelection = activeTransportSelection,
-                onBack = { showVinResolve = false },
-            )
-            else -> GoldenPathScreen(
-            themeMode = themeMode,
-            isOnline = isOnline,
-            demoModeEnabled = demoModeEnabled,
-            connectionStatus = connectionStatus,
-            vinDisplay = vinDisplay,
-            vinSourceLabel = vinSourceLabel,
-            savedVehicleProfile = savedVehicleProfile,
-            showAbout = showAbout,
-            showSettings = showSettings,
-            updateCheckEnabled = SettingsLogic.isUpdateCheckEnabled(checkInterval),
-            appVersion = appVersion,
-            installedFormat = installedFormat ?: "apk",
-            updateStatus = updateUi.updateStatus,
-            donations = donations,
-            canApplyUpdate = updateUi.canApplyUpdate,
-            onThemeToggle = { scope.launch { themePreferences.setThemeMode(themeMode.next()) } },
-            onThemeModeSelect = { mode -> scope.launch { themePreferences.setThemeMode(mode) } },
-            onDemoModeChange = { enabled ->
-                scope.launch { root.demoPreferences.setEnabled(enabled) }
-            },
-            transportPickerType = transportUi.pickerType,
-            transportTcpHost = transportUi.tcpHost,
-            transportTcpPort = transportUi.tcpPort,
-            transportBluetoothAddress = transportUi.bluetoothAddress,
-            transportUsbDeviceName = transportUi.usbDeviceName,
-            bluetoothDevices = transportUi.bluetoothDevices,
-            usbDevices = transportUi.usbDevices,
-            transportStatusMessage = transportUi.statusMessage,
-            onTransportTypeChange = transportUi.onTypeChange,
-            onTransportTcpHostChange = transportUi.onTcpHostChange,
-            onTransportTcpPortChange = transportUi.onTcpPortChange,
-            onBluetoothSelect = transportUi.onBluetoothSelect,
-            onUsbSelect = transportUi.onUsbSelect,
-            onSaveTransportSelection = transportUi.onSaveSelection,
-            onRequestUsbPermission = transportUi.onRequestUsbPermission,
-            onAboutOpen = { showAbout = !showAbout; if (showAbout) showSettings = false },
-            onAboutClose = { showAbout = false },
-            onSettingsOpen = { showSettings = !showSettings; if (showSettings) showAbout = false },
-            onSettingsClose = { showSettings = false },
-            onUpdateCheckChange = { enabled ->
-                scope.launch {
-                    appUpdatePreferences.setCheckInterval(
-                        SettingsLogic.intervalForToggle(enabled, checkInterval),
+                activeTransportSelection = activeTransportSelection,
+                savedVehicleProfile = savedVehicleProfile,
+                liveDataCoordinator = liveDataCoordinator,
+                sessionHistoryCoordinator = sessionHistoryCoordinator,
+                onRouteChange = { route = it },
+                homeContent = {
+                    GoldenPathScreen(
+                        themeMode = themeMode,
+                        isOnline = isOnline,
+                        demoModeEnabled = demoModeEnabled,
+                        personaMode = personaMode,
+                        connectionStatus = connectionStatus,
+                        vinDisplay = vinDisplay,
+                        vinSourceLabel = vinSourceLabel,
+                        savedVehicleProfile = savedVehicleProfile,
+                        showAbout = showAbout,
+                        showSettings = showSettings,
+                        updateCheckEnabled = SettingsLogic.isUpdateCheckEnabled(checkInterval),
+                        appVersion = appVersion,
+                        installedFormat = installedFormat ?: "apk",
+                        updateStatus = updateUi.updateStatus,
+                        donations = donations,
+                        canApplyUpdate = updateUi.canApplyUpdate,
+                        onThemeToggle = { scope.launch { themePreferences.setThemeMode(themeMode.next()) } },
+                        onThemeModeSelect = { mode -> scope.launch { themePreferences.setThemeMode(mode) } },
+                        onDemoModeChange = { enabled ->
+                            scope.launch { root.demoPreferences.setEnabled(enabled) }
+                        },
+                        onPersonaChange = { mode -> scope.launch { root.personaPreferences.setPersona(mode) } },
+                        transportPickerType = transportUi.pickerType,
+                        transportTcpHost = transportUi.tcpHost,
+                        transportTcpPort = transportUi.tcpPort,
+                        transportBluetoothAddress = transportUi.bluetoothAddress,
+                        transportUsbDeviceName = transportUi.usbDeviceName,
+                        bluetoothDevices = transportUi.bluetoothDevices,
+                        usbDevices = transportUi.usbDevices,
+                        transportStatusMessage = transportUi.statusMessage,
+                        onTransportTypeChange = transportUi.onTypeChange,
+                        onTransportTcpHostChange = transportUi.onTcpHostChange,
+                        onTransportTcpPortChange = transportUi.onTcpPortChange,
+                        onBluetoothSelect = transportUi.onBluetoothSelect,
+                        onUsbSelect = transportUi.onUsbSelect,
+                        onSaveTransportSelection = transportUi.onSaveSelection,
+                        onRequestUsbPermission = transportUi.onRequestUsbPermission,
+                        onAboutOpen = { showAbout = !showAbout; if (showAbout) showSettings = false },
+                        onAboutClose = { showAbout = false },
+                        onSettingsOpen = { showSettings = !showSettings; if (showSettings) showAbout = false },
+                        onSettingsClose = { showSettings = false },
+                        onUpdateCheckChange = { enabled ->
+                            scope.launch {
+                                appUpdatePreferences.setCheckInterval(
+                                    SettingsLogic.intervalForToggle(enabled, checkInterval),
+                                )
+                            }
+                        },
+                        onApplyUpdate = updateUi.onApplyUpdate,
+                        liveDataEnabled = demoModeEnabled && connectionStatus.contains("Connected"),
+                        onOpenLiveData = { route = GoldenPathRoute.LiveData },
+                        onOpenSessionHistory = { route = GoldenPathRoute.SessionHistory },
+                        onOpenVinResolve = { route = GoldenPathRoute.VinResolve },
+                        onOpenShop = { route = GoldenPathRoute.Shop },
+                        compositionRoot = root,
+                        settingsScope = scope,
                     )
-                }
-            },
-            onApplyUpdate = updateUi.onApplyUpdate,
-            liveDataEnabled = demoModeEnabled && connectionStatus.contains("Connected"),
-            onOpenLiveData = { showLiveData = true },
-            onOpenSessionHistory = { showSessionHistory = true },
-            onOpenVinResolve = { showVinResolve = true },
-            compositionRoot = root,
-            settingsScope = scope,
-        )
-        }
+                },
+            )
         }
     }
 }

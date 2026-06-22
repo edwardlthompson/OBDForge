@@ -9,11 +9,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,19 +21,24 @@ import androidx.compose.ui.res.stringResource
 import dev.foss.goldenpath.R
 import dev.foss.goldenpath.ui.theme.SpacingMd
 import dev.foss.goldenpath.ui.theme.ThemeMode
+import dev.foss.obdforge.domain.livedata.PersonaMode
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SettingsScreen(
     themeMode: ThemeMode,
+    personaMode: PersonaMode,
     updateCheckEnabled: Boolean,
     demoModeEnabled: Boolean,
+    showExpertSection: Boolean,
+    showAuditSection: Boolean,
     expertUnlocked: Boolean,
     expertUnlockStatusMessage: String,
     expertPinErrorMessage: String?,
     auditEntryCount: Int,
     auditExportJson: String?,
     onThemeModeSelect: (ThemeMode) -> Unit,
+    onPersonaSelect: (PersonaMode) -> Unit,
     onUpdateCheckChange: (Boolean) -> Unit,
     onDemoModeChange: (Boolean) -> Unit,
     onExpertUnlock: (String) -> Unit,
@@ -52,6 +57,10 @@ fun SettingsScreen(
         Text(
             text = stringResource(R.string.settings_title),
             style = MaterialTheme.typography.headlineSmall,
+        )
+        SettingsPersonaSection(
+            persona = personaMode,
+            onPersonaSelect = onPersonaSelect,
         )
         Text(text = stringResource(R.string.settings_theme_label))
         FlowRow(horizontalArrangement = Arrangement.spacedBy(SpacingMd)) {
@@ -91,18 +100,22 @@ fun SettingsScreen(
             )
             Switch(checked = updateCheckEnabled, onCheckedChange = onUpdateCheckChange)
         }
-        SettingsExpertModeSection(
-            expertUnlocked = expertUnlocked,
-            unlockStatusMessage = expertUnlockStatusMessage,
-            pinErrorMessage = expertPinErrorMessage,
-            onUnlock = onExpertUnlock,
-            onLock = onExpertLock,
-        )
-        SettingsAuditExportSection(
-            auditEntryCount = auditEntryCount,
-            exportJson = auditExportJson,
-            onExport = onAuditExport,
-        )
+        if (showExpertSection) {
+            SettingsExpertModeSection(
+                expertUnlocked = expertUnlocked,
+                unlockStatusMessage = expertUnlockStatusMessage,
+                pinErrorMessage = expertPinErrorMessage,
+                onUnlock = onExpertUnlock,
+                onLock = onExpertLock,
+            )
+        }
+        if (showAuditSection) {
+            SettingsAuditExportSection(
+                auditEntryCount = auditEntryCount,
+                exportJson = auditExportJson,
+                onExport = onAuditExport,
+            )
+        }
         Button(onClick = onBack) {
             Text(stringResource(R.string.settings_close))
         }

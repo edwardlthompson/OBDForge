@@ -10,6 +10,8 @@ import dev.foss.goldenpath.R
 import dev.foss.goldenpath.ui.settings.SettingsScreen
 import dev.foss.goldenpath.ui.theme.ThemeMode
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
+import dev.foss.obdforge.domain.livedata.PersonaMode
+import dev.foss.obdforge.domain.persona.PersonaNavigation
 import dev.foss.obdforge.ui.settings.SettingsSafetyCoordinator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -22,11 +24,13 @@ fun GoldenPathSettingsHost(
     scope: CoroutineScope,
     root: ObdForgeCompositionRoot,
     themeMode: ThemeMode,
+    personaMode: PersonaMode,
     updateCheckEnabled: Boolean,
     demoModeEnabled: Boolean,
     onThemeModeSelect: (ThemeMode) -> Unit,
     onUpdateCheckChange: (Boolean) -> Unit,
     onDemoModeChange: (Boolean) -> Unit,
+    onPersonaChange: (PersonaMode) -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -56,14 +60,18 @@ fun GoldenPathSettingsHost(
 
     SettingsScreen(
         themeMode = themeMode,
+        personaMode = personaMode,
         updateCheckEnabled = updateCheckEnabled,
         demoModeEnabled = demoModeEnabled,
+        showExpertSection = PersonaNavigation.showsExpertMode(personaMode),
+        showAuditSection = PersonaNavigation.showsAuditExport(personaMode),
         expertUnlocked = expertUnlocked,
         expertUnlockStatusMessage = unlockStatusMessage,
         expertPinErrorMessage = pinErrorMessage,
         auditEntryCount = auditEntryCount,
         auditExportJson = auditExportJson,
         onThemeModeSelect = onThemeModeSelect,
+        onPersonaSelect = { mode -> scope.launch { onPersonaChange(mode) } },
         onUpdateCheckChange = onUpdateCheckChange,
         onDemoModeChange = onDemoModeChange,
         onExpertUnlock = { pin -> scope.launch { coordinator.unlockExpert(pin) } },

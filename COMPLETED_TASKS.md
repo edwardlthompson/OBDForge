@@ -2,6 +2,15 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 11 — Personas & Shop (M11) (2026-06-21)
+
+- ✅ [AGENT] Expanded `PersonaMode` to DIY, Semi-pro, Shop, Racing with `PersonaNavigation` filtered destinations
+- ✅ [AGENT] Settings persona switcher; expert/audit sections gated by persona; live data layout follows global persona
+- ✅ [AGENT] Updated `PersonaPolicy` — Semi-pro limited bidirectional; Shop/Racing full writes behind interlocks
+- ✅ [AGENT] Room v6 `customers` + `work_orders` + `MIGRATION_5_6`; `ShopRepository` intake → inspect → close-out
+- ✅ [AGENT] Shop UI — work order list, intake form (VIN prefill), detail with session attach and close-out
+- ✅ [AUTO] `PersonaNavigationTest`, `ShopRepositoryTest`, `DemoShopFlowTest`, migration v5→6
+
 ## OBDForge Sprint 10 — VIN Resolution (M10) (2026-06-21)
 
 - ✅ [AGENT] `VinValidator` — ISO 3779 normalize, charset, check digit validation

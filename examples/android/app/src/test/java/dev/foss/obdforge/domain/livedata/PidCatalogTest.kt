@@ -14,7 +14,9 @@ class PidCatalogTest {
     @Test
     fun forPersona_racingIncludesMoreThanDiy() {
         val diy = PidCatalog.forPersona(PersonaMode.Diy)
+        val semiPro = PidCatalog.forPersona(PersonaMode.SemiPro)
         val racing = PidCatalog.forPersona(PersonaMode.Racing)
-        assertTrue(racing.size > diy.size)
+        assertTrue(semiPro.size > diy.size)
+        assertTrue(racing.size >= semiPro.size)
     }
 }

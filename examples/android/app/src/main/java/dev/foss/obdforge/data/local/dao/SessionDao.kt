@@ -22,4 +22,7 @@ interface SessionDao {
 
     @Query("SELECT COUNT(*) FROM sessions")
     suspend fun count(): Int
+
+    @Query("SELECT * FROM sessions ORDER BY startedAtEpochMs DESC LIMIT 1")
+    suspend fun latest(): SessionEntity?
 }

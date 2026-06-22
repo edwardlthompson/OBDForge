@@ -23,6 +23,8 @@ object PidCatalog {
 
     fun forPersona(persona: PersonaMode): List<PidDefinition> = when (persona) {
         PersonaMode.Diy -> listOf(rpm, speed, coolant, throttle)
+        PersonaMode.SemiPro -> listOf(rpm, speed, coolant, load, throttle, intake)
+        PersonaMode.Shop -> all
         PersonaMode.Racing -> all
     }
 }

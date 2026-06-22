@@ -13,7 +13,6 @@ fun LiveDataHost(
     coordinator: LiveDataCoordinator,
     scope: CoroutineScope,
     persona: PersonaMode,
-    onPersonaChange: (PersonaMode) -> Unit,
     onBack: () -> Unit,
 ) {
     val snapshot by coordinator.snapshot.collectAsStateWithLifecycle(
@@ -34,7 +33,6 @@ fun LiveDataHost(
         snapshot = snapshot,
         persona = persona,
         paused = paused,
-        onPersonaChange = onPersonaChange,
         onPauseToggle = {
             if (paused) coordinator.resume() else coordinator.pause()
         },

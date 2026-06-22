@@ -37,7 +37,6 @@ fun LiveDataDashboardScreen(
     snapshot: LiveDataSnapshot,
     persona: PersonaMode,
     paused: Boolean,
-    onPersonaChange: (PersonaMode) -> Unit,
     onPauseToggle: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -69,7 +68,7 @@ fun LiveDataDashboardScreen(
                 .padding(SpacingMd),
             verticalArrangement = Arrangement.spacedBy(SpacingMd),
         ) {
-            LiveDataPersonaChips(persona = persona, onPersonaChange = onPersonaChange)
+            LiveDataPersonaLabel(persona = persona)
             LiveDataPidGrid(
                 layout = layout,
                 snapshot = snapshot,
@@ -80,28 +79,21 @@ fun LiveDataDashboardScreen(
 }
 
 @Composable
-private fun LiveDataPersonaChips(
-    persona: PersonaMode,
-    onPersonaChange: (PersonaMode) -> Unit,
-) {
-    Column(verticalArrangement = Arrangement.spacedBy(SpacingSm)) {
-        Text(
-            text = stringResource(R.string.livedata_layout_label),
-            style = MaterialTheme.typography.labelLarge,
-        )
-        androidx.compose.foundation.layout.Row(horizontalArrangement = Arrangement.spacedBy(SpacingSm)) {
-            FilterChip(
-                selected = persona == PersonaMode.Diy,
-                onClick = { onPersonaChange(PersonaMode.Diy) },
-                label = { Text(stringResource(R.string.livedata_persona_diy)) },
-            )
-            FilterChip(
-                selected = persona == PersonaMode.Racing,
-                onClick = { onPersonaChange(PersonaMode.Racing) },
-                label = { Text(stringResource(R.string.livedata_persona_racing)) },
-            )
-        }
-    }
+private fun LiveDataPersonaLabel(persona: PersonaMode) {
+    Text(
+        text = stringResource(
+            R.string.livedata_persona_active,
+            stringResource(personaLabelRes(persona)),
+        ),
+        style = MaterialTheme.typography.labelLarge,
+    )
+}
+
+private fun personaLabelRes(mode: PersonaMode): Int = when (mode) {
+    PersonaMode.Diy -> R.string.persona_diy
+    PersonaMode.SemiPro -> R.string.persona_semi_pro
+    PersonaMode.Shop -> R.string.persona_shop
+    PersonaMode.Racing -> R.string.persona_racing
 }
 
 @Composable

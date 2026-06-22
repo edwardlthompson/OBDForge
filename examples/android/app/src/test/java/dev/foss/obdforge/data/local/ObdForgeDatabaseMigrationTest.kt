@@ -85,6 +85,25 @@ class ObdForgeDatabaseMigrationTest {
         room.close()
     }
 
+    @Test
+    fun migrate5To6_addsShopTables() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        val dbName = "migration-test-5-6"
+        context.deleteDatabase(dbName)
+        createV1Schema(context, dbName)
+        SQLiteDatabase.openOrCreateDatabase(context.getDatabasePath(dbName).absolutePath, null).use {
+            it.execSQL("ALTER TABLE sessions ADD COLUMN endedAtEpochMs INTEGER")
+            it.version = 2
+        }
+
+        val room = buildRoom(context, dbName)
+        room.openHelper.writableDatabase.use { migrated ->
+            assertTrue(tableExists(migrated, "customers"))
+            assertTrue(tableExists(migrated, "work_orders"))
+        }
+        room.close()
+    }
+
     private fun buildRoom(context: Context, dbName: String) =
         Room.databaseBuilder(context, ObdForgeDatabase::class.java, dbName)
             .addMigrations(
@@ -92,6 +111,7 @@ class ObdForgeDatabaseMigrationTest {
                 ObdForgeDatabase.MIGRATION_2_3,
                 ObdForgeDatabase.MIGRATION_3_4,
                 ObdForgeDatabase.MIGRATION_4_5,
+                ObdForgeDatabase.MIGRATION_5_6,
             )
             .build()
 

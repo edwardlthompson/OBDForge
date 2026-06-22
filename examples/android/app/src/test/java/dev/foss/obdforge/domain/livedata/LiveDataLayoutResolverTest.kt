@@ -16,6 +16,21 @@ class LiveDataLayoutResolverTest {
     }
 
     @Test
+    fun semiProLayout_usesMediumDensity() {
+        val layout = LiveDataLayoutResolver.resolve(PersonaMode.SemiPro)
+        assertFalse(layout.compact)
+        assertEquals(3, layout.columns)
+        assertEquals(6, layout.pids.size)
+    }
+
+    @Test
+    fun shopLayout_usesCompactGrid() {
+        val layout = LiveDataLayoutResolver.resolve(PersonaMode.Shop)
+        assertTrue(layout.compact)
+        assertEquals(4, layout.columns)
+    }
+
+    @Test
     fun racingLayout_usesCompactGridAndHighRate() {
         val layout = LiveDataLayoutResolver.resolve(PersonaMode.Racing)
         assertTrue(layout.compact)

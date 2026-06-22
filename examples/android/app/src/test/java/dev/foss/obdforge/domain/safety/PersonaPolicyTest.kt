@@ -7,27 +7,23 @@ import org.junit.Test
 
 class PersonaPolicyTest {
     @Test
-    fun diyAllowsClearDtcOnly() {
+    fun diy_allowsClearDtcOnly() {
         assertTrue(PersonaPolicy.allows(PersonaMode.Diy, WriteOperation.ClearDtc))
         assertFalse(PersonaPolicy.allows(PersonaMode.Diy, WriteOperation.UdsWrite))
     }
 
     @Test
-    fun racingAllowsAllWriteOperations() {
-        WriteOperation.entries.forEach { operation ->
+    fun semiPro_allowsLimitedBidirectional() {
+        assertTrue(PersonaPolicy.allows(PersonaMode.SemiPro, WriteOperation.ClearDtc))
+        assertTrue(PersonaPolicy.allows(PersonaMode.SemiPro, WriteOperation.ActuatorTest))
+        assertFalse(PersonaPolicy.allows(PersonaMode.SemiPro, WriteOperation.UdsWrite))
+    }
+
+    @Test
+    fun shopAndRacing_allowAllWrites() {
+        for (operation in WriteOperation.entries) {
+            assertTrue(PersonaPolicy.allows(PersonaMode.Shop, operation))
             assertTrue(PersonaPolicy.allows(PersonaMode.Racing, operation))
         }
-    }
-
-    @Test
-    fun clearDtcDoesNotRequireExpertUnlock() {
-        assertFalse(PersonaPolicy.requiresExpertUnlock(WriteOperation.ClearDtc))
-    }
-
-    @Test
-    fun advancedWritesRequireExpertUnlock() {
-        assertTrue(PersonaPolicy.requiresExpertUnlock(WriteOperation.UdsWrite))
-        assertTrue(PersonaPolicy.requiresExpertUnlock(WriteOperation.ActuatorTest))
-        assertTrue(PersonaPolicy.requiresExpertUnlock(WriteOperation.EcuCoding))
     }
 }

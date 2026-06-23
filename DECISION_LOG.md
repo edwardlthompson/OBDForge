@@ -18,6 +18,13 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-06-21 — Release APK signing outside Gradle
+- **Status:** Accepted
+- **Context:** F-Droid requires reproducible unsigned APK builds; sideload users want a properly signed release artifact without manual `jarsigner` steps each time
+- **Decision:** Post-build signing via `scripts/sign-release-apk.sh` with env-var keystore contract; optional CI upload when GitHub secrets are configured; unsigned APK remains the reproducible default
+- **Alternatives considered:** Gradle `signingConfigs` in repo (rejected: secrets in CI only, harder to keep unsigned reproducible path clean); debug-only signing (rejected: not suitable for sideload distribution)
+- **Consequences:** Maintainers run `generate-release-keystore` once locally; CI signed APK is opt-in via secrets
+
 ### 2026-06-20 — Repo-wide checklist status markers
 - **Status:** Accepted
 - **Context:** BUILD_PLAN and scattered checklists used mixed ⬜ / `- [ ]` / ✅ formats; inconsistent in Markdown Preview vs source

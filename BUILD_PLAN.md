@@ -1,6 +1,6 @@
 # Build Plan
 
-> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–17).
+> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–18).
 
 ## Owner labels
 
@@ -25,7 +25,7 @@
 
 ## Active board
 
-> **v1.2.0** shipping 2026-06-22. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.0]`.
+> **v1.2.1** shipping 2026-06-21. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.1]`.
 
 ### Open work
 
@@ -37,14 +37,6 @@
 | 4 | HUMAN | Shop operator review | Optional real-world workflow feedback |
 | 5 | HUMAN | Post-release monitoring | Issues, adapter notes → `KNOWLEDGE_BASE.md` |
 | 6 | HUMAN | Configure GitHub signing secrets | `OBDFORGE_KEYSTORE_BASE64` + passwords for CI signed APK upload |
-
-### Recently completed (Sprint 18)
-
-| Task | Owner |
-|------|-------|
-| ✅ Adaptive launcher icon (OBD port + check-engine, high contrast) | AGENT |
-| ✅ Automated release APK signing (`sign-release-apk`, `build-release-apk.sh --sign`) | AGENT |
-| ✅ F-Droid store `icon.png` + README icon | AGENT |
 
 ### Blocked — hardware bench
 
@@ -77,10 +69,10 @@ Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
 ### Pre-release
 
-- ✅ `pre-release-gate.sh` + reproducible APK verify (v1.0.0, v1.1.0, v1.2.0)
+- ✅ `pre-release-gate.sh` + reproducible APK verify (v1.0.0, v1.1.0, v1.2.0, v1.2.1)
 
 ---
 
 ## Archive
 
-Sprints **0–17** complete. Sprint detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).
+Sprints **0–18** complete. Sprint detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).

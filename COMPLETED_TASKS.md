@@ -2,6 +2,13 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 18 — Icon and release signing (2026-06-21)
+
+- ✅ [AGENT] Adaptive launcher icon (OBD-II port + check-engine, high contrast)
+- ✅ [AGENT] Automated release APK signing (`sign-release-apk`, `build-release-apk.sh --sign`, optional CI upload)
+- ✅ [AGENT] F-Droid store `icon.png` + README icon
+- ✅ [HUMAN] v1.2.1 tag + GitHub Release (APK + SBOMs)
+
 ## OBDForge ADB bench session (2026-06-22)
 
 - ✅ [ADB] Release v1.1.0 smoke on OnePlus CPH2583 (Android 16) — install, cold start, upgrade reinstall

@@ -111,13 +111,18 @@ jobs:
         run: bash scripts/build-release-apk.sh --clean
 
       - name: Sign release APK
-        if: hashFiles('examples/android/app/build.gradle.kts') != '' && secrets.OBDFORGE_KEYSTORE_BASE64 != ''
+        if: hashFiles('examples/android/app/build.gradle.kts') != ''
         env:
+          OBDFORGE_KEYSTORE_BASE64: ${{ secrets.OBDFORGE_KEYSTORE_BASE64 }}
           OBDFORGE_KEYSTORE_PASSWORD: ${{ secrets.OBDFORGE_KEYSTORE_PASSWORD }}
           OBDFORGE_KEY_ALIAS: ${{ secrets.OBDFORGE_KEY_ALIAS }}
           OBDFORGE_KEY_PASSWORD: ${{ secrets.OBDFORGE_KEY_PASSWORD }}
         run: |
-          echo "${{ secrets.OBDFORGE_KEYSTORE_BASE64 }}" | base64 -d > /tmp/obdforge-release.keystore
+          if [ -z "${OBDFORGE_KEYSTORE_BASE64}" ]; then
+            echo "Skipping release signing — OBDFORGE_KEYSTORE_BASE64 not configured"
+            exit 0
+          fi
+          echo "${OBDFORGE_KEYSTORE_BASE64}" | base64 -d > /tmp/obdforge-release.keystore
           export OBDFORGE_KEYSTORE_PATH=/tmp/obdforge-release.keystore
           bash scripts/sign-release-apk.sh
 

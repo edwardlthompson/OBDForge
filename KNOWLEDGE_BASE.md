@@ -109,3 +109,12 @@
 | **Cause** | First-run `WelcomeHost` covers home until user taps **Continue to app** |
 | **Fix** | In `GoldenPathUiTest`, dismiss welcome via `onNodeWithText("Continue to app").performClick()` (try/catch if already completed) |
 | **Prevention** | Any new first-run gate must update androidTest smoke helpers before `/ship` |
+
+### KB-011 — `secrets` in GitHub Actions `if:` expressions
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | `release.yml` fails to parse at dispatch or tag push: `Unrecognized named-value: 'secrets'` |
+| **Cause** | GitHub Actions forbids referencing `secrets.*` directly in job/step `if:` conditions |
+| **Fix** | Pass secret into step `env:` and gate inside the shell script (`if [ -z "$OBDFORGE_KEYSTORE_BASE64" ]; then exit 0; fi`) |
+| **Prevention** | Never use `secrets.FOO != ''` in `if:`; optional CI steps skip in-script when env is empty |

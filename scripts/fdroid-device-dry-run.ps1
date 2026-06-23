@@ -31,8 +31,15 @@ try {
         Pop-Location
     }
 
+    $releaseSigned = Join-Path $Root "examples\android\app\build\outputs\apk\release\app-release-signed.apk"
     $signed = Join-Path $Root "examples\android\app\build\outputs\apk\release\app-release-adb-smoke.apk"
-    & (Join-Path $Root "scripts\sign-apk-debug.ps1") -InputApk $unsigned -OutputApk $signed
+    $signScript = Join-Path $Root "scripts\sign-release-apk.ps1"
+    if ((Test-Path $signScript) -and $env:OBDFORGE_KEYSTORE_PATH -and (Test-Path $env:OBDFORGE_KEYSTORE_PATH)) {
+        & $signScript -InputApk $unsigned -OutputApk $releaseSigned
+        Copy-Item $releaseSigned $signed -Force
+    } else {
+        & (Join-Path $Root "scripts\sign-apk-debug.ps1") -InputApk $unsigned -OutputApk $signed
+    }
 
     Write-Host "APK: $signed"
     & $adb logcat -c 2>$null

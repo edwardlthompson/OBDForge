@@ -91,6 +91,53 @@ CI `android-release` job runs the same verification on tagged builds.
 3. Vehicle safety incident → `[HUMAN]` lead; preserve audit log export
 4. Contact maintainers in `.github/CODEOWNERS`
 
+| Device smoke | `adb install -r app/build/outputs/apk/release/app-release-signed.apk` | Cold start, no crash |
+
+## Release APK signing
+
+Reproducible builds stay **unsigned** (`app-release-unsigned.apk`). Signing is a **post-build** step so F-Droid hash verification is unchanged.
+
+### One-time keystore (local)
+
+```bash
+export OBDFORGE_KEYSTORE_PASSWORD='your-strong-password'
+export OBDFORGE_KEY_PASSWORD="$OBDFORGE_KEYSTORE_PASSWORD"
+bash scripts/generate-release-keystore.sh
+```
+
+Optional: copy env to `~/.obdforge/signing.env` (gitignored):
+
+```bash
+export OBDFORGE_KEYSTORE_PATH="$HOME/.obdforge/obdforge-release.keystore"
+export OBDFORGE_KEY_ALIAS=obdforge
+export OBDFORGE_KEYSTORE_PASSWORD=...
+export OBDFORGE_KEY_PASSWORD=...
+```
+
+### Build and sign
+
+```bash
+bash scripts/build-release-apk.sh --clean --sign
+# Output: examples/android/app/build/outputs/apk/release/app-release-signed.apk
+```
+
+Windows: `pwsh scripts/sign-release-apk.ps1` after `build-release-apk.sh`.
+
+### CI (GitHub Release)
+
+Add repository secrets:
+
+| Secret | Value |
+|--------|-------|
+| `OBDFORGE_KEYSTORE_BASE64` | `base64 -w0 ~/.obdforge/obdforge-release.keystore` |
+| `OBDFORGE_KEYSTORE_PASSWORD` | Keystore password |
+| `OBDFORGE_KEY_ALIAS` | `obdforge` |
+| `OBDFORGE_KEY_PASSWORD` | Key password |
+
+Release workflow uploads both unsigned (reproducible) and signed (sideload) APKs when secrets are set.
+
+F-Droid builds from source and signs with their own key — GitHub signed APK is for direct install only.
+
 ## Secret Rotation
 
 Applies to GitHub Actions signing secrets and any future update-manifest tokens:

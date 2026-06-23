@@ -12,8 +12,8 @@
 ## Device verification (ADB)
 
 1. Build release APK: `bash scripts/build-release-apk.sh --clean`
-2. Sign for local install: `pwsh scripts/sign-apk-debug.ps1 -InputApk examples/android/app/build/outputs/apk/release/app-release-unsigned.apk`
-3. Install: `adb install -r examples/android/app/build/outputs/apk/release/app-release-adb-smoke.apk`
+2. Sign for local install: `bash scripts/build-release-apk.sh --clean --sign` (release keystore) or `pwsh scripts/sign-apk-debug.ps1` (debug smoke only)
+3. Install: `adb install -r examples/android/app/build/outputs/apk/release/app-release-signed.apk`
 4. Or run: `pwsh scripts/fdroid-device-dry-run.ps1` (Windows) / `bash scripts/fdroid-device-dry-run.sh` (Linux/macOS)
 5. Bench log: `docs/ADB_BENCH_RESULTS.md`
 

@@ -38,7 +38,13 @@ if [ ! -f "$UNSIGNED" ]; then
   bash scripts/build-release-apk.sh --clean
 fi
 
-bash scripts/sign-apk-debug.sh "$UNSIGNED" "$SIGNED"
+if [ -n "${OBDFORGE_KEYSTORE_PATH:-}" ] && [ -f "${OBDFORGE_KEYSTORE_PATH}" ]; then
+  RELEASE_SIGNED="$APK_DIR/app-release-signed.apk"
+  bash scripts/sign-release-apk.sh "$UNSIGNED" "$RELEASE_SIGNED"
+  SIGNED="$RELEASE_SIGNED"
+else
+  bash scripts/sign-apk-debug.sh "$UNSIGNED" "$SIGNED"
+fi
 echo "OK   APK: $SIGNED"
 
 "$ADB" logcat -c || true

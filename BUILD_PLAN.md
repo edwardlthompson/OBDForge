@@ -36,6 +36,15 @@
 | 3 | ADB | F-Droid fdroiddata MR | Draft ready · device smoke PASS 2026-06-22 · GitLab submit pending |
 | 4 | HUMAN | Shop operator review | Optional real-world workflow feedback |
 | 5 | HUMAN | Post-release monitoring | Issues, adapter notes → `KNOWLEDGE_BASE.md` |
+| 6 | HUMAN | Configure GitHub signing secrets | `OBDFORGE_KEYSTORE_BASE64` + passwords for CI signed APK upload |
+
+### Recently completed (Sprint 18)
+
+| Task | Owner |
+|------|-------|
+| ✅ Adaptive launcher icon (OBD port + check-engine, high contrast) | AGENT |
+| ✅ Automated release APK signing (`sign-release-apk`, `build-release-apk.sh --sign`) | AGENT |
+| ✅ F-Droid store `icon.png` + README icon | AGENT |
 
 ### Blocked — hardware bench
 

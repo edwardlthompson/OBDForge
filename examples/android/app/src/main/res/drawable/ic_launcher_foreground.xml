@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Signal arcs (filled crescents) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M20,50 a6,6 0 0,1 0,8 a10,10 0 0,0 0,-8 z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M88,50 a6,6 0 0,0 0,8 a10,10 0 0,1 0,-8 z" />
+    <!-- Check-engine indicator -->
+    <path
+        android:fillColor="#E94560"
+        android:pathData="M54,24 L62,38 L46,38 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M52,34 h4 v6 h-4 z M52,42 h4 v2 h-4 z" />
+    <!-- OBD-II port trapezoid -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,48 L74,48 L68,78 L40,78 Z" />
+    <!-- Pin holes -->
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M42,56 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M54,56 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M66,56 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M42,66 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M54,66 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+    <path
+        android:fillColor="#1A1A2E"
+        android:pathData="M66,66 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" />
+</vector>

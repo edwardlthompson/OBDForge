@@ -25,7 +25,7 @@
 
 ## Active board
 
-> **v1.2.1** on main. Last audit: 2026-06-24 (`CODE_REVIEW.md` ephemeral).
+> **v1.2.2** shipping 2026-06-24. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.2]`.
 
 ### Open work
 
@@ -69,7 +69,7 @@ Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
 ### Pre-release
 
-- ✅ `pre-release-gate.sh` + reproducible APK verify (v1.0.0, v1.1.0, v1.2.0, v1.2.1)
+- ✅ `pre-release-gate.sh` + reproducible APK verify (v1.0.0, v1.1.0, v1.2.0, v1.2.1, v1.2.2)
 
 ---
 

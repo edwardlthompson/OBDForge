@@ -2,6 +2,12 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge v1.2.2 release (2026-06-24)
+
+- ✅ [AGENT] Signed installable APK on GitHub releases (`OBDForge-X.Y.Z.apk`)
+- ✅ [AGENT] Option A launcher icon + ObdScaffold edge-to-edge insets
+- ✅ [HUMAN] v1.2.2 tag + GitHub Release (APK + SBOMs)
+
 ## OBDForge Sprint 19 — Audit remediation (2026-06-24)
 
 - ✅ [AGENT] F-001 — Compress icon PNGs under 500 KB (`docs/assets`, F-Droid metadata, launcher foreground)

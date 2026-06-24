@@ -74,11 +74,12 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 | Date | Milestone | What worked | What to improve |
 |------|-----------|-------------|-----------------|
-| 2026-06-21 | v1.2.1 release | Icon + signing scripts shipped; CI unsigned APK path unchanged | Configure release keystore secrets for signed CI artifact |
+| 2026-06-24 | v1.2.2 release | Signed sideload APK + ObdScaffold insets | Release Please PR permission still [HUMAN] |
+| 2026-06-21 | v1.2.1 release | Icon + signing scripts shipped | Configure release keystore secrets for signed CI artifact |
 
 ## Template Provenance
 
 - **Source template:** `edwardlthompson/agent-project-bootstrap`
-- **Template version:** `1.2.1` (bootstrap provenance)
-- **Product version:** `1.2.1` (see `.template-version` / Release Please)
+- **Template version:** `1.2.2` (bootstrap provenance)
+- **Product version:** `1.2.2` (see `.template-version` / Release Please)
 - **Last update check:** See `.template-update.json`

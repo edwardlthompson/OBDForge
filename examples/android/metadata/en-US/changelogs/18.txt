@@ -1,0 +1,1 @@
+OBDForge 1.2.2 — Signed sideload APK on GitHub releases, Option A launcher icon, ObdScaffold edge-to-edge insets fixing nav bar overlap.

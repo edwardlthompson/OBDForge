@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.2] - 2026-06-24
+
+### Added
+
+- `ObdScaffold` edge-to-edge layout helpers with navigation-bar gutter on all bottom-fixed UI
+
+### Changed
+
+- Launcher icon: Option A PNG (check-engine + OBD-II port, no signal waves); compressed under 500 KB CI gate
+
+### Fixed
+
+- GitHub releases attach signed installable `OBDForge-X.Y.Z.apk` (fixes `INSTALL_PARSE_FAILED_NO_CERTIFICATES` on sideload)
+- Release workflow signing step when GitHub secrets unset (KB-011)
+- Welcome and app screens: top inset no longer double-counts status bar; bottom buttons clear 3-button nav bar
+
 ## [1.2.1] - 2026-06-21
 
 ### Added
@@ -64,7 +80,8 @@ First public release — product milestones M1–M13 (Sprints 0–14).
 - Architecture ADRs 0001–0005, personas spec, threat model, privacy policy, and runbook
 - F-Droid submission checklist in `docs/FDROID_SUBMISSION.md`
 
-[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.1...HEAD
+[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.2...HEAD
+[1.2.2]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.2
 [1.2.1]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.1
 [1.2.0]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.0
 [1.1.0]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.1.0

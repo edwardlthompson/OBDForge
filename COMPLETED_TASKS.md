@@ -2,6 +2,16 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 19 — Audit remediation (2026-06-24)
+
+- ✅ [AGENT] F-001 — Compress icon PNGs under 500 KB (`docs/assets`, F-Droid metadata, launcher foreground)
+- ✅ [AGENT] F-002 — Index release-signing scripts in `TEMPLATE_INDEX.json`
+- ✅ [AGENT] F-004 — Option A launcher icon (PNG foreground, no wireless waves)
+- ✅ [AGENT] F-004 — `ObdScaffold` + `navigationBarGutter()` edge-to-edge insets app-wide
+- ✅ [AGENT] KB-013 — Document AI icon size gate regression
+- 🔲 [HUMAN] F-003 — Release Please Actions PR permission
+- 🔲 [HUMAN] F-005 — GitHub signing secrets (BUILD_PLAN #6)
+
 ## OBDForge Sprint 18 — Icon and release signing (2026-06-21)
 
 - ✅ [AGENT] Adaptive launcher icon (OBD-II port + check-engine, high contrast)

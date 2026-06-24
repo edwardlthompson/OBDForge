@@ -14,7 +14,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -23,8 +22,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.foss.obdforge.R
+import dev.foss.obdforge.ui.theme.ObdScaffold
 import dev.foss.obdforge.ui.theme.SpacingMd
 import dev.foss.obdforge.ui.theme.SpacingSm
+import dev.foss.obdforge.ui.theme.obdBottomGutter
 import dev.foss.obdforge.domain.session.SessionDetail
 import dev.foss.obdforge.domain.session.SessionSummary
 import java.text.DateFormat
@@ -43,7 +44,7 @@ fun SessionHistoryScreen(
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Scaffold(
+    ObdScaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
@@ -63,7 +64,8 @@ fun SessionHistoryScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(SpacingMd),
+                .padding(SpacingMd)
+                .obdBottomGutter(),
             verticalArrangement = Arrangement.spacedBy(SpacingMd),
         ) {
             if (summaries.isEmpty()) {

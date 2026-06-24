@@ -2,7 +2,6 @@ package dev.foss.obdforge.ui.livedata
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,7 +11,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.Icon
@@ -23,8 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.foss.obdforge.R
+import dev.foss.obdforge.ui.theme.ObdScaffold
 import dev.foss.obdforge.ui.theme.SpacingMd
 import dev.foss.obdforge.ui.theme.SpacingSm
+import dev.foss.obdforge.ui.theme.obdScrollContentPadding
 import dev.foss.obdforge.domain.livedata.LiveDataLayoutConfig
 import dev.foss.obdforge.domain.livedata.LiveDataLayoutResolver
 import dev.foss.obdforge.domain.livedata.LiveDataSnapshot
@@ -42,7 +42,7 @@ fun LiveDataDashboardScreen(
     modifier: Modifier = Modifier,
 ) {
     val layout = LiveDataLayoutResolver.resolve(persona)
-    Scaffold(
+    ObdScaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
@@ -105,7 +105,7 @@ private fun LiveDataPidGrid(
     LazyVerticalGrid(
         columns = GridCells.Fixed(layout.columns),
         modifier = modifier,
-        contentPadding = PaddingValues(bottom = SpacingMd),
+        contentPadding = obdScrollContentPadding(SpacingSm),
         horizontalArrangement = Arrangement.spacedBy(SpacingSm),
         verticalArrangement = Arrangement.spacedBy(SpacingSm),
     ) {

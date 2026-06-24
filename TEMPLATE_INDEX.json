@@ -899,6 +899,55 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/sign-release-apk.sh",
+      "purpose": "Post-build release APK signing with env-var keystore contract",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/sign-release-apk.ps1",
+      "purpose": "Windows wrapper for sign-release-apk.sh",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/sign-apk-sideload.sh",
+      "purpose": "Sign unsigned release APK for sideload (release or debug keystore fallback)",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/sign-apk-sideload.ps1",
+      "purpose": "Windows wrapper for sign-apk-sideload.sh",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/generate-release-keystore.sh",
+      "purpose": "One-time release keystore generation outside repo",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/generate-release-keystore.ps1",
+      "purpose": "Windows wrapper for generate-release-keystore.sh",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/ensure-ci-sideload-keystore.sh",
+      "purpose": "Create or reuse cached CI sideload keystore for signed GitHub release APKs",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/verify-reproducible-apk.sh",
       "purpose": "Local double-build APK hash check (SOURCE_DATE_EPOCH parity with CI)",
       "read_when": "milestone_boundary",

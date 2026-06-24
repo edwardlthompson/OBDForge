@@ -1,7 +1,6 @@
 package dev.foss.obdforge.ui.ai
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,7 +16,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -30,7 +28,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.foundation.text.KeyboardOptions
 import dev.foss.obdforge.R
+import dev.foss.obdforge.ui.theme.ObdScaffold
 import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.obdScrollContentPadding
 import dev.foss.obdforge.domain.ai.DtcExplanation
 import dev.foss.obdforge.domain.diagnostics.VehicleHealthSnapshot
 
@@ -55,7 +55,7 @@ fun DtcExplainScreen(
 ) {
     var manualCode by remember { mutableStateOf("") }
 
-    Scaffold(
+    ObdScaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
@@ -84,7 +84,7 @@ fun DtcExplainScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = SpacingMd),
-            contentPadding = PaddingValues(vertical = SpacingMd),
+            contentPadding = obdScrollContentPadding(),
             verticalArrangement = Arrangement.spacedBy(SpacingMd),
         ) {
             item {

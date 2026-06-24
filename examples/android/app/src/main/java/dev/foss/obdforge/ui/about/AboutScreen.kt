@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import dev.foss.obdforge.R
 import dev.foss.obdforge.about.DonationsConfig
 import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.obdBottomGutter
 
 @Composable
 fun AboutScreen(
@@ -28,7 +29,7 @@ fun AboutScreen(
 ) {
     val uriHandler = LocalUriHandler.current
     Column(
-        modifier = modifier.padding(SpacingMd),
+        modifier = modifier.obdBottomGutter().padding(SpacingMd),
         verticalArrangement = Arrangement.spacedBy(SpacingMd),
     ) {
         Text(

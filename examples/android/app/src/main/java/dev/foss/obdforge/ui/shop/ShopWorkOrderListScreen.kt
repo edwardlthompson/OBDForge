@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.foss.obdforge.R
 import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.obdBottomGutter
 import dev.foss.obdforge.domain.shop.WorkOrder
 
 @Composable
@@ -30,6 +31,7 @@ fun ShopWorkOrderListScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .obdBottomGutter()
             .padding(SpacingMd),
         verticalArrangement = Arrangement.spacedBy(SpacingMd),
     ) {

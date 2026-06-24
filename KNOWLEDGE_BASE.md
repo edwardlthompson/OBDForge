@@ -127,3 +127,12 @@
 | **Cause** | GitHub Release attached `app-release-unsigned.apk` — reproducible F-Droid build artifact, not installable on Android |
 | **Fix** | Install **`OBDForge-X.Y.Z.apk`** or **`app-release-signed.apk`** from the release; locally run `scripts/sign-apk-sideload.ps1` on the unsigned APK |
 | **Prevention** | Release workflow always signs before upload; unsigned kept for reproducible hash verify only |
+
+### KB-013 — AI-generated icon PNG exceeds 500 KB gate
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | CI `Repo Hygiene` / `Feature Gate` fail: `LARGE TRACKED FILE: docs/assets/icon.png (1173 KB > 500 KB)` |
+| **Cause** | Cursor `GenerateImage` PNGs copied verbatim to `docs/assets/` and F-Droid metadata without resize/compress |
+| **Fix** | Resize to 512×512, PNG `optimize=True`, `compress_level=9`; verify `<500 KB` before commit |
+| **Prevention** | Run `scripts/check-large-tracked-files.sh` before push; keep launcher foreground in `drawable-nodpi` under same budget |

@@ -10,13 +10,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.foss.obdforge.R
+import dev.foss.obdforge.ui.theme.ObdScaffold
 import dev.foss.obdforge.ui.theme.SpacingLg
 import dev.foss.obdforge.ui.theme.SpacingMd
 
@@ -33,7 +33,7 @@ fun WelcomeScreen(
     onContinue: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Scaffold(
+    ObdScaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(title = { Text(stringResource(R.string.welcome_title)) })

@@ -29,6 +29,7 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import dev.foss.obdforge.R
 import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.navigationBarGutter
 import java.util.concurrent.Executors
 
 @Composable
@@ -104,6 +105,7 @@ fun VinBarcodeCamera(
             onClick = onClose,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .navigationBarGutter()
                 .padding(SpacingMd),
         ) {
             Text(stringResource(R.string.vin_scanner_close))

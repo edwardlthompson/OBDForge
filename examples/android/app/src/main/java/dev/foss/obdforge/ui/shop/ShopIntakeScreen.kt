@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.foundation.text.KeyboardOptions
 import dev.foss.obdforge.R
 import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.obdBottomGutter
 
 @Composable
 fun ShopIntakeScreen(
@@ -37,6 +38,7 @@ fun ShopIntakeScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .obdBottomGutter()
             .padding(SpacingMd),
         verticalArrangement = Arrangement.spacedBy(SpacingMd),
     ) {

@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.foss.obdforge.R
 import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.obdBottomGutter
 import dev.foss.obdforge.ui.theme.ThemeMode
 import dev.foss.obdforge.domain.livedata.PersonaMode
 
@@ -58,6 +59,7 @@ fun SettingsScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .obdBottomGutter()
             .verticalScroll(rememberScrollState())
             .padding(SpacingMd),
         verticalArrangement = Arrangement.spacedBy(SpacingMd),

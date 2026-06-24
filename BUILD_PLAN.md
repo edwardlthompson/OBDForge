@@ -1,6 +1,6 @@
 # Build Plan
 
-> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–18).
+> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–19).
 
 ## Owner labels
 
@@ -25,15 +25,15 @@
 
 ## Active board
 
-> **v1.2.1** shipping 2026-06-21. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.1]`.
+> **v1.2.1** on main. Last audit: 2026-06-24 (`CODE_REVIEW.md` ephemeral).
 
 ### Open work
 
 | # | Owner | Task | Notes |
 |---|-------|------|-------|
-| 1 | AGENT | Live-data charting / time-series dashboard | Blocked — needs hardware bench (`docs/ADB_BENCH_RESULTS.md`) |
+| 1 | AGENT | Live-data charting / time-series dashboard | ❌ Blocked — hardware bench (`docs/ADB_BENCH_RESULTS.md`) |
 | 2 | HUMAN | Fill `app-update.json` release-check URL | Donations done (Venmo) |
-| 3 | ADB | F-Droid fdroiddata MR | Draft ready · device smoke PASS 2026-06-22 · GitLab submit pending |
+| 3 | ADB | F-Droid fdroiddata MR | Draft ready · device smoke PASS · GitLab submit pending |
 | 4 | HUMAN | Shop operator review | Optional real-world workflow feedback |
 | 5 | HUMAN | Post-release monitoring | Issues, adapter notes → `KNOWLEDGE_BASE.md` |
 | 6 | HUMAN | Configure GitHub signing secrets | `OBDFORGE_KEYSTORE_BASE64` + passwords for CI signed APK upload |
@@ -75,4 +75,4 @@ Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
 ## Archive
 
-Sprints **0–18** complete. Sprint detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).
+Sprints **0–19** complete. Sprint detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).

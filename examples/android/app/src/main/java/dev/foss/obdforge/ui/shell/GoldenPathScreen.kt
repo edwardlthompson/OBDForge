@@ -9,7 +9,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -24,8 +23,9 @@ import dev.foss.obdforge.R
 import dev.foss.obdforge.about.DonationsConfig
 import dev.foss.obdforge.ui.about.AboutScreen
 import dev.foss.obdforge.ui.components.ThemeToggle
-import dev.foss.obdforge.ui.theme.SpacingLg
+import dev.foss.obdforge.ui.theme.ObdScaffold
 import dev.foss.obdforge.ui.theme.SpacingMd
+import dev.foss.obdforge.ui.theme.obdBottomGutter
 import dev.foss.obdforge.ui.theme.ThemeMode
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.transport.BluetoothDeviceOption
@@ -96,7 +96,7 @@ fun GoldenPathScreen(
     compositionRoot: ObdForgeCompositionRoot? = null,
     settingsScope: kotlinx.coroutines.CoroutineScope? = null,
 ) {
-    Scaffold(
+    ObdScaffold(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.app_title)) },
@@ -156,7 +156,8 @@ fun GoldenPathScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(SpacingMd),
+                    .padding(SpacingMd)
+                    .obdBottomGutter(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(SpacingMd),
             ) {

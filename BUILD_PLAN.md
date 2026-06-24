@@ -25,7 +25,7 @@
 
 ## Active board
 
-> **v1.2.2** shipping 2026-06-24. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.2]`.
+> **v1.2.3** shipping 2026-06-24. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.3]`.
 
 ### Open work
 
@@ -36,7 +36,7 @@
 | 3 | ADB | F-Droid fdroiddata MR | Draft ready · device smoke PASS · GitLab submit pending |
 | 4 | HUMAN | Shop operator review | Optional real-world workflow feedback |
 | 5 | HUMAN | Post-release monitoring | Issues, adapter notes → `KNOWLEDGE_BASE.md` |
-| 6 | HUMAN | Configure GitHub signing secrets | `OBDFORGE_KEYSTORE_BASE64` + passwords for CI signed APK upload |
+| 6 | HUMAN | Configure GitHub signing secrets | ✅ Done 2026-06-24 — stable `OBDFORGE_KEYSTORE_*` secrets set |
 
 ### Blocked — hardware bench
 

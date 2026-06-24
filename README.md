@@ -4,7 +4,7 @@
   <img src="docs/assets/icon.png" alt="OBDForge app icon" width="128" height="128" />
 </p>
 
-![Version](https://img.shields.io/badge/version-1.2.2-blue?style=flat-square)
+![Version](https://img.shields.io/badge/version-1.2.3-blue?style=flat-square)
 ![GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)
 ![Android](https://img.shields.io/badge/platform-Android-3DDC84?style=flat-square)
 ![FOSS](https://img.shields.io/badge/FOSS-F--Droid-2ea043?style=flat-square)
@@ -39,7 +39,9 @@ OBDForge connects to ELM327 and OBDLink STN/STPX adapters over Bluetooth, USB, W
 
 ## Quick Start
 
-**Sideload from GitHub Releases:** download **`OBDForge-X.Y.Z.apk`** (signed). Do **not** install `app-release-unsigned.apk` — it is for F-Droid reproducible builds only and will fail with `INSTALL_PARSE_FAILED_NO_CERTIFICATES`.
+**Sideload from GitHub Releases:** download **`OBDForge-X.Y.Z.apk`** only. Do **not** install unsigned or debug-signed builds from release assets.
+
+If upgrade fails with **signatures do not match**, uninstall the old app once, then install the new APK (see KB-014 in `KNOWLEDGE_BASE.md`). This is a one-time step when switching to the stable release signing key.
 
 ```bash
 cd examples/android

@@ -136,3 +136,12 @@
 | **Cause** | Cursor `GenerateImage` PNGs copied verbatim to `docs/assets/` and F-Droid metadata without resize/compress |
 | **Fix** | Resize to 512×512, PNG `optimize=True`, `compress_level=9`; verify `<500 KB` before commit |
 | **Prevention** | Run `scripts/check-large-tracked-files.sh` before push; keep launcher foreground in `drawable-nodpi` under same budget |
+
+### KB-014 — APK upgrade fails: signatures do not match
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | `adb install` or sideload fails: `INSTALL_FAILED_UPDATE_INCOMPATIBLE: signatures do not match` |
+| **Cause** | Phone has an APK signed with a **different key** (debug keystore, old CI ephemeral sideload key, or manual local sign) than the GitHub release APK |
+| **Fix** | Uninstall OBDForge once, then install **`OBDForge-X.Y.Z.apk`** from GitHub Releases. Future updates work in-place when all releases use the same `OBDFORGE_KEYSTORE_BASE64` secret |
+| **Prevention** | Never upload unsigned or debug-signed APKs to GitHub Releases; require stable release keystore secrets; release workflow uploads **only** `OBDForge-X.Y.Z.apk` |

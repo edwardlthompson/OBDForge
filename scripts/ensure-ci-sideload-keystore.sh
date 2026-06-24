@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Create or reuse a stable CI sideload keystore (cached in GitHub Actions).
+# DEPRECATED: Do not use for GitHub Releases — ephemeral cache keys break sideload upgrades.
+# Use stable OBDFORGE_KEYSTORE_* GitHub secrets + scripts/ensure-release-signing-secrets.sh instead.
 # Outputs export lines for OBDFORGE_KEYSTORE_* when release secrets are unset.
 # Usage: eval "$(bash scripts/ensure-ci-sideload-keystore.sh)"
 set -euo pipefail

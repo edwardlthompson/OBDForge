@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.3] - 2026-06-24
+
+### Changed
+
+- GitHub Releases attach **only** signed `OBDForge-X.Y.Z.apk` (no unsigned APK or SBOM clutter)
+
+### Fixed
+
+- Stable release signing key via GitHub secrets — sideload updates no longer break when CI cache rotates keys
+- Document one-time uninstall when switching from debug- or old-key installs (`INSTALL_FAILED_UPDATE_INCOMPATIBLE`)
+
 ## [1.2.2] - 2026-06-24
 
 ### Added
@@ -80,7 +91,8 @@ First public release — product milestones M1–M13 (Sprints 0–14).
 - Architecture ADRs 0001–0005, personas spec, threat model, privacy policy, and runbook
 - F-Droid submission checklist in `docs/FDROID_SUBMISSION.md`
 
-[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.2...HEAD
+[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.3...HEAD
+[1.2.3]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.3
 [1.2.2]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.2
 [1.2.1]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.1
 [1.2.0]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.0

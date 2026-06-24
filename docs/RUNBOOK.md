@@ -42,7 +42,8 @@
 
 | Symptom | Check | Fix |
 |---------|-------|-----|
-| APK won't install (`INSTALL_PARSE_FAILED_NO_CERTIFICATES`) | Downloaded `app-release-unsigned.apk` from GitHub | Install **`OBDForge-X.Y.Z.apk`** or **`app-release-signed.apk`** — unsigned APKs are for F-Droid reproducible builds only |
+| APK won't install (`INSTALL_PARSE_FAILED_NO_CERTIFICATES`) | Downloaded unsigned APK | Install **`OBDForge-X.Y.Z.apk`** from GitHub Releases only |
+| APK won't upgrade (`INSTALL_FAILED_UPDATE_INCOMPATIBLE`) | Old install signed with different key (debug / old CI key) | Uninstall OBDForge once, then install **`OBDForge-X.Y.Z.apk`** |
 | Gradle FOSS grep fail | Proprietary dep in `build.gradle.kts` | Remove GMS/Firebase |
 | Reproducible hash drift | `SOURCE_DATE_EPOCH` unset | Pin epoch in CI + local |
 | BT connect timeout | Android 12+ permissions | `BLUETOOTH_CONNECT` manifest + runtime |
@@ -126,7 +127,7 @@ Windows: `pwsh scripts/sign-release-apk.ps1` after `build-release-apk.sh`.
 
 ### CI (GitHub Release)
 
-Add repository secrets:
+Repository secrets (required — release workflow fails without them):
 
 | Secret | Value |
 |--------|-------|
@@ -135,7 +136,9 @@ Add repository secrets:
 | `OBDFORGE_KEY_ALIAS` | `obdforge` |
 | `OBDFORGE_KEY_PASSWORD` | Key password |
 
-Release workflow uploads both unsigned (reproducible) and signed (sideload) APKs when secrets are set.
+The release workflow uploads **only** `OBDForge-X.Y.Z.apk` (signed with this stable key). Unsigned reproducible builds stay in CI/F-Droid scripts only — never on GitHub Releases.
+
+Verify secrets before tagging: `bash scripts/ensure-release-signing-secrets.sh` (with env vars set locally).
 
 F-Droid builds from source and signs with their own key — GitHub signed APK is for direct install only.
 

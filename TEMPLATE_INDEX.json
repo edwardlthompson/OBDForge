@@ -1,5 +1,5 @@
 {
-  "template_version": "1.2.2",
+  "template_version": "1.2.3",
   "entry_points": {
     "bootstrap": "docs/START_HERE.md",
     "reference": "docs/FOR_AGENTS.md",
@@ -943,6 +943,13 @@
     {
       "path": "scripts/ensure-ci-sideload-keystore.sh",
       "purpose": "Create or reuse cached CI sideload keystore for signed GitHub release APKs",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/ensure-release-signing-secrets.sh",
+      "purpose": "Fail release build when GitHub signing secrets are missing",
       "read_when": "milestone_boundary",
       "update_when": "milestone_boundary",
       "owner": "maintainer"

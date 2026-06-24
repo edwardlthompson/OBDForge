@@ -1,0 +1,1 @@
+OBDForge 1.2.3 — Stable release signing key; GitHub Releases now ship only signed OBDForge-X.Y.Z.apk. Uninstall once if upgrading from a debug-signed install.

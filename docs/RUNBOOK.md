@@ -11,7 +11,7 @@
 | CI on main | `bash scripts/check-github-ci.sh --wait 300` | CI, CodeQL, Security Scan green |
 | Reproducible APK | `bash scripts/verify-reproducible-apk.sh` | Matching hashes |
 | F-Droid metadata | `bash scripts/verify-fdroid-metadata.sh` | No errors |
-| Device smoke | `adb install -r app/build/outputs/apk/release/*.apk` | Cold start, no crash |
+| Device smoke | `adb install -r app/build/outputs/apk/release/app-release-signed.apk` | Cold start, no crash |
 
 ## Structured Logging
 
@@ -42,6 +42,7 @@
 
 | Symptom | Check | Fix |
 |---------|-------|-----|
+| APK won't install (`INSTALL_PARSE_FAILED_NO_CERTIFICATES`) | Downloaded `app-release-unsigned.apk` from GitHub | Install **`OBDForge-X.Y.Z.apk`** or **`app-release-signed.apk`** — unsigned APKs are for F-Droid reproducible builds only |
 | Gradle FOSS grep fail | Proprietary dep in `build.gradle.kts` | Remove GMS/Firebase |
 | Reproducible hash drift | `SOURCE_DATE_EPOCH` unset | Pin epoch in CI + local |
 | BT connect timeout | Android 12+ permissions | `BLUETOOTH_CONNECT` manifest + runtime |

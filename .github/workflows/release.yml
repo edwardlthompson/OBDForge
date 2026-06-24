@@ -110,7 +110,14 @@ jobs:
           SOURCE_DATE_EPOCH: "1700000000"
         run: bash scripts/build-release-apk.sh --clean
 
-      - name: Sign release APK
+      - name: Cache CI sideload keystore
+        if: hashFiles('examples/android/app/build.gradle.kts') != ''
+        uses: actions/cache@v4
+        with:
+          path: /tmp/obdforge-sideload.keystore
+          key: obdforge-sideload-keystore-v1
+
+      - name: Sign release APK for sideload
         if: hashFiles('examples/android/app/build.gradle.kts') != ''
         env:
           OBDFORGE_KEYSTORE_BASE64: ${{ secrets.OBDFORGE_KEYSTORE_BASE64 }}
@@ -118,13 +125,26 @@ jobs:
           OBDFORGE_KEY_ALIAS: ${{ secrets.OBDFORGE_KEY_ALIAS }}
           OBDFORGE_KEY_PASSWORD: ${{ secrets.OBDFORGE_KEY_PASSWORD }}
         run: |
-          if [ -z "${OBDFORGE_KEYSTORE_BASE64}" ]; then
-            echo "Skipping release signing — OBDFORGE_KEYSTORE_BASE64 not configured"
-            exit 0
+          UNSIGNED="examples/android/app/build/outputs/apk/release/app-release-unsigned.apk"
+          SIGNED="examples/android/app/build/outputs/apk/release/app-release-signed.apk"
+          VERSION="$(tr -d '[:space:]' < .template-version)"
+          INSTALLABLE="examples/android/app/build/outputs/apk/release/OBDForge-${VERSION}.apk"
+          if [ ! -f "$UNSIGNED" ]; then
+            echo "FAIL: unsigned APK not found"
+            exit 1
           fi
-          echo "${OBDFORGE_KEYSTORE_BASE64}" | base64 -d > /tmp/obdforge-release.keystore
-          export OBDFORGE_KEYSTORE_PATH=/tmp/obdforge-release.keystore
-          bash scripts/sign-release-apk.sh
+          if [ -n "${OBDFORGE_KEYSTORE_BASE64}" ]; then
+            echo "${OBDFORGE_KEYSTORE_BASE64}" | base64 -d > /tmp/obdforge-release.keystore
+            export OBDFORGE_KEYSTORE_PATH=/tmp/obdforge-release.keystore
+            export OBDFORGE_KEY_ALIAS="${OBDFORGE_KEY_ALIAS:-obdforge}"
+            bash scripts/sign-release-apk.sh "$UNSIGNED" "$SIGNED"
+          else
+            echo "Release keystore secrets not set — using cached CI sideload keystore"
+            eval "$(bash scripts/ensure-ci-sideload-keystore.sh)"
+            bash scripts/sign-release-apk.sh "$UNSIGNED" "$SIGNED"
+          fi
+          cp "$SIGNED" "$INSTALLABLE"
+          echo "Installable APK: $INSTALLABLE"
 
       - name: Generate root SBOM
         uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0.20.6
@@ -209,4 +229,7 @@ jobs:
           [ -n "$APK" ] && FILES="$FILES $APK"
           SIGNED="examples/android/app/build/outputs/apk/release/app-release-signed.apk"
           [ -f "$SIGNED" ] && FILES="$FILES $SIGNED"
+          VERSION="$(tr -d '[:space:]' < .template-version)"
+          INSTALLABLE="examples/android/app/build/outputs/apk/release/OBDForge-${VERSION}.apk"
+          [ -f "$INSTALLABLE" ] && FILES="$FILES $INSTALLABLE"
           gh release upload "$TAG" $FILES --clobber

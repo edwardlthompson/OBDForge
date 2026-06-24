@@ -39,10 +39,21 @@ OBDForge connects to ELM327 and OBDLink STN/STPX adapters over Bluetooth, USB, W
 
 ## Quick Start
 
+**Sideload from GitHub Releases:** download **`OBDForge-X.Y.Z.apk`** (signed). Do **not** install `app-release-unsigned.apk` — it is for F-Droid reproducible builds only and will fail with `INSTALL_PARSE_FAILED_NO_CERTIFICATES`.
+
 ```bash
 cd examples/android
 ./gradlew assembleDebug
 # Install: adb install app/build/outputs/apk/debug/app-debug.apk
+```
+
+**Build + sign release locally:**
+
+```bash
+export SOURCE_DATE_EPOCH=1700000000
+bash scripts/build-release-apk.sh --clean
+bash scripts/sign-apk-sideload.sh   # release keystore or debug keystore fallback
+adb install -r examples/android/app/build/outputs/apk/release/app-release-signed.apk
 ```
 
 Windows: `.\gradlew.bat assembleDebug`

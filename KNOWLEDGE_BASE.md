@@ -118,3 +118,12 @@
 | **Cause** | GitHub Actions forbids referencing `secrets.*` directly in job/step `if:` conditions |
 | **Fix** | Pass secret into step `env:` and gate inside the shell script (`if [ -z "$OBDFORGE_KEYSTORE_BASE64" ]; then exit 0; fi`) |
 | **Prevention** | Never use `secrets.FOO != ''` in `if:`; optional CI steps skip in-script when env is empty |
+
+### KB-012 — Unsigned release APK fails to install on device
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | Sideload or `adb install` fails: `INSTALL_PARSE_FAILED_NO_CERTIFICATES` |
+| **Cause** | GitHub Release attached `app-release-unsigned.apk` — reproducible F-Droid build artifact, not installable on Android |
+| **Fix** | Install **`OBDForge-X.Y.Z.apk`** or **`app-release-signed.apk`** from the release; locally run `scripts/sign-apk-sideload.ps1` on the unsigned APK |
+| **Prevention** | Release workflow always signs before upload; unsigned kept for reproducible hash verify only |

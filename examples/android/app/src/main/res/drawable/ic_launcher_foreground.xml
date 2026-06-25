@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Check-engine MIL — orthogonal outline matching export-launcher-icon.py -->
+    <path
+        android:fillColor="@android:color/transparent"
+        android:strokeColor="@color/ic_launcher_engine"
+        android:strokeWidth="3.2"
+        android:strokeLineJoin="miter"
+        android:strokeLineCap="square"
+        android:pathData="M35,26 L35,30 L31,30 L31,22 L43,22 L43,26 L69,26 L69,40 L65,40 L65,44 L59,44 L59,48 L49,48 L49,44 L45,44 L45,40 L41,40 L41,30 L35,30 Z" />
+    <path
+        android:fillColor="@color/ic_launcher_port"
+        android:pathData="M50,56 L58,56 L76,59 L82,86 L26,86 L32,59 Z" />
+    <path
+        android:fillColor="@color/ic_launcher_background"
+        android:pathData="M34,67 h3 v5 h-3z M39,67 h3 v5 h-3z M44,67 h3 v5 h-3z M49,67 h3 v5 h-3z M54,67 h3 v5 h-3z M59,67 h3 v5 h-3z M64,67 h3 v5 h-3z M69,67 h3 v5 h-3z M34,76 h3 v5 h-3z M39,76 h3 v5 h-3z M44,76 h3 v5 h-3z M49,76 h3 v5 h-3z M54,76 h3 v5 h-3z M59,76 h3 v5 h-3z M64,76 h3 v5 h-3z M69,76 h3 v5 h-3z" />
+</vector>

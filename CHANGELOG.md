@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.6] - 2026-06-25
+
+### Changed
+
+- Launcher icon: vector foreground with dark `#0B0F14` background, clean check-engine outline, and crisp OBD-II port (replaces distorted PNG)
+
+### Added
+
+- `scripts/export-launcher-icon.py` — regenerate store/README PNGs from vector geometry
+
 ## [1.2.5] - 2026-06-25
 
 ### Added
@@ -126,7 +136,8 @@ First public release — product milestones M1–M13 (Sprints 0–14).
 - Architecture ADRs 0001–0005, personas spec, threat model, privacy policy, and runbook
 - F-Droid submission checklist in `docs/FDROID_SUBMISSION.md`
 
-[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.5...HEAD
+[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.6...HEAD
+[1.2.6]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.6
 [1.2.5]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.5
 [1.2.4]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.4
 [1.2.3]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.3

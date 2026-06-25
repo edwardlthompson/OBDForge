@@ -14,9 +14,9 @@ RepoType: git
 Repo: https://github.com/edwardlthompson/OBDForge
 
 Builds:
-  - versionName: '1.2.5'
-    versionCode: 21
-    commit: v1.2.5
+  - versionName: '1.2.6'
+    versionCode: 22
+    commit: v1.2.6
     subdir: examples/android
     gradle:
       - yes
@@ -29,7 +29,7 @@ Builds:
 
 AutoUpdateMode: Version v%v
 UpdateCheckMode: Tags
-CurrentVersion: '1.2.5'
-CurrentVersionCode: 21
+CurrentVersion: '1.2.6'
+CurrentVersionCode: 22
 
 Fastlane: https://github.com/edwardlthompson/OBDForge/tree/main/examples/android/metadata/en-US

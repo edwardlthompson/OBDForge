@@ -2,6 +2,12 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge v1.2.6 release (2026-06-25)
+
+- ✅ [AGENT] Vector launcher icon — dark `#0B0F14` background, clean check-engine outline, OBD port
+- ✅ [AGENT] `export-launcher-icon.py` for store/README PNG regeneration
+- ✅ [HUMAN] v1.2.6 tag + GitHub Release (signed APK)
+
 ## OBDForge v1.2.5 release (2026-06-25)
 
 - ✅ [AGENT] Debug `dev.foss.obdforge.debug` package id — no longer blocks release sideload

@@ -27,6 +27,11 @@ android {
         release {
             isMinifyEnabled = false
         }
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+            resValue("string", "app_name", "OBDForge Debug")
+        }
     }
 
     compileOptions {

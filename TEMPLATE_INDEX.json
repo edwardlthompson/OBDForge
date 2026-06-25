@@ -871,6 +871,20 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/install-github-release.sh",
+      "purpose": "ADB install signed GitHub Release APK; auto-uninstall on signature mismatch (KB-014/KB-015)",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/install-github-release.ps1",
+      "purpose": "Windows wrapper for install-github-release.sh",
+      "read_when": "milestone_boundary",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/verify-branch-protection.sh",
       "purpose": "Verify GitHub branch protection required checks match template defaults",
       "read_when": "milestone_boundary",

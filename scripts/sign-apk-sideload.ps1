@@ -34,7 +34,7 @@ if ($env:OBDFORGE_KEYSTORE_PATH -and $env:OBDFORGE_KEYSTORE_PASSWORD -and (Test-
 $debugSign = Join-Path $Root "scripts\sign-apk-debug.ps1"
 if (Test-Path $debugSign) {
     & $debugSign -InputApk $InputApk -OutputApk $OutputApk
-    Write-Host "NOTE: signed with local debug keystore — configure release keystore for stable sideload updates"
+    Write-Host "NOTE: signed with local debug keystore — blocks GitHub release upgrades on dev.foss.obdforge (KB-014). Use release keystore or ./gradlew installDebug (dev.foss.obdforge.debug)."
     exit 0
 }
 

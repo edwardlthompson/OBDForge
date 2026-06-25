@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `scripts/install-github-release.sh/.ps1` — ADB install of signed GitHub APK with auto-uninstall on signature mismatch
+
+### Changed
+
+- Debug builds use `dev.foss.obdforge.debug` so `./gradlew installDebug` no longer blocks release sideload upgrades
+
+### Fixed
+
+- Document and prevent recurring `INSTALL_FAILED_UPDATE_INCOMPATIBLE` when debug and release share package id (KB-015)
+
 ## [1.2.4] - 2026-06-25
 
 ### Added

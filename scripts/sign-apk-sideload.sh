@@ -38,7 +38,8 @@ fi
 DEBUG_KS="${HOME:-/root}/.android/debug.keystore"
 if [ -f "$DEBUG_KS" ]; then
   bash "$ROOT/scripts/sign-apk-debug.sh" "$INPUT" "$OUTPUT"
-  echo "NOTE: signed with local debug keystore — configure release keystore for stable sideload updates"
+  echo "NOTE: signed with local debug keystore — installs as dev.foss.obdforge and will block GitHub release upgrades (KB-014)"
+  echo "  Prefer release keystore, or use debug build (dev.foss.obdforge.debug) via ./gradlew installDebug"
   exit 0
 fi
 

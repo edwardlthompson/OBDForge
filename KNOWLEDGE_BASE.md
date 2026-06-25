@@ -144,4 +144,13 @@
 | **Symptom** | `adb install` or sideload fails: `INSTALL_FAILED_UPDATE_INCOMPATIBLE: signatures do not match` |
 | **Cause** | Phone has an APK signed with a **different key** (debug keystore, old CI ephemeral sideload key, or manual local sign) than the GitHub release APK |
 | **Fix** | Uninstall OBDForge once, then install **`OBDForge-X.Y.Z.apk`** from GitHub Releases. Future updates work in-place when all releases use the same `OBDFORGE_KEYSTORE_BASE64` secret |
-| **Prevention** | Never upload unsigned or debug-signed APKs to GitHub Releases; require stable release keystore secrets; release workflow uploads **only** `OBDForge-X.Y.Z.apk` |
+| **Prevention** | Never upload unsigned or debug-signed APKs to GitHub Releases; require stable release keystore secrets; release workflow uploads **only** `OBDForge-X.Y.Z.apk`; use `dev.foss.obdforge.debug` for local debug builds (`applicationIdSuffix`) |
+
+### KB-015 — Debug install blocks GitHub release upgrade
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | GitHub `OBDForge-X.Y.Z.apk` fails after `./gradlew installDebug` or `sign-apk-sideload` with debug keystore |
+| **Cause** | Debug-signed APK uses package `dev.foss.obdforge` (same as release) but a different certificate |
+| **Fix** | `adb uninstall dev.foss.obdforge` then install release APK, or run `pwsh scripts/install-github-release.ps1` |
+| **Prevention** | Debug builds use `applicationIdSuffix = ".debug"`; bench script auto-uninstalls on signature mismatch |

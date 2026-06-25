@@ -43,7 +43,7 @@
 | Symptom | Check | Fix |
 |---------|-------|-----|
 | APK won't install (`INSTALL_PARSE_FAILED_NO_CERTIFICATES`) | Downloaded unsigned APK | Install **`OBDForge-X.Y.Z.apk`** from GitHub Releases only |
-| APK won't upgrade (`INSTALL_FAILED_UPDATE_INCOMPATIBLE`) | Old install signed with different key (debug / old CI key) | Uninstall OBDForge once, then install **`OBDForge-X.Y.Z.apk`** |
+| APK won't upgrade (`INSTALL_FAILED_UPDATE_INCOMPATIBLE`) | Debug or old signing key on `dev.foss.obdforge` | `pwsh scripts/install-github-release.ps1` (auto-uninstall) or uninstall once, then install **`OBDForge-X.Y.Z.apk`** (KB-014/KB-015) |
 | Gradle FOSS grep fail | Proprietary dep in `build.gradle.kts` | Remove GMS/Firebase |
 | Reproducible hash drift | `SOURCE_DATE_EPOCH` unset | Pin epoch in CI + local |
 | BT connect timeout | Android 12+ permissions | `BLUETOOTH_CONNECT` manifest + runtime |

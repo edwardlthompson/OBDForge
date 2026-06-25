@@ -41,11 +41,14 @@ OBDForge connects to ELM327 and OBDLink STN/STPX adapters over Bluetooth, USB, W
 
 **Sideload from GitHub Releases:** download **`OBDForge-X.Y.Z.apk`** only. Do **not** install unsigned or debug-signed builds from release assets.
 
-If upgrade fails with **signatures do not match**, uninstall the old app once, then install the new APK (see KB-014 in `KNOWLEDGE_BASE.md`). This is a one-time step when switching to the stable release signing key.
+If upgrade fails with **signatures do not match**, uninstall the old app once, then install the new APK (see KB-014 in `KNOWLEDGE_BASE.md`). This often happens after **`./gradlew installDebug`** — debug builds now use `dev.foss.obdforge.debug` so they no longer block release installs.
+
+**OnePlus / ADB bench:** `pwsh scripts/install-github-release.ps1` downloads the signed release APK and auto-uninstalls on signature mismatch.
 
 ```bash
 cd examples/android
 ./gradlew assembleDebug
+# Installs dev.foss.obdforge.debug — does not conflict with GitHub release APK
 # Install: adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 

@@ -5,6 +5,43 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0](https://github.com/edwardlthompson/OBDForge/compare/v1.2.6...v1.3.0) (2026-06-25)
+
+
+### Added
+
+* **android:** add launcher icon and automated release signing ([ca11726](https://github.com/edwardlthompson/OBDForge/commit/ca117260b2efff208cab2b733a8491fa1f21ea6e))
+
+
+### Fixed
+
+* add manufacturer catalog string resource ([202e545](https://github.com/edwardlthompson/OBDForge/commit/202e545211efd535aa9d7507444d06c889675f54))
+* **android:** audit sprint — icon, insets, CI hygiene ([ae1f114](https://github.com/edwardlthompson/OBDForge/commit/ae1f114d9148408c5eaf99bd9829cdc53eb5f6fb))
+* **android:** dismiss welcome screen in instrumented UI tests ([8a2ab2f](https://github.com/edwardlthompson/OBDForge/commit/8a2ab2f1272275a74ef7d2ac86d6cb63dffbe8f8))
+* **android:** guard Bluetooth discovery without permission ([32d1e95](https://github.com/edwardlthompson/OBDForge/commit/32d1e952b901c93f3a1076af6a4e737588eb3f73))
+* **android:** prevent debug install blocking release sideload ([d0ee831](https://github.com/edwardlthompson/OBDForge/commit/d0ee83152f35b562f8403e183beaab3994024833))
+* **android:** use try/catch for welcome dismiss in UI tests ([723810a](https://github.com/edwardlthompson/OBDForge/commit/723810a31ace791ae7ca316e438f31648fa4e843))
+* **ci:** allow release workflow when signing secrets unset ([dc41f9f](https://github.com/edwardlthompson/OBDForge/commit/dc41f9f5741c8a330f691347956f84ab6672716d))
+* **ci:** restore design-cohesion scripts and sync template version to 1.1.0 ([400cc7b](https://github.com/edwardlthompson/OBDForge/commit/400cc7ba09013856a88c2d1aa13865bb731532c5))
+* **release:** always attach signed installable APK to GitHub releases ([f6e081d](https://github.com/edwardlthompson/OBDForge/commit/f6e081d1eda039695f04ab44d8ffad018d360d85))
+* **release:** stable signing key and APK-only GitHub releases ([e81088f](https://github.com/edwardlthompson/OBDForge/commit/e81088f97bfd5e9af58cb667abfad43b7698b7ee))
+
+
+### Changed
+
+* **release:** prepare v1.2.1 release ([9f03505](https://github.com/edwardlthompson/OBDForge/commit/9f03505b5dc5e14e1f90e3285e4f28960f5d35a2))
+* **release:** prepare v1.2.2 release ([c53ec19](https://github.com/edwardlthompson/OBDForge/commit/c53ec19d269ad4260bd306870af9f44613663ab0))
+* **release:** prepare v1.2.4 release ([c95c446](https://github.com/edwardlthompson/OBDForge/commit/c95c4463e1b32f73e5c91ee04cfc3a382d86b2a9))
+* **release:** prepare v1.2.5 release ([3cdc380](https://github.com/edwardlthompson/OBDForge/commit/3cdc3802d2647f73dcbde5e25675d54dfeebbd21))
+* **release:** prepare v1.2.6 release ([8d7d37b](https://github.com/edwardlthompson/OBDForge/commit/8d7d37ba7f456e2edbbbcae5ccf04bf76fb7f628))
+
+
+### Documentation
+
+* KB-010 welcome screen instrumented test regression ([c1b7642](https://github.com/edwardlthompson/OBDForge/commit/c1b76421265dac40f50f38821129725cd497bb25))
+* KB-011 release workflow secrets if-expression regression ([f6b0650](https://github.com/edwardlthompson/OBDForge/commit/f6b0650d839592b071b4080c3fe6e54b25b1b115))
+* record KB-009 design-cohesion script corruption from v1.1.0 ship ([1e6391a](https://github.com/edwardlthompson/OBDForge/commit/1e6391a1da250348c0fb1b37c41556d02152b3fc))
+
 ## [Unreleased]
 
 ## [1.2.6] - 2026-06-25

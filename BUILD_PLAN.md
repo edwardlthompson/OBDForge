@@ -25,7 +25,7 @@
 
 ## Active board
 
-> **v1.2.4** shipping 2026-06-25. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.4]`.
+> **v1.2.5** shipping 2026-06-25. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.5]`.
 
 ### Open work
 
@@ -73,7 +73,7 @@ Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
 ### Pre-release
 
-- ✅ `pre-release-gate.sh` + reproducible APK verify (v1.0.0–v1.2.4)
+- ✅ `pre-release-gate.sh` + reproducible APK verify (v1.0.0–v1.2.5)
 
 ---
 

@@ -18,8 +18,8 @@ android {
         applicationId = "dev.foss.obdforge"
         minSdk = 26
         targetSdk = 37
-        versionCode = 20
-        versionName = "1.2.4"
+        versionCode = 21
+        versionName = "1.2.5"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,7 +30,6 @@ android {
         debug {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
-            resValue("string", "app_name", "OBDForge Debug")
         }
     }
 

@@ -1,0 +1,1 @@
+OBDForge 1.2.5 — Fix sideload upgrades after debug installs (KB-015). Debug builds use dev.foss.obdforge.debug. install-github-release script for ADB bench.

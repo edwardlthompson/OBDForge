@@ -2,6 +2,13 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge v1.2.5 release (2026-06-25)
+
+- ✅ [AGENT] Debug `dev.foss.obdforge.debug` package id — no longer blocks release sideload
+- ✅ [AGENT] `install-github-release` scripts with auto-uninstall on signature mismatch
+- ✅ [AGENT] KB-015 documented
+- ✅ [HUMAN] v1.2.5 tag + GitHub Release (signed APK)
+
 ## OBDForge v1.2.4 release (2026-06-25)
 
 - ✅ [AGENT] `AdapterConnectCard` — one-tap connect/reconnect from home screen

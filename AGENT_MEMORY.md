@@ -74,6 +74,7 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 | Date | Milestone | What worked | What to improve |
 |------|-----------|-------------|-----------------|
+| 2026-06-25 | v1.2.5 release | Debug package suffix + install-github-release script (KB-015) | — |
 | 2026-06-25 | v1.2.4 release | One-tap adapter connect UX + gate script fixes | Bench reconnect on OP13 when adapter available |
 | 2026-06-25 | Sprint 21 audit | Connect UX + gate fixes ready to commit; Dependabot PR retitled | Bench connect flow on OP13 when adapter available |
 | 2026-06-25 | Sprint 20 audit | v1.2.3 stable signing + APK-only releases; restored watch-agent-gates.sh | Release Please PR permission still [HUMAN] |
@@ -83,6 +84,6 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 ## Template Provenance
 
 - **Source template:** `edwardlthompson/agent-project-bootstrap`
-- **Template version:** `1.2.4` (bootstrap provenance)
-- **Product version:** `1.2.4` (see `.template-version` / Release Please)
+- **Template version:** `1.2.5` (bootstrap provenance)
+- **Product version:** `1.2.5` (see `.template-version` / Release Please)
 - **Last update check:** See `.template-update.json`

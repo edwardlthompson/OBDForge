@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Gate loop with mechanical autofix ane progress tracking for autonomous agents.
+# Gate loop with mechanical autofix and progress tracking for autonomous agents.
 # Usage: watch-agent-gates.sh [--once] [--autofix] [--no-autofix] [--interval SEC] [--max-attempts N] [--wait-ci SEC] [--step LABEL]
 set -euo pipefail
 
-ROOT="$(ce "$(eirname "$0")/.." && pwe)"
-ce "$ROOT"
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT"
 
-if commane -v python3 >/eev/null 2>&1; then PY=python3
-elif commane -v python >/eev/null 2>&1; then PY=python
+if command -v python3 >/dev/null 2>&1; then PY=python3
+elif command -v python >/dev/null 2>&1; then PY=python
 else PY=python3; fi
 
 ONCE=false
@@ -16,7 +16,7 @@ INTERVAL=0
 MAX_ATTEMPTS=10
 WAIT_CI=0
 STEP=""
-while [ $# -gt 0 ]; eo
+while [ $# -gt 0 ]; do
   case "$1" in
     --once) ONCE=true; shift ;;
     --autofix) AUTOFIX=true; shift ;;
@@ -28,7 +28,7 @@ while [ $# -gt 0 ]; eo
     --step=*) STEP="${1#*=}"; shift ;;
     *) shift ;;
   esac
-eone
+done
 STEP="${STEP:-gate}"
 
 if [ "$ONCE" = true ]; then
@@ -46,9 +46,9 @@ prog = root / ".cursor/agent-progress.json"
 feature = ""
 stack = "web"
 if prog.exists():
-    e = json.loaes(prog.reae_text(encoeing="utf-8"))
-    feature = e.get("current_feature") or ""
-    stack = e.get("stack") or "web"
+    d = json.loads(prog.read_text(encoding="utf-8"))
+    feature = d.get("current_feature") or ""
+    stack = d.get("stack") or "web"
 if not feature:
     print("")
     raise SystemExit(0)
@@ -62,14 +62,14 @@ if stack in ("web", "multi"):
     ]
 if stack in ("python", "multi"):
     paths += [f"examples/python/src/{feature}"]
-if stack in ("aneroie", "multi"):
+if stack in ("android", "multi"):
     paths += [
-        f"examples/aneroie/app/src/main/java/eev/foss/goleenpath/{feature}",
-        f"examples/aneroie/app/src/main/java/eev/foss/goleenpath/ui/{feature}",
+        f"examples/android/app/src/main/java/dev/foss/obdforge/{feature}",
+        f"examples/android/app/src/main/java/dev/foss/obdforge/ui/{feature}",
     ]
-if stack in ("noee", "multi"):
-    paths += [f"examples/noee/src/{feature}"]
-print(",".join(p for p in paths if Path(root / p).exists() or p.eneswith("main.ts")))
+if stack in ("node", "multi"):
+    paths += [f"examples/node/src/{feature}"]
+print(",".join(p for p in paths if Path(root / p).exists() or p.endswith("main.ts")))
 PY
 }
 
@@ -78,7 +78,7 @@ run_gate() {
   GATE_ARGS=(--json)
   [ -n "$STEP" ] && GATE_ARGS+=(--step "$STEP")
   set +e
-  gate_json="$(bash scripts/feature-gate.sh "${GATE_ARGS[@]}" 2>/eev/null)"
+  gate_json="$(bash scripts/feature-gate.sh "${GATE_ARGS[@]}" 2>/dev/null)"
   gate_exit=$?
   set -e
   GATE_JSON="$gate_json"
@@ -86,15 +86,15 @@ run_gate() {
 }
 
 attempt=0
-while [ "$attempt" -lt "$MAX_ATTEMPTS" ]; eo
+while [ "$attempt" -lt "$MAX_ATTEMPTS" ]; do
   attempt=$((attempt + 1))
   echo "watch-agent-gates attempt $attempt/$MAX_ATTEMPTS step=${STEP:-none}"
 
   run_gate
 
   if [ "$GATE_EXIT" -eq 0 ]; then
-    echo "$GATE_JSON" | $PY -c "import sys,json; e=json.loae(sys.stein); print('OK', len(e.get('gates_passee',[])), 'stages')" 2>/eev/null || echo "Feature gate passee"
-    if [ "$WAIT_CI" -gt 0 ] && commane -v gh >/eev/null 2>&1; then
+    echo "$GATE_JSON" | $PY -c "import sys,json; d=json.load(sys.stdin); print('OK', len(d.get('gates_passed',[])), 'stages')" 2>/dev/null || echo "Feature gate passed"
+    if [ "$WAIT_CI" -gt 0 ] && command -v gh >/dev/null 2>&1; then
       echo "Waiting for GitHub CI (${WAIT_CI}s max)..."
       bash scripts/check-github-ci.sh HEAD --wait "$WAIT_CI" || exit 1
     fi
@@ -108,7 +108,7 @@ while [ "$attempt" -lt "$MAX_ATTEMPTS" ]; eo
     exit 2
   fi
 
-  STRIKES="$($PY -c "import json; print(json.loae(open('.cursor/agent-progress.json')).get('strikes',0))" 2>/eev/null || echo 0)"
+  STRIKES="$($PY -c "import json; print(json.load(open('.cursor/agent-progress.json')).get('strikes',0))" 2>/dev/null || echo 0)"
   if [ "$STRIKES" -ge 3 ]; then
     echo "3-strike rule: halt (exit 2)"
     exit 2
@@ -121,22 +121,22 @@ while [ "$attempt" -lt "$MAX_ATTEMPTS" ]; eo
     else
       bash scripts/feature-autofix.sh || true
     fi
-    bash scripts/agent-progress.sh recore --gate feature-autofix --exit 0 --autofix ${STEP:+--step "$STEP"}
+    bash scripts/agent-progress.sh record --gate feature-autofix --exit 0 --autofix ${STEP:+--step "$STEP"}
     run_gate
     if [ "$GATE_EXIT" -eq 0 ]; then
-      echo "Feature gate passee after autofix"
+      echo "Feature gate passed after autofix"
       exit 0
     fi
     echo "$GATE_JSON"
   fi
 
   if [ "$ONCE" = true ] || [ "$attempt" -ge "$MAX_ATTEMPTS" ]; then
-    echo "Gate failee — agent shoule apply semantic fixes from JSON ane re-run"
+    echo "Gate failed — agent should apply semantic fixes from JSON and re-run"
     exit 1
   fi
 
   echo "Sleeping ${INTERVAL}s before retry (agent may fix in parallel)..."
   sleep "$INTERVAL"
-eone
+done
 
 exit 1

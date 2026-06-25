@@ -22,6 +22,7 @@ import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.preferences.DemoPreferences
 import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.data.preferences.WelcomePreferences
+import dev.foss.obdforge.domain.transport.BluetoothLinkKind
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.domain.livedata.PersonaMode
@@ -61,6 +62,7 @@ fun GoldenPathApp(
     var connectionStatus by remember {
         mutableStateOf(context.getString(R.string.connection_status_disconnected))
     }
+    var isAdapterConnected by remember { mutableStateOf(false) }
     var vinDisplay by remember { mutableStateOf(context.getString(R.string.vin_unknown)) }
     var vinSourceLabel by remember { mutableStateOf("") }
     val root = compositionRoot ?: remember { ObdForgeCompositionRoot.create(context) }
@@ -69,12 +71,25 @@ fun GoldenPathApp(
     )
     val savedTransport by root.transportPreferences.selection.collectAsStateWithLifecycle(
         initialValue = TransportSelection(
-            type = TransportType.WiFi,
-            endpoint = TransportEndpoint.Tcp(
-                host = TransportEndpoint.Tcp.DEFAULT_OBD_HOST,
-                port = TransportEndpoint.Tcp.DEFAULT_OBD_PORT,
+            type = TransportType.Bluetooth,
+            endpoint = TransportEndpoint.Bluetooth(
+                deviceAddress = "",
+                displayName = null,
+                linkKind = BluetoothLinkKind.Auto,
             ),
         ),
+    )
+    val adapterConnectUi = rememberAdapterConnectUi(
+        context = context,
+        scope = scope,
+        root = root,
+        demoModeEnabled = demoModeEnabled,
+        savedTransport = savedTransport,
+        connectionStatus = connectionStatus,
+        onConnectionStatusChange = { connectionStatus = it },
+        onVinDisplayChange = { vinDisplay = it },
+        onVinSourceLabelChange = { vinSourceLabel = it },
+        onConnectedChange = { isAdapterConnected = it },
     )
     val transportUi = rememberGoldenPathTransportUi(
         context = context,
@@ -82,15 +97,7 @@ fun GoldenPathApp(
         root = root,
         activity = activity,
         onConnectionStatusChange = { connectionStatus = it },
-    )
-    val bluetoothConnectUi = rememberBluetoothConnectUi(
-        context = context,
-        scope = scope,
-        root = root,
-        demoModeEnabled = demoModeEnabled,
-        onConnectionStatusChange = { connectionStatus = it },
-        onVinDisplayChange = { vinDisplay = it },
-        onVinSourceLabelChange = { vinSourceLabel = it },
+        onConnectAfterSave = adapterConnectUi.onConnect,
     )
     val demoSelection = remember {
         TransportSelection(TransportType.Simulated, TransportEndpoint.Simulated)
@@ -176,13 +183,11 @@ fun GoldenPathApp(
                 homeContent = {
                     GoldenPathScreen(
                         themeMode = themeMode,
-                        isOnline = isOnline,
                         demoModeEnabled = demoModeEnabled,
                         personaMode = personaMode,
-                        connectionStatus = connectionStatus,
                         vinDisplay = vinDisplay,
                         vinSourceLabel = vinSourceLabel,
-                        savedVehicleProfile = savedVehicleProfile,
+                        adapterConnectUi = adapterConnectUi,
                         showAbout = showAbout,
                         showSettings = showSettings,
                         updateCheckEnabled = SettingsLogic.isUpdateCheckEnabled(checkInterval),
@@ -211,12 +216,8 @@ fun GoldenPathApp(
                         onBluetoothSelect = transportUi.onBluetoothSelect,
                         onUsbSelect = transportUi.onUsbSelect,
                         onSaveTransportSelection = transportUi.onSaveSelection,
+                        onSaveAndConnect = transportUi.onSaveAndConnect,
                         onRequestUsbPermission = transportUi.onRequestUsbPermission,
-                        bluetoothConnectEnabled = bluetoothConnectUi.canConnect,
-                        bluetoothConnectConnecting = bluetoothConnectUi.isConnecting,
-                        bluetoothLastAdapterLabel = bluetoothConnectUi.lastAdapterLabel,
-                        bluetoothConnectStatusMessage = bluetoothConnectUi.statusMessage,
-                        onBluetoothConnect = bluetoothConnectUi.onConnect,
                         onAboutOpen = { showAbout = !showAbout; if (showAbout) showSettings = false },
                         onAboutClose = { showAbout = false },
                         onSettingsOpen = { showSettings = !showSettings; if (showSettings) showAbout = false },
@@ -233,7 +234,7 @@ fun GoldenPathApp(
                             }
                         },
                         onApplyUpdate = updateUi.onApplyUpdate,
-                        liveDataEnabled = connectionStatus.contains("Connected"),
+                        liveDataEnabled = isAdapterConnected || connectionStatus.contains("Connected"),
                         onOpenLiveData = { route = GoldenPathRoute.LiveData },
                         onOpenSessionHistory = { route = GoldenPathRoute.SessionHistory },
                         onOpenVinResolve = { route = GoldenPathRoute.VinResolve },

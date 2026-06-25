@@ -2,6 +2,39 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge v1.2.4 release (2026-06-25)
+
+- ✅ [AGENT] `AdapterConnectCard` — one-tap connect/reconnect from home screen
+- ✅ [AGENT] Unified `AdapterConnectUseCase`; Save & connect; default Bluetooth transport
+- ✅ [AGENT] Gate fixes: `watch-agent-gates.sh` restore, `check-file-limits.sh` build exclude
+- ✅ [HUMAN] v1.2.4 tag + GitHub Release (signed APK)
+
+## OBDForge Sprint 21 — Connect UX + audit (2026-06-25)
+
+- ✅ [AGENT] Home-screen `AdapterConnectCard` — one-tap connect/reconnect; unified `AdapterConnectUseCase`
+- ✅ [AGENT] Transport picker **Save & connect**; default transport Bluetooth; collapsible adapter setup
+- ✅ [AGENT] F-001 — CHANGELOG `[Unreleased]` for audit fixes + connect UX
+- ✅ [AGENT] F-003 — Dependabot PR #6 retitled for Conventional Commits gate
+- ✅ [AGENT] All local gates green (bootstrap, feature-gate, hygiene, watch-agent-gates); unit tests pass
+- 🔲 [HUMAN] F-002 — Release Please Actions PR permission (carried)
+- 🔲 [ADB] F-004 — Bench connect/reconnect on OP13 with real adapter
+
+## OBDForge Sprint 20 — Post v1.2.3 audit (2026-06-25)
+
+- ✅ [AGENT] F-001 — Restore corrupted `watch-agent-gates.sh` (d-character mangling since v1.1.0)
+- ✅ [AGENT] F-004 — Exclude `build/` from `check-file-limits.sh` (local KSP false positives)
+- ✅ [AGENT] F-008 — Pre-release gate list through v1.2.3; mark CI green on maintenance board
+- ✅ [AGENT] Audit gates: bootstrap/hygiene/README pass; unit tests pass; v1.2.3 single APK verified
+- 🔲 [HUMAN] F-002 — Release Please Actions PR permission (carried from Sprint 19)
+- 🔲 [AGENT] F-003 — Dependabot `actions/checkout` v7 PR #6 (title gate)
+
+## OBDForge v1.2.3 release (2026-06-24)
+
+- ✅ [AGENT] Stable release signing key (`OBDFORGE_KEYSTORE_*` secrets)
+- ✅ [AGENT] APK-only GitHub releases (`OBDForge-X.Y.Z.apk` only)
+- ✅ [AGENT] KB-014 — signature mismatch upgrade troubleshooting
+- ✅ [HUMAN] v1.2.3 tag + GitHub Release; OP13 install verified
+
 ## OBDForge v1.2.2 release (2026-06-24)
 
 - ✅ [AGENT] Signed installable APK on GitHub releases (`OBDForge-X.Y.Z.apk`)
@@ -15,8 +48,8 @@
 - ✅ [AGENT] F-004 — Option A launcher icon (PNG foreground, no wireless waves)
 - ✅ [AGENT] F-004 — `ObdScaffold` + `navigationBarGutter()` edge-to-edge insets app-wide
 - ✅ [AGENT] KB-013 — Document AI icon size gate regression
-- 🔲 [HUMAN] F-003 — Release Please Actions PR permission
-- 🔲 [HUMAN] F-005 — GitHub signing secrets (BUILD_PLAN #6)
+- 🔲 [HUMAN] F-003 — Release Please Actions PR permission (carried → Sprint 20)
+- ✅ [HUMAN] F-005 — GitHub signing secrets (BUILD_PLAN #6)
 
 ## OBDForge Sprint 18 — Icon and release signing (2026-06-21)
 

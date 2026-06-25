@@ -20,7 +20,7 @@ import dev.foss.obdforge.data.persistence.SessionRepository
 import dev.foss.obdforge.data.registry.ProtocolRegistry
 import dev.foss.obdforge.data.registry.TransportRegistry
 import dev.foss.obdforge.data.diagnostics.VehicleHealthScanUseCase
-import dev.foss.obdforge.data.transport.BluetoothReconnectUseCase
+import dev.foss.obdforge.data.transport.AdapterConnectUseCase
 import dev.foss.obdforge.data.transport.TransportDiscovery
 import dev.foss.obdforge.data.ai.DtcManufacturerOverlayLoader
 import dev.foss.obdforge.data.ai.DtcCatalogAssetLoader
@@ -54,7 +54,7 @@ data class ObdForgeCompositionRoot(
     val shopRepository: ShopRepository,
     val explainDtcUseCase: ExplainDtcUseCase,
     val sessionRecorder: SessionRecorder,
-    val bluetoothReconnectUseCase: BluetoothReconnectUseCase,
+    val adapterConnectUseCase: AdapterConnectUseCase,
     val vehicleHealthScanUseCase: VehicleHealthScanUseCase,
 ) {
     companion object {
@@ -122,7 +122,7 @@ data class ObdForgeCompositionRoot(
                     protocolRegistry = protocolRegistry,
                     sessionRepository = sessionRepository,
                 ),
-                bluetoothReconnectUseCase = BluetoothReconnectUseCase(
+                adapterConnectUseCase = AdapterConnectUseCase(
                     transportRegistry = transportRegistry,
                     protocolRegistry = protocolRegistry,
                     transportPreferences = transportPreferences,

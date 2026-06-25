@@ -16,6 +16,7 @@ import dev.foss.obdforge.data.transport.BluetoothDeviceOption
 import dev.foss.obdforge.data.transport.UsbDeviceOption
 import dev.foss.obdforge.data.transport.buildTransportEndpoint
 import dev.foss.obdforge.data.transport.displayLabel
+import dev.foss.obdforge.domain.transport.BluetoothLinkKind
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.ui.connect.BluetoothPermissionGate
@@ -38,6 +39,7 @@ data class GoldenPathTransportUi(
     val onBluetoothSelect: (BluetoothDeviceOption) -> Unit,
     val onUsbSelect: (UsbDeviceOption) -> Unit,
     val onSaveSelection: () -> Unit,
+    val onSaveAndConnect: () -> Unit,
     val onRequestUsbPermission: () -> Unit,
 )
 
@@ -48,13 +50,15 @@ fun rememberGoldenPathTransportUi(
     root: ObdForgeCompositionRoot,
     activity: ComponentActivity?,
     onConnectionStatusChange: (String) -> Unit,
+    onConnectAfterSave: () -> Unit,
 ): GoldenPathTransportUi {
     val savedTransport by root.transportPreferences.selection.collectAsStateWithLifecycle(
         initialValue = TransportSelection(
-            type = TransportType.WiFi,
-            endpoint = TransportEndpoint.Tcp(
-                host = TransportEndpoint.Tcp.DEFAULT_OBD_HOST,
-                port = TransportEndpoint.Tcp.DEFAULT_OBD_PORT,
+            type = TransportType.Bluetooth,
+            endpoint = TransportEndpoint.Bluetooth(
+                deviceAddress = "",
+                displayName = null,
+                linkKind = BluetoothLinkKind.Auto,
             ),
         ),
     )
@@ -139,6 +143,29 @@ fun rememberGoldenPathTransportUi(
                         endpoint.displayLabel(),
                     )
                     onConnectionStatusChange(context.getString(R.string.connection_status_adapter_ready))
+                }
+            }
+        },
+        onSaveAndConnect = {
+            val endpoint = buildTransportEndpoint(
+                type = pickerType,
+                tcpHost = tcpHost,
+                tcpPort = tcpPort,
+                bluetoothAddress = bluetoothAddress,
+                bluetoothName = bluetoothName,
+                usbDeviceName = usbDeviceName,
+            )
+            if (endpoint == null) {
+                transportStatus = context.getString(R.string.transport_status_invalid)
+            } else {
+                scope.launch {
+                    root.transportPreferences.setSelection(pickerType, endpoint)
+                    transportStatus = context.getString(
+                        R.string.transport_status_saved,
+                        transportTypeName(context, pickerType),
+                        endpoint.displayLabel(),
+                    )
+                    onConnectAfterSave()
                 }
             }
         },

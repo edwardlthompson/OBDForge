@@ -31,7 +31,15 @@
     <string name="bluetooth_connect_error_no_saved">No saved Bluetooth adapter — pick one below</string>
     <string name="bluetooth_connect_error_failed">Could not connect: %1$s</string>
     <string name="bluetooth_connect_error_unknown">unknown error</string>
+    <string name="adapter_connect_title">OBD-II adapter</string>
+    <string name="adapter_connect_saved_label">Saved: %1$s</string>
+    <string name="adapter_connect_setup_hint">Choose your adapter type and paired device below, then tap Save &amp; connect.</string>
+    <string name="adapter_connect_choose">Set up adapter</string>
+    <string name="adapter_connect_reconnect">Reconnect</string>
+    <string name="adapter_connect_change">Change adapter</string>
+    <string name="adapter_connect_error_no_saved">Choose an adapter below, then Save &amp; connect</string>
     <string name="bluetooth_connect_permission_denied">Bluetooth permission required</string>
+    <string name="transport_save_and_connect">Save &amp; connect</string>
     <string name="demo_mode_label">Simulation mode</string>
     <string name="demo_mode_on">Simulation on — using canned OBD responses</string>
     <string name="demo_mode_off">Simulation off — connect an adapter to begin</string>

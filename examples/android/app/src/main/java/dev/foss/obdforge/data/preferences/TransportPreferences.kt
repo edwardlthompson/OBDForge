@@ -23,8 +23,8 @@ data class TransportSelection(
 
 class TransportPreferences(private val context: Context) {
     val selection: Flow<TransportSelection> = context.transportDataStore.data.map { prefs ->
-        val typeName = prefs[TYPE_KEY] ?: TransportType.WiFi.name
-        val type = runCatching { TransportType.valueOf(typeName) }.getOrDefault(TransportType.WiFi)
+        val typeName = prefs[TYPE_KEY] ?: TransportType.Bluetooth.name
+        val type = runCatching { TransportType.valueOf(typeName) }.getOrDefault(TransportType.Bluetooth)
         TransportSelection(type = type, endpoint = endpointFromPrefs(type, prefs))
     }
 

@@ -25,7 +25,7 @@ check_view_paths "view" < <(find "$ROOT" -type f \( \
   -o -path "*/examples/web/src/components/*.ts" \
   -o -path "*/examples/android/app/src/main/java/*/ui/*/*.kt" \
   -o -path "*/examples/android/app/src/main/java/*/ui/shell/GoldenPath*.kt" \
-  \) ! -path "*/node_modules/*" ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/dist/*" -print0 2>/dev/null)
+  \) ! -path "*/node_modules/*" ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/dist/*" ! -path "*/build/*" -print0 2>/dev/null)
 
 echo "Checking logic file limits (max $LOGIC_LIMIT lines)..."
 while IFS= read -r -d '' file; do
@@ -36,7 +36,7 @@ while IFS= read -r -d '' file; do
   fi
 done < <(find "$ROOT/examples" -type f \( -name "*.ts" -o -name "*.py" -o -name "*.kt" \) \
   ! -name "*.test.*" ! -name "*.spec.*" \
-  ! -path "*/node_modules/*" ! -path "*/.venv/*" ! -path "*/.git/*" \
+  ! -path "*/node_modules/*" ! -path "*/.venv/*" ! -path "*/.git/*" ! -path "*/build/*" \
   ! -path "*/examples/web/src/components/*" \
   ! -path "*/examples/android/app/src/main/java/*/ui/shell/GoldenPath*.kt" \
   ! -path "*/examples/android/app/src/main/java/*/ui/*/*.kt" \

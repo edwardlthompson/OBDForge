@@ -1,6 +1,6 @@
 # Build Plan
 
-> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–19).
+> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–21).
 
 ## Owner labels
 
@@ -25,7 +25,7 @@
 
 ## Active board
 
-> **v1.2.3** shipping 2026-06-24. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.3]`.
+> **v1.2.4** shipping 2026-06-25. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.4]`.
 
 ### Open work
 
@@ -36,7 +36,10 @@
 | 3 | ADB | F-Droid fdroiddata MR | Draft ready · device smoke PASS · GitLab submit pending |
 | 4 | HUMAN | Shop operator review | Optional real-world workflow feedback |
 | 5 | HUMAN | Post-release monitoring | Issues, adapter notes → `KNOWLEDGE_BASE.md` |
-| 6 | HUMAN | Configure GitHub signing secrets | ✅ Done 2026-06-24 — stable `OBDFORGE_KEYSTORE_*` secrets set |
+| 6 | HUMAN | Configure GitHub signing secrets | ✅ Done 2026-06-24 |
+| 7 | HUMAN | Release Please Actions PR permission | F-002 |
+| 8 | AGENT | Merge Dependabot `actions/checkout` v7 bump | F-003 — PR #6 retitled; merge when CI green |
+| 9 | ADB | Bench one-tap connect / reconnect on OP13 | F-004 — needs OBD adapter |
 
 ### Blocked — hardware bench
 
@@ -48,6 +51,7 @@ No OBD adapter or bench ECU on hand. Pull when hardware is available.
 | Protocol | ELM327 DTC + PID read; STN vs ELM latency |
 | Live data | 10+ PID stability (5 min); unblocks charting (#1) |
 | Bidirectional | Staged bench ECU test (authorized vehicles only) |
+| Connect UX | One-tap reconnect car-to-car (`AdapterConnectCard`) |
 
 Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
@@ -59,7 +63,7 @@ Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
 - 🔲 [AUTO] `check-security-triage.sh --wait-ci 300`
 - 🔲 [AGENT] Dependabot bumps; triage OpenSSF Scorecard SARIF
-- 🔲 [AUTO] CI + Feature Gate green on `main`
+- ✅ [AUTO] CI + Feature Gate green on `main` (2026-06-25 Sprint 21 audit)
 
 ### Monthly
 
@@ -69,10 +73,10 @@ Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
 ### Pre-release
 
-- ✅ `pre-release-gate.sh` + reproducible APK verify (v1.0.0, v1.1.0, v1.2.0, v1.2.1, v1.2.2)
+- ✅ `pre-release-gate.sh` + reproducible APK verify (v1.0.0–v1.2.4)
 
 ---
 
 ## Archive
 
-Sprints **0–19** complete. Sprint detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).
+Sprints **0–21** complete. Sprint detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).

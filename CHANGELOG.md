@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.4] - 2026-06-25
+
+### Added
+
+- Home-screen **AdapterConnectCard** — one-tap connect/reconnect to saved OBD adapter from main screen
+- Unified `AdapterConnectUseCase` for Bluetooth, Wi‑Fi, USB, and Ethernet (replaces Bluetooth-only reconnect)
+- **Save & connect** in transport picker for first-time adapter setup
+- `SavedTransportConnectTest` for last-known Bluetooth fallback logic
+
+### Changed
+
+- Default transport preference to Bluetooth (mobile-first)
+- Transport picker collapses behind **Change adapter**; feature nav buttons follow connect card
+- Removed misleading network status line from home (was labeled as adapter status)
+
+### Fixed
+
+- Restored corrupted `watch-agent-gates.sh` (d-character mangling since v1.1.0)
+- `check-file-limits.sh` excludes `build/` (Room KSP local false positives)
+
 ## [1.2.3] - 2026-06-24
 
 ### Changed
@@ -91,7 +111,8 @@ First public release — product milestones M1–M13 (Sprints 0–14).
 - Architecture ADRs 0001–0005, personas spec, threat model, privacy policy, and runbook
 - F-Droid submission checklist in `docs/FDROID_SUBMISSION.md`
 
-[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.3...HEAD
+[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.4...HEAD
+[1.2.4]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.4
 [1.2.3]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.3
 [1.2.2]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.2
 [1.2.1]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.1

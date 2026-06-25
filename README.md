@@ -4,7 +4,7 @@
   <img src="docs/assets/icon.png" alt="OBDForge app icon" width="128" height="128" />
 </p>
 
-![Version](https://img.shields.io/badge/version-1.2.3-blue?style=flat-square)
+![Version](https://img.shields.io/badge/version-1.2.4-blue?style=flat-square)
 ![GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)
 ![Android](https://img.shields.io/badge/platform-Android-3DDC84?style=flat-square)
 ![FOSS](https://img.shields.io/badge/FOSS-F--Droid-2ea043?style=flat-square)

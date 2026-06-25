@@ -12,54 +12,64 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.foss.obdforge.R
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.preferences.TransportSelection
+import dev.foss.obdforge.data.transport.SavedTransportConnect
+import dev.foss.obdforge.data.transport.displayLabel
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.domain.vehicle.VinSourceType
 import dev.foss.obdforge.ui.connect.BluetoothPermissionGate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-data class BluetoothConnectUi(
-    val lastAdapterLabel: String?,
+data class AdapterConnectUi(
+    val isConnected: Boolean,
     val isConnecting: Boolean,
+    val adapterSummary: String?,
+    val transportLabel: String?,
     val canConnect: Boolean,
+    val showSetupHint: Boolean,
     val statusMessage: String,
     val onConnect: () -> Unit,
 )
 
 @Composable
-fun rememberBluetoothConnectUi(
+fun rememberAdapterConnectUi(
     context: Context,
     scope: CoroutineScope,
     root: ObdForgeCompositionRoot,
     demoModeEnabled: Boolean,
+    savedTransport: TransportSelection,
+    connectionStatus: String,
     onConnectionStatusChange: (String) -> Unit,
     onVinDisplayChange: (String) -> Unit,
     onVinSourceLabelChange: (String) -> Unit,
-): BluetoothConnectUi {
+    onConnectedChange: (Boolean) -> Unit,
+): AdapterConnectUi {
     val lastBluetooth by root.transportPreferences.lastBluetooth.collectAsStateWithLifecycle(initialValue = null)
     var isConnecting by remember { mutableStateOf(false) }
     var statusMessage by remember { mutableStateOf("") }
     var pendingConnect by remember { mutableStateOf(false) }
 
+    val isReady = remember(savedTransport, lastBluetooth) {
+        SavedTransportConnect.isReady(savedTransport, lastBluetooth)
+    }
+    val resolvedSelection = remember(savedTransport, lastBluetooth) {
+        SavedTransportConnect.resolveSelection(savedTransport, lastBluetooth)
+    }
+
     suspend fun performConnect() {
-        val endpoint = root.transportPreferences.lastBluetoothEndpoint()
-            ?: run {
-                statusMessage = context.getString(R.string.bluetooth_connect_error_no_saved)
-                root.diagnosticEventRecorder.record(
-                    category = dev.foss.obdforge.domain.diagnostics.DiagnosticEventCategory.Connection,
-                    severity = dev.foss.obdforge.domain.diagnostics.DiagnosticEventSeverity.Warn,
-                    message = "Bluetooth connect aborted: no saved adapter",
-                    transportType = TransportType.Bluetooth,
-                )
-                return
-            }
+        if (!isReady) {
+            statusMessage = context.getString(R.string.adapter_connect_error_no_saved)
+            return
+        }
         isConnecting = true
         statusMessage = ""
+        onConnectedChange(false)
         onConnectionStatusChange(context.getString(R.string.bluetooth_connecting))
-        val result = root.bluetoothReconnectUseCase.connectLastKnown()
+        val result = root.adapterConnectUseCase.connectSaved()
         isConnecting = false
         result.fold(
             onSuccess = { outcome ->
+                onConnectedChange(true)
                 onConnectionStatusChange(context.getString(R.string.connection_status_connected_adapter))
                 onVinDisplayChange(context.getString(R.string.vin_label, outcome.vinResult.vin))
                 onVinSourceLabelChange(
@@ -70,14 +80,13 @@ fun rememberBluetoothConnectUi(
                     },
                 )
                 root.sessionRecorder.recordFromConnection(
-                    selection = TransportSelection(
-                        type = TransportType.Bluetooth,
-                        endpoint = endpoint,
-                    ),
+                    selection = outcome.selection,
                     vinResult = outcome.vinResult,
                 )
+                root.vinProfileRepository.save(outcome.vinResult)
             },
             onFailure = { error ->
+                onConnectedChange(false)
                 statusMessage = context.getString(
                     R.string.bluetooth_connect_error_failed,
                     error.message ?: context.getString(R.string.bluetooth_connect_error_unknown),
@@ -85,8 +94,8 @@ fun rememberBluetoothConnectUi(
                 root.diagnosticEventRecorder.record(
                     category = dev.foss.obdforge.domain.diagnostics.DiagnosticEventCategory.Connection,
                     severity = dev.foss.obdforge.domain.diagnostics.DiagnosticEventSeverity.Error,
-                    message = "Bluetooth reconnect failed: ${error.message ?: "unknown"}",
-                    transportType = TransportType.Bluetooth,
+                    message = "Adapter connect failed: ${error.message ?: "unknown"}",
+                    transportType = savedTransport.type,
                 )
                 onConnectionStatusChange(context.getString(R.string.connection_status_disconnected))
             },
@@ -102,36 +111,50 @@ fun rememberBluetoothConnectUi(
         } else if (pendingConnect) {
             pendingConnect = false
             statusMessage = context.getString(R.string.bluetooth_connect_permission_denied)
-            root.diagnosticEventRecorder.record(
-                category = dev.foss.obdforge.domain.diagnostics.DiagnosticEventCategory.Connection,
-                severity = dev.foss.obdforge.domain.diagnostics.DiagnosticEventSeverity.Warn,
-                message = "Bluetooth connect aborted: permission denied",
-                transportType = TransportType.Bluetooth,
-            )
         }
     }
 
     fun requestConnect() {
         if (demoModeEnabled || isConnecting) return
-        if (lastBluetooth == null) {
-            statusMessage = context.getString(R.string.bluetooth_connect_error_no_saved)
+        if (!isReady) {
+            statusMessage = context.getString(R.string.adapter_connect_error_no_saved)
             return
         }
-        val missing = BluetoothPermissionGate.missingPermissions(context)
-        if (missing.isNotEmpty()) {
-            pendingConnect = true
-            permissionLauncher.launch(missing.toTypedArray())
-        } else {
-            scope.launch { performConnect() }
+        val needsBt = savedTransport.type == TransportType.Bluetooth
+        if (needsBt) {
+            val missing = BluetoothPermissionGate.missingPermissions(context)
+            if (missing.isNotEmpty()) {
+                pendingConnect = true
+                permissionLauncher.launch(missing.toTypedArray())
+                return
+            }
         }
+        scope.launch { performConnect() }
     }
 
-    val label = lastBluetooth?.displayName ?: lastBluetooth?.deviceAddress
-    return BluetoothConnectUi(
-        lastAdapterLabel = label,
+    val transportLabel = transportTypeName(context, savedTransport.type)
+    val adapterSummary = resolvedSelection?.endpoint?.displayLabel()
+        ?: lastBluetooth?.displayLabel()
+
+    return AdapterConnectUi(
+        isConnected = connectionStatus.contains("Connected") && !demoModeEnabled,
         isConnecting = isConnecting,
-        canConnect = !demoModeEnabled && lastBluetooth != null,
+        adapterSummary = adapterSummary,
+        transportLabel = if (isReady) transportLabel else null,
+        canConnect = !demoModeEnabled && isReady,
+        showSetupHint = !demoModeEnabled && !isReady,
         statusMessage = statusMessage,
         onConnect = ::requestConnect,
     )
 }
+
+private fun transportTypeName(context: Context, type: TransportType): String =
+    context.getString(
+        when (type) {
+            TransportType.Bluetooth -> R.string.transport_type_bluetooth
+            TransportType.UsbSerial -> R.string.transport_type_usb
+            TransportType.WiFi -> R.string.transport_type_wifi
+            TransportType.Ethernet -> R.string.transport_type_ethernet
+            TransportType.Simulated -> R.string.transport_type_simulated
+        },
+    )

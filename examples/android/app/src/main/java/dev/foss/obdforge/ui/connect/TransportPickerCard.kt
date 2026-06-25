@@ -45,6 +45,7 @@ fun TransportPickerCard(
     onBluetoothSelect: (BluetoothDeviceOption) -> Unit,
     onUsbSelect: (UsbDeviceOption) -> Unit,
     onSaveSelection: () -> Unit,
+    onSaveAndConnect: () -> Unit,
     onRequestUsbPermission: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -140,6 +141,9 @@ fun TransportPickerCard(
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+            }
+            Button(onClick = onSaveAndConnect, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.transport_save_and_connect))
             }
             Button(onClick = onSaveSelection, modifier = Modifier.fillMaxWidth()) {
                 Text(stringResource(R.string.transport_save_selection))

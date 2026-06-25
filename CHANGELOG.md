@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Restored corrupted `watch-agent-gates.sh` (d-character mangling since v1.1.0)
 - `check-file-limits.sh` excludes `build/` (Room KSP local false positives)
+- Guard Bluetooth device discovery when `BLUETOOTH_CONNECT` not yet granted (fixes emulator crash)
 
 ## [1.2.3] - 2026-06-24
 

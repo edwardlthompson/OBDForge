@@ -1,11 +1,15 @@
 package dev.foss.obdforge.data.transport
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.content.Context
+import android.content.pm.PackageManager
 import android.hardware.usb.UsbManager
+import android.os.Build
+import androidx.core.content.ContextCompat
 import com.hoho.android.usbserial.driver.UsbSerialProber
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import kotlinx.coroutines.delay
@@ -23,19 +27,25 @@ data class UsbDeviceOption(
 
 class TransportDiscovery(private val context: Context) {
     fun pairedBluetoothDevices(): List<BluetoothDeviceOption> {
+        if (!hasBluetoothConnectPermission()) return emptyList()
         val manager = context.getSystemService(BluetoothManager::class.java) ?: return emptyList()
         val adapter = manager.adapter ?: return emptyList()
         if (!adapter.isEnabled) return emptyList()
-        return adapter.bondedDevices.orEmpty().map { device ->
-            BluetoothDeviceOption(
-                address = device.address,
-                name = device.name,
-            )
-        }.sortedBy { it.name ?: it.address }
+        return try {
+            adapter.bondedDevices.orEmpty().map { device ->
+                BluetoothDeviceOption(
+                    address = device.address,
+                    name = device.name,
+                )
+            }.sortedBy { it.name ?: it.address }
+        } catch (_: SecurityException) {
+            emptyList()
+        }
     }
 
     @SuppressLint("MissingPermission")
     suspend fun discoverBluetoothDevices(scanDurationMs: Long = 4000L): List<BluetoothDeviceOption> {
+        if (!hasBluetoothConnectPermission()) return emptyList()
         val devices = pairedBluetoothDevices().associateBy { it.address }.toMutableMap()
         val manager = context.getSystemService(BluetoothManager::class.java) ?: return devices.values.toSortedList()
         val adapter = manager.adapter ?: return devices.values.toSortedList()
@@ -75,6 +85,14 @@ class TransportDiscovery(private val context: Context) {
                 productId = device.productId,
             )
         }.sortedBy { it.deviceName }
+    }
+
+    private fun hasBluetoothConnectPermission(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true
+        return ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.BLUETOOTH_CONNECT,
+        ) == PackageManager.PERMISSION_GRANTED
     }
 }
 

@@ -5,4 +5,5 @@ enum class WriteOperation {
     ActuatorTest,
     UdsWrite,
     EcuCoding,
+    EcuFlash,
 }

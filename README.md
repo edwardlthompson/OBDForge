@@ -4,7 +4,7 @@
   <img src="docs/assets/icon.png" alt="OBDForge app icon" width="128" height="128" />
 </p>
 
-![Version](https://img.shields.io/badge/version-1.2.6-blue?style=flat-square)
+![Version](https://img.shields.io/badge/version-1.2.7-blue?style=flat-square)
 ![GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue?style=flat-square)
 ![Android](https://img.shields.io/badge/platform-Android-3DDC84?style=flat-square)
 ![FOSS](https://img.shields.io/badge/FOSS-F--Droid-2ea043?style=flat-square)
@@ -15,21 +15,22 @@ Built on [agent-project-bootstrap](https://github.com/edwardlthompson/agent-proj
 
 ## Purpose
 
-OBDForge connects to ELM327 and OBDLink STN/STPX adapters over Bluetooth, USB, WiFi, or Ethernet to read and clear DTCs, stream live PIDs, resolve VIN ECU-first, and run shop workflows — all on-device under GPL-3.0-or-later with no proprietary SDKs.
+OBDForge connects to ELM327 and OBDLink STN/STPX adapters over Bluetooth, USB, WiFi, or Ethernet to read and clear DTCs, stream live PIDs (including narrowband O2 voltage and wideband lambda when the ECU reports them), resolve VIN ECU-first, and run shop workflows — all on-device under GPL-3.0-or-later with no proprietary SDKs.
+
+**Coverage honesty:** OBDForge targets **legislated OBD-II** via a working adapter. Bus selection is adapter firmware (`ATSP0`). It does **not** claim support for every OBD-II vehicle, proprietary OEM diagnostic packs, or production ECU flash on Bluetooth. OBDLink **MX** uses Classic Bluetooth SPP for diagnostics/coding only. Stage A flash scaffolding (USB-C host / Simulated demo ISO-TP) is documented in [`docs/FLASH_HARDWARE.md`](docs/FLASH_HARDWARE.md) — real reprogramming needs `[HUMAN]` bench and a user-supplied security plugin. Local AI does not invent security keys.
 
 ## Features
 
 | Area | Capability |
 |------|------------|
-| Transports | BLE GATT + Classic SPP (Auto: BLE first), USB serial, Wi‑Fi/Ethernet TCP, one-click reconnect |
-| Protocols | ELM327, OBDLink STN/STPX, UDS, KWP, J1939 (plugin SPI) |
-| Live data | Customizable PID dashboards per persona |
-| Safety | Interlocks, expert mode, local audit log (ADR-0003) |
+| Transports | BLE GATT + Classic SPP (Auto or Classic-first for OBDLink), USB serial, Wi‑Fi/Ethernet TCP, pairing + one-click reconnect |
+| Protocols | ELM327, OBDLink STN/STPX, UDS DID coding (gated), KWP/J1939 VIN helpers |
+| Live data | Mode 01 PIDs (fuel trims, MAF/MAP, NB/WB O2), Mode 02 freeze frame, Mode 07 pending DTCs |
+| Safety | Interlocks, expert mode, local audit log (ADR-0003); flash services rejected |
 | VIN | ECU-first chain with barcode fallback (ADR-0005) |
 | Personas | DIY, Semi-pro, Shop, Racing (`docs/PERSONAS.md`) |
 | AI | On-device DTC assistant — auto vehicle scan, code list, out-of-range PIDs, local explain |
 | Demo mode | Full UI flow without hardware |
-
 ## Stack
 
 - **Kotlin** + **Jetpack Compose** (Material 3 / Material You)
@@ -50,6 +51,7 @@ cd examples/android
 ./gradlew assembleDebug
 # Installs dev.foss.obdforge.debug — does not conflict with GitHub release APK
 # Install: adb install app/build/outputs/apk/debug/app-debug.apk
+
 ```
 
 **Build + sign release locally:**
@@ -59,6 +61,7 @@ export SOURCE_DATE_EPOCH=1700000000
 bash scripts/build-release-apk.sh --clean
 bash scripts/sign-apk-sideload.sh   # release keystore or debug keystore fallback
 adb install -r examples/android/app/build/outputs/apk/release/app-release-signed.apk
+
 ```
 
 Windows: `.\gradlew.bat assembleDebug`
@@ -73,11 +76,11 @@ Windows: `.\gradlew.bat assembleDebug`
 | `HUMAN` | Approvals, GitHub settings, product calls |
 | `ADB` | Device/emulator testing, F-Droid |
 | `AUTO` | CI, Dependabot, scripts |
-
 **Status:** 🔲 open · ✅ done · ❌ blocked
 
 ```bash
 grep '\[AGENT\]' BUILD_PLAN.md
+
 ```
 
 Sprints **0–14** in [`BUILD_PLAN.md`](BUILD_PLAN.md). Product milestones **M1–M13** in [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLAN.md).
@@ -95,7 +98,6 @@ Sprints **0–14** in [`BUILD_PLAN.md`](BUILD_PLAN.md). Product milestones **M1�
 | [`docs/RUNBOOK.md`](docs/RUNBOOK.md) | Release + F-Droid ops |
 | [`docs/FDROID_SUBMISSION.md`](docs/FDROID_SUBMISSION.md) | F-Droid fdroiddata MR checklist |
 | [`AGENT_MEMORY.md`](AGENT_MEMORY.md) | Stack index for agents |
-
 ## Security
 
 - **Threat model:** OBD adapters are untrusted input; ECU writes require SafetyGate + expert mode.
@@ -109,6 +111,7 @@ Sprints **0–14** in [`BUILD_PLAN.md`](BUILD_PLAN.md). Product milestones **M1�
 UI (Compose) → Use Cases → Repositories → Transports / Protocols / Room
                      ↓
               SafetyGate + AuditLog
+
 ```
 
 Details: [`docs/adr/0001-core-architecture.md`](docs/adr/0001-core-architecture.md)

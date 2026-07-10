@@ -23,6 +23,21 @@ class ObdIsoResponseParserTest {
     }
 
     @Test
+    fun parseMode02_freezeFrame() {
+        val parsed = requireNotNull(ObdIsoResponseParser.parseMode02("42 0C 0F A0", 0x0C))
+        assertEquals(ObdMode.Mode02, parsed.mode)
+        assertEquals(0x0C, parsed.pid)
+        assertEquals(2, parsed.payload.size)
+    }
+
+    @Test
+    fun parseMode07_pendingDtc() {
+        val parsed = requireNotNull(ObdIsoResponseParser.parseMode07("47 01 33 00 00 00 00 00"))
+        assertEquals(1, parsed.entries.size)
+        assertEquals("P0133", parsed.entries.first().code)
+    }
+
+    @Test
     fun parseMode04_success() {
         assertTrue(ObdIsoResponseParser.parseMode04("44"))
     }

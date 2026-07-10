@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import dev.foss.obdforge.data.bidirectional.GatedBidirectionalService
 import dev.foss.obdforge.data.bidirectional.ObdBidirectionalExecutor
+import dev.foss.obdforge.data.flash.GatedFlashService
 import dev.foss.obdforge.data.local.ObdForgeDatabase
 import dev.foss.obdforge.data.preferences.DemoPreferences
 import dev.foss.obdforge.data.preferences.DiagnosticLogPreferences
@@ -21,6 +22,7 @@ import dev.foss.obdforge.data.registry.ProtocolRegistry
 import dev.foss.obdforge.data.registry.TransportRegistry
 import dev.foss.obdforge.data.diagnostics.VehicleHealthScanUseCase
 import dev.foss.obdforge.data.transport.AdapterConnectUseCase
+import dev.foss.obdforge.data.transport.BluetoothBonding
 import dev.foss.obdforge.data.transport.TransportDiscovery
 import dev.foss.obdforge.data.ai.DtcManufacturerOverlayLoader
 import dev.foss.obdforge.data.ai.DtcCatalogAssetLoader
@@ -49,6 +51,7 @@ data class ObdForgeCompositionRoot(
     val diagnosticEventRecorder: DiagnosticEventRecorder,
     val safetyGateUseCase: SafetyGateUseCase,
     val gatedBidirectionalService: GatedBidirectionalService,
+    val gatedFlashService: GatedFlashService,
     val vinProfileRepository: VinProfileRepository,
     val resolveVinUseCase: ResolveVinUseCase,
     val shopRepository: ShopRepository,
@@ -113,6 +116,7 @@ data class ObdForgeCompositionRoot(
                     executor = ObdBidirectionalExecutor(transportRegistry, protocolRegistry),
                     safetyGateUseCase = safetyGateUseCase,
                 ),
+                gatedFlashService = GatedFlashService(safetyGateUseCase = safetyGateUseCase),
                 vinProfileRepository = vinProfileRepository,
                 resolveVinUseCase = resolveVinUseCase,
                 shopRepository = shopRepository,
@@ -127,6 +131,9 @@ data class ObdForgeCompositionRoot(
                     protocolRegistry = protocolRegistry,
                     transportPreferences = transportPreferences,
                     eventRecorder = diagnosticEventRecorder,
+                    bondChecker = { endpoint ->
+                        BluetoothBonding.isBonded(appContext, endpoint.deviceAddress)
+                    },
                 ),
                 vehicleHealthScanUseCase = VehicleHealthScanUseCase(
                     transportRegistry = transportRegistry,

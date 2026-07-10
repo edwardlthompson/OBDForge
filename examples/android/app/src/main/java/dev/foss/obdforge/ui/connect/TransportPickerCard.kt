@@ -26,6 +26,7 @@ import dev.foss.obdforge.R
 import dev.foss.obdforge.ui.theme.SpacingMd
 import dev.foss.obdforge.data.transport.BluetoothDeviceOption
 import dev.foss.obdforge.data.transport.UsbDeviceOption
+import dev.foss.obdforge.domain.transport.BluetoothLinkKind
 import dev.foss.obdforge.domain.transport.TransportType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,11 +39,16 @@ fun TransportPickerCard(
     selectedUsbDeviceName: String,
     bluetoothDevices: List<BluetoothDeviceOption>,
     usbDevices: List<UsbDeviceOption>,
+    bluetoothLinkKind: BluetoothLinkKind,
+    bluetoothBonded: Boolean,
+    bluetoothPairing: Boolean,
     statusMessage: String,
     onTypeChange: (TransportType) -> Unit,
     onTcpHostChange: (String) -> Unit,
     onTcpPortChange: (String) -> Unit,
     onBluetoothSelect: (BluetoothDeviceOption) -> Unit,
+    onBluetoothLinkKindChange: (BluetoothLinkKind) -> Unit,
+    onPairBluetooth: () -> Unit,
     onUsbSelect: (UsbDeviceOption) -> Unit,
     onSaveSelection: () -> Unit,
     onSaveAndConnect: () -> Unit,
@@ -51,6 +57,7 @@ fun TransportPickerCard(
 ) {
     var typeExpanded by remember { mutableStateOf(false) }
     var btExpanded by remember { mutableStateOf(false) }
+    var linkExpanded by remember { mutableStateOf(false) }
     var usbExpanded by remember { mutableStateOf(false) }
     val transportTypes = remember {
         listOf(
@@ -60,6 +67,8 @@ fun TransportPickerCard(
             TransportType.UsbSerial,
         )
     }
+    val canConnectBluetooth = selectedType != TransportType.Bluetooth ||
+        (selectedBluetoothAddress.isNotBlank() && bluetoothBonded)
 
     Card(
         modifier = modifier.fillMaxWidth(),
@@ -118,13 +127,27 @@ fun TransportPickerCard(
                         singleLine = true,
                     )
                 }
-                TransportType.Bluetooth -> BluetoothDevicePickerField(
-                    devices = bluetoothDevices,
-                    selectedAddress = selectedBluetoothAddress,
-                    expanded = btExpanded,
-                    onExpandedChange = { btExpanded = it },
-                    onSelect = onBluetoothSelect,
-                )
+                TransportType.Bluetooth -> {
+                    BluetoothDevicePickerField(
+                        devices = bluetoothDevices,
+                        selectedAddress = selectedBluetoothAddress,
+                        expanded = btExpanded,
+                        onExpandedChange = { btExpanded = it },
+                        onSelect = onBluetoothSelect,
+                    )
+                    BluetoothLinkKindPickerField(
+                        selected = bluetoothLinkKind,
+                        expanded = linkExpanded,
+                        onExpandedChange = { linkExpanded = it },
+                        onSelect = onBluetoothLinkKindChange,
+                    )
+                    BluetoothPairingActions(
+                        selectedAddress = selectedBluetoothAddress,
+                        isBonded = bluetoothBonded,
+                        isPairing = bluetoothPairing,
+                        onPair = onPairBluetooth,
+                    )
+                }
                 TransportType.UsbSerial -> UsbDevicePickerField(
                     devices = usbDevices,
                     selectedDeviceName = selectedUsbDeviceName,
@@ -142,7 +165,11 @@ fun TransportPickerCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            Button(onClick = onSaveAndConnect, modifier = Modifier.fillMaxWidth()) {
+            Button(
+                onClick = onSaveAndConnect,
+                modifier = Modifier.fillMaxWidth(),
+                enabled = canConnectBluetooth,
+            ) {
                 Text(stringResource(R.string.transport_save_and_connect))
             }
             Button(onClick = onSaveSelection, modifier = Modifier.fillMaxWidth()) {

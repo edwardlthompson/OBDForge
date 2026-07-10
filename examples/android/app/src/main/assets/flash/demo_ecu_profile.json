@@ -1,0 +1,13 @@
+{
+  "id": "demo-isotp-v1",
+  "displayName": "OBDForge Demo ECU (ISO-TP fixture)",
+  "ecuIdPattern": "DEMO*",
+  "programmingSessionId": 2,
+  "securityLevel": 1,
+  "memoryAddress": 524288,
+  "memorySize": 256,
+  "dataFormatId": 0,
+  "maxBlockLength": 64,
+  "eraseRoutineId": 65280,
+  "verifyRoutineId": 65281
+}

@@ -5,6 +5,8 @@ import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.data.preferences.TransportPreferences
 import dev.foss.obdforge.data.registry.ProtocolRegistry
 import dev.foss.obdforge.data.registry.TransportRegistry
+import dev.foss.obdforge.domain.transport.BluetoothConnectException
+import dev.foss.obdforge.domain.transport.BluetoothConnectFailure
 import dev.foss.obdforge.domain.transport.ConnectionState
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
@@ -62,16 +64,43 @@ class AdapterConnectUseCase(
     private val protocolRegistry: ProtocolRegistry,
     private val transportPreferences: TransportPreferences,
     private val eventRecorder: DiagnosticEventRecorder? = null,
+    private val bondChecker: ((TransportEndpoint.Bluetooth) -> Boolean)? = null,
 ) {
     suspend fun connectSaved(): Result<AdapterConnectOutcome> {
         val saved = transportPreferences.selection.first()
         val lastBt = transportPreferences.lastBluetoothEndpoint()
         val selection = SavedTransportConnect.resolveSelection(saved, lastBt)
             ?: return Result.failure(IllegalStateException("No saved adapter"))
+        val bluetooth = selection.endpoint as? TransportEndpoint.Bluetooth
+        if (bluetooth != null) {
+            if (bluetooth.deviceAddress.isBlank()) {
+                return Result.failure(
+                    BluetoothConnectException(
+                        BluetoothConnectFailure.EmptyAddress,
+                        "Empty Bluetooth address",
+                    ),
+                )
+            }
+            val bonded = bondChecker?.invoke(bluetooth) ?: true
+            if (!bonded) {
+                return Result.failure(
+                    BluetoothConnectException(
+                        BluetoothConnectFailure.NotBonded,
+                        "Adapter not paired — pair in Bluetooth settings first",
+                    ),
+                )
+            }
+        }
+        ActiveTransportSession.disconnectCurrent()
         val transport = transportRegistry.create(selection.type, selection.endpoint)
             ?: return Result.failure(IllegalStateException("Transport unavailable"))
-        transport.connect().getOrElse { return Result.failure(it) }
+        ActiveTransportSession.replaceWith(transport)
+        transport.connect().getOrElse {
+            ActiveTransportSession.disconnectCurrent()
+            return Result.failure(it)
+        }
         if (transport.state != ConnectionState.Connected) {
+            ActiveTransportSession.disconnectCurrent()
             return Result.failure(IllegalStateException("Adapter not connected"))
         }
         val protocol = protocolRegistry.selectBest(transport)
@@ -80,6 +109,7 @@ class AdapterConnectUseCase(
                 transportType = selection.type,
                 message = "No supported protocol after connect",
             )
+            ActiveTransportSession.disconnectCurrent()
             return Result.failure(IllegalStateException("No supported protocol"))
         }
         val vinResult = VinResolver.readFromEcu(transport) ?: VinResolver.demoVin()

@@ -1,5 +1,7 @@
 package dev.foss.obdforge.domain.safety
 
+import dev.foss.obdforge.domain.flash.FlashTransportPolicy
+
 object SafetyGate {
     private const val STATIONARY_SPEED_KPH = 1.0
 
@@ -30,6 +32,20 @@ object SafetyGate {
         }
         if (context.writesThisSession >= context.maxWritesPerSession) {
             return SafetyGateResult.Blocked(SafetyBlockReason.RateLimitExceeded)
+        }
+        if (context.operation == WriteOperation.EcuFlash) {
+            if (!FlashTransportPolicy.allows(context.transportType)) {
+                return SafetyGateResult.Blocked(SafetyBlockReason.FlashTransportNotAllowed)
+            }
+            if (!context.brickRiskAttested) {
+                return SafetyGateResult.Blocked(SafetyBlockReason.BrickRiskAttestationRequired)
+            }
+            if (!context.demoMode) {
+                val volts = context.batteryVoltageVolts
+                if (volts == null || volts < SafetyContext.FLASH_MIN_BATTERY_VOLTS) {
+                    return SafetyGateResult.Blocked(SafetyBlockReason.BatteryVoltageTooLow)
+                }
+            }
         }
         return SafetyGateResult.Allowed
     }

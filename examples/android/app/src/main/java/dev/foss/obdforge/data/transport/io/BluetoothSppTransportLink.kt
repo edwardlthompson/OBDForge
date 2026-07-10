@@ -1,16 +1,20 @@
 package dev.foss.obdforge.data.transport.io
 
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
+import dev.foss.obdforge.domain.transport.BluetoothConnectException
+import dev.foss.obdforge.domain.transport.BluetoothConnectFailure
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.UUID
 
 class BluetoothSppTransportLink(
     private val adapter: BluetoothAdapter,
     private val deviceAddress: String,
+    private val connectTimeoutMs: Long = BluetoothSppConnect.CONNECT_TIMEOUT_MS,
 ) : TransportLink {
     private var socket: BluetoothSocket? = null
     private var input: InputStream? = null
@@ -19,19 +23,40 @@ class BluetoothSppTransportLink(
     override val isOpen: Boolean
         get() = socket?.isConnected == true
 
+    @SuppressLint("MissingPermission")
     override suspend fun open(): Result<Unit> = withContext(Dispatchers.IO) {
+        if (deviceAddress.isBlank()) {
+            return@withContext Result.failure(
+                BluetoothConnectException(
+                    BluetoothConnectFailure.EmptyAddress,
+                    "Empty Bluetooth address",
+                ),
+            )
+        }
         runCatching {
             val device = adapter.getRemoteDevice(deviceAddress)
-            val active = device.createRfcommSocketToServiceRecord(SPP_UUID)
+            if (device.bondState != BluetoothDevice.BOND_BONDED) {
+                throw BluetoothConnectException(
+                    BluetoothConnectFailure.NotBonded,
+                    "Adapter not paired — pair in Bluetooth settings first",
+                )
+            }
             adapter.cancelDiscovery()
-            active.connect()
-            socket = active
-            input = active.inputStream
-            output = active.outputStream
-        }
+            val connected = BluetoothSppConnect.openWithFallback(device, connectTimeoutMs)
+            socket = connected
+            input = connected.inputStream
+            output = connected.outputStream
+        }.fold(
+            onSuccess = { Result.success(Unit) },
+            onFailure = { error -> Result.failure(BluetoothSppConnect.mapOpenError(error)) },
+        )
     }
 
     override suspend fun close() = withContext(Dispatchers.IO) {
+        closeQuietly()
+    }
+
+    private fun closeQuietly() {
         runCatching {
             input?.close()
             output?.close()
@@ -54,16 +79,23 @@ class BluetoothSppTransportLink(
         runCatching {
             val stream = requireNotNull(input) { "Bluetooth link not open" }
             val buffer = ByteArray(512)
-            val read = stream.read(buffer)
-            if (read <= 0) {
-                ByteArray(0)
-            } else {
-                buffer.copyOf(read)
+            if (stream.available() <= 0) {
+                val deadline = System.currentTimeMillis() + timeoutMs.coerceAtLeast(0)
+                while (System.currentTimeMillis() < deadline) {
+                    if (stream.available() > 0) break
+                    Thread.sleep(20)
+                }
+                if (stream.available() <= 0) {
+                    return@runCatching ByteArray(0)
+                }
             }
+            val read = stream.read(buffer)
+            if (read <= 0) ByteArray(0) else buffer.copyOf(read)
         }
     }
 
     companion object {
-        val SPP_UUID: UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
+        const val CONNECT_TIMEOUT_MS = BluetoothSppConnect.CONNECT_TIMEOUT_MS
+        val SPP_UUID = BluetoothSppConnect.SPP_UUID
     }
 }

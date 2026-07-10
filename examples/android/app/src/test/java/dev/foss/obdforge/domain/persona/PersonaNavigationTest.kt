@@ -31,4 +31,12 @@ class PersonaNavigationTest {
         assertTrue(PersonaNavigation.isVisible(PersonaMode.Diy, AppDestination.DtcExplain))
         assertFalse(PersonaNavigation.isVisible(PersonaMode.Racing, AppDestination.DtcExplain))
     }
+
+    @Test
+    fun ecuCoding_visibleForShopAndRacingOnly() {
+        assertTrue(PersonaNavigation.isVisible(PersonaMode.Shop, AppDestination.EcuCoding))
+        assertTrue(PersonaNavigation.isVisible(PersonaMode.Racing, AppDestination.EcuCoding))
+        assertFalse(PersonaNavigation.isVisible(PersonaMode.Diy, AppDestination.EcuCoding))
+        assertFalse(PersonaNavigation.isVisible(PersonaMode.SemiPro, AppDestination.EcuCoding))
+    }
 }

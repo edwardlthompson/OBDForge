@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.7] - 2026-07-10
+
+### Added
+
+- Bluetooth pairing UX for Classic SPP (OBDLink MX hints, bond checks, busy-socket messaging)
+- Narrowband / wideband O2 and fuel-trim / MAF / MAP live PIDs; Mode 02 / 07 freeze-frame / pending DTC support
+- Gated UDS DID coding (`22` / `2E`) for Shop/Racing with expert unlock
+- Stage A ECU flash scaffold: USB-C host / Simulated only, ISO-TP + programming session demo engine, `SecurityAccessPlugin` SPI, `docs/FLASH_HARDWARE.md`
+
+### Changed
+
+- Coverage honesty in README / F-Droid copy — not universal OBD-II; MX is diagnostics/coding only
+- Flash transport policy: Bluetooth and Wi‑Fi blocked for `WriteOperation.EcuFlash`
+- `pre-release-gate.sh` uses `.cursor/stack-selection.json` stack (android) instead of always `multi`
+
+### Fixed
+
+- `scripts/check-file-limits.sh` CRLF corruption breaking feature-gate on Windows
+- `GoldenPathApp.kt` view line-limit overrun after connect/coding wiring
+- Flash SafetyGate battery voltage floor (≥12.0 V) for non-demo programming
+- `PidSupportDiscoveryTest` expectations aligned with expanded demo PID bitmaps
+
 ## [1.2.6] - 2026-06-25
 
 ### Changed
@@ -136,7 +158,8 @@ First public release — product milestones M1–M13 (Sprints 0–14).
 - Architecture ADRs 0001–0005, personas spec, threat model, privacy policy, and runbook
 - F-Droid submission checklist in `docs/FDROID_SUBMISSION.md`
 
-[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.6...HEAD
+[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.7...HEAD
+[1.2.7]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.7
 [1.2.6]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.6
 [1.2.5]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.5
 [1.2.4]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.4

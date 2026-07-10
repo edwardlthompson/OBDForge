@@ -24,6 +24,7 @@ import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.transport.BluetoothDeviceOption
 import dev.foss.obdforge.data.transport.UsbDeviceOption
 import dev.foss.obdforge.domain.livedata.PersonaMode
+import dev.foss.obdforge.domain.transport.BluetoothLinkKind
 import dev.foss.obdforge.domain.transport.TransportType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,11 +55,16 @@ fun GoldenPathScreen(
     transportUsbDeviceName: String,
     bluetoothDevices: List<BluetoothDeviceOption>,
     usbDevices: List<UsbDeviceOption>,
+    bluetoothLinkKind: BluetoothLinkKind,
+    bluetoothBonded: Boolean,
+    bluetoothPairing: Boolean,
     transportStatusMessage: String,
     onTransportTypeChange: (TransportType) -> Unit,
     onTransportTcpHostChange: (String) -> Unit,
     onTransportTcpPortChange: (String) -> Unit,
     onBluetoothSelect: (BluetoothDeviceOption) -> Unit,
+    onBluetoothLinkKindChange: (BluetoothLinkKind) -> Unit,
+    onPairBluetooth: () -> Unit,
     onUsbSelect: (UsbDeviceOption) -> Unit,
     onSaveTransportSelection: () -> Unit,
     onSaveAndConnect: () -> Unit,
@@ -76,6 +82,7 @@ fun GoldenPathScreen(
     onOpenVinResolve: () -> Unit = {},
     onOpenShop: () -> Unit = {},
     onOpenDtcExplain: () -> Unit = {},
+    onOpenEcuCoding: () -> Unit = {},
     compositionRoot: ObdForgeCompositionRoot? = null,
     settingsScope: kotlinx.coroutines.CoroutineScope? = null,
 ) {
@@ -149,11 +156,16 @@ fun GoldenPathScreen(
                 transportUsbDeviceName = transportUsbDeviceName,
                 bluetoothDevices = bluetoothDevices,
                 usbDevices = usbDevices,
+                bluetoothLinkKind = bluetoothLinkKind,
+                bluetoothBonded = bluetoothBonded,
+                bluetoothPairing = bluetoothPairing,
                 transportStatusMessage = transportStatusMessage,
                 onTransportTypeChange = onTransportTypeChange,
                 onTransportTcpHostChange = onTransportTcpHostChange,
                 onTransportTcpPortChange = onTransportTcpPortChange,
                 onBluetoothSelect = onBluetoothSelect,
+                onBluetoothLinkKindChange = onBluetoothLinkKindChange,
+                onPairBluetooth = onPairBluetooth,
                 onUsbSelect = onUsbSelect,
                 onSaveTransportSelection = onSaveTransportSelection,
                 onSaveAndConnect = onSaveAndConnect,
@@ -164,6 +176,7 @@ fun GoldenPathScreen(
                 onOpenVinResolve = onOpenVinResolve,
                 onOpenShop = onOpenShop,
                 onOpenDtcExplain = onOpenDtcExplain,
+                onOpenEcuCoding = onOpenEcuCoding,
                 updateStatus = updateStatus,
                 currentUpdateLabel = currentUpdateLabel,
                 modifier = Modifier

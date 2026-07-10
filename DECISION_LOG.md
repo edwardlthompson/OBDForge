@@ -12,11 +12,33 @@
 - **Decision:** ...
 - **Alternatives considered:** ...
 - **Consequences:** ...
+
 ```
 
 ## Entries
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
+
+### 2026-07-10 — Stage A flash: USB-C host only + AI assist policy
+- **Status:** Accepted
+- **Context:** Refined flash requirements plan — USB-C-first hardware, local AI must not crack crypto
+- **Decision:** `FlashTransportPolicy` allows only `UsbSerial` + `Simulated` (Wi‑Fi/Ethernet/BT blocked). Ship `docs/FLASH_HARDWARE.md` (EX/SX + OTG). `FlashSecurityAssist` may match installed plugins / explain NRCs; key generation and crypto cracking are rejected. Stack: `IsoTpLink`, `UdsProgrammingSession`, `FlashTransferEngine` behind `WriteOperation.EcuFlash`
+- **Alternatives considered:** Allow Wi‑Fi flash when USB unavailable (rejected for Stage A integrity); LLM invents `27` keys (rejected)
+- **Consequences:** Supersedes earlier “USB/Wi‑Fi” wording for flash transport; MX remains diagnostics/coding only; real-vehicle bench still `[HUMAN]`
+
+### 2026-07-10 — Stage A ECU flash scaffold (USB/Wi‑Fi only; no MX)
+- **Status:** Superseded (transport narrowed by entry above)
+- **Context:** User approved implementing the ECU flash requirements plan (Stage A)
+- **Decision:** Scaffold ISO-TP framing, demo `34`/`36`/`37` transfer engine, `WriteOperation.EcuFlash`, USB/Wi‑Fi/Ethernet/Simulated-only flash transport policy (Bluetooth/MX blocked), user-supplied `SecurityAccessPlugin` SPI with no OEM keys in APK, and one demo ECU profile. Local AI must not invent seed/keys. Real-vehicle bench remains `[HUMAN]`
+- **Alternatives considered:** Keep flash permanently out of scope (superseded for Stage A scaffold only); allow Bluetooth flash (rejected: drop/brick risk)
+- **Consequences:** Coding path still rejects raw `34`/`36`/`37`; flash uses separate gated service; F-Droid default remains diagnostics-first until a flash product flavor ships
+
+### 2026-07-10 — ECU coding is DID-only; flash out of scope on MX
+- **Status:** Superseded (in part by Stage A scaffold above)
+- **Context:** Personas advertise ECU writes/coding; users asked for coding/flashing with OBDLink MX
+- **Decision:** Implement gated UDS DID read (`22`) / write (`2E`) for Shop/Racing with expert unlock; MX remains diagnostics/coding only — not a flash transport
+- **Alternatives considered:** Full reflash toolchain on MX (rejected); raw unrestricted UDS (rejected: ADR-0003 safety)
+- **Consequences:** Coding UI has no binary picker; flash requires USB-C Stage A path
 
 ### 2026-06-21 — Release APK signing outside Gradle
 - **Status:** Accepted

@@ -24,26 +24,35 @@ import json, subprocess, sys
 
 repo = sys.argv[1]
 total = 0
-page = 1
-while page <= 50:
+for severity in ("critical", "high"):
     proc = subprocess.run(
-        ["gh", "api", f"repos/{repo}/dependabot/alerts", "-f", "state=open",
-         "-f", f"per_page=100", "-f", f"page={page}"],
-        capture_output=True, text=True,
+        [
+            "gh",
+            "api",
+            "--paginate",
+            f"repos/{repo}/dependabot/alerts?state=open&severity={severity}&per_page=100",
+        ],
+        capture_output=True,
+        text=True,
     )
     if proc.returncode != 0:
-        print("error", file=sys.stderr)
+        print((proc.stderr or proc.stdout or "error").strip(), file=sys.stderr)
         raise SystemExit(1)
-    alerts = json.loads(proc.stdout or "[]")
-    if not alerts:
-        break
-    for a in alerts:
-        sev = (a.get("security_vulnerability") or {}).get("severity", "").lower()
-        if sev in ("critical", "high"):
-            total += 1
-    if len(alerts) < 100:
-        break
-    page += 1
+    raw = (proc.stdout or "").strip()
+    if not raw:
+        continue
+    # --paginate may concatenate JSON arrays; normalize to one list
+    try:
+        alerts = json.loads(raw)
+    except json.JSONDecodeError:
+        alerts = []
+        for chunk in raw.replace("][", "]\n[").splitlines():
+            chunk = chunk.strip()
+            if chunk:
+                alerts.extend(json.loads(chunk))
+    if isinstance(alerts, dict):
+        alerts = [alerts]
+    total += len(alerts)
 print(total)
 PY
 )"

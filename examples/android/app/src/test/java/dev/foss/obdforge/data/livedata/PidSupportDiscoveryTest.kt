@@ -21,6 +21,6 @@ class PidSupportDiscoveryTest {
         assertTrue(0x0C in supported)
         assertTrue(0x0D in supported)
         assertFalse(0x2F in supported)
-        assertFalse(0x42 in supported)
+        assertTrue(0x42 in supported)
     }
 }

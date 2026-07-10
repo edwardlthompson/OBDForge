@@ -18,9 +18,26 @@ object ObdIsoResponseParser {
         return PidResponse(mode = ObdMode.Mode01, pid = pid, payload = payload, raw = response)
     }
 
-    fun parseMode03(response: String): DtcList? {
+    /** Mode 02 freeze-frame: response prefix 42 + PID (same payload layout as Mode 01). */
+    fun parseMode02(response: String, pid: Int): PidResponse? {
         val hex = normalizeHex(response)
-        val index = hex.indexOf("43")
+        val prefix = "42" + pid.toString(16).uppercase().padStart(2, '0')
+        val index = hex.indexOf(prefix)
+        if (index < 0) return null
+        val dataHex = hex.substring(index + 4)
+        if (dataHex.length < 2) return null
+        val payload = hexToBytes(dataHex)
+        return PidResponse(mode = ObdMode.Mode02, pid = pid, payload = payload, raw = response)
+    }
+
+    fun parseMode03(response: String): DtcList? = parseDtcMode(response, "43")
+
+    /** Mode 07 pending DTCs — same DTC encoding as Mode 03, response prefix 47. */
+    fun parseMode07(response: String): DtcList? = parseDtcMode(response, "47")
+
+    private fun parseDtcMode(response: String, modePrefix: String): DtcList? {
+        val hex = normalizeHex(response)
+        val index = hex.indexOf(modePrefix)
         if (index < 0) return null
         val dataHex = hex.substring(index + 2)
         if (dataHex.isEmpty()) return DtcList(emptyList(), response)

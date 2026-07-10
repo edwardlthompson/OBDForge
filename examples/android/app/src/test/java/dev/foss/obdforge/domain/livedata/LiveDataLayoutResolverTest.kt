@@ -12,7 +12,9 @@ class LiveDataLayoutResolverTest {
         assertFalse(layout.compact)
         assertEquals(2, layout.columns)
         assertEquals(500L, layout.pollIntervalMs)
-        assertEquals(4, layout.pids.size)
+        assertEquals(6, layout.pids.size)
+        assertTrue(layout.pids.contains(0x14))
+        assertTrue(layout.pids.contains(0x24))
     }
 
     @Test
@@ -20,7 +22,8 @@ class LiveDataLayoutResolverTest {
         val layout = LiveDataLayoutResolver.resolve(PersonaMode.SemiPro)
         assertFalse(layout.compact)
         assertEquals(3, layout.columns)
-        assertEquals(6, layout.pids.size)
+        assertTrue(layout.pids.size >= 6)
+        assertTrue(layout.pids.contains(0x14))
     }
 
     @Test

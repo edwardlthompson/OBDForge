@@ -15,6 +15,7 @@ object PersonaPolicy {
         WriteOperation.ActuatorTest,
         WriteOperation.UdsWrite,
         WriteOperation.EcuCoding,
+        WriteOperation.EcuFlash,
         -> true
     }
 }

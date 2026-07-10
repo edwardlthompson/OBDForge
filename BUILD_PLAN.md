@@ -1,6 +1,6 @@
 # Build Plan
 
-> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–21).
+> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–22).
 
 ## Owner labels
 
@@ -25,21 +25,21 @@
 
 ## Active board
 
-> **v1.2.6** shipping 2026-06-25. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.6]`.
+> **v1.2.6** shipped 2026-06-25. Sprint 22 audit AGENT fixes local (2026-07-10). See [`CHANGELOG.md`](CHANGELOG.md) `[Unreleased]`.
 
 ### Open work
 
 | # | Owner | Task | Notes |
 |---|-------|------|-------|
-| 1 | AGENT | Live-data charting / time-series dashboard | ❌ Blocked — hardware bench (`docs/ADB_BENCH_RESULTS.md`) |
-| 2 | HUMAN | Fill `app-update.json` release-check URL | Donations done (Venmo) |
-| 3 | ADB | F-Droid fdroiddata MR | Draft ready · device smoke PASS · GitLab submit pending |
-| 4 | HUMAN | Shop operator review | Optional real-world workflow feedback |
-| 5 | HUMAN | Post-release monitoring | Issues, adapter notes → `KNOWLEDGE_BASE.md` |
-| 6 | HUMAN | Configure GitHub signing secrets | ✅ Done 2026-06-24 |
-| 7 | HUMAN | Release Please Actions PR permission | F-002 |
-| 8 | AGENT | Merge Dependabot `actions/checkout` v7 bump | F-003 — PR #6 retitled; merge when CI green |
-| 9 | ADB | Bench one-tap connect / reconnect on OP13 | F-004 — needs OBD adapter |
+| 1 | HUMAN | Merge Dependabot PR #8 (github-actions) | F-004 — CI green; branch protection blocked agent |
+| 2 | HUMAN | Dependabot PR #9 android deps | F-005 — CodeQL Analyze failed; do not merge until green |
+| 3 | HUMAN | Release Please Actions PR permission | F-010 — carried |
+| 4 | HUMAN | Fill `app-update.json` release-check URL | Donations done (Venmo) |
+| 5 | ADB | F-Droid fdroiddata MR | Draft ready · GitLab submit pending |
+| 6 | ADB | Bench connect / flash USB-C on device | F-008/F-009 — `docs/FLASH_HARDWARE.md` |
+| 7 | AGENT | Live-data charting / time-series dashboard | ❌ Blocked — hardware bench |
+| 8 | HUMAN | Shop operator review | Optional |
+| 9 | HUMAN | Post-release monitoring | Issues → `KNOWLEDGE_BASE.md` |
 
 ### Blocked — hardware bench
 
@@ -49,9 +49,10 @@ No OBD adapter or bench ECU on hand. Pull when hardware is available.
 |------|------|
 | Transports | BLE GATT, Classic SPP, USB, Wi‑Fi/Ethernet smoke with real adapter |
 | Protocol | ELM327 DTC + PID read; STN vs ELM latency |
-| Live data | 10+ PID stability (5 min); unblocks charting (#1) |
+| Live data | 10+ PID stability (5 min); unblocks charting (#7) |
 | Bidirectional | Staged bench ECU test (authorized vehicles only) |
 | Connect UX | One-tap reconnect car-to-car (`AdapterConnectCard`) |
+| Flash | USB-C OTG + EX/SX; demo then one ECU family `[HUMAN]` |
 
 Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
@@ -62,8 +63,8 @@ Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 ### Weekly
 
 - 🔲 [AUTO] `check-security-triage.sh --wait-ci 300`
-- 🔲 [AGENT] Dependabot bumps; triage OpenSSF Scorecard SARIF
-- ✅ [AUTO] CI + Feature Gate green on `main` (2026-06-25 Sprint 21 audit)
+- 🔲 [AGENT] Dependabot bumps; triage OpenSSF Scorecard SARIF (F-007)
+- ✅ [AUTO] Local feature-gate green after Sprint 22 (2026-07-10); re-verify CI on `main` after PR #8 merge
 
 ### Monthly
 
@@ -79,4 +80,4 @@ Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
 ## Archive
 
-Sprints **0–21** complete. Sprint detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).
+Sprints **0–22** complete (Sprint 22 AGENT subset). Detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).

@@ -28,5 +28,14 @@ interface DiagnosticProtocol {
 
     suspend fun readDtcs(transport: ObdTransport): Result<DtcList>
 
+    suspend fun readPendingDtcs(transport: ObdTransport): Result<DtcList> =
+        Result.failure(UnsupportedOperationException("Mode 07 not implemented"))
+
+    suspend fun readFreezeFrame(
+        transport: ObdTransport,
+        pid: Int,
+    ): Result<PidResponse> =
+        Result.failure(UnsupportedOperationException("Mode 02 not implemented"))
+
     suspend fun clearDtcs(transport: ObdTransport): Result<Unit>
 }

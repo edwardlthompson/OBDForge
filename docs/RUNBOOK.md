@@ -12,7 +12,6 @@
 | Reproducible APK | `bash scripts/verify-reproducible-apk.sh` | Matching hashes |
 | F-Droid metadata | `bash scripts/verify-fdroid-metadata.sh` | No errors |
 | Device smoke | `adb install -r app/build/outputs/apk/release/app-release-signed.apk` | Cold start, no crash |
-
 ## Structured Logging
 
 - Android: `Log` tags per feature (`ObdTransport`, `VinResolver`, `SafetyGate`)
@@ -51,13 +50,13 @@
 | Adapter garbage responses | Clone ELM firmware | Fall back to Elm327Protocol probe |
 | Room migration crash | Schema bump without test | Add `MigrationTest` |
 | CI emulator flake | API 34 AOSP job | Re-run; check `connectedDebugAndroidTest` logs |
-
 ## OBD Adapter Troubleshooting
 
-1. Confirm transport (BT paired **before** in system settings for SPP adapters)
-2. Capture sanitized transcript (**Settings → Export diagnostic log**, or USB: `Android/data/<package>/files/logs/latest-diagnostic-log.json`) — `[ADB]`
-3. Try demo mode to isolate app vs adapter
-4. Document adapter firmware in GitHub issue template
+1. Confirm transport (BT paired in-app or in system settings for SPP adapters)
+2. **OBDLink MX:** force-close the OBDLink app, set Bluetooth link to **Classic (SPP)**, then Save & connect (see KB-016)
+3. Capture sanitized transcript (**Settings → Export diagnostic log**, or USB: `Android/data/<package>/files/logs/latest-diagnostic-log.json`) — `[ADB]`
+4. Try demo mode to isolate app vs adapter
+5. Document adapter firmware in GitHub issue template
 
 ## Backup & Restore
 
@@ -66,7 +65,6 @@
 | User diagnostics data | User responsibility | Uninstall = loss | Export session JSON (Shop) |
 | Signing keys | N/A | Immediate | Offline keystore; never in repo |
 | Repository | N/A (git) | Immediate | `git clone` |
-
 ## F-Droid Reproducible Build Procedure
 
 ```bash
@@ -74,6 +72,7 @@ export SOURCE_DATE_EPOCH=1700000000  # fixed project epoch
 bash scripts/build-release-apk.sh --clean
 bash scripts/verify-reproducible-apk.sh
 bash scripts/verify-fdroid-metadata.sh
+
 ```
 
 CI `android-release` job runs the same verification on tagged builds.
@@ -85,7 +84,6 @@ CI `android-release` job runs the same verification on tagged builds.
 | App cold start | Time to interactive | < 2s mid-range device |
 | PID refresh | p95 interval accuracy | ±100 ms of configured rate |
 | VIN resolve (ECU) | p95 latency | < 10s on bench |
-
 ## Escalation
 
 1. Check `BUILD_PLAN.md` blocked tasks (❌)
@@ -94,7 +92,6 @@ CI `android-release` job runs the same verification on tagged builds.
 4. Contact maintainers in `.github/CODEOWNERS`
 
 | Device smoke | `adb install -r app/build/outputs/apk/release/app-release-signed.apk` | Cold start, no crash |
-
 ## Release APK signing
 
 Reproducible builds stay **unsigned** (`app-release-unsigned.apk`). Signing is a **post-build** step so F-Droid hash verification is unchanged.
@@ -105,6 +102,7 @@ Reproducible builds stay **unsigned** (`app-release-unsigned.apk`). Signing is a
 export OBDFORGE_KEYSTORE_PASSWORD='your-strong-password'
 export OBDFORGE_KEY_PASSWORD="$OBDFORGE_KEYSTORE_PASSWORD"
 bash scripts/generate-release-keystore.sh
+
 ```
 
 Optional: copy env to `~/.obdforge/signing.env` (gitignored):
@@ -114,6 +112,7 @@ export OBDFORGE_KEYSTORE_PATH="$HOME/.obdforge/obdforge-release.keystore"
 export OBDFORGE_KEY_ALIAS=obdforge
 export OBDFORGE_KEYSTORE_PASSWORD=...
 export OBDFORGE_KEY_PASSWORD=...
+
 ```
 
 ### Build and sign
@@ -121,6 +120,7 @@ export OBDFORGE_KEY_PASSWORD=...
 ```bash
 bash scripts/build-release-apk.sh --clean --sign
 # Output: examples/android/app/build/outputs/apk/release/app-release-signed.apk
+
 ```
 
 Windows: `pwsh scripts/sign-release-apk.ps1` after `build-release-apk.sh`.
@@ -135,7 +135,6 @@ Repository secrets (required — release workflow fails without them):
 | `OBDFORGE_KEYSTORE_PASSWORD` | Keystore password |
 | `OBDFORGE_KEY_ALIAS` | `obdforge` |
 | `OBDFORGE_KEY_PASSWORD` | Key password |
-
 The release workflow uploads **only** `OBDForge-X.Y.Z.apk` (signed with this stable key). Unsigned reproducible builds stay in CI/F-Droid scripts only — never on GitHub Releases.
 
 Verify secrets before tagging: `bash scripts/ensure-release-signing-secrets.sh` (with env vars set locally).

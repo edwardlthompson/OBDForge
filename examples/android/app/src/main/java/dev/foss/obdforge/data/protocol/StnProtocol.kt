@@ -31,6 +31,12 @@ class StnProtocol : DiagnosticProtocol {
     override suspend fun readDtcs(transport: ObdTransport): Result<DtcList> =
         StLinkObdCommands.readDtcs(transport)
 
+    override suspend fun readPendingDtcs(transport: ObdTransport): Result<DtcList> =
+        StLinkObdCommands.readPendingDtcs(transport)
+
+    override suspend fun readFreezeFrame(transport: ObdTransport, pid: Int): Result<PidResponse> =
+        StLinkObdCommands.readFreezeFrame(transport, pid)
+
     override suspend fun clearDtcs(transport: ObdTransport): Result<Unit> =
         StLinkObdCommands.clearDtcs(transport)
 }

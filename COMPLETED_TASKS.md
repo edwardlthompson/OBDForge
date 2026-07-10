@@ -2,6 +2,18 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 22 — Post v1.2.6 audit (2026-07-10)
+
+- ✅ [AGENT] F-001 — LF-normalize `scripts/check-file-limits.sh` (CRLF broke feature-gate)
+- ✅ [AGENT] F-002 — `GoldenPathApp.kt` ≤250 view lines
+- ✅ [AGENT] F-003 — CHANGELOG `[Unreleased]` for pairing / O2 / coding / flash Stage A WIP
+- ✅ [AGENT] F-006 — Flash SafetyGate battery voltage floor (≥12.0 V non-demo)
+- ✅ [AGENT] Local gates: `validate-bootstrap --quick`, `feature-gate --stack multi`, hygiene, README health
+- ❌ [AGENT] F-004 — Merge Dependabot PR #8 blocked by branch protection (needs HUMAN merge)
+- 🔲 [HUMAN] F-005 — Dependabot PR #9 android deps (CodeQL red)
+- 🔲 [HUMAN] F-010 — Release Please Actions PR permission (carried)
+- 🔲 [ADB] F-Droid fdroiddata MR + hardware/flash USB bench
+
 ## OBDForge v1.2.6 release (2026-06-25)
 
 - ✅ [AGENT] Vector launcher icon — dark `#0B0F14` background, clean check-engine outline, OBD port

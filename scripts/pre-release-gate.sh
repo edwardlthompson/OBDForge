@@ -11,7 +11,13 @@ VERSION=""
 
 echo "=== Pre-release gate ==="
 
-if ! bash scripts/feature-gate.sh --stack multi --strict --json; then
+STACK="multi"
+if [ -f .cursor/stack-selection.json ]; then
+  STACK="$(python3 -c "import json; print(json.load(open('.cursor/stack-selection.json', encoding='utf-8')).get('stack', 'multi') or 'multi')")"
+fi
+echo "Using feature-gate stack=${STACK}"
+
+if ! bash scripts/feature-gate.sh --stack "$STACK" --strict --json; then
   echo "FAIL: feature-gate.sh"
   ERRORS=$((ERRORS + 1))
 else

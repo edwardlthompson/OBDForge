@@ -56,7 +56,16 @@ class BleGattTransportLink(
                     Triple(write, notify, candidate)
                 }
                 if (profile == null) {
-                    if (cont.isActive) cont.resume(Result.failure(IllegalStateException("No OBD BLE profile found")))
+                    if (cont.isActive) {
+                        cont.resume(
+                            Result.failure(
+                                dev.foss.obdforge.domain.transport.BluetoothConnectException(
+                                    dev.foss.obdforge.domain.transport.BluetoothConnectFailure.BleProfileMissing,
+                                    "No OBD BLE profile found — try Classic Bluetooth",
+                                ),
+                            ),
+                        )
+                    }
                     return
                 }
                 val (write, notify, _) = profile

@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.domain.persona.AppDestination
 import dev.foss.obdforge.domain.persona.PersonaNavigation
+import dev.foss.obdforge.ui.coding.EcuCodingEntryButton
 import dev.foss.obdforge.ui.livedata.LiveDataEntryButton
 import dev.foss.obdforge.ui.session.SessionHistoryEntryButton
 import dev.foss.obdforge.ui.shop.ShopEntryButton
@@ -22,9 +23,13 @@ fun ColumnScope.GoldenPathHomeNav(
     onOpenVinResolve: () -> Unit,
     onOpenShop: () -> Unit,
     onOpenDtcExplain: () -> Unit,
+    onOpenEcuCoding: () -> Unit,
 ) {
     if (PersonaNavigation.isVisible(persona, AppDestination.Shop)) {
         ShopEntryButton(onOpen = onOpenShop, modifier = Modifier.fillMaxWidth())
+    }
+    if (PersonaNavigation.isVisible(persona, AppDestination.EcuCoding)) {
+        EcuCodingEntryButton(onOpen = onOpenEcuCoding, modifier = Modifier.fillMaxWidth())
     }
     if (PersonaNavigation.isVisible(persona, AppDestination.DtcExplain)) {
         DtcExplainEntryButton(onOpen = onOpenDtcExplain, modifier = Modifier.fillMaxWidth())

@@ -14,6 +14,9 @@ object PidFormatter {
             PidUnit.Percent -> "${numeric.roundToInt()}"
             PidUnit.Volts -> "%.1f".format(numeric)
             PidUnit.Seconds -> numeric.roundToInt().toString()
+            PidUnit.Lambda -> "%.3f".format(numeric)
+            PidUnit.GramsPerSec -> "%.2f".format(numeric)
+            PidUnit.Kpa -> numeric.roundToInt().toString()
             PidUnit.None -> numeric.toString()
         }
     }

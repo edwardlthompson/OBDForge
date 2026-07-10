@@ -100,6 +100,37 @@ class GatedBidirectionalServiceTest {
         assertEquals("6F 01 00", (outcome as BidirectionalOutcome.Executed).response)
     }
 
+    @Test
+    fun diyEcuCodingBlockedByPersonaPolicy() = runTest {
+        val outcome = service.ecuCodingRead(
+            session = diySession(),
+            selection = DemoDiagnosticFlow.demoSelection,
+            didHex = "F190",
+        )
+        assertEquals(SafetyBlockReason.PersonaNotPermitted, (outcome as BidirectionalOutcome.Blocked).reason)
+    }
+
+    @Test
+    fun racingExpertEcuCodingReadSucceedsInDemo() = runTest {
+        val now = 1_000L
+        val outcome = service.ecuCodingRead(
+            session = racingSession(expertUnlocked = true, nowMs = now),
+            selection = DemoDiagnosticFlow.demoSelection,
+            didHex = "F190",
+        )
+        assertTrue(outcome is BidirectionalOutcome.Executed)
+    }
+
+    @Test
+    fun flashShapedUdsWriteRejected() = runTest {
+        val outcome = service.udsWrite(
+            session = racingSession(expertUnlocked = true, nowMs = 1_000L),
+            selection = DemoDiagnosticFlow.demoSelection,
+            command = "34 00 00",
+        )
+        assertTrue(outcome is BidirectionalOutcome.Failed)
+    }
+
     private fun diySession() = BidirectionalSession(
         persona = PersonaMode.Diy,
         expertUnlocked = false,

@@ -8,6 +8,7 @@ enum class AppDestination {
     SessionHistory,
     Shop,
     DtcExplain,
+    EcuCoding,
 }
 
 object PersonaNavigation {
@@ -33,11 +34,13 @@ object PersonaNavigation {
             AppDestination.LiveData,
             AppDestination.SessionHistory,
             AppDestination.DtcExplain,
+            AppDestination.EcuCoding,
         )
         PersonaMode.Racing -> setOf(
             AppDestination.LiveData,
             AppDestination.SessionHistory,
             AppDestination.VinResolve,
+            AppDestination.EcuCoding,
         )
     }
 

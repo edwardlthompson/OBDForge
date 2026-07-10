@@ -14,6 +14,8 @@ import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.data.transport.SavedTransportConnect
 import dev.foss.obdforge.data.transport.displayLabel
+import dev.foss.obdforge.domain.transport.BluetoothConnectFailure
+import dev.foss.obdforge.domain.transport.BluetoothConnectFailures
 import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.domain.vehicle.VinSourceType
 import dev.foss.obdforge.ui.connect.BluetoothPermissionGate
@@ -87,10 +89,7 @@ fun rememberAdapterConnectUi(
             },
             onFailure = { error ->
                 onConnectedChange(false)
-                statusMessage = context.getString(
-                    R.string.bluetooth_connect_error_failed,
-                    error.message ?: context.getString(R.string.bluetooth_connect_error_unknown),
-                )
+                statusMessage = bluetoothFailureMessage(context, error)
                 root.diagnosticEventRecorder.record(
                     category = dev.foss.obdforge.domain.diagnostics.DiagnosticEventCategory.Connection,
                     severity = dev.foss.obdforge.domain.diagnostics.DiagnosticEventSeverity.Error,
@@ -158,3 +157,26 @@ private fun transportTypeName(context: Context, type: TransportType): String =
             TransportType.Simulated -> R.string.transport_type_simulated
         },
     )
+
+internal fun bluetoothFailureMessage(context: Context, error: Throwable?): String {
+    val kind = BluetoothConnectFailures.classify(error)
+    val specific = when (kind) {
+        BluetoothConnectFailure.EmptyAddress ->
+            context.getString(R.string.bluetooth_connect_error_empty_address)
+        BluetoothConnectFailure.NotBonded ->
+            context.getString(R.string.bluetooth_connect_error_not_bonded)
+        BluetoothConnectFailure.PermissionDenied ->
+            context.getString(R.string.bluetooth_connect_permission_denied)
+        BluetoothConnectFailure.BusyOrRefused ->
+            context.getString(R.string.bluetooth_connect_error_busy)
+        BluetoothConnectFailure.Timeout ->
+            context.getString(R.string.bluetooth_connect_error_timeout)
+        BluetoothConnectFailure.BleProfileMissing ->
+            context.getString(R.string.bluetooth_connect_error_ble_profile)
+        BluetoothConnectFailure.Unknown -> null
+    }
+    return specific ?: context.getString(
+        R.string.bluetooth_connect_error_failed,
+        error?.message ?: context.getString(R.string.bluetooth_connect_error_unknown),
+    )
+}

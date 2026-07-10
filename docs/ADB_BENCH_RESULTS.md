@@ -11,7 +11,6 @@
 | Root | Magisk (uid=0) |
 | ADB serial | `b5214fc6` |
 | Last session | 2026-06-22 |
-
 ## Release smoke — v1.1.0 (2026-06-22)
 
 | Check | Result | Notes |
@@ -27,7 +26,6 @@
 | Runtime grants (`BLUETOOTH_*`, `CAMERA`) | PASS | Via system dialog + `pm grant` |
 | Demo mode home | PASS | Simulation banner, live-data nav enabled |
 | F-Droid metadata gate | PASS | `verify-fdroid-metadata.sh` |
-
 ### Debug APK note (Android 16)
 
 Debug builds trigger a one-time **Android App Compatibility** dialog (16 KB page-size / native `.so` alignment from ML Kit, MediaPipe, TFLite). Tap **Don't show again** once; release APK does not show this dialog.
@@ -41,7 +39,6 @@ Debug builds trigger a one-time **Android App Compatibility** dialog (16 KB page
 | `fdroid-device-dry-run.ps1` / `.sh` | FIXED | Restored corrupted scripts; launcher updated for namespace rename |
 | `fdroid lint` | SKIP | fdroidserver not on bench host |
 | GitLab fdroiddata MR | PENDING | Draft: `packaging/fdroid/dev.foss.obdforge.yml` — needs maintainer GitLab account |
-
 ## Features not exercised on device this session
 
 | Feature | Status | Notes |
@@ -51,20 +48,23 @@ Debug builds trigger a one-time **Android App Compatibility** dialog (16 KB page
 | DTC explain / live data screens | SKIP | Manual only this session |
 | Camera VIN barcode scanner | SKIP | `CAMERA` granted; scanner UI not opened |
 | Release update check | SKIP | Needs hosted `app-update.json` URL |
-
 ## Hardware bench (blocked — no OBD adapter on phone)
 
 Phone was on USB **for ADB only**. No `/dev/ttyUSB*` / `/dev/ttyACM*` nodes; no USB-serial OBD adapter on OTG.
 
 | Sprint | Task | Status |
 |--------|------|--------|
-| 2 | Transport smoke (BT/USB/Wi‑Fi/TCP) | BLOCKED — pair/connect ELM327 or OBDLink to **phone** |
+| 2 | Transport smoke (BT/USB/Wi‑Fi/TCP) | BLOCKED — pair/connect ELM327 or OBDLink MX to **phone** |
 | 3 | ELM327 DTC + PID bench | BLOCKED |
 | 4 | STN vs ELM latency | BLOCKED |
 | 5 | 10+ PID 5 min stability | BLOCKED — unblocks live-data charting |
 | 9 | Staged ECU bidirectional bench | BLOCKED |
+| — | OBDLink MX Classic pairing + O2 PIDs | BLOCKED — `[HUMAN]` close OBDLink app, Pair adapter, Classic link, confirm STN + live O2 |
+| — | Stage A ECU flash (USB) | BLOCKED — `[HUMAN]` see `docs/FLASH_HARDWARE.md`; demo profile `demo-isotp-v1` only in CI |
 
-**How to re-run:** connect adapter to phone (BT paired in system settings, USB-OTG, or Wi‑Fi to adapter AP), use app with simulation **off**, then export **Settings → Connection & crash log** and copy `latest-diagnostic-log.json` over USB.
+**Flash note:** Only USB-C host (`UsbSerial`) or Simulated may run `WriteOperation.EcuFlash`. Bluetooth/MX and Wi‑Fi are blocked. Prefer OBDLink EX/SX + USB-C OTG — see `docs/FLASH_HARDWARE.md`.
+
+**How to re-run:** connect adapter to phone (in-app Pair or BT settings; for MX use Classic SPP and close OBDLink app), USB-OTG, or Wi‑Fi to adapter AP; use app with simulation **off**, then export **Settings → Connection & crash log** and copy `latest-diagnostic-log.json` over USB.
 
 ## Prior session — v1.0.0 (2026-06-21)
 

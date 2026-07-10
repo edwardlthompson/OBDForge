@@ -5,6 +5,7 @@ import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.domain.vehicle.VehicleProfile
+import dev.foss.obdforge.ui.coding.EcuCodingHost
 import dev.foss.obdforge.ui.livedata.LiveDataCoordinator
 import dev.foss.obdforge.ui.livedata.LiveDataHost
 import dev.foss.obdforge.ui.session.SessionHistoryCoordinator
@@ -21,6 +22,7 @@ enum class GoldenPathRoute {
     VinResolve,
     Shop,
     DtcExplain,
+    EcuCoding,
 }
 
 @Composable
@@ -66,6 +68,14 @@ fun GoldenPathRouteHost(
             root = root,
             scope = scope,
             persona = personaMode,
+            transportSelection = activeTransportSelection,
+            onBack = { onRouteChange(GoldenPathRoute.Home) },
+        )
+        GoldenPathRoute.EcuCoding -> EcuCodingHost(
+            root = root,
+            scope = scope,
+            persona = personaMode,
+            demoModeEnabled = demoModeEnabled,
             transportSelection = activeTransportSelection,
             onBack = { onRouteChange(GoldenPathRoute.Home) },
         )

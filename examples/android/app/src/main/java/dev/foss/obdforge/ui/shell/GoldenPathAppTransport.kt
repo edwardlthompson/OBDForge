@@ -12,10 +12,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.foss.obdforge.R
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.preferences.TransportSelection
+import dev.foss.obdforge.data.transport.BluetoothBonding
 import dev.foss.obdforge.data.transport.BluetoothDeviceOption
 import dev.foss.obdforge.data.transport.UsbDeviceOption
 import dev.foss.obdforge.data.transport.buildTransportEndpoint
 import dev.foss.obdforge.data.transport.displayLabel
+import dev.foss.obdforge.domain.transport.BluetoothAdapterHints
 import dev.foss.obdforge.domain.transport.BluetoothLinkKind
 import dev.foss.obdforge.domain.transport.TransportEndpoint
 import dev.foss.obdforge.domain.transport.TransportType
@@ -32,11 +34,16 @@ data class GoldenPathTransportUi(
     val usbDeviceName: String,
     val bluetoothDevices: List<BluetoothDeviceOption>,
     val usbDevices: List<UsbDeviceOption>,
+    val bluetoothLinkKind: BluetoothLinkKind,
+    val bluetoothBonded: Boolean,
+    val bluetoothPairing: Boolean,
     val statusMessage: String,
     val onTypeChange: (TransportType) -> Unit,
     val onTcpHostChange: (String) -> Unit,
     val onTcpPortChange: (String) -> Unit,
     val onBluetoothSelect: (BluetoothDeviceOption) -> Unit,
+    val onBluetoothLinkKindChange: (BluetoothLinkKind) -> Unit,
+    val onPairBluetooth: () -> Unit,
     val onUsbSelect: (UsbDeviceOption) -> Unit,
     val onSaveSelection: () -> Unit,
     val onSaveAndConnect: () -> Unit,
@@ -78,12 +85,20 @@ fun rememberGoldenPathTransportUi(
     var bluetoothName by remember(savedTransport) {
         mutableStateOf((savedTransport.endpoint as? TransportEndpoint.Bluetooth)?.displayName)
     }
+    var bluetoothLinkKind by remember(savedTransport) {
+        mutableStateOf(
+            (savedTransport.endpoint as? TransportEndpoint.Bluetooth)?.linkKind
+                ?: BluetoothLinkKind.Auto,
+        )
+    }
     var usbDeviceName by remember(savedTransport) {
         mutableStateOf((savedTransport.endpoint as? TransportEndpoint.UsbSerial)?.deviceName.orEmpty())
     }
     var transportStatus by remember { mutableStateOf("") }
     var bluetoothDevices by remember { mutableStateOf(emptyList<BluetoothDeviceOption>()) }
     var usbDevices by remember { mutableStateOf(emptyList<UsbDeviceOption>()) }
+    var bluetoothBonded by remember { mutableStateOf(false) }
+    var bluetoothPairing by remember { mutableStateOf(false) }
     val usbPermissionRequester = remember(activity) {
         activity?.let { UsbPermissionRequester(it) }
     }
@@ -106,6 +121,44 @@ fun rememberGoldenPathTransportUi(
         }
     }
 
+    LaunchedEffect(bluetoothAddress) {
+        bluetoothBonded = if (bluetoothAddress.isBlank()) {
+            false
+        } else {
+            BluetoothBonding.isBonded(context, bluetoothAddress)
+        }
+    }
+
+    fun saveEndpoint(connectAfter: Boolean) {
+        val endpoint = buildTransportEndpoint(
+            type = pickerType,
+            tcpHost = tcpHost,
+            tcpPort = tcpPort,
+            bluetoothAddress = bluetoothAddress,
+            bluetoothName = bluetoothName,
+            usbDeviceName = usbDeviceName,
+            bluetoothLinkKind = bluetoothLinkKind,
+        )
+        if (endpoint == null) {
+            transportStatus = context.getString(R.string.transport_status_invalid)
+            return
+        }
+        if (connectAfter && pickerType == TransportType.Bluetooth && !bluetoothBonded) {
+            transportStatus = context.getString(R.string.bluetooth_connect_error_not_bonded)
+            return
+        }
+        scope.launch {
+            root.transportPreferences.setSelection(pickerType, endpoint)
+            transportStatus = context.getString(
+                R.string.transport_status_saved,
+                transportTypeName(context, pickerType),
+                endpoint.displayLabel(),
+            )
+            onConnectionStatusChange(context.getString(R.string.connection_status_adapter_ready))
+            if (connectAfter) onConnectAfterSave()
+        }
+    }
+
     return GoldenPathTransportUi(
         pickerType = pickerType,
         tcpHost = tcpHost,
@@ -114,6 +167,9 @@ fun rememberGoldenPathTransportUi(
         usbDeviceName = usbDeviceName,
         bluetoothDevices = bluetoothDevices,
         usbDevices = usbDevices,
+        bluetoothLinkKind = bluetoothLinkKind,
+        bluetoothBonded = bluetoothBonded,
+        bluetoothPairing = bluetoothPairing,
         statusMessage = transportStatus,
         onTypeChange = { pickerType = it },
         onTcpHostChange = { tcpHost = it },
@@ -121,54 +177,28 @@ fun rememberGoldenPathTransportUi(
         onBluetoothSelect = { device ->
             bluetoothAddress = device.address
             bluetoothName = device.name
+            bluetoothLinkKind = BluetoothAdapterHints.defaultLinkKind(device.name)
+            bluetoothBonded = BluetoothBonding.isBonded(context, device.address)
+        },
+        onBluetoothLinkKindChange = { bluetoothLinkKind = it },
+        onPairBluetooth = {
+            if (bluetoothAddress.isBlank() || bluetoothPairing) return@GoldenPathTransportUi
+            bluetoothPairing = true
+            transportStatus = context.getString(R.string.bluetooth_pairing)
+            scope.launch {
+                val ok = BluetoothBonding.ensureBonded(context, bluetoothAddress)
+                bluetoothPairing = false
+                bluetoothBonded = ok || BluetoothBonding.isBonded(context, bluetoothAddress)
+                transportStatus = if (bluetoothBonded) {
+                    context.getString(R.string.connection_status_adapter_ready)
+                } else {
+                    context.getString(R.string.bluetooth_pair_failed)
+                }
+            }
         },
         onUsbSelect = { device -> usbDeviceName = device.deviceName },
-        onSaveSelection = {
-            val endpoint = buildTransportEndpoint(
-                type = pickerType,
-                tcpHost = tcpHost,
-                tcpPort = tcpPort,
-                bluetoothAddress = bluetoothAddress,
-                bluetoothName = bluetoothName,
-                usbDeviceName = usbDeviceName,
-            )
-            if (endpoint == null) {
-                transportStatus = context.getString(R.string.transport_status_invalid)
-            } else {
-                scope.launch {
-                    root.transportPreferences.setSelection(pickerType, endpoint)
-                    transportStatus = context.getString(
-                        R.string.transport_status_saved,
-                        transportTypeName(context, pickerType),
-                        endpoint.displayLabel(),
-                    )
-                    onConnectionStatusChange(context.getString(R.string.connection_status_adapter_ready))
-                }
-            }
-        },
-        onSaveAndConnect = {
-            val endpoint = buildTransportEndpoint(
-                type = pickerType,
-                tcpHost = tcpHost,
-                tcpPort = tcpPort,
-                bluetoothAddress = bluetoothAddress,
-                bluetoothName = bluetoothName,
-                usbDeviceName = usbDeviceName,
-            )
-            if (endpoint == null) {
-                transportStatus = context.getString(R.string.transport_status_invalid)
-            } else {
-                scope.launch {
-                    root.transportPreferences.setSelection(pickerType, endpoint)
-                    transportStatus = context.getString(
-                        R.string.transport_status_saved,
-                        transportTypeName(context, pickerType),
-                        endpoint.displayLabel(),
-                    )
-                    onConnectAfterSave()
-                }
-            }
-        },
+        onSaveSelection = { saveEndpoint(connectAfter = false) },
+        onSaveAndConnect = { saveEndpoint(connectAfter = true) },
         onRequestUsbPermission = {
             val requester = usbPermissionRequester
             val device = requester?.deviceForName(usbDeviceName)

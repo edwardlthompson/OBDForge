@@ -44,9 +44,9 @@ class StpxProtocol : DiagnosticProtocol, FastStreamingCapable {
         }
         return when (mode) {
             ObdMode.Mode01 -> readMode01ViaStpx(transport, pid)
-            ObdMode.Mode09 -> StLinkObdCommands.readPid(transport, mode, pid)
-            ObdMode.Mode03, ObdMode.Mode04 ->
-                Result.failure(IllegalArgumentException("Use readDtcs/clearDtcs for mode $mode"))
+            ObdMode.Mode02, ObdMode.Mode09 -> StLinkObdCommands.readPid(transport, mode, pid)
+            ObdMode.Mode03, ObdMode.Mode04, ObdMode.Mode07 ->
+                Result.failure(IllegalArgumentException("Use readDtcs/readPendingDtcs/clearDtcs for mode $mode"))
         }
     }
 
@@ -77,6 +77,12 @@ class StpxProtocol : DiagnosticProtocol, FastStreamingCapable {
 
     override suspend fun readDtcs(transport: ObdTransport): Result<DtcList> =
         StLinkObdCommands.readDtcs(transport)
+
+    override suspend fun readPendingDtcs(transport: ObdTransport): Result<DtcList> =
+        StLinkObdCommands.readPendingDtcs(transport)
+
+    override suspend fun readFreezeFrame(transport: ObdTransport, pid: Int): Result<PidResponse> =
+        StLinkObdCommands.readFreezeFrame(transport, pid)
 
     override suspend fun clearDtcs(transport: ObdTransport): Result<Unit> =
         StLinkObdCommands.clearDtcs(transport)

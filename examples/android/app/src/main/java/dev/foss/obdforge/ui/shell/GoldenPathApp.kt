@@ -58,7 +58,6 @@ fun GoldenPathApp(
     val welcomePreferences = remember { WelcomePreferences(context) }
     val welcomeCompleted by welcomePreferences.completed.collectAsStateWithLifecycle(initialValue = false)
     var showWelcomeReview by remember { mutableStateOf(false) }
-
     var connectionStatus by remember {
         mutableStateOf(context.getString(R.string.connection_status_disconnected))
     }
@@ -109,7 +108,6 @@ fun GoldenPathApp(
             selection = if (demoModeEnabled) demoSelection else savedTransport,
         )
     }
-
     val personaMode by root.personaPreferences.persona.collectAsStateWithLifecycle(
         initialValue = PersonaMode.Diy,
     )
@@ -121,15 +119,12 @@ fun GoldenPathApp(
             eventRecorder = root.diagnosticEventRecorder,
         )
     }
-
     val sessionHistoryCoordinator = remember(root) {
         SessionHistoryCoordinator(root.sessionRepository)
     }
-
     val savedVehicleProfile by root.vinProfileRepository.observeLatest()
         .collectAsStateWithLifecycle(initialValue = null)
     val activeTransportSelection = if (demoModeEnabled) demoSelection else savedTransport
-
     GoldenPathDemoConnectionEffect(
         demoModeEnabled = demoModeEnabled,
         connectDemo = connectDemo,
@@ -141,7 +136,6 @@ fun GoldenPathApp(
         onVinDisplayChange = { vinDisplay = it },
         onVinSourceLabelChange = { vinSourceLabel = it },
     )
-
     val updateUi = rememberGoldenPathUpdateUi(
         context = context,
         scope = scope,
@@ -209,11 +203,16 @@ fun GoldenPathApp(
                         transportUsbDeviceName = transportUi.usbDeviceName,
                         bluetoothDevices = transportUi.bluetoothDevices,
                         usbDevices = transportUi.usbDevices,
+                        bluetoothLinkKind = transportUi.bluetoothLinkKind,
+                        bluetoothBonded = transportUi.bluetoothBonded,
+                        bluetoothPairing = transportUi.bluetoothPairing,
                         transportStatusMessage = transportUi.statusMessage,
                         onTransportTypeChange = transportUi.onTypeChange,
                         onTransportTcpHostChange = transportUi.onTcpHostChange,
                         onTransportTcpPortChange = transportUi.onTcpPortChange,
                         onBluetoothSelect = transportUi.onBluetoothSelect,
+                        onBluetoothLinkKindChange = transportUi.onBluetoothLinkKindChange,
+                        onPairBluetooth = transportUi.onPairBluetooth,
                         onUsbSelect = transportUi.onUsbSelect,
                         onSaveTransportSelection = transportUi.onSaveSelection,
                         onSaveAndConnect = transportUi.onSaveAndConnect,
@@ -240,6 +239,7 @@ fun GoldenPathApp(
                         onOpenVinResolve = { route = GoldenPathRoute.VinResolve },
                         onOpenShop = { route = GoldenPathRoute.Shop },
                         onOpenDtcExplain = { route = GoldenPathRoute.DtcExplain },
+                        onOpenEcuCoding = { route = GoldenPathRoute.EcuCoding },
                         compositionRoot = root,
                         settingsScope = scope,
                     )

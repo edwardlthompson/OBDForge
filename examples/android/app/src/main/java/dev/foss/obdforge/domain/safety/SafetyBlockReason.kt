@@ -10,4 +10,7 @@ enum class SafetyBlockReason {
     ConfirmationRequired,
     RateLimitExceeded,
     DemoAttestationRequired,
+    FlashTransportNotAllowed,
+    BrickRiskAttestationRequired,
+    BatteryVoltageTooLow,
 }

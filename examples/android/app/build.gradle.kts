@@ -18,8 +18,8 @@ android {
         applicationId = "dev.foss.obdforge"
         minSdk = 26
         targetSdk = 37
-        versionCode = 22
-        versionName = "1.2.6"
+        versionCode = 23
+        versionName = "1.2.7"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

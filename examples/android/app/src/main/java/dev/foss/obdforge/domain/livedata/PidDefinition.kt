@@ -7,6 +7,9 @@ enum class PidUnit(val symbol: String) {
     Celsius("°C"),
     Volts("V"),
     Seconds("s"),
+    Lambda("λ"),
+    GramsPerSec("g/s"),
+    Kpa("kPa"),
     None(""),
 }
 

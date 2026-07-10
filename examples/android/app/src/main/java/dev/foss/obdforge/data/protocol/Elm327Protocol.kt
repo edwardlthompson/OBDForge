@@ -38,6 +38,9 @@ class Elm327Protocol : DiagnosticProtocol {
             ObdMode.Mode01 -> ObdIsoResponseParser.parseMode01(response, pid)
                 ?.let { Result.success(it) }
                 ?: Result.failure(IllegalStateException("Invalid Mode 01 response"))
+            ObdMode.Mode02 -> ObdIsoResponseParser.parseMode02(response, pid)
+                ?.let { Result.success(it) }
+                ?: Result.failure(IllegalStateException("Invalid Mode 02 response"))
             ObdMode.Mode09 -> {
                 val vin = ObdIsoResponseParser.parseMode09Vin(response)
                     ?: return Result.failure(IllegalStateException("Invalid Mode 09 response"))
@@ -50,8 +53,8 @@ class Elm327Protocol : DiagnosticProtocol {
                     ),
                 )
             }
-            ObdMode.Mode03, ObdMode.Mode04 ->
-                Result.failure(IllegalArgumentException("Use readDtcs/clearDtcs for mode $mode"))
+            ObdMode.Mode03, ObdMode.Mode04, ObdMode.Mode07 ->
+                Result.failure(IllegalArgumentException("Use readDtcs/readPendingDtcs/clearDtcs for mode $mode"))
         }
     }
 
@@ -64,6 +67,19 @@ class Elm327Protocol : DiagnosticProtocol {
             ?.let { Result.success(it) }
             ?: Result.failure(IllegalStateException("Invalid Mode 03 response"))
     }
+
+    override suspend fun readPendingDtcs(transport: ObdTransport): Result<DtcList> {
+        if (!ensureConnected(transport)) {
+            return Result.failure(IllegalStateException("Transport not connected"))
+        }
+        val response = transport.send("07").getOrElse { return Result.failure(it) }
+        return ObdIsoResponseParser.parseMode07(response)
+            ?.let { Result.success(it) }
+            ?: Result.failure(IllegalStateException("Invalid Mode 07 response"))
+    }
+
+    override suspend fun readFreezeFrame(transport: ObdTransport, pid: Int): Result<PidResponse> =
+        readPid(transport, ObdMode.Mode02, pid)
 
     override suspend fun clearDtcs(transport: ObdTransport): Result<Unit> {
         if (!ensureConnected(transport)) {

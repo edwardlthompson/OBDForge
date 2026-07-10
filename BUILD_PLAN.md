@@ -25,14 +25,14 @@
 
 ## Active board
 
-> **v1.2.6** shipped 2026-06-25. Sprint 22 audit AGENT fixes local (2026-07-10). See [`CHANGELOG.md`](CHANGELOG.md) `[Unreleased]`.
+> **v1.2.7** shipping 2026-07-10. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.7]`. Sprint 22 audit AGENT fixes included.
 
 ### Open work
 
 | # | Owner | Task | Notes |
 |---|-------|------|-------|
-| 1 | HUMAN | Merge Dependabot PR #8 (github-actions) | F-004 — CI green; branch protection blocked agent |
-| 2 | HUMAN | Dependabot PR #9 android deps | F-005 — CodeQL Analyze failed; do not merge until green |
+| 1 | HUMAN | Merge Dependabot PR #8 (github-actions) | F-004 — CI green; branch protection |
+| 2 | HUMAN | Dependabot PR #9 android deps | F-005 — CodeQL Analyze failed |
 | 3 | HUMAN | Release Please Actions PR permission | F-010 — carried |
 | 4 | HUMAN | Fill `app-update.json` release-check URL | Donations done (Venmo) |
 | 5 | ADB | F-Droid fdroiddata MR | Draft ready · GitLab submit pending |
@@ -64,7 +64,7 @@ Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
 - 🔲 [AUTO] `check-security-triage.sh --wait-ci 300`
 - 🔲 [AGENT] Dependabot bumps; triage OpenSSF Scorecard SARIF (F-007)
-- ✅ [AUTO] Local feature-gate green after Sprint 22 (2026-07-10); re-verify CI on `main` after PR #8 merge
+- ✅ [AUTO] Local feature-gate green after Sprint 22 (2026-07-10); CI green on `main` for v1.2.7 prepare commit
 
 ### Monthly
 

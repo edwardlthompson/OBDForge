@@ -2,6 +2,14 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge v1.2.7 release (2026-07-10)
+
+- ✅ [AGENT] MX pairing, O2/fuel-trim PIDs, DID coding, Stage A flash scaffold
+- ✅ [AGENT] Pre-release gate: stack-selection + Dependabot count fix
+- ✅ [AGENT] `chore(release): prepare v1.2.7` pushed; CI/Security/CodeQL green
+- 🔲 [HUMAN] Confirm GitHub Release assets (APK + SBOM) after Release workflow
+- 🔲 [ADB] Device smoke + F-Droid MR
+
 ## OBDForge Sprint 22 — Post v1.2.6 audit (2026-07-10)
 
 - ✅ [AGENT] F-001 — LF-normalize `scripts/check-file-limits.sh` (CRLF broke feature-gate)

@@ -147,3 +147,21 @@
 | **Cause** | MX is Classic SPP (not BLE FFF0/NUS). Auto link tried BLE first; OBDLink app may hold the RFCOMM socket; device may be unpaired for third-party apps |
 | **Fix** | Force-close OBDLink app → Pair adapter in OBDForge (or Android Bluetooth settings) → set Bluetooth link to **Classic (SPP)** → Save & connect. Busy/refused errors mean another app still holds the socket |
 | **Prevention** | Name match `OBDLink`/`MX` defaults link kind to Classic; SPP connect times out at 8s with actionable copy |
+
+### KB-017 — Release workflow upload needs GitHub Release first
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | `Release` workflow builds/signs APK then fails: `release vX.Y.Z not found (create GitHub release first)` |
+| **Cause** | Upload step requires an existing GitHub Release for the tag; `workflow_dispatch` alone does not create it |
+| **Fix** | `gh release create vX.Y.Z --target main --notes-file …` (or merge Release Please), then re-run Release / let `release` event upload the APK |
+| **Prevention** | Ship order: tag/release notes → create GitHub Release → Release workflow uploads `OBDForge-X.Y.Z.apk` |
+
+### KB-018 — Dependabot alert count used invalid `gh api -f`
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | `pre-release-gate.sh` / `check-security-triage.sh --strict` fails with Dependabot API error despite zero open alerts in UI |
+| **Cause** | `count-critical-high-dependabot.sh` passed filters via `gh api -f` (form body) instead of query string |
+| **Fix** | Query `repos/{repo}/dependabot/alerts?state=open&severity=critical|high` with `--paginate` |
+| **Prevention** | Prefer URL query params for GET Dependabot alerts; keep severity filters explicit |

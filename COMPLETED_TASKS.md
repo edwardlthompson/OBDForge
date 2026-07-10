@@ -7,8 +7,9 @@
 - ✅ [AGENT] MX pairing, O2/fuel-trim PIDs, DID coding, Stage A flash scaffold
 - ✅ [AGENT] Pre-release gate: stack-selection + Dependabot count fix
 - ✅ [AGENT] `chore(release): prepare v1.2.7` pushed; CI/Security/CodeQL green
-- 🔲 [HUMAN] Confirm GitHub Release assets (APK + SBOM) after Release workflow
+- ✅ [HUMAN/AGENT] GitHub Release v1.2.7 + signed `OBDForge-1.2.7.apk` uploaded
 - 🔲 [ADB] Device smoke + F-Droid MR
+- 🔲 [AUTO] SBOM assets not on this release (APK-only policy) — track if required later
 
 ## OBDForge Sprint 22 — Post v1.2.6 audit (2026-07-10)
 

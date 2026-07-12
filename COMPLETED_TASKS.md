@@ -8,6 +8,7 @@
 - ✅ [AGENT] Pre-release gate: stack-selection + Dependabot count fix
 - ✅ [AGENT] `chore(release): prepare v1.2.7` pushed; CI/Security/CodeQL green
 - ✅ [HUMAN/AGENT] GitHub Release v1.2.7 + signed `OBDForge-1.2.7.apk` uploaded
+- ✅ [HUMAN] F-004 / F-005 — Merged Dependabot [#8](https://github.com/edwardlthompson/OBDForge/pull/8) (actions) and [#10](https://github.com/edwardlthompson/OBDForge/pull/10) (android deps; superseded closed #9) 2026-07-12
 - 🔲 [ADB] Device smoke + F-Droid MR
 - 🔲 [AUTO] SBOM assets not on this release (APK-only policy) — track if required later
 

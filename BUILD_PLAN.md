@@ -31,15 +31,13 @@
 
 | # | Owner | Task | Notes |
 |---|-------|------|-------|
-| 1 | HUMAN | Merge Dependabot PR #8 (github-actions) | F-004 — CI green; branch protection |
-| 2 | HUMAN | Dependabot PR #9 android deps | F-005 — CodeQL Analyze failed |
-| 3 | HUMAN | Release Please Actions PR permission | F-010 — carried |
-| 4 | HUMAN | Fill `app-update.json` release-check URL | Donations done (Venmo) |
-| 5 | ADB | F-Droid fdroiddata MR | Draft ready · GitLab submit pending |
-| 6 | ADB | Bench connect / flash USB-C on device | F-008/F-009 — `docs/FLASH_HARDWARE.md` |
-| 7 | AGENT | Live-data charting / time-series dashboard | ❌ Blocked — hardware bench |
-| 8 | HUMAN | Shop operator review | Optional |
-| 9 | HUMAN | Post-release monitoring | Issues → `KNOWLEDGE_BASE.md` |
+| 1 | HUMAN | Release Please Actions PR permission | F-010 — carried |
+| 2 | HUMAN | Fill `app-update.json` release-check URL | Donations done (Venmo) |
+| 3 | ADB | F-Droid fdroiddata MR | Draft ready · GitLab submit pending |
+| 4 | ADB | Bench connect / flash USB-C on device | F-008/F-009 — `docs/FLASH_HARDWARE.md` |
+| 5 | AGENT | Live-data charting / time-series dashboard | ❌ Blocked — hardware bench |
+| 6 | HUMAN | Shop operator review | Optional |
+| 7 | HUMAN | Post-release monitoring | Issues → `KNOWLEDGE_BASE.md` |
 
 ### Blocked — hardware bench
 

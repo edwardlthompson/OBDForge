@@ -8,6 +8,7 @@ object DemoObdFixtures {
 
     val mode01Responses: Map<Int, String> = mapOf(
         0x00 to "41 00 BE 3F A8 13",
+        0x03 to "41 03 02 02",
         0x04 to "41 04 50",
         0x05 to "41 05 92",
         0x06 to "41 06 80",

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.8] - 2026-07-12
+
+### Added
+
+- Live **Fuel loop** status (Mode 01 PID `0x03`) — open vs closed loop labels on the dashboard (monitor-only)
+
 ## [1.2.7] - 2026-07-10
 
 ### Added
@@ -158,7 +164,8 @@ First public release — product milestones M1–M13 (Sprints 0–14).
 - Architecture ADRs 0001–0005, personas spec, threat model, privacy policy, and runbook
 - F-Droid submission checklist in `docs/FDROID_SUBMISSION.md`
 
-[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.7...HEAD
+[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.8...HEAD
+[1.2.8]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.8
 [1.2.7]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.7
 [1.2.6]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.6
 [1.2.5]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.5

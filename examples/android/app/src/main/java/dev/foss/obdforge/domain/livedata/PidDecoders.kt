@@ -45,4 +45,7 @@ object PidDecoders {
     fun mapKpa(): (ByteArray) -> Double? = { bytes ->
         if (bytes.isEmpty()) null else bytes[0].toUByte().toDouble()
     }
+
+    /** Fuel system status (PID 0x03): packed bank1 | (bank2 << 8). */
+    fun fuelSystemStatus(): (ByteArray) -> Double? = FuelSystemStatus::decodePacked
 }

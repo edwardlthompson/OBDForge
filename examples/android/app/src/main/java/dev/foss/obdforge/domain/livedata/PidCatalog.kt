@@ -1,6 +1,12 @@
 package dev.foss.obdforge.domain.livedata
 
 object PidCatalog {
+    private val fuelLoop = PidDefinition(
+        FuelSystemStatus.PID,
+        "Fuel loop",
+        PidUnit.None,
+        PidDecoders.fuelSystemStatus(),
+    )
     private val rpm = PidDefinition(0x0C, "Engine RPM", PidUnit.Rpm, PidDecoders.rpm())
     private val speed = PidDefinition(0x0D, "Vehicle speed", PidUnit.Kph, PidDecoders.singleByteOffset(0.0))
     private val coolant = PidDefinition(0x05, "Coolant temp", PidUnit.Celsius, PidDecoders.singleByteOffset(-40.0))
@@ -48,7 +54,7 @@ object PidCatalog {
     private val commandedLambda = PidDefinition(0x44, "Commanded λ", PidUnit.Lambda, PidDecoders.widebandLambda())
 
     private val core: List<PidDefinition> = listOf(
-        rpm, speed, coolant, load, throttle, intake, fuel, runtime, voltage, ambient, oil,
+        fuelLoop, rpm, speed, coolant, load, throttle, intake, fuel, runtime, voltage, ambient, oil,
         stft1, ltft1, stft2, ltft2, map, maf,
     )
 
@@ -69,9 +75,9 @@ object PidCatalog {
     fun get(pid: Int): PidDefinition? = byPid[pid]
 
     fun forPersona(persona: PersonaMode): List<PidDefinition> = when (persona) {
-        PersonaMode.Diy -> listOf(rpm, speed, coolant, throttle, o2B1S1, lambda24)
+        PersonaMode.Diy -> listOf(fuelLoop, rpm, speed, coolant, throttle, o2B1S1, lambda24)
         PersonaMode.SemiPro -> listOf(
-            rpm, speed, coolant, load, throttle, intake, stft1, ltft1, maf,
+            fuelLoop, rpm, speed, coolant, load, throttle, intake, stft1, ltft1, maf,
             o2B1S1, o2B1S2, lambda24, commandedLambda,
         )
         PersonaMode.Shop, PersonaMode.Racing -> all

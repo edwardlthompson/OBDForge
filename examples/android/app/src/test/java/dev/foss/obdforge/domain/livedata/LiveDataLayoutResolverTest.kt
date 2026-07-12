@@ -12,7 +12,8 @@ class LiveDataLayoutResolverTest {
         assertFalse(layout.compact)
         assertEquals(2, layout.columns)
         assertEquals(500L, layout.pollIntervalMs)
-        assertEquals(6, layout.pids.size)
+        assertEquals(7, layout.pids.size)
+        assertTrue(layout.pids.contains(0x03))
         assertTrue(layout.pids.contains(0x14))
         assertTrue(layout.pids.contains(0x24))
     }

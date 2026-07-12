@@ -27,4 +27,15 @@ class PidFormatterTest {
         )
         assertEquals("13.7", PidFormatter.format(value))
     }
+
+    @Test
+    fun displayLabel_fuelLoopUsesStatusText() {
+        val value = ParsedPidValue(
+            pid = 0x03,
+            name = "Fuel loop",
+            unit = PidUnit.None,
+            numericValue = 2.0,
+        )
+        assertEquals("Closed loop", PidFormatter.displayLabel(value))
+    }
 }

@@ -25,7 +25,7 @@
 
 ## Active board
 
-> **v1.2.7** shipping 2026-07-10. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.7]`. Sprint 22 audit AGENT fixes included.
+> **v1.2.8** shipping 2026-07-12. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.8]`.
 
 ### Open work
 

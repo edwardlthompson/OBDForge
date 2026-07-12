@@ -2,6 +2,12 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge v1.2.8 release (2026-07-12)
+
+- ✅ [AGENT] Fuel loop status (Mode 01 PID `0x03`) on live dashboard
+- ✅ [AGENT] `chore(release): prepare v1.2.8` pushed; CI/Security/CodeQL green
+- ✅ [HUMAN/AGENT] GitHub Release v1.2.8 + signed `OBDForge-1.2.8.apk`
+
 ## OBDForge v1.2.7 release (2026-07-10)
 
 - ✅ [AGENT] MX pairing, O2/fuel-trim PIDs, DID coding, Stage A flash scaffold

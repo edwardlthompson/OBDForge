@@ -69,7 +69,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
     implementation("androidx.room:room-runtime:2.8.4")
     implementation("androidx.room:room-ktx:2.8.4")
-    implementation("com.github.mik3y:usb-serial-for-android:3.9.0")
+    implementation("com.github.mik3y:usb-serial-for-android:3.11.0")
     ksp("androidx.room:room-compiler:2.8.4")
 
     testImplementation("androidx.room:room-testing:2.8.4")

@@ -19,6 +19,13 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-07-22 — Branch protection uses Actions job check names
+- **Status:** Accepted
+- **Context:** Required contexts `CI` / `Security Scan` / GHAS `CodeQL` never went green on PRs; auto-merge stayed BLOCKED
+- **Decision:** Human set required checks to `Feature Gate`, `Repo Hygiene`, `Analyze (java-kotlin)`, `Gitleaks Secret Scan`, `Trivy FS Scan` (GitHub Actions app)
+- **Alternatives considered:** Keep admin-merge only (rejected)
+- **Consequences:** Release Please PR #16 auto-merged to v1.2.10 without `--admin`; APK uploaded via Release workflow
+
 ### 2026-07-22 — Enable Release Please / Dependabot auto-merge (F-010)
 - **Status:** Accepted
 - **Context:** Human enabled Actions create/approve PRs and repo `allow_auto_merge`

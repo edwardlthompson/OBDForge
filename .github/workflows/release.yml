@@ -36,7 +36,8 @@ jobs:
       - name: Poll required CI checks
         env:
           GH_TOKEN: ${{ github.token }}
-        run: bash scripts/check-github-ci.sh HEAD --wait 300
+        # Tag push races main CI; allow a full Android gate cycle
+        run: bash scripts/check-github-ci.sh HEAD --wait 900
 
   release-apk:
     if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'

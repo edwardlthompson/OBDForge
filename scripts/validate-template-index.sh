@@ -10,7 +10,7 @@ if ! command -v jq &>/dev/null; then
   python3 - "$INDEX" "$ROOT" << 'PY'
 import glob, json, sys, os
 index_path, root = sys.argv[1], sys.argv[2]
-with open(index_path) as f:
+with open(index_path, encoding="utf-8") as f:
     data = json.load(f)
 errors = []
 for ep in data.get("entry_points", {}).values():
@@ -79,7 +79,7 @@ fi
 python3 - "$INDEX" "$ROOT" << 'PY' || exit 1
 import glob, json, os, sys
 index_path, root = sys.argv[1], sys.argv[2]
-with open(index_path) as f:
+with open(index_path, encoding="utf-8") as f:
     data = json.load(f)
 indexed = {item["path"] for item in data.get("files", [])}
 unindexed = []

@@ -34,7 +34,7 @@ Read the upstream release notes at `github.com/edwardlthompson/agent-project-boo
 | `.github/workflows/dependency-review.yml` | Cherry-pick workflow | AGENT + HUMAN review |
 | `.cursor/rules/destructive-ops.mdc` | Copy new rule file | AGENT |
 | `.env.example` | Merge new vars; never overwrite local `.env` | AGENT |
-| `LICENSE` | Verify MIT still applies | HUMAN |
+| `LICENSE` | Verify license still applies (OBDForge: **GPL-3.0-or-later** — do not replace with MIT) | HUMAN |
 | `examples/` | Reference only unless adopting new stack | HUMAN decision |
 | `TEMPLATE_INDEX.json` | Run validate script after merge | AGENT |
 

@@ -5,8 +5,6 @@
       "release-type": "simple",
       "changelog-path": "CHANGELOG.md",
       "extra-files": [
-        ".template-version",
-        "TEMPLATE_INDEX.json",
         "examples/android/app/build.gradle.kts",
         "examples/android/metadata/fdroiddata-handoff.yml"
       ],

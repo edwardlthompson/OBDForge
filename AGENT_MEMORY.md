@@ -74,6 +74,7 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 | Date | Milestone | What worked | What to improve |
 |------|-----------|-------------|-----------------|
+| 2026-07-22 | v1.2.12 | fix(ci) hide docs/chore in RP; closed docs-only #18; APK shipped | Prefer feat/fix for product bumps; docs hygiene no longer cuts releases |
 | 2026-07-22 | v1.2.11 + RP docs loop fix | Closed docs-only PR #18; hide docs/chore in release-please-config | Prefer feat/fix for product bumps; JAVA_HOME for local android gate |
 | 2026-07-22 | v1.2.10 + release automation | Branch protection job names; RP/Dependabot auto-merge; APK via product-version.sh | HUMAN: app-update URL; ADB: F-Droid + hardware bench |
 | 2026-07-22 | v1.2.9 | First RP PR after F-010 settings; signed APK upload | Tag-gate raced CI (wait lengthened) |
@@ -93,6 +94,6 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 - **Source template:** `edwardlthompson/agent-project-bootstrap`
 - **Template version:** `0.15.1` (tracked in `.template-version`)
-- **Product version:** `1.2.11` (`.release-please-manifest.json` / CHANGELOG / APK — not `.template-version`)
+- **Product version:** `1.2.12` (`.release-please-manifest.json` / CHANGELOG / APK — not `.template-version`)
 - **Aligned:** 2026-07-21 — see `docs/BOOTSTRAP_ALIGNMENT.md`; release automation proven 2026-07-22
 - **Last update check:** See `.template-update.json`

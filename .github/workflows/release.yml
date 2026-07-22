@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag to build and upload (e.g. v1.2.3); defaults to v.template-version
+        description: Release tag to build and upload (e.g. v1.2.3); defaults to v + product version from Release Please manifest
         required: false
         type: string
   release:
@@ -24,12 +24,12 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Verify tag matches .template-version
+      - name: Verify tag matches product version
         run: |
           TAG="${GITHUB_REF#refs/tags/v}"
-          VERSION=$(tr -d '[:space:]' < .template-version)
+          VERSION="$(bash scripts/product-version.sh)"
           if [ "$TAG" != "$VERSION" ]; then
-            echo "Tag v$TAG does not match .template-version ($VERSION)"
+            echo "Tag v$TAG does not match product version ($VERSION)"
             exit 1
           fi
 
@@ -58,12 +58,12 @@ jobs:
         with:
           ref: ${{ inputs.tag != '' && github.ref || steps.tag.outputs.tag || github.ref }}
 
-      - name: Finalize release tag from .template-version
+      - name: Finalize release tag from product version
         if: steps.tag.outputs.tag == ''
         id: tag_ver
-        run: echo "tag=v$(tr -d '[:space:]' < .template-version)" >> "$GITHUB_OUTPUT"
+        run: echo "tag=v$(bash scripts/product-version.sh)" >> "$GITHUB_OUTPUT"
 
-      - name: Verify tag matches .template-version
+      - name: Verify tag matches product version
         run: |
           if [ -n "${{ inputs.tag }}" ]; then
             EFFECTIVE="${{ inputs.tag }}"
@@ -71,9 +71,9 @@ jobs:
             EFFECTIVE="${{ steps.tag.outputs.tag || steps.tag_ver.outputs.tag }}"
           fi
           TAG="${EFFECTIVE#v}"
-          VERSION=$(tr -d '[:space:]' < .template-version)
+          VERSION="$(bash scripts/product-version.sh)"
           if [ "$TAG" != "$VERSION" ]; then
-            echo "Tag v$TAG does not match .template-version ($VERSION)"
+            echo "Tag v$TAG does not match product version ($VERSION)"
             exit 1
           fi
           echo "EFFECTIVE_TAG=v${VERSION}" >> "$GITHUB_ENV"
@@ -114,7 +114,7 @@ jobs:
           bash scripts/ensure-release-signing-secrets.sh
           UNSIGNED="examples/android/app/build/outputs/apk/release/app-release-unsigned.apk"
           SIGNED="examples/android/app/build/outputs/apk/release/app-release-signed.apk"
-          VERSION="$(tr -d '[:space:]' < .template-version)"
+          VERSION="$(bash scripts/product-version.sh)"
           INSTALLABLE="examples/android/app/build/outputs/apk/release/OBDForge-${VERSION}.apk"
           echo "${OBDFORGE_KEYSTORE_BASE64}" | base64 -d > /tmp/obdforge-release.keystore
           export OBDFORGE_KEYSTORE_PATH=/tmp/obdforge-release.keystore
@@ -135,7 +135,7 @@ jobs:
             echo "FAIL: release $TAG not found (create GitHub release first)"
             exit 1
           fi
-          VERSION="$(tr -d '[:space:]' < .template-version)"
+          VERSION="$(bash scripts/product-version.sh)"
           INSTALLABLE="examples/android/app/build/outputs/apk/release/OBDForge-${VERSION}.apk"
           if [ ! -f "$INSTALLABLE" ]; then
             echo "FAIL: $INSTALLABLE not found"

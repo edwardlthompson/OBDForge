@@ -1373,6 +1373,13 @@
       "read_when": "as_needed",
       "update_when": "template_upgrade",
       "owner": "maintainer"
+    },
+    {
+      "path": "scripts/product-version.sh",
+      "purpose": "Print product semver from Release Please manifest",
+      "read_when": "as_needed",
+      "update_when": "as_needed",
+      "owner": "maintainer"
     }
   ],
   "modules": {

@@ -5,6 +5,27 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.9](https://github.com/edwardlthompson/OBDForge/compare/v1.2.8...v1.2.9) (2026-07-22)
+
+
+### Fixed
+
+* **ci:** drop Dependabot scans for pruned web/node/python stacks ([1a8b1ef](https://github.com/edwardlthompson/OBDForge/commit/1a8b1ef36792028886d9cd3d5109a26783459be1))
+* **ci:** Release Please automerge without local git checkout ([66143d4](https://github.com/edwardlthompson/OBDForge/commit/66143d4a2369ce3255b8815a857444e4b674bd98))
+* **deps:** merge Dependabot bumps; ignore Kotlin &gt;=2.4.10 ([c9be8fb](https://github.com/edwardlthompson/OBDForge/commit/c9be8fb56bbd1721fd8ceccce57e06ea38cf4de3))
+
+
+### Changed
+
+* align agent tooling with bootstrap v0.15.1 ([fceb07c](https://github.com/edwardlthompson/OBDForge/commit/fceb07cbb8e2c34949970b78dbfcdaa1c88208d5))
+* **deps:** Bump the android-dependencies group across 1 directory with 5 updates ([#14](https://github.com/edwardlthompson/OBDForge/issues/14)) ([44e00b6](https://github.com/edwardlthompson/OBDForge/commit/44e00b66f38f435d187e785e6b427c130eebb281))
+* **deps:** Bump the github-actions group across 1 directory with 3 updates ([#13](https://github.com/edwardlthompson/OBDForge/issues/13)) ([2c779d0](https://github.com/edwardlthompson/OBDForge/commit/2c779d02b41768c452ca417bbc6d74aab8066eb8))
+
+
+### Documentation
+
+* mark v1.2.8 ship complete on BUILD_PLAN ([0991148](https://github.com/edwardlthompson/OBDForge/commit/09911483b69f97f30f4d98463646a89953c9268b))
+
 ## [Unreleased]
 
 ### Changed

@@ -27,11 +27,16 @@ jobs:
           manifest-file: .release-please-manifest.json
 
       - name: Sync template version files on release PR
-        if: ${{ steps.release.outputs.prs_created == 'true' && steps.release.outputs.pr != '' }}
+        if: steps.release.outputs.prs_created == 'true'
         env:
           GH_TOKEN: ${{ secrets.AUTOMERGE_TOKEN || secrets.GITHUB_TOKEN }}
-          PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr).number }}
+          RP_PR_JSON: ${{ steps.release.outputs.pr }}
         run: |
+          if [ -z "${RP_PR_JSON}" ] || [ "${RP_PR_JSON}" = "null" ]; then
+            echo "No PR JSON from Release Please; skip sync"
+            exit 0
+          fi
+          PR_NUMBER="$(python3 -c 'import json,os; print(json.loads(os.environ["RP_PR_JSON"])["number"])')"
           gh pr checkout "$PR_NUMBER"
           # Child repos: sync-template-version.sh is a no-op for .template-version (app vs template semver)
           bash scripts/sync-template-version.sh

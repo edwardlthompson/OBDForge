@@ -16,3 +16,7 @@
 |------|------------|
 | Release Please Actions PR permission (F-010) | Repo: Actions write + create/approve PRs; `allow_auto_merge`; `AUTOMERGE_TOKEN`; `release-please-automerge.yml` |
 | Dependabot auto-merge | Same `allow_auto_merge` + `dependabot-automerge.yml` uses `AUTOMERGE_TOKEN` |
+
+## Automation polish (optional `[HUMAN]` settings UI)
+
+Branch protection still requires check contexts **`CI`**, **`Security Scan`**, **`CodeQL`** (GHAS app) that do not match Actions job names (`Feature Gate`, `Analyze (java-kotlin)`, etc.). That kept Release Please PR #15 `BLOCKED` for auto-merge until an admin squash. Update **Settings → Branches → main → Require status checks** to the real job names so future Release Please / Dependabot PRs merge without `--admin`.

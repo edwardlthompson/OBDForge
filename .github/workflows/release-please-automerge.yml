@@ -18,8 +18,10 @@ jobs:
       - name: Enable auto-merge when checks pass
         env:
           GH_TOKEN: ${{ secrets.AUTOMERGE_TOKEN || secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          gh pr merge "$PR_NUMBER" --auto --merge
+          # No checkout needed — pass --repo so gh does not shell out to local git
+          gh pr merge "$PR_NUMBER" --repo "$GH_REPO" --auto --squash
           echo "Auto-merge queued for PR #${PR_NUMBER} (merges when required checks pass)."
           echo "Prefer AUTOMERGE_TOKEN (PAT) so the merge push triggers CI on main."

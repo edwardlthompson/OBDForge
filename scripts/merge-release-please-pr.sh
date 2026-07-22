@@ -35,10 +35,10 @@ fi
 
 echo "Release Please PR #${PR}"
 
-if gh pr merge "$PR" --auto --merge 2>/dev/null; then
+if gh pr merge "$PR" --auto --squash 2>/dev/null; then
   echo "Auto-merge queued for PR #${PR}"
 else
-  echo "WARN: --auto failed; trying direct merge"
+  echo "WARN: --auto failed; trying direct squash merge"
 fi
 
 if [ "$WAIT" -gt 0 ]; then
@@ -61,5 +61,5 @@ if echo "$state" | grep -q "^MERGED"; then
 fi
 
 echo "Admin merge fallback (requires repo admin gh auth)..."
-gh pr merge "$PR" --merge --admin
+gh pr merge "$PR" --squash --admin
 echo "PR #${PR} merged via admin"

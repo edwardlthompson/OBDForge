@@ -3,4 +3,5 @@
 # .template-version tracks upstream agent-project-bootstrap; app version is "." in the manifest.
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-python3 -c "import json; print(json.load(open('$ROOT/.release-please-manifest.json', encoding='utf-8'))['.'].strip())"
+cd "$ROOT"
+python3 -c "import json; print(json.load(open('.release-please-manifest.json', encoding='utf-8'))['.'].strip())"

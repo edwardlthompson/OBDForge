@@ -192,7 +192,7 @@ Confirm or reject each:
 
 | Item | Status |
 |------|--------|
-| `release-please-automerge.yml` | Deferred (§8 item 6) |
+| `release-please-automerge.yml` | ✅ Added 2026-07-22 after F-010 settings enabled |
 | Prune go/lightroom/rust modules | Deferred (§8 item 7) |
 
 ### Still needs `[HUMAN]` / `[ADB]`

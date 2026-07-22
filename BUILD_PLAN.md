@@ -34,6 +34,7 @@
 1. ❌ [AGENT] Live-data charting / time-series dashboard — blocked: hardware bench required
 2. 🔲 [AGENT] Dependabot bumps; triage OpenSSF Scorecard SARIF (F-007) — weekly when alerts open
 3. 🔲 [AGENT] Adapter compatibility notes → `KNOWLEDGE_BASE.md` — monthly cadence
+4. ✅ [AUTO] Release Please + Dependabot auto-merge (F-010) — Actions write/create-PR + repo auto-merge + `AUTOMERGE_TOKEN` + `release-please-automerge.yml` (2026-07-22)
 
 ### Parallel (safe after Sequential schema lock)
 
@@ -47,12 +48,11 @@
 
 > Address after `/build` completes AGENT/AUTO and Parallel work above. Automation failures → [`HUMAN_BACKLOG.md`](HUMAN_BACKLOG.md).
 
-1. 🔲 [HUMAN] Release Please Actions PR permission (F-010)
-2. 🔲 [HUMAN] Fill `app-update.json` release-check URL (donations done — Venmo)
-3. 🔲 [HUMAN] Shop operator review (optional)
-4. 🔲 [HUMAN] Post-release monitoring — Issues → `KNOWLEDGE_BASE.md`
-5. 🔲 [ADB] F-Droid fdroiddata MR — draft ready · GitLab submit pending
-6. 🔲 [ADB] Bench connect / flash USB-C on device — F-008/F-009 · `docs/FLASH_HARDWARE.md`
+1. 🔲 [HUMAN] Fill `app-update.json` release-check URL (donations done — Venmo)
+2. 🔲 [HUMAN] Shop operator review (optional)
+3. 🔲 [HUMAN] Post-release monitoring — Issues → `KNOWLEDGE_BASE.md`
+4. 🔲 [ADB] F-Droid fdroiddata MR — draft ready · GitLab submit pending
+5. 🔲 [ADB] Bench connect / flash USB-C on device — F-008/F-009 · `docs/FLASH_HARDWARE.md`
 
 ### Blocked — hardware bench (`[ADB]` / `[HUMAN]`)
 
@@ -76,6 +76,7 @@ No OBD adapter or bench ECU on hand. Pull when hardware is available. Log result
 - 🔲 [AUTO] `check-security-triage.sh --wait-ci 300`
 - 🔲 [AGENT] Dependabot bumps; triage OpenSSF Scorecard SARIF (F-007)
 - ✅ [AUTO] Local feature-gate green after Sprint 22 (2026-07-10); CI green on `main` for v1.2.7 prepare commit
+- ✅ [AUTO] Release Please / Dependabot auto-merge enabled (2026-07-22)
 
 ### Monthly
 
@@ -89,7 +90,7 @@ No OBD adapter or bench ECU on hand. Pull when hardware is available. Log result
 
 ### Human (after automation)
 
-- 🔲 [HUMAN] Items listed under Active board → Human & device
+- 🔲 [HUMAN] Product URL / shop review / post-release monitoring (see Human & device)
 - 🔲 [ADB] Hardware bench + F-Droid MR when ready
 
 ---

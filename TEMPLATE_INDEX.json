@@ -1366,6 +1366,13 @@
       "read_when": "milestone_boundary",
       "update_when": "milestone_boundary",
       "owner": "maintainer"
+    },
+    {
+      "path": ".github/workflows/release-please-automerge.yml",
+      "purpose": "Queue auto-merge for Release Please PRs when checks pass",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
     }
   ],
   "modules": {

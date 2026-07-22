@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependabot Android group PR CodeQL failure by pinning Kotlin below 2.4.10; Dependabot ignores Kotlin `>=2.4.10` until the extractor catches up.
 - Drop Dependabot ecosystems for pruned stacks (`examples/web`, `examples/node`, `examples/python`) that fail with `dependency_file_not_found`.
 
+### Changed
+
+- Automate Release Please + Dependabot merges: `release-please-automerge.yml`, `AUTOMERGE_TOKEN`, workflows prefer PAT over `GITHUB_TOKEN` (F-010 cleared).
+
 ## [1.2.8] - 2026-07-12
 
 ### Added

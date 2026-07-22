@@ -21,17 +21,19 @@ jobs:
       - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v4
         id: release
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # Prefer AUTOMERGE_TOKEN (PAT) so created PRs / merges trigger push CI
+          token: ${{ secrets.AUTOMERGE_TOKEN || secrets.GITHUB_TOKEN }}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
       - name: Sync template version files on release PR
-        if: steps.release.outputs.prs_created == 'true'
+        if: ${{ steps.release.outputs.prs_created == 'true' && steps.release.outputs.pr != '' }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.AUTOMERGE_TOKEN || secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr).number }}
         run: |
           gh pr checkout "$PR_NUMBER"
+          # Child repos: sync-template-version.sh is a no-op for .template-version (app vs template semver)
           bash scripts/sync-template-version.sh
           if ! git diff --quiet; then
             git config user.name "github-actions[bot]"
@@ -44,6 +46,6 @@ jobs:
       - name: Trigger SBOM asset upload
         if: steps.release.outputs.release_created == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.AUTOMERGE_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           gh workflow run release.yml --ref main -f "tag=${{ steps.release.outputs.tag_name }}"

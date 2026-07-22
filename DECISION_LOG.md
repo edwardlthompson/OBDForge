@@ -19,6 +19,13 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-07-22 — Enable Release Please / Dependabot auto-merge (F-010)
+- **Status:** Accepted
+- **Context:** Human enabled Actions create/approve PRs and repo `allow_auto_merge`
+- **Decision:** Set `AUTOMERGE_TOKEN` secret; add `release-please-automerge.yml`; point Release Please + Dependabot automerge at `AUTOMERGE_TOKEN || GITHUB_TOKEN`; clear F-010 from BUILD_PLAN / HUMAN_BACKLOG
+- **Alternatives considered:** Keep manual merge of Release Please PRs (rejected once settings available)
+- **Consequences:** Release Please PRs queue auto-merge when checks pass; merge push should trigger CI via PAT
+
 ### 2026-07-22 — Pin Kotlin 2.4.0 until CodeQL supports 2.4.10+
 - **Status:** Accepted
 - **Context:** Dependabot PR #14 bumped Kotlin to 2.4.10; CodeQL failed with extractor ceiling “supports versions below 2.4.10”

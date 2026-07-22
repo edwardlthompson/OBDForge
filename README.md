@@ -66,7 +66,13 @@ adb install -r examples/android/app/build/outputs/apk/release/app-release-signed
 
 Windows: `.\gradlew.bat assembleDebug`
 
-**Agent bootstrap:** read [`docs/START_HERE.md`](docs/START_HERE.md) and follow `BUILD_PLAN.md` Sequential lane.
+## How agents should work in this repo
+
+1. Read [`docs/START_HERE.md`](docs/START_HERE.md) → pick mode via [`docs/CURSOR_MODES.md`](docs/CURSOR_MODES.md).
+2. Follow [`AGENTS.md`](AGENTS.md) and [`docs/FOR_AGENTS.md`](docs/FOR_AGENTS.md).
+3. Execute [`BUILD_PLAN.md`](BUILD_PLAN.md) **Sequential** before Parallel; HUMAN/ADB under Human & device → [`HUMAN_BACKLOG.md`](HUMAN_BACKLOG.md) when automation cannot finish.
+4. Active stack: **Android only** (`modules/android/MODULE.md`, `examples/android/`). License: **GPL-3.0-or-later**.
+5. Slash commands: [`docs/help/BATCH_COMMANDS.md`](docs/help/BATCH_COMMANDS.md). Template alignment: [`docs/BOOTSTRAP_ALIGNMENT.md`](docs/BOOTSTRAP_ALIGNMENT.md).
 
 ## BUILD_PLAN Labels
 
@@ -80,10 +86,9 @@ Windows: `.\gradlew.bat assembleDebug`
 
 ```bash
 grep '\[AGENT\]' BUILD_PLAN.md
-
 ```
 
-Sprints **0–14** in [`BUILD_PLAN.md`](BUILD_PLAN.md). Product milestones **M1–M13** in [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLAN.md).
+Product milestones **M1–M13** in [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLAN.md). Archived sprints: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md).
 
 ## Project Docs
 
@@ -92,12 +97,14 @@ Sprints **0–14** in [`BUILD_PLAN.md`](BUILD_PLAN.md). Product milestones **M1�
 | [`docs/START_HERE.md`](docs/START_HERE.md) | Agent/human entry point |
 | [`modules/android/MODULE.md`](modules/android/MODULE.md) | F-Droid compliance checklist |
 | [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLAN.md) | Milestones M1–M13 |
+| [`docs/BOOTSTRAP_ALIGNMENT.md`](docs/BOOTSTRAP_ALIGNMENT.md) | Template alignment / migration notes |
 | [`docs/adr/`](docs/adr/) | Architecture decisions |
 | [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md) | STRIDE + adapter trust |
 | [`docs/PRIVACY.md`](docs/PRIVACY.md) | VIN privacy, local-first |
 | [`docs/RUNBOOK.md`](docs/RUNBOOK.md) | Release + F-Droid ops |
 | [`docs/FDROID_SUBMISSION.md`](docs/FDROID_SUBMISSION.md) | F-Droid fdroiddata MR checklist |
 | [`AGENT_MEMORY.md`](AGENT_MEMORY.md) | Stack index for agents |
+| [`HUMAN_BACKLOG.md`](HUMAN_BACKLOG.md) | HUMAN/ADB items automation could not finish |
 ## Security
 
 - **Threat model:** OBD adapters are untrusted input; ECU writes require SafetyGate + expert mode.

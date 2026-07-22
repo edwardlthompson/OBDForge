@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Sync .template-version, TEMPLATE_INDEX, and README badge from .release-please-manifest.json
+# Template maintainer: sync .template-version + TEMPLATE_INDEX from Release Please manifest.
+# Child repos (TEMPLATE_INDEX.child_repo or stack-selection.pruned): do NOT overwrite
+# .template-version (tracks upstream bootstrap). Only refresh product notes if needed.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -10,16 +12,27 @@ if [ ! -f .release-please-manifest.json ]; then
   exit 1
 fi
 
-VERSION="$(python3 -c "import json; print(json.load(open('.release-please-manifest.json'))['.'].strip())")"
+PRODUCT="$(python3 -c "import json; print(json.load(open('.release-please-manifest.json', encoding='utf-8'))['.'].strip())")"
 
-if [ -z "$VERSION" ]; then
+if [ -z "$PRODUCT" ]; then
   echo "FAIL: empty version in manifest"
   exit 1
 fi
 
-echo "$VERSION" > .template-version
+CHILD="$(python3 -c "import json;from pathlib import Path;p=Path('TEMPLATE_INDEX.json');print('yes' if p.exists() and json.loads(p.read_text(encoding='utf-8')).get('child_repo') else 'no')")"
+PRUNED="$(python3 -c "import json;from pathlib import Path;p=Path('.cursor/stack-selection.json');print('yes' if p.exists() and json.loads(p.read_text(encoding='utf-8')).get('pruned') else 'no')" 2>/dev/null || echo no)"
 
-export SYNC_TEMPLATE_VERSION="${VERSION}"
+if [ "$CHILD" = "yes" ] || [ "$PRUNED" = "yes" ]; then
+  TEMPLATE="$(tr -d '[:space:]' < .template-version)"
+  echo "Child repo mode: leaving .template-version=$TEMPLATE (upstream bootstrap)"
+  echo "Product version (Release Please): $PRODUCT"
+  echo "Skip syncing template semver from app manifest."
+  exit 0
+fi
+
+echo "$PRODUCT" > .template-version
+
+export SYNC_TEMPLATE_VERSION="${PRODUCT}"
 python3 <<'PY'
 import json
 import os
@@ -61,4 +74,4 @@ mt = re.sub(
 mem.write_text(mt, encoding="utf-8")
 PY
 
-echo "Synced template version to ${VERSION} (.template-version, TEMPLATE_INDEX.json, README.md, AGENT_MEMORY.md)"
+echo "Synced template version to ${PRODUCT} (.template-version, TEMPLATE_INDEX.json, README.md, AGENT_MEMORY.md)"

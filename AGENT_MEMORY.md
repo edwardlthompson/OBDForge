@@ -63,7 +63,7 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 ### Key Constraints
 
-- Max 250 lines per view file, 150 lines per logic file
+- Max 300 lines per static data file (UI + i18n), 150 lines per pure logic file (`docs/FILE_SIZE_GUIDE.md`)
 - Trunk-based development with Conventional Commits
 - Android-only Golden Path in `examples/android/`
 - Demo mode must run without hardware (deterministic mock transport)
@@ -74,6 +74,7 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 | Date | Milestone | What worked | What to improve |
 |------|-----------|-------------|-----------------|
+| 2026-07-21 | Bootstrap align v0.15.1 | FOSS Cursor hooks/skills/agents; GPL wording; BUILD_PLAN reshape; HUMAN_BACKLOG | Deferred: release-please-automerge; prune inactive modules |
 | 2026-07-12 | v1.2.8 release | Fuel loop (PID 0x03) open/closed status on live dashboard | Monitor-only; no O2 disable toggle |
 | 2026-07-10 | v1.2.7 release | Pairing, O2 PIDs, DID coding, Stage A flash scaffold; pre-release uses stack-selection | HUMAN: merge Dependabot #8/#9; USB flash bench |
 | 2026-07-10 | Sprint 22 audit | Fixed CRLF file-limits + GoldenPathApp line budget; flash voltage floor; Unreleased CHANGELOG | HUMAN merge PR #8 (branch protection); PR #9 CodeQL red; JAVA_HOME for watch-agent-gates Android stage |
@@ -88,6 +89,7 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 ## Template Provenance
 
 - **Source template:** `edwardlthompson/agent-project-bootstrap`
-- **Template version:** `1.2.8` (bootstrap provenance)
-- **Product version:** `1.2.8` (see `.template-version` / Release Please)
+- **Template version:** `0.15.1` (tracked in `.template-version`)
+- **Product version:** `1.2.8` (Gradle / CHANGELOG / Release Please — not `.template-version`)
+- **Aligned:** 2026-07-21 — see `docs/BOOTSTRAP_ALIGNMENT.md`
 - **Last update check:** See `.template-update.json`

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Align agent tooling with agent-project-bootstrap **v0.15.1** (Cursor FOSS hooks/skills/agents, parallel `/build` + `HUMAN_BACKLOG.md`, Sequential/Parallel BUILD_PLAN shape); `.template-version` now tracks template semver (app remains 1.2.8). See `docs/BOOTSTRAP_ALIGNMENT.md`.
+
 ## [1.2.8] - 2026-07-12
 
 ### Added

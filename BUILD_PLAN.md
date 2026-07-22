@@ -1,6 +1,6 @@
 # Build Plan
 
-> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–22).
+> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–22). Template baseline: agent-project-bootstrap **v0.15.1** (`docs/BOOTSTRAP_ALIGNMENT.md`).
 
 ## Owner labels
 
@@ -19,40 +19,53 @@
 | ✅ | Done — archive to `COMPLETED_TASKS.md` |
 | ❌ | Blocked — add brief reason |
 
-**Agent rule:** Sequential `[AGENT]` items first; shared schema/types are Sequential-only (`docs/PARALLEL_AGENT_SCOPES.md`).
+**Agent rule:** Execute all `[AGENT]` **Sequential** items first, then dispatch **Parallel** agents with isolated file scopes (`docs/PARALLEL_AGENT_SCOPES.md`). Shared schema/types are Sequential-only.
+
+**Autonomous `/build`:** Runs `[AGENT]`/`[AUTO]` and Parallel work first, then attempts **Human & device (after automation)** via `scripts/attempt-build-plan-row.sh`. Failures append [`HUMAN_BACKLOG.md`](HUMAN_BACKLOG.md) and continue. Status: `bash scripts/build-sprint-status.sh --json --lane child`.
 
 ---
 
-## Active board
+## Active board — post v1.2.8
 
 > **v1.2.8** shipping 2026-07-12. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.8]`.
 
-### Open work
+### Sequential
 
-| # | Owner | Task | Notes |
-|---|-------|------|-------|
-| 1 | HUMAN | Release Please Actions PR permission | F-010 — carried |
-| 2 | HUMAN | Fill `app-update.json` release-check URL | Donations done (Venmo) |
-| 3 | ADB | F-Droid fdroiddata MR | Draft ready · GitLab submit pending |
-| 4 | ADB | Bench connect / flash USB-C on device | F-008/F-009 — `docs/FLASH_HARDWARE.md` |
-| 5 | AGENT | Live-data charting / time-series dashboard | ❌ Blocked — hardware bench |
-| 6 | HUMAN | Shop operator review | Optional |
-| 7 | HUMAN | Post-release monitoring | Issues → `KNOWLEDGE_BASE.md` |
+1. ❌ [AGENT] Live-data charting / time-series dashboard — blocked: hardware bench required
+2. 🔲 [AGENT] Dependabot bumps; triage OpenSSF Scorecard SARIF (F-007) — weekly when alerts open
+3. 🔲 [AGENT] Adapter compatibility notes → `KNOWLEDGE_BASE.md` — monthly cadence
 
-### Blocked — hardware bench
+### Parallel (safe after Sequential schema lock)
 
-No OBD adapter or bench ECU on hand. Pull when hardware is available.
+<!-- parallel_exception: no multi-agent split until charting unblocked; single Android container -->
+
+| Agent | Scope | Task |
+|-------|-------|------|
+| — | — | _None open — add non-overlapping `examples/android/**` rows when charting unblocks_ |
+
+### Human & device (after automation)
+
+> Address after `/build` completes AGENT/AUTO and Parallel work above. Automation failures → [`HUMAN_BACKLOG.md`](HUMAN_BACKLOG.md).
+
+1. 🔲 [HUMAN] Release Please Actions PR permission (F-010)
+2. 🔲 [HUMAN] Fill `app-update.json` release-check URL (donations done — Venmo)
+3. 🔲 [HUMAN] Shop operator review (optional)
+4. 🔲 [HUMAN] Post-release monitoring — Issues → `KNOWLEDGE_BASE.md`
+5. 🔲 [ADB] F-Droid fdroiddata MR — draft ready · GitLab submit pending
+6. 🔲 [ADB] Bench connect / flash USB-C on device — F-008/F-009 · `docs/FLASH_HARDWARE.md`
+
+### Blocked — hardware bench (`[ADB]` / `[HUMAN]`)
+
+No OBD adapter or bench ECU on hand. Pull when hardware is available. Log results in `docs/ADB_BENCH_RESULTS.md`.
 
 | Area | Task |
 |------|------|
 | Transports | BLE GATT, Classic SPP, USB, Wi‑Fi/Ethernet smoke with real adapter |
 | Protocol | ELM327 DTC + PID read; STN vs ELM latency |
-| Live data | 10+ PID stability (5 min); unblocks charting (#7) |
+| Live data | 10+ PID stability (5 min); unblocks Sequential charting |
 | Bidirectional | Staged bench ECU test (authorized vehicles only) |
 | Connect UX | One-tap reconnect car-to-car (`AdapterConnectCard`) |
 | Flash | USB-C OTG + EX/SX; demo then one ECU family `[HUMAN]` |
-
-Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 
 ---
 
@@ -73,6 +86,11 @@ Log when bench arrives: `docs/ADB_BENCH_RESULTS.md`
 ### Pre-release
 
 - ✅ `pre-release-gate.sh` + reproducible APK verify (v1.0.0–v1.2.6)
+
+### Human (after automation)
+
+- 🔲 [HUMAN] Items listed under Active board → Human & device
+- 🔲 [ADB] Hardware bench + F-Droid MR when ready
 
 ---
 

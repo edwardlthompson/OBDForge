@@ -41,7 +41,7 @@ Never use raw hex in composables — reference `MaterialTheme.colorScheme` exten
 
 ## Layout rules
 
-- Max **250 lines** per view file; extract sub-composables early.
+- Max **300 lines** per static data / view file; extract sub-composables early (`docs/FILE_SIZE_GUIDE.md`).
 - Minimum **48.dp** touch targets for glove-friendly shop use.
 - PID values use **tabular nums** (`FontFeatureSettings("tnum")`).
 - RTL-safe: `Alignment.Start` / `End`; no hardcoded left/right padding.

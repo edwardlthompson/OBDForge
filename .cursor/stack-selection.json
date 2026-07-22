@@ -1,9 +1,37 @@
 {
+  "distribution_tier": "foss",
   "stack": "android",
   "pruned": true,
   "active_modules": [
     "android"
   ],
-  "parallel_scope_note": "Sprint 1 Parallel: Android FOSS scope only (`examples/android/**`)",
-  "selected_at": "2026-06-21T22:33:30+00:00"
+  "parallel_scope_note": "Android FOSS scope only (`examples/android/**`)",
+  "selected_at": "2026-06-21T22:33:30+00:00",
+  "aligned_template_version": "0.15.1",
+  "aligned_at": "2026-07-21T00:00:00+00:00",
+  "cursor_features_enabled": [
+    "rules",
+    "commands",
+    "hooks",
+    "skills",
+    "subagents",
+    "modes",
+    "worktrees",
+    "permissions",
+    "parallel_scope",
+    "build_automation",
+    "feature_radar",
+    "plugin_pack",
+    "cli_example",
+    "mcp_foss_example"
+  ],
+  "cursor_features_hidden": [
+    "cloud_agents",
+    "bugbot",
+    "automations",
+    "approval_agents",
+    "mcp_commercial_example",
+    "android_commercial_patterns"
+  ],
+  "cursor_features_synced_at": "2026-07-22T03:58:37+00:00"
 }

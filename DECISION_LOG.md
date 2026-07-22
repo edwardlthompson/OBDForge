@@ -19,6 +19,13 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-07-21 — Align child repo to agent-project-bootstrap v0.15.1
+- **Status:** Accepted
+- **Context:** OBDForge already used bootstrap process files but lagged Cursor FOSS integrations (hooks, skills, parallel `/build`) and mis-tracked app semver in `.template-version`
+- **Decision:** Cherry-pick FOSS Cursor surfaces + parallel/sprint scripts from upstream v0.15.1; productize `docs/START_HERE.md`; keep **GPL-3.0-or-later** in agent docs; set `.template-version` to `0.15.1`; reshape `BUILD_PLAN.md` with Sequential / Parallel / Human & device; seed `HUMAN_BACKLOG.md`; adopt 300/150 file budgets. Defer `release-please-automerge.yml` and pruning inactive go/lightroom/rust modules
+- **Alternatives considered:** Fresh bootstrap overwrite (rejected: destroys product history); adopt MIT LICENSE from template (rejected: product is GPL); activate commercial Cursor tier (rejected: F-Droid FOSS)
+- **Consequences:** Agents use local-compute + `/cleanup` + HUMAN backlog automation; Android CI/release workflows untouched beyond additive ignores; see `docs/BOOTSTRAP_ALIGNMENT.md`
+
 ### 2026-07-10 — Stage A flash: USB-C host only + AI assist policy
 - **Status:** Accepted
 - **Context:** Refined flash requirements plan — USB-C-first hardware, local AI must not crack crypto

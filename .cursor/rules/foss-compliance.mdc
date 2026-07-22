@@ -7,7 +7,7 @@ alwaysApply: true
 
 ## License
 
-- Pure FOSS under MIT license
+- Pure FOSS under **GPL-3.0-or-later** (OBDForge product license; do not rewrite to MIT)
 - No proprietary closed-source SDKs in production path
 - Android: no Google Play Services, Firebase, or closed telemetry trackers
 

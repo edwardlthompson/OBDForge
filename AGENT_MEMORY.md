@@ -74,7 +74,9 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 | Date | Milestone | What worked | What to improve |
 |------|-----------|-------------|-----------------|
-| 2026-07-21 | Bootstrap align v0.15.1 | FOSS Cursor hooks/skills/agents; GPL wording; BUILD_PLAN reshape; HUMAN_BACKLOG | Deferred: release-please-automerge; prune inactive modules |
+| 2026-07-22 | v1.2.10 + release automation | Branch protection job names; RP/Dependabot auto-merge; APK via product-version.sh | HUMAN: app-update URL; ADB: F-Droid + hardware bench |
+| 2026-07-22 | v1.2.9 | First RP PR after F-010 settings; signed APK upload | Tag-gate raced CI (wait lengthened) |
+| 2026-07-21 | Bootstrap align v0.15.1 | FOSS Cursor hooks/skills/agents; GPL wording; BUILD_PLAN reshape; HUMAN_BACKLOG | Prune inactive go/lightroom/rust modules (optional) |
 | 2026-07-12 | v1.2.8 release | Fuel loop (PID 0x03) open/closed status on live dashboard | Monitor-only; no O2 disable toggle |
 | 2026-07-10 | v1.2.7 release | Pairing, O2 PIDs, DID coding, Stage A flash scaffold; pre-release uses stack-selection | HUMAN: merge Dependabot #8/#9; USB flash bench |
 | 2026-07-10 | Sprint 22 audit | Fixed CRLF file-limits + GoldenPathApp line budget; flash voltage floor; Unreleased CHANGELOG | HUMAN merge PR #8 (branch protection); PR #9 CodeQL red; JAVA_HOME for watch-agent-gates Android stage |
@@ -90,6 +92,6 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 - **Source template:** `edwardlthompson/agent-project-bootstrap`
 - **Template version:** `0.15.1` (tracked in `.template-version`)
-- **Product version:** `1.2.8` (Gradle / CHANGELOG / Release Please — not `.template-version`)
-- **Aligned:** 2026-07-21 — see `docs/BOOTSTRAP_ALIGNMENT.md`
+- **Product version:** `1.2.10` (`.release-please-manifest.json` / CHANGELOG / APK — not `.template-version`)
+- **Aligned:** 2026-07-21 — see `docs/BOOTSTRAP_ALIGNMENT.md`; release automation proven 2026-07-22
 - **Last update check:** See `.template-update.json`

@@ -27,7 +27,7 @@
 
 ## Active board — post v1.2.8
 
-> **v1.2.8** shipping 2026-07-12. See [`CHANGELOG.md`](CHANGELOG.md) `[1.2.8]`.
+> **v1.2.10** shipping 2026-07-22 ([release](https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.10)). Prior: v1.2.8 (2026-07-12).
 
 ### Sequential
 

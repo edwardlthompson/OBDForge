@@ -19,6 +19,13 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-07-22 — Pin Kotlin 2.4.0 until CodeQL supports 2.4.10+
+- **Status:** Accepted
+- **Context:** Dependabot PR #14 bumped Kotlin to 2.4.10; CodeQL failed with extractor ceiling “supports versions below 2.4.10”
+- **Decision:** Merge AGP 9.3.0 + usb-serial 3.11.0; keep Kotlin at 2.4.0; ignore Kotlin `>=2.4.10` in Dependabot (KB-019). Merged Actions group PR #13 (setup-node/go/stale v7)
+- **Alternatives considered:** Wait for CodeQL (blocks other bumps); disable CodeQL on PRs (rejected)
+- **Consequences:** Revisit Kotlin bump when CodeQL release notes include 2.4.10+; automerge still needs repo `enablePullRequestAutoMerge` `[HUMAN]`
+
 ### 2026-07-21 — Align child repo to agent-project-bootstrap v0.15.1
 - **Status:** Accepted
 - **Context:** OBDForge already used bootstrap process files but lagged Cursor FOSS integrations (hooks, skills, parallel `/build`) and mis-tracked app semver in `.template-version`

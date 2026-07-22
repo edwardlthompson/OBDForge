@@ -39,3 +39,11 @@ updates:
     groups:
       android-dependencies:
         patterns: ["*"]
+    # CodeQL Java extractor supports Kotlin < 2.4.10 only (KB-019). Revisit when CodeQL catches up.
+    ignore:
+      - dependency-name: "org.jetbrains.kotlin.jvm"
+        versions: [">=2.4.10"]
+      - dependency-name: "org.jetbrains.kotlin.plugin.compose"
+        versions: [">=2.4.10"]
+      - dependency-name: "org.jetbrains.kotlin:kotlin-test"
+        versions: [">=2.4.10"]

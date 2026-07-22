@@ -165,3 +165,12 @@
 | **Cause** | `count-critical-high-dependabot.sh` passed filters via `gh api -f` (form body) instead of query string |
 | **Fix** | Query `repos/{repo}/dependabot/alerts?state=open&severity=critical|high` with `--paginate` |
 | **Prevention** | Prefer URL query params for GET Dependabot alerts; keep severity filters explicit |
+
+### KB-019 — CodeQL rejects Kotlin ≥ 2.4.10
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | Dependabot Android PR fails CodeQL `Analyze (java-kotlin)`: `Kotlin version 2.4.10 is too recent. CodeQL currently supports versions below 2.4.10` |
+| **Cause** | CodeQL Java/Kotlin extractor lag behind Kotlin toolchain releases |
+| **Fix** | Keep Kotlin plugins/`kotlin-test` at **2.4.0**; still take AGP / library bumps (e.g. AGP 9.3.0, usb-serial 3.11.0) |
+| **Prevention** | `.github/dependabot.yml` ignores Kotlin `>=2.4.10` until CodeQL supports them; re-check on CodeQL release notes |

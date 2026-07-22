@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Align agent tooling with agent-project-bootstrap **v0.15.1** (Cursor FOSS hooks/skills/agents, parallel `/build` + `HUMAN_BACKLOG.md`, Sequential/Parallel BUILD_PLAN shape); `.template-version` now tracks template semver (app remains 1.2.8). See `docs/BOOTSTRAP_ALIGNMENT.md`.
+- Dependencies: Android Gradle Plugin **9.3.0**, `usb-serial-for-android` **3.11.0**; GitHub Actions `setup-node` / `setup-go` / `stale` **v7** (Kotlin stays **2.4.0** for CodeQL — KB-019).
+
+### Fixed
+
+- Dependabot Android group PR CodeQL failure by pinning Kotlin below 2.4.10; Dependabot ignores Kotlin `>=2.4.10` until the extractor catches up.
 
 ## [1.2.8] - 2026-07-12
 

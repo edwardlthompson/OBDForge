@@ -5,6 +5,15 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.10](https://github.com/edwardlthompson/OBDForge/compare/v1.2.9...v1.2.10) (2026-07-22)
+
+
+### Fixed
+
+* **ci:** avoid fromJSON on empty Release Please PR output ([37891e8](https://github.com/edwardlthompson/OBDForge/commit/37891e82b26e4c34ab02f0b814f760bf1626a253))
+* **ci:** Release workflow uses product version, not template-version ([c092483](https://github.com/edwardlthompson/OBDForge/commit/c092483762ffe1a68527f5a29da33d55a21094de))
+* **ci:** resolve product-version.sh relative to repo root ([bcb2f72](https://github.com/edwardlthompson/OBDForge/commit/bcb2f72cae66b967c8d617d5aaa129f3aa0330a4))
+
 ## [1.2.9](https://github.com/edwardlthompson/OBDForge/compare/v1.2.8...v1.2.9) (2026-07-22)
 
 

@@ -5,15 +5,18 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.2.11](https://github.com/edwardlthompson/OBDForge/compare/v1.2.10...v1.2.11) (2026-07-22)
+## [Unreleased]
 
+### Fixed
+
+- Release Please: hide `docs`/`chore` changelog sections so post-release hygiene commits do not open patch PRs
+
+## [1.2.11](https://github.com/edwardlthompson/OBDForge/compare/v1.2.10...v1.2.11) (2026-07-22)
 
 ### Documentation
 
 * bump README version badge to 1.2.10 ([720c153](https://github.com/edwardlthompson/OBDForge/commit/720c1531b593b08d02d1aac9699a2df16abab437))
 * ship hygiene for v1.2.10 after release automation ([d8a65b7](https://github.com/edwardlthompson/OBDForge/commit/d8a65b7dbafaed4086560f87002c4acbf6db17b3))
-
-## [Unreleased]
 
 ## [1.2.10](https://github.com/edwardlthompson/OBDForge/compare/v1.2.9...v1.2.10) (2026-07-22)
 

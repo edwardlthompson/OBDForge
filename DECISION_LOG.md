@@ -19,6 +19,13 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-07-22 — Hide docs/chore from Release Please releasable units
+- **Status:** Accepted
+- **Context:** Post-release README/memory sync (`docs:`) opened Release Please PR #18 for v1.2.12 (docs-only patch loop after v1.2.11)
+- **Decision:** Mark `docs` and `chore` as `"hidden": true` in `release-please-config.json` changelog-sections; close PR #18 without merge
+- **Alternatives considered:** Keep merging docs-only patches (rejected); remove docs/chore from sections entirely (also fine; hidden keeps types known)
+- **Consequences:** Only feat/fix/perf/revert open release PRs; badge/memory hygiene commits no longer cut versions
+
 ### 2026-07-22 — Branch protection uses Actions job check names
 - **Status:** Accepted
 - **Context:** Required contexts `CI` / `Security Scan` / GHAS `CodeQL` never went green on PRs; auto-merge stayed BLOCKED

@@ -17,7 +17,7 @@
     { "type": "fix", "section": "Fixed" },
     { "type": "perf", "section": "Changed" },
     { "type": "revert", "section": "Changed" },
-    { "type": "docs", "section": "Documentation" },
-    { "type": "chore", "section": "Changed" }
+    { "type": "docs", "section": "Documentation", "hidden": true },
+    { "type": "chore", "section": "Changed", "hidden": true }
   ]
 }

@@ -34,7 +34,7 @@
 1. ❌ [AGENT] Live-data charting / time-series dashboard — blocked: hardware bench required
 2. 🔲 [AGENT] Dependabot bumps; triage OpenSSF Scorecard SARIF (F-007) — weekly when alerts open
 3. 🔲 [AGENT] Adapter compatibility notes → `KNOWLEDGE_BASE.md` — monthly cadence
-4. ✅ [AUTO] Release Please + Dependabot auto-merge (F-010) — settings + `AUTOMERGE_TOKEN` + automerge workflows; branch protection job names fixed; proven on v1.2.9 / **v1.2.10** auto-merge (2026-07-22)
+4. ✅ [AUTO] Release Please + Dependabot auto-merge (F-010) — settings + `AUTOMERGE_TOKEN` + automerge workflows; branch protection job names fixed; proven on v1.2.9–**v1.2.11**; docs/chore hidden so hygiene commits do not open patch PRs (closed #18)
 
 ### Parallel (safe after Sequential schema lock)
 

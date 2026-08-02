@@ -85,7 +85,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: bash scripts/check-github-ci.sh HEAD --wait 3600
 
-      - uses: actions/setup-java@v5
+      - uses: actions/setup-java@v5.6.0
         if: hashFiles('examples/android/app/build.gradle.kts') != ''
         with:
           distribution: temurin

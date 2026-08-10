@@ -18,9 +18,9 @@ RepoType: git
 Repo: https://github.com/edwardlthompson/OBDForge
 
 Builds:
-  - versionName: '1.2.12' # x-release-please-version
+  - versionName: '1.2.13' # x-release-please-version
     versionCode: 25
-    commit: v1.2.12
+    commit: v1.2.13
     subdir: examples/android
     gradle:
       - yes
@@ -33,5 +33,5 @@ Builds:
 
 AutoUpdateMode: Version v%v
 UpdateCheckMode: Tags
-CurrentVersion: '1.2.12' # x-release-please-version
+CurrentVersion: '1.2.13' # x-release-please-version
 CurrentVersionCode: 25

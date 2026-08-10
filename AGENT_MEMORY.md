@@ -74,6 +74,7 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 | Date | Milestone | What worked | What to improve |
 |------|-----------|-------------|-----------------|
+| 2026-08-10 | v1.2.13 /ship | RP #25 auto-merged; APK uploaded; child pre-release gate; upgrade sim OK | HUMAN/ADB: F-Droid + PII + hardware; bump versionCode with next product release |
 | 2026-08-10 | Sprint 23 close | PR #24 auto-merged; Scorecard workflow SHA pins; audit fixes committed | HUMAN/ADB: F-Droid + PII policy + hardware; continue pin campaign |
 | 2026-08-09 | Sprint 23 audit | Version sync + RP markers; ZXing replaces ML Kit; flash null voltage default; gates green | Commit/push audit tree; PR #24 auto-merge wait; F-Droid MR; Scorecard pins |
 | 2026-07-22 | v1.2.12 | fix(ci) hide docs/chore in RP; closed docs-only #18; APK shipped | Prefer feat/fix for product bumps; docs hygiene no longer cuts releases |

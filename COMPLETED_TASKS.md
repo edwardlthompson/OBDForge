@@ -2,6 +2,13 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge v1.2.13 release (2026-08-10)
+
+- ✅ [AGENT] `/ship` — pre-release gate, push Sprint 23, CI green, Release Please [#25](https://github.com/edwardlthompson/OBDForge/pull/25) auto-merged
+- ✅ [AUTO] GitHub Release v1.2.13 + `OBDForge-1.2.13.apk` uploaded (APK-only; no SBOM assets — policy)
+- ✅ [AUTO] Template upgrade simulation passed post-push
+- 🔲 [ADB] F-Droid MR + device smoke on 1.2.13 APK
+
 ## OBDForge Sprint 23 — Post v1.2.12 audit (2026-08-09)
 
 - ✅ [AGENT] F-001 — Gradle `versionName`/`versionCode` → 1.2.12 / 25; `x-release-please-version` markers; fdroid handoff + packaging sync

@@ -174,3 +174,12 @@
 | **Cause** | CodeQL Java/Kotlin extractor lag behind Kotlin toolchain releases |
 | **Fix** | Keep Kotlin plugins/`kotlin-test` at **2.4.0**; still take AGP / library bumps (e.g. AGP 9.3.0, usb-serial 3.11.0) |
 | **Prevention** | `.github/dependabot.yml` ignores Kotlin `>=2.4.10` until CodeQL supports them; re-check on CodeQL release notes |
+
+### KB-020 — `weekly-health-check.yml` fails with zero jobs on release push
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | Push of `chore(main): release X.Y.Z` shows `weekly-health-check.yml` as `failure` in ~0s with empty jobs list |
+| **Cause** | Workflow is schedule/`workflow_dispatch`-oriented; path/event filter aborts the push-triggered run without jobs |
+| **Fix** | Ignore for release sign-off; required gates remain **CI**, **Security Scan**, **CodeQL** |
+| **Prevention** | Do not add `weekly-health-check` to branch-protection required checks; triage only Monday scheduled runs |

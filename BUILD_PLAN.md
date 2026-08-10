@@ -25,16 +25,16 @@
 
 ---
 
-## Active board — post Sprint 23
+## Active board — post v1.2.13
 
-> **v1.2.12** shipping 2026-07-22 ([release](https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.12)). Sprint 23 AGENT complete (audit + PR #24). HUMAN/ADB backlog below.
+> **v1.2.13** shipping 2026-08-10 ([release](https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.13) · `OBDForge-1.2.13.apk`). Sprint 23 + `/ship` complete. HUMAN/ADB backlog below.
 
 ### Sequential
 
 1. ❌ [AGENT] Live-data charting / time-series dashboard — blocked: hardware bench required
 2. 🔲 [AGENT] Dependabot bumps; continue OpenSSF Scorecard pin campaign (F-007) — weekly when alerts open
 3. 🔲 [AGENT] Adapter compatibility notes → `KNOWLEDGE_BASE.md` — monthly cadence
-4. ✅ [AUTO] Release Please + Dependabot auto-merge (F-010) — proven through v1.2.12; PR [#24](https://github.com/edwardlthompson/OBDForge/pull/24) merged 2026-08-10
+4. ✅ [AUTO] Release Please + Dependabot auto-merge (F-010) — proven through **v1.2.13**; PRs [#24](https://github.com/edwardlthompson/OBDForge/pull/24) + [#25](https://github.com/edwardlthompson/OBDForge/pull/25) merged 2026-08-10
 
 ### Parallel (safe after Sequential schema lock)
 

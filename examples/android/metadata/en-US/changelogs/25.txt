@@ -1,0 +1,1 @@
+OBDForge 1.2.12 — Align APK version with GitHub Releases; ZXing VIN barcode (FOSS); require measured battery voltage for non-demo flash; Fastlane/F-Droid metadata refresh.

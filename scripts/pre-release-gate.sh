@@ -31,31 +31,29 @@ else
   echo "OK   security-triage.sh --strict passed"
 fi
 
+# Template baseline (.template-version) may differ from product semver in child repos.
+# Product version comes from Release Please manifest (scripts/product-version.sh).
+PRODUCT_VERSION=""
+if [ -f .release-please-manifest.json ]; then
+  PRODUCT_VERSION="$(bash scripts/product-version.sh 2>/dev/null || true)"
+fi
+
 if [ ! -f .template-version ]; then
   echo "MISSING: .template-version"
   ERRORS=$((ERRORS + 1))
 else
-  VERSION="$(tr -d '[:space:]' < .template-version)"
-  echo "OK   .template-version = ${VERSION}"
-  if [ -f .release-please-manifest.json ]; then
-    MANIFEST_VERSION="$(python3 - <<'PY'
-import json
-with open(".release-please-manifest.json", encoding="utf-8") as f:
-    print(json.load(f).get(".", "").strip())
-PY
-)"
-    if [ -z "$MANIFEST_VERSION" ]; then
-      echo "FAIL: .release-please-manifest.json missing \".\" version"
-      ERRORS=$((ERRORS + 1))
-    elif [ "$VERSION" != "$MANIFEST_VERSION" ]; then
-      echo "FAIL: .template-version (${VERSION}) != release-please manifest (${MANIFEST_VERSION})"
-      ERRORS=$((ERRORS + 1))
-    else
-      echo "OK   release-please manifest matches .template-version"
-    fi
-  else
-    echo "FAIL: .release-please-manifest.json not found"
+  TEMPLATE_VERSION="$(tr -d '[:space:]' < .template-version)"
+  echo "OK   .template-version = ${TEMPLATE_VERSION}"
+  if [ -z "$PRODUCT_VERSION" ]; then
+    echo "FAIL: .release-please-manifest.json missing \".\" version"
     ERRORS=$((ERRORS + 1))
+    VERSION="$TEMPLATE_VERSION"
+  elif [ "$TEMPLATE_VERSION" = "$PRODUCT_VERSION" ]; then
+    echo "OK   release-please manifest matches .template-version"
+    VERSION="$PRODUCT_VERSION"
+  else
+    echo "OK   child product version ${PRODUCT_VERSION} (template baseline ${TEMPLATE_VERSION})"
+    VERSION="$PRODUCT_VERSION"
   fi
 fi
 

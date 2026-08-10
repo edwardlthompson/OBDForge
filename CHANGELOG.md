@@ -5,14 +5,26 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- Align Android `versionName`/`versionCode` with Release Please (1.2.12 / 25) and add `x-release-please` markers
+- Require measured battery voltage for non-demo ECU flash (`FlashSession` no longer defaults to 13.5 V)
+- Replace ML Kit barcode scanning with ZXing (`com.google.zxing:core`) for F-Droid FOSS compliance
+
+### Changed
+
+- Fastlane short description synced to product copy; fdroiddata handoff versions refreshed
+- CI android-structure FOSS grep rejects `com.google.mlkit`
+- Merge Dependabot Actions PR #24 (scorecard + stale); pin Scorecard workflow action SHAs (F-007 start)
+
 ## [1.2.12](https://github.com/edwardlthompson/OBDForge/compare/v1.2.11...v1.2.12) (2026-07-22)
 
 
 ### Fixed
 
 * **ci:** stop Release Please docs-only patch loop ([d816d68](https://github.com/edwardlthompson/OBDForge/commit/d816d68b9040cd53e89ba1fc751f56f21f47538a))
-
-## [Unreleased]
 
 ## [1.2.11](https://github.com/edwardlthompson/OBDForge/compare/v1.2.10...v1.2.11) (2026-07-22)
 
@@ -205,7 +217,7 @@ First public release — product milestones M1–M13 (Sprints 0–14).
 - Architecture ADRs 0001–0005, personas spec, threat model, privacy policy, and runbook
 - F-Droid submission checklist in `docs/FDROID_SUBMISSION.md`
 
-[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.8...HEAD
+[Unreleased]: https://github.com/edwardlthompson/OBDForge/compare/v1.2.12...HEAD
 [1.2.8]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.8
 [1.2.7]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.7
 [1.2.6]: https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.6

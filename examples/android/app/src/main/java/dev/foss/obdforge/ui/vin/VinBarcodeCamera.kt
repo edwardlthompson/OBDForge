@@ -3,6 +3,7 @@ package dev.foss.obdforge.ui.vin
 import android.util.Size
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
@@ -24,9 +25,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.common.InputImage
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.BinaryBitmap
+import com.google.zxing.DecodeHintType
+import com.google.zxing.MultiFormatReader
+import com.google.zxing.PlanarYUVLuminanceSource
+import com.google.zxing.common.HybridBinarizer
 import dev.foss.obdforge.R
 import dev.foss.obdforge.ui.theme.SpacingMd
 import dev.foss.obdforge.ui.theme.navigationBarGutter
@@ -42,11 +46,24 @@ fun VinBarcodeCamera(
     val lifecycleOwner = LocalLifecycleOwner.current
     var detected by remember { mutableStateOf(false) }
     val executor = remember { Executors.newSingleThreadExecutor() }
-    val scanner = remember { BarcodeScanning.getClient() }
+    val reader = remember {
+        MultiFormatReader().apply {
+            setHints(
+                mapOf(
+                    DecodeHintType.POSSIBLE_FORMATS to listOf(
+                        BarcodeFormat.CODE_39,
+                        BarcodeFormat.CODE_128,
+                        BarcodeFormat.QR_CODE,
+                        BarcodeFormat.DATA_MATRIX,
+                    ),
+                    DecodeHintType.TRY_HARDER to true,
+                ),
+            )
+        }
+    }
 
     DisposableEffect(Unit) {
         onDispose {
-            scanner.close()
             executor.shutdown()
         }
     }
@@ -67,26 +84,14 @@ fun VinBarcodeCamera(
                             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                             .build()
                         analysis.setAnalyzer(executor) { imageProxy ->
-                            if (detected) {
-                                imageProxy.close()
-                                return@setAnalyzer
-                            }
-                            val mediaImage = imageProxy.image
-                            if (mediaImage != null) {
-                                val image = InputImage.fromMediaImage(
-                                    mediaImage,
-                                    imageProxy.imageInfo.rotationDegrees,
-                                )
-                                scanner.process(image)
-                                    .addOnSuccessListener { barcodes ->
-                                        val raw = barcodes.firstVinValue()
-                                        if (raw != null) {
-                                            detected = true
-                                            onBarcodeDetected(raw)
-                                        }
+                            try {
+                                if (!detected) {
+                                    decodeVin(imageProxy, reader)?.let { raw ->
+                                        detected = true
+                                        onBarcodeDetected(raw)
                                     }
-                                    .addOnCompleteListener { imageProxy.close() }
-                            } else {
+                                }
+                            } finally {
                                 imageProxy.close()
                             }
                         }
@@ -113,9 +118,19 @@ fun VinBarcodeCamera(
     }
 }
 
-private fun List<Barcode>.firstVinValue(): String? =
-    firstNotNullOfOrNull { barcode ->
-        barcode.rawValue?.takeIf { value ->
-            value.filter { it.isLetterOrDigit() }.length >= 17
-        }
+private fun decodeVin(imageProxy: ImageProxy, reader: MultiFormatReader): String? {
+    val width = imageProxy.width
+    val height = imageProxy.height
+    val yBuffer = imageProxy.planes[0].buffer
+    val yBytes = ByteArray(yBuffer.remaining())
+    yBuffer.get(yBytes)
+    val source = PlanarYUVLuminanceSource(yBytes, width, height, 0, 0, width, height, false)
+    return try {
+        reader.decodeWithState(BinaryBitmap(HybridBinarizer(source))).text
+            ?.takeIf { value -> value.filter { it.isLetterOrDigit() }.length >= 17 }
+    } catch (_: Exception) {
+        null
+    } finally {
+        reader.reset()
     }
+}

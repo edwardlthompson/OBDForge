@@ -245,7 +245,7 @@ jobs:
       - uses: actions/checkout@v7
       - name: Validate FOSS compliance markers
         run: |
-          if grep -rE "com\.google\.android\.gms|firebase" \
+          if grep -rE "com\.google\.android\.gms|firebase|com\.google\.mlkit" \
               examples/android \
               --include="*.gradle" --include="*.gradle.kts" --include="*.toml" \
               --include="*.kt" --include="*.kts" --include="*.xml" \
@@ -420,7 +420,7 @@ jobs:
         run: yes | sdkmanager --licenses
       - name: FOSS compliance grep
         run: |
-          if grep -rE "com\.google\.android\.gms|firebase" \
+          if grep -rE "com\.google\.android\.gms|firebase|com\.google\.mlkit" \
               examples/android \
               --include="*.gradle" --include="*.gradle.kts" --include="*.toml" \
               --include="*.kt" --include="*.kts" --include="*.xml" \

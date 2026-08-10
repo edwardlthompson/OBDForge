@@ -66,6 +66,23 @@ class SafetyGateFlashTest {
         )
     }
 
+    @Test
+    fun ecuFlash_blocksMissingBatteryWhenNotDemo() {
+        val result = SafetyGate.evaluate(
+            base().copy(
+                operation = WriteOperation.EcuFlash,
+                transportType = TransportType.UsbSerial,
+                brickRiskAttested = true,
+                demoMode = false,
+                batteryVoltageVolts = null,
+            ),
+        )
+        assertEquals(
+            SafetyBlockReason.BatteryVoltageTooLow,
+            (result as SafetyGateResult.Blocked).reason,
+        )
+    }
+
     private fun base() = SafetyContext(
         persona = PersonaMode.Shop,
         operation = WriteOperation.EcuFlash,

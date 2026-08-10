@@ -14,7 +14,8 @@ data class FlashSession(
     val brickRiskAttested: Boolean,
     val demoStationaryAttested: Boolean = true,
     val vehicleSpeedKph: Double? = 0.0,
-    val batteryVoltageVolts: Double? = 13.5,
+    /** Measured control-module voltage (V). Null until read — required for non-demo flash. */
+    val batteryVoltageVolts: Double? = null,
     val protocolProbed: Boolean = true,
     val adapterConnected: Boolean = true,
     val userConfirmed: Boolean = true,

@@ -1,6 +1,6 @@
 # Build Plan
 
-> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–22). Template baseline: agent-project-bootstrap **v0.15.1** (`docs/BOOTSTRAP_ALIGNMENT.md`).
+> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–23). Template baseline: agent-project-bootstrap **v0.15.1** (`docs/BOOTSTRAP_ALIGNMENT.md`).
 
 ## Owner labels
 
@@ -25,16 +25,16 @@
 
 ---
 
-## Active board — post v1.2.8
+## Active board — post Sprint 23
 
-> **v1.2.12** shipping 2026-07-22 ([release](https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.12)). Automation path proven through v1.2.9–v1.2.12; docs/chore no longer cut patch releases.
+> **v1.2.12** shipping 2026-07-22 ([release](https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.12)). Sprint 23 AGENT complete (audit + PR #24). HUMAN/ADB backlog below.
 
 ### Sequential
 
 1. ❌ [AGENT] Live-data charting / time-series dashboard — blocked: hardware bench required
-2. 🔲 [AGENT] Dependabot bumps; triage OpenSSF Scorecard SARIF (F-007) — weekly when alerts open
+2. 🔲 [AGENT] Dependabot bumps; continue OpenSSF Scorecard pin campaign (F-007) — weekly when alerts open
 3. 🔲 [AGENT] Adapter compatibility notes → `KNOWLEDGE_BASE.md` — monthly cadence
-4. ✅ [AUTO] Release Please + Dependabot auto-merge (F-010) — settings + `AUTOMERGE_TOKEN` + automerge workflows; branch protection job names fixed; proven on v1.2.9–**v1.2.11**; docs/chore hidden so hygiene commits do not open patch PRs (closed #18)
+4. ✅ [AUTO] Release Please + Dependabot auto-merge (F-010) — proven through v1.2.12; PR [#24](https://github.com/edwardlthompson/OBDForge/pull/24) merged 2026-08-10
 
 ### Parallel (safe after Sequential schema lock)
 
@@ -51,8 +51,9 @@
 1. 🔲 [HUMAN] Fill `app-update.json` release-check URL (donations done — Venmo)
 2. 🔲 [HUMAN] Shop operator review (optional)
 3. 🔲 [HUMAN] Post-release monitoring — Issues → `KNOWLEDGE_BASE.md`
-4. 🔲 [ADB] F-Droid fdroiddata MR — draft ready · GitLab submit pending
-5. 🔲 [ADB] Bench connect / flash USB-C on device — F-008/F-009 · `docs/FLASH_HARDWARE.md`
+4. 🔲 [HUMAN] F-008 — Decide backup/export redaction policy for VIN/shop PII
+5. 🔲 [ADB] F-Droid fdroiddata MR — refresh after Sprint 23 FOSS/version fixes · GitLab submit pending
+6. 🔲 [ADB] Bench connect / flash USB-C on device — F-009/F-010 · `docs/FLASH_HARDWARE.md`
 
 ### Blocked — hardware bench (`[ADB]` / `[HUMAN]`)
 
@@ -74,9 +75,9 @@ No OBD adapter or bench ECU on hand. Pull when hardware is available. Log result
 ### Weekly
 
 - 🔲 [AUTO] `check-security-triage.sh --wait-ci 300`
-- 🔲 [AGENT] Dependabot bumps; triage OpenSSF Scorecard SARIF (F-007)
+- 🔲 [AGENT] Dependabot bumps; continue Scorecard pin campaign (F-007)
 - ✅ [AUTO] Local feature-gate green after Sprint 22 (2026-07-10); CI green on `main` for v1.2.7 prepare commit
-- ✅ [AUTO] Release Please / Dependabot auto-merge enabled (2026-07-22)
+- ✅ [AUTO] Release Please / Dependabot auto-merge enabled (2026-07-22); PR #24 merged 2026-08-10
 
 ### Monthly
 
@@ -97,4 +98,4 @@ No OBD adapter or bench ECU on hand. Pull when hardware is available. Log result
 
 ## Archive
 
-Sprints **0–22** complete (Sprint 22 AGENT subset). Detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).
+Sprints **0–23** complete (Sprint 23 AGENT). Detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).

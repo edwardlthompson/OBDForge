@@ -2,6 +2,19 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge Sprint 23 — Post v1.2.12 audit (2026-08-09)
+
+- ✅ [AGENT] F-001 — Gradle `versionName`/`versionCode` → 1.2.12 / 25; `x-release-please-version` markers; fdroid handoff + packaging sync
+- ✅ [AGENT] F-002 — Replace ML Kit barcode with ZXing; CI FOSS grep rejects `com.google.mlkit`
+- ✅ [AGENT] F-003 — `FlashSession.batteryVoltageVolts` default `null` + missing-voltage SafetyGate test
+- ✅ [AGENT] F-004 — CHANGELOG `[Unreleased]` to top; footer `v1.2.12...HEAD`
+- ✅ [AGENT] F-005 — Fastlane short_description synced to product copy
+- ✅ [AGENT] F-006 — Dependabot PR [#24](https://github.com/edwardlthompson/OBDForge/pull/24) auto-merged 2026-08-10
+- ✅ [AGENT] F-007 (partial) — Triaged Scorecard SARIF; pinned `scorecard.yml` checkout + upload-sarif SHAs; remaining pins deferred weekly
+- ✅ [AGENT] Local gates: `validate-bootstrap --quick`, `feature-gate`, hygiene, README health, `watch-agent-gates`
+- 🔲 [HUMAN] F-008 — VIN/shop PII backup/export policy → Human & device board
+- 🔲 [ADB] F-Droid MR + hardware/flash bench (F-009/F-010) → Human & device board
+
 ## OBDForge v1.2.8 release (2026-07-12)
 
 - ✅ [AGENT] Fuel loop status (Mode 01 PID `0x03`) on live dashboard

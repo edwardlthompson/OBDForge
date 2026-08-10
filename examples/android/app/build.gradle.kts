@@ -18,8 +18,8 @@ android {
         applicationId = "dev.foss.obdforge"
         minSdk = 26
         targetSdk = 37
-        versionCode = 24
-        versionName = "1.2.8"
+        versionCode = 25
+        versionName = "1.2.12" // x-release-please-version
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -63,7 +63,7 @@ dependencies {
     implementation("androidx.camera:camera-camera2:1.6.1")
     implementation("androidx.camera:camera-lifecycle:1.6.1")
     implementation("androidx.camera:camera-view:1.6.1")
-    implementation("com.google.mlkit:barcode-scanning:17.3.0")
+    implementation("com.google.zxing:core:3.5.3")
     implementation("com.google.mediapipe:tasks-genai:0.10.35")
     implementation("org.tensorflow:tensorflow-lite:2.17.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")

@@ -19,6 +19,20 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-08-10 — Sprint 23 Scorecard triage (F-007)
+- **Status:** Accepted (partial)
+- **Context:** ~74 open Scorecard code-scanning alerts after PR #24 merge; mostly `PinnedDependenciesID` on GitHub-owned `@vN` tags; also TokenPermissions, CII, Fuzzing, Maintained, SecurityPolicy, BinaryArtifacts, CodeReview
+- **Decision:** Pin `scorecard.yml` `actions/checkout` + `codeql-action/upload-sarif` to SHAs now; defer repo-wide pin campaign to weekly F-007; treat CII/Fuzzing/Maintained/SecurityPolicy/CodeReview/BinaryArtifacts as org-process deferrals (not blocking FOSS releases while Scorecard workflow stays green)
+- **Alternatives considered:** Pin every workflow action in one PR (rejected — high blast radius); dismiss all PinnedDependencies (rejected — Scorecard wants hashes)
+- **Consequences:** Scorecard job itself is hash-pinned; remaining alerts tracked on BUILD_PLAN weekly row
+
+### 2026-08-09 — Sprint 23 audit: release identity + FOSS barcode
+- **Status:** Accepted
+- **Context:** GitHub Release `OBDForge-1.2.12.apk` advertised 1.2.12 while Gradle stayed at 1.2.8/24; Release Please `extra-files` lacked markers; ML Kit barcode risked F-Droid NonFreeDep; `FlashSession` defaulted battery to 13.5 V
+- **Decision:** Sync Gradle + fdroid handoff to 1.2.12/25 with `x-release-please-version`; replace ML Kit with ZXing core; extend CI FOSS grep for `mlkit`; require measured/`null` battery for non-demo flash
+- **Alternatives considered:** Leave tooling-only semver skew documented only (rejected — confusing for sideload users); keep ML Kit behind product flavor (deferred — F-Droid path needs FLOSS now)
+- **Consequences:** Next release PR can bump Android version strings; barcode path is Apache-2.0; optimistic flash voltage bypass removed. Published 1.2.12 APK binary identity remains historical until next signed build.
+
 ### 2026-07-22 — Hide docs/chore from Release Please releasable units
 - **Status:** Accepted
 - **Context:** Post-release README/memory sync (`docs:`) opened Release Please PR #18 for v1.2.12 (docs-only patch loop after v1.2.11)

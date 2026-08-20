@@ -19,6 +19,13 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-08-20 — /ship process sync (no product bump)
+- **Status:** Accepted
+- **Context:** `/ship` after bootstrap v0.21.0 alignment; `chore`/`docs` are hidden in Release Please
+- **Decision:** Push process commits to `main`; do not invent a 1.2.14 tag. Rebase onto Dependabot #26 before push. Leave high-refresh display WIP uncommitted
+- **Alternatives considered:** Force a feat/fix to cut 1.2.14 (rejected — no product change); include high-refresh in this ship (rejected — separate slice)
+- **Consequences:** Product stays 1.2.13. No Release Please PR. CI/Security/CodeQL green on `fb4fbd2`. weekly-health-check failed in ~0s (KB-020). v1.2.13 GitHub Release still APK-only (no SBOM asset)
+
 ### 2026-08-20 — Align agent process to bootstrap v0.21.0
 - **Status:** Accepted
 - **Context:** Child repo was still on template 0.15.1; upstream added coach/tour/ideas, adapters, verify harness, branding, and bootstrap engine tests

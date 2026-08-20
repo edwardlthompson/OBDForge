@@ -179,7 +179,7 @@
 
 | Field | Detail |
 |-------|--------|
-| **Symptom** | Push of `chore(main): release X.Y.Z` shows `weekly-health-check.yml` as `failure` in ~0s with empty jobs list |
+| **Symptom** | Push to `main` (release or process/`docs`/`chore`) shows `weekly-health-check.yml` as `failure` in ~0s with empty jobs list |
 | **Cause** | Workflow is schedule/`workflow_dispatch`-oriented; path/event filter aborts the push-triggered run without jobs |
 | **Fix** | Ignore for release sign-off; required gates remain **CI**, **Security Scan**, **CodeQL** |
 | **Prevention** | Do not add `weekly-health-check` to branch-protection required checks; triage only Monday scheduled runs |

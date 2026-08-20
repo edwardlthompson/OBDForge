@@ -1,6 +1,6 @@
 # Build Plan
 
-> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–23). Template baseline: agent-project-bootstrap **v0.15.1** (`docs/BOOTSTRAP_ALIGNMENT.md`).
+> OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–23). Template baseline: agent-project-bootstrap **v0.21.0** (`docs/BOOTSTRAP_ALIGNMENT.md`).
 
 ## Owner labels
 

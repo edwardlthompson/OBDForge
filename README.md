@@ -13,7 +13,7 @@ Free open-source Android OBD-II diagnostics with multi-transport adapters, live 
 
 Built on [agent-project-bootstrap](https://github.com/edwardlthompson/agent-project-bootstrap) (Android stack, pruned).
 
-## Purpose
+## Pitch
 
 OBDForge connects to ELM327 and OBDLink STN/STPX adapters over Bluetooth, USB, WiFi, or Ethernet to read and clear DTCs, stream live PIDs (including narrowband O2 voltage and wideband lambda when the ECU reports them), resolve VIN ECU-first, and run shop workflows — all on-device under GPL-3.0-or-later with no proprietary SDKs.
 
@@ -38,7 +38,7 @@ OBDForge connects to ELM327 and OBDLink STN/STPX adapters over Bluetooth, USB, W
 - **Clean Architecture** — `TransportRegistry`, `ProtocolRegistry`
 - **F-Droid** reproducible builds — see `modules/android/MODULE.md`
 
-## Quick Start
+## Quick start
 
 **Sideload from GitHub Releases:** download **`OBDForge-X.Y.Z.apk`** only. Do **not** install unsigned or debug-signed builds from release assets.
 

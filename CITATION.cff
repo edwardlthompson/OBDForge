@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: OBDForge
+message: If you use this software, please cite it using these metadata.
+type: software
+authors:
+  - name: Edward L. Thompson
+repository-code: https://github.com/edwardlthompson/OBDForge
+url: https://github.com/edwardlthompson/OBDForge
+abstract: >-
+  FOSS Android OBD-II diagnostics app (GPL-3.0-or-later) with multi-transport
+  adapters, on-device AI, and F-Droid / GitHub Releases.
+keywords:
+  - foss
+  - android
+  - obd-ii
+  - fdroid
+  - diagnostics
+license: GPL-3.0-or-later
+version: 1.2.13
+date-released: 2026-08-10

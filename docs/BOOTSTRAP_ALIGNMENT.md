@@ -1,10 +1,10 @@
 # Bootstrap Alignment — Gap Analysis
 
-> **Status:** Phase 1–4 executed for approved YES items (2026-07-21)  
-> **Date:** 2026-07-21  
-> **Local app version:** 1.2.8 (OBDForge product)  
-> **Upstream template:** [edwardlthompson/agent-project-bootstrap](https://github.com/edwardlthompson/agent-project-bootstrap) **v0.15.1** (latest)  
-> **Local `.template-version`:** `0.15.1` (template semver; app version remains in Gradle/CHANGELOG)
+> **Status:** Aligned to upstream **v0.21.0** (2026-08-20); Phase 1–4 notes below remain historical  
+> **Date:** 2026-08-20  
+> **Local app version:** 1.2.13 (OBDForge product)  
+> **Upstream template:** [edwardlthompson/agent-project-bootstrap](https://github.com/edwardlthompson/agent-project-bootstrap) **v0.21.0**  
+> **Local `.template-version`:** `0.21.0` (template semver; app version remains in Gradle/CHANGELOG / Release Please)
 
 ---
 
@@ -208,6 +208,30 @@ See `BUILD_PLAN.md` → Human & device and `HUMAN_BACKLOG.md` (Release Please pe
 
 ---
 
-## 10. Next step
+## 10. Next step (historical, 2026-07-21)
 
 Run local validation (`validate-bootstrap`, encoding, hygiene). Human may later approve deferred items 6–7.
+
+---
+
+## 11. v0.21.0 process sync (2026-08-20)
+
+Targeted child sync — no re-scaffold. Product Android code, GPL `LICENSE`, F-Droid/release scripts, and `foss-compliance.mdc` were preserved.
+
+### Added
+- Batch atomics: `/coach`, `/tour`, `/ideas`, `/codex-review`
+- Docs: `BEST_PRACTICES`, `FIRST_30_DAYS`, `AGENT_PORTABILITY`, `spec.md`, `plan.md`, `CODEX_REVIEW.md`, `help/{TOUR,COACH,IDEAS,GLOSSARY}`, `features/_handoff.md`
+- Multi-agent adapters generated from `AGENTS.md` (Claude, Gemini, Copilot, Windsurf, Cline, Continue, `main.mdc`)
+- Branding kit, `CITATION.cff`, `SUPPORT.md`, `env.schema.json`, `bootstrap.config.json.example`, `PROJECT_CHECKLIST.md`, `.agent/memory/*`, `.vscode` tasks/extensions
+- `scripts/verify.sh`, `project-health.sh`, bootstrap engine libs + unit tests
+
+### Preserved (do not overwrite)
+- GPL-3.0-or-later product license and `foss-compliance.mdc`
+- Child-aware `check-template-version-sync.sh` / `pre-release-gate.sh` (template semver ≠ product semver)
+- Android CI, `release.yml`, F-Droid / reproducible APK verifiers
+- Commercial Cursor paths stay inactive (`distribution_tier: foss`)
+
+### Intentionally not applied
+- Live `bootstrap.config.json` — engine license allowlist is MIT/Apache only; product stays GPL
+- Commercial example files and `modules/android/COMMERCIAL.md` — FOSS child; activation doc links to upstream
+- `generate-project-readme.py` overwrite of product `README.md`

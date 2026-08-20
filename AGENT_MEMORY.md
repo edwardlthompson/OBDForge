@@ -74,6 +74,7 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 | Date | Milestone | What worked | What to improve |
 |------|-----------|-------------|-----------------|
+| 2026-08-20 | Bootstrap align v0.21.0 | Coach/tour/ideas, adapters, verify harness; GPL + child semver split kept | Live bootstrap.config.json (MIT/Apache allowlist); commercial Cursor files |
 | 2026-08-10 | v1.2.13 /ship | RP #25 auto-merged; APK uploaded; child pre-release gate; upgrade sim OK | HUMAN/ADB: F-Droid + PII + hardware; bump versionCode with next product release |
 | 2026-08-10 | Sprint 23 close | PR #24 auto-merged; Scorecard workflow SHA pins; audit fixes committed | HUMAN/ADB: F-Droid + PII policy + hardware; continue pin campaign |
 | 2026-08-09 | Sprint 23 audit | Version sync + RP markers; ZXing replaces ML Kit; flash null voltage default; gates green | Commit/push audit tree; PR #24 auto-merge wait; F-Droid MR; Scorecard pins |
@@ -96,7 +97,7 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 ## Template Provenance
 
 - **Source template:** `edwardlthompson/agent-project-bootstrap`
-- **Template version:** `0.15.1` (tracked in `.template-version`)
-- **Product version:** `1.2.12` (`.release-please-manifest.json` / CHANGELOG / APK — not `.template-version`)
-- **Aligned:** 2026-07-21 — see `docs/BOOTSTRAP_ALIGNMENT.md`; release automation proven 2026-07-22
+- **Template version:** `0.21.0` (tracked in `.template-version`)
+- **Product version:** `1.2.13` (`.release-please-manifest.json` / CHANGELOG / APK — not `.template-version`)
+- **Aligned:** 2026-08-20 — see `docs/BOOTSTRAP_ALIGNMENT.md` section 11; release automation proven 2026-07-22
 - **Last update check:** See `.template-update.json`

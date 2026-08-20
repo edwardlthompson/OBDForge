@@ -23,20 +23,23 @@ See [`docs/CURSOR_MODES.md`](CURSOR_MODES.md) — pick the Cursor mode before ed
 
 ## Agent shortcuts
 
-Type **`/`** in Cursor Agent chat. Start with **[docs/help/BATCH_COMMANDS.md](help/BATCH_COMMANDS.md)** — try `/verify` before merge or `/build` for BUILD_PLAN sprints.
+Type **`/`** in Cursor Agent chat. Start with **[docs/help/BATCH_COMMANDS.md](help/BATCH_COMMANDS.md)** — try `/tour` (first run), `/coach` (what next), `/verify` before merge, or `/build` for BUILD_PLAN sprints.
+
+Other IDEs: read [`docs/help/TOUR.md`](help/TOUR.md) or [`docs/help/COACH.md`](help/COACH.md). Portability map: [`AGENT_PORTABILITY.md`](AGENT_PORTABILITY.md). Glossary: [`help/GLOSSARY.md`](help/GLOSSARY.md).
 
 ## OBDForge read order (agents)
 
 1. `README.md` (product overview)
 2. `docs/START_HERE.md` (this file)
 3. `docs/CURSOR_MODES.md`
-4. `docs/FOR_AGENTS.md`
-5. `AGENTS.md`
-6. `BUILD_PLAN.md` Sequential lane
-7. `modules/android/MODULE.md` only
-8. `examples/android/` only (Golden Path)
-9. `docs/DESIGN_GUIDE.md` / `docs/FEATURE_MODULES.md` when doing UI or Sprint 2+ features
-10. Product docs as needed: `docs/EXECUTION_PLAN.md`, `docs/adr/`, `docs/THREAT_MODEL.md`, `docs/PRIVACY.md`
+4. `docs/BEST_PRACTICES.md` + `docs/FIRST_30_DAYS.md`
+5. `docs/FOR_AGENTS.md`
+6. `AGENTS.md`
+7. `BUILD_PLAN.md` Sequential lane
+8. `modules/android/MODULE.md` only
+9. `examples/android/` only (Golden Path)
+10. `docs/DESIGN_GUIDE.md` / `docs/FEATURE_MODULES.md` when doing UI or Sprint 2+ features
+11. Product docs as needed: `docs/spec.md`, `docs/EXECUTION_PLAN.md`, `docs/adr/`, `docs/THREAT_MODEL.md`, `docs/PRIVACY.md`
 
 ## Do Not Read Yet
 

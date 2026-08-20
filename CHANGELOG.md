@@ -5,6 +5,12 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Align agent process with agent-project-bootstrap **v0.21.0** (`/coach`, `/tour`, `/ideas`, adapters, verify harness)
+
 ## [1.2.13](https://github.com/edwardlthompson/OBDForge/compare/v1.2.12...v1.2.13) (2026-08-10)
 
 
@@ -12,8 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * **ci:** child-aware pre-release gate and F-Droid changelog 25 ([05cdf50](https://github.com/edwardlthompson/OBDForge/commit/05cdf50042c9035db455732f5e9e10ce7af9c75d))
 * complete Sprint 23 audit (version sync, ZXing, flash voltage) ([0bf32bb](https://github.com/edwardlthompson/OBDForge/commit/0bf32bb1a6bd3bae7c264f53651f629e660a6bf4))
-
-## [Unreleased]
 
 ## [1.2.12](https://github.com/edwardlthompson/OBDForge/compare/v1.2.11...v1.2.12) (2026-07-22)
 

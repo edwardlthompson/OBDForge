@@ -19,6 +19,13 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-08-20 — Align agent process to bootstrap v0.21.0
+- **Status:** Accepted
+- **Context:** Child repo was still on template 0.15.1; upstream added coach/tour/ideas, adapters, verify harness, branding, and bootstrap engine tests
+- **Decision:** Merge process artifacts only; keep GPL product license, child-aware template/product semver split, Android/F-Droid release tooling, and FOSS Cursor tier. Do not write live `bootstrap.config.json` (engine allowlist is MIT/Apache). Point commercial activation links at upstream instead of copying commercial files
+- **Alternatives considered:** Full re-scaffold (rejected — would overwrite product); copy commercial examples (rejected — FOSS/F-Droid); overwrite `README.md` via generate-project-readme (rejected)
+- **Consequences:** `.template-version` / `TEMPLATE_INDEX` / `aligned_template_version` are 0.21.0; product remains 1.2.13. Agents get `/coach` `/tour` `/ideas` and portable adapters
+
 ### 2026-08-10 — Sprint 23 Scorecard triage (F-007)
 - **Status:** Accepted (partial)
 - **Context:** ~74 open Scorecard code-scanning alerts after PR #24 merge; mostly `PinnedDependenciesID` on GitHub-owned `@vN` tags; also TokenPermissions, CII, Fuzzing, Maintained, SecurityPolicy, BinaryArtifacts, CodeReview

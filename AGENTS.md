@@ -2,13 +2,28 @@
 
 1. **First read:** `docs/START_HERE.md`
 2. **Cursor modes:** `docs/CURSOR_MODES.md` (Ask / Plan / Agent / Debug routing)
-3. **Bootstrap mode:** `docs/INITIALIZATION_PROMPT.md` (historical; this repo is already initialized)
-4. **Reference mode:** `docs/FOR_AGENTS.md` + `TEMPLATE_INDEX.json`
-5. **Task board:** `BUILD_PLAN.md` (Sequential before Parallel) — status: 🔲 open · ✅ done · ❌ blocked
-6. **Parallel dispatch:** parallel-first BUILD_PLAN; `/build` automates HUMAN/ADB first, backlogs failures to `HUMAN_BACKLOG.md`, never halts on human labels — `scripts/build-sprint-status.sh --lane child`
-7. **Living memory:** update `AGENT_MEMORY.md` only at milestone boundaries
+3. **Why / coach:** `docs/BEST_PRACTICES.md` · 30-day playbook `docs/FIRST_30_DAYS.md` · `/coach` · backlog `/ideas` (`docs/help/IDEAS.md`) · first-run `/tour` (`docs/help/TOUR.md` in other IDEs) · portability `docs/AGENT_PORTABILITY.md`
+4. **Bootstrap mode:** `docs/INITIALIZATION_PROMPT.md` (historical; this repo is already initialized)
+5. **Reference mode:** `docs/FOR_AGENTS.md` + `TEMPLATE_INDEX.json`
+6. **Task board:** `BUILD_PLAN.md` (Sequential before Parallel) — status: 🔲 open · ✅ done · ❌ blocked
+7. **Parallel dispatch:** parallel-first BUILD_PLAN; `/build` automates HUMAN/ADB first, backlogs failures to `HUMAN_BACKLOG.md`, never halts on human labels — `scripts/build-sprint-status.sh --lane child`
+8. **Living memory:** update `AGENT_MEMORY.md` only at milestone boundaries
 
 > Legacy `.cursorrules` is deprecated. Use `.cursor/rules/*.mdc` and this file instead.
+
+## Project Overview & Architecture
+
+<!-- bootstrap-project-card -->
+**Product:** OBDForge
+**Purpose:** FOSS Android OBD-II diagnostics (F-Droid / GitHub Releases)
+**Stack:** android
+<!-- /bootstrap-project-card -->
+
+Child / Reference repo of [agent-project-bootstrap](https://github.com/edwardlthompson/agent-project-bootstrap). Preserve application code; follow process and tooling from the template.
+
+- **Active stack:** Android only (`modules/android/MODULE.md`, `examples/android/`)
+- **Product spec:** `docs/spec.md` (points at `docs/EXECUTION_PLAN.md`) · `docs/plan.md` · feature slices: `docs/features/`
+- **Verification:** `bash scripts/verify.sh` or `python3 scripts/agent-run.py verify`
 
 ## Architecture Constraints
 
@@ -23,11 +38,28 @@
 - Conventional Commits for all changes
 - Small, modular functions; keep files within token-optimal size
 - Read-before-write: inspect types/interfaces via `@filename` before editing
-- Cursor mode routing per `docs/CURSOR_MODES.md`; Plan for non-trivial tasks with `### Critique`
+- Cursor mode routing per `docs/CURSOR_MODES.md`; Plan for non-trivial tasks with resolved `### Critique`
+
+## Testing & Quality Enforcement
+
+**Test-first:** Every `[AGENT]` feature task must add or update automated tests for the change, **or** document in `docs/features/{name}.md` / `docs/spec.md`:
+
+1. Why automated tests are not feasible
+2. The fallback validation command (for example `feature-gate.sh`)
+
+Do not mark a BUILD_PLAN feature row ✅ without tests or that justification.
+
+```bash
+python3 scripts/agent-run.py validate-bootstrap --quick
+python3 scripts/agent-run.py feature-gate --stack android
+python3 scripts/agent-run.py watch-agent-gates --once --autofix
+```
 
 ## Session Protocol
 
 - On session start: read `START_HERE.md`, pick mode via `docs/CURSOR_MODES.md`, then `BUILD_PLAN.md` Sequential lane
+- If your tool has no slash commands, use `docs/help/*.md` (start with `docs/help/TOUR.md`)
+- When creating or significantly changing a file, state one sentence of why (see `docs/BEST_PRACTICES.md` and `/coach`)
 - On milestone end: update `AGENT_MEMORY.md`, append to `DECISION_LOG.md` or `docs/adr/`
 - On 3-strike failure: halt and escalate to human
 - On context bloat: write `.cursor-session-state`, ask human to clear chat
@@ -37,22 +69,44 @@
 - Log significant agent actions in `DECISION_LOG.md` at milestone boundaries
 - Template alignment notes: `docs/BOOTSTRAP_ALIGNMENT.md`
 
+## Multi-Agent Adapters
+
+This file is the source of truth. After editing it, sync adapters:
+
+```bash
+bash scripts/bootstrap-lifecycle.sh --sync-adapters
+```
+
+| Target | File |
+|--------|------|
+| Cursor | `.cursor/rules/main.mdc` |
+| Claude Code | `CLAUDE.md` |
+| GitHub Copilot | `.github/copilot-instructions.md` |
+| Gemini / Antigravity | `GEMINI.md` |
+| Windsurf | `.windsurf/rules/agents-pointer.md` |
+| Cline / Roo | `.clinerules` |
+| Aider | `CONVENTIONS.md` |
+| Continue | `.continue/rules/agents.md` |
+
+Do not hand-edit generated adapters. See `docs/AGENT_PORTABILITY.md`.
+
 ## Module Activation
 
 Activate only **Android** (`modules/android/MODULE.md`). Inactive stack stubs (if present) are reference-only — do not copy `examples/` wholesale.
 
 ## Cursor FOSS integrations
 
-Shipped from agent-project-bootstrap v0.15.1 (see `docs/CURSOR_INTEGRATIONS.md`):
+Shipped from agent-project-bootstrap **v0.21.0** (see `docs/CURSOR_INTEGRATIONS.md`):
 
 - **Hooks** — `.cursor/hooks.json` enforces destructive-ops + UTF-8 (fail-open; `/push` session override)
-- **Skills (7)** — `.cursor/skills/` progressive-load companions for `/gates`, `/scope`, `/fix`, hygiene, Sprint 0, features, canvas status
+- **Skills** — `.cursor/skills/` progressive-load companions including `/gates`, `/scope`, `/fix`, `/codex-review`
 - **Subagents (3)** — `.cursor/agents/` verifier, gate-fixer, explorer
-- **Local compute first** — `.cursor/rules/local-compute.mdc`: This Computer + parallel Task/worktrees/`/best-of-n` before Cloud; multi-core bootstrap checks
-- **Worktrees** — `.cursor/worktrees.json` + fail-soft OS setup (`/worktree`, `/best-of-n`)
-- **Auto-review** — `.cursor/permissions.json` dual layer with hooks
-- **Plugin pack** — `.cursor-plugin/plugin.json` + `scripts/pack-cursor-plugin.*` → `dist/cursor-plugin/`
+- **Local compute first** — `.cursor/rules/local-compute.mdc`
+- **Worktrees** — `.cursor/worktrees.json` + OS setup
+- **Auto-review** — `.cursor/permissions.json`
+- **Plugin pack** — `.cursor-plugin/plugin.json`
 - **CLI (opt-in)** — `docs/CURSOR_CLI.md`
+- **Codex review (opt-in)** — `docs/CODEX_REVIEW.md` + `/codex-review`
 - **Optional MCP** — copy `.cursor/mcp.foss.example` → gitignored `.cursor/mcp.json`
 
 Validate: `python3 scripts/agent-run.py check-cursor-hooks -- --smoke`, `python3 scripts/agent-run.py check-cursor-integrations -- --tier foss`

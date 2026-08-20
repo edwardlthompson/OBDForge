@@ -21,10 +21,14 @@ examples/android/local.properties
 .DS_Store
 Thumbs.db
 .idea/
-.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/extensions.json
 *.swp
 .cursor-session-state
 .cursor/agent-progress.json
+.cursor/last-feature-gate.json
 .cursor/parallel-scope-lock.json
 .cursor/worktrees/
 .cursor/mcp.json
@@ -86,6 +90,8 @@ examples/android/captures/
 # Ephemeral agent outputs (examples tracked)
 CODE_REVIEW.md
 RELEASE_NOTES.md
+scratchpad.md
+.cursor/handoff-*.md
 
 # Signing (never commit)
 *.keystore

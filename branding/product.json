@@ -1,0 +1,39 @@
+{
+  "mode": "product",
+  "name": "OBDForge",
+  "short_name": "OBDForge",
+  "tagline": "FOSS Android OBD-II diagnostics",
+  "pitch": "OBDForge is a GPL-3.0-or-later Android app for ELM327 and OBDLink adapters: live PIDs, DTC workflows, shop intake, and on-device AI — no Play Services, F-Droid compatible.",
+  "features": [
+    "Multi-transport adapters (Bluetooth, USB, Wi-Fi, Ethernet)",
+    "Live PID dashboard with persona modes",
+    "DTC read/clear, freeze-frame, and session history",
+    "On-device AI explanations (MediaPipe / TFLite)",
+    "Reproducible APK builds and F-Droid metadata"
+  ],
+  "quick_start": [
+    "Open Cursor Agent and type `/tour` or `/coach`.",
+    "Build the Android app from `examples/android/`.",
+    "Follow `docs/START_HERE.md` and `BUILD_PLAN.md` Sequential lane."
+  ],
+  "install": "JDK 17+, Android SDK. See `modules/android/MODULE.md` and `examples/android/README.md`.",
+  "usage": "Use `/verify` before merge and `/ship` to publish. Active stack is Android only.",
+  "urls": {
+    "docs": "docs/START_HERE.md",
+    "contributing": "CONTRIBUTING.md",
+    "security": "SECURITY.md",
+    "license": "LICENSE",
+    "design": "docs/DESIGN_GUIDE.md",
+    "branding": "branding/BRANDING.md",
+    "github_repo": "edwardlthompson/OBDForge"
+  },
+  "badge": {
+    "primary": "e94560",
+    "secondary": "4A5F82",
+    "license": "2ea043",
+    "foss": "656d76"
+  },
+  "stacks": [
+    "android"
+  ]
+}

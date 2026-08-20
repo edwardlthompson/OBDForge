@@ -6,9 +6,8 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-if command -v python3 >/dev/null 2>&1; then PY=python3
-elif command -v python >/dev/null 2>&1; then PY=python
-else PY=python3; fi
+# shellcheck source=lib/resolve-python.sh
+. "$(cd "$(dirname "$0")" && pwd)/lib/resolve-python.sh"
 
 ONCE=false
 AUTOFIX=true
@@ -64,8 +63,8 @@ if stack in ("python", "multi"):
     paths += [f"examples/python/src/{feature}"]
 if stack in ("android", "multi"):
     paths += [
-        f"examples/android/app/src/main/java/dev/foss/obdforge/{feature}",
-        f"examples/android/app/src/main/java/dev/foss/obdforge/ui/{feature}",
+        f"examples/android/app/src/main/java/dev/foss/goldenpath/{feature}",
+        f"examples/android/app/src/main/java/dev/foss/goldenpath/ui/{feature}",
     ]
 if stack in ("node", "multi"):
     paths += [f"examples/node/src/{feature}"]
@@ -115,6 +114,10 @@ while [ "$attempt" -lt "$MAX_ATTEMPTS" ]; do
   fi
 
   if [ "$AUTOFIX" = true ]; then
+    # Allowlisted stage → mechanical command (never free-text suggested_fixes)
+    echo "$GATE_JSON" >.cursor/last-feature-gate.json 2>/dev/null || true
+    bash scripts/apply-suggested-gate-fixes.sh --json .cursor/last-feature-gate.json || true
+
     PATHS="$(feature_autofix_paths)"
     if [ -n "$PATHS" ]; then
       bash scripts/feature-autofix.sh --paths "$PATHS" || true

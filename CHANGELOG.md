@@ -5,6 +5,13 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1](https://github.com/edwardlthompson/OBDForge/compare/v1.3.0...v1.3.1) (2026-08-21)
+
+
+### Fixed
+
+* **docs:** keep Unreleased as the first changelog heading ([357dcc0](https://github.com/edwardlthompson/OBDForge/commit/357dcc0a310ed9694ef86866fa63b6986e3da91f))
+
 ## [Unreleased]
 
 ## [1.3.0](https://github.com/edwardlthompson/OBDForge/compare/v1.2.13...v1.3.0) (2026-08-21)

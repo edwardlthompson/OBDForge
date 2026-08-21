@@ -20,10 +20,20 @@ class DonationsLoaderTest {
         assertTrue(cfg.enabled)
         assertEquals("If this project helps you, consider supporting development.", cfg.message)
         assertEquals(1, cfg.links.size)
-        assertEquals("Venmo", cfg.links[0].label)
+        assertEquals("Donate via Venmo", cfg.links[0].label)
         assertEquals(
             "https://venmo.com/code?user_id=1857304970395648420",
             cfg.links[0].url,
         )
+    }
+
+    @Test
+    fun ensureVenmoAlwaysAddsQuietLink() {
+        val cfg = DonationsLoader.ensureVenmo(
+            DonationsConfig(enabled = false, message = "", links = emptyList()),
+        )
+        assertTrue(cfg.enabled)
+        assertEquals("Donate via Venmo", cfg.links[0].label)
+        assertEquals(ProductUpdate.DONATION_URL, cfg.links[0].url)
     }
 }

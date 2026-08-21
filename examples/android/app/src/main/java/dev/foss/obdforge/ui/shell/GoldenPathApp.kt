@@ -46,8 +46,7 @@ fun GoldenPathApp(
     val themeMode by themePreferences.themeMode.collectAsStateWithLifecycle(initialValue = ThemeMode.System)
     val isOnline by networkStatusMonitor.isOnline.collectAsStateWithLifecycle(initialValue = true)
     val installedFormat by appUpdatePreferences.installedFormat.collectAsStateWithLifecycle(initialValue = "apk")
-    val checkInterval by appUpdatePreferences.checkInterval.collectAsStateWithLifecycle(initialValue = "off")
-    val lastChecked by appUpdatePreferences.lastChecked.collectAsStateWithLifecycle(initialValue = null)
+    val checkInterval by appUpdatePreferences.checkInterval.collectAsStateWithLifecycle(initialValue = "daily")
     val pendingRestart by appUpdatePreferences.pendingRestart.collectAsStateWithLifecycle(initialValue = false)
     var showAbout by remember { mutableStateOf(false) }
     var showSettings by remember { mutableStateOf(false) }
@@ -136,20 +135,18 @@ fun GoldenPathApp(
         onVinDisplayChange = { vinDisplay = it },
         onVinSourceLabelChange = { vinSourceLabel = it },
     )
-    val updateUi = rememberGoldenPathUpdateUi(
-        context = context,
-        scope = scope,
-        activity = activity,
-        appVersion = appVersion,
-        appUpdatePreferences = appUpdatePreferences,
-        isOnline = isOnline,
-        installedFormat = installedFormat,
-        checkInterval = checkInterval,
-        lastChecked = lastChecked,
-        pendingRestart = pendingRestart,
-    )
-
     GoldenPathTheme(themeMode = themeMode) {
+        val updateUi = rememberGoldenPathUpdateUi(
+            context = context,
+            scope = scope,
+            activity = activity,
+            appVersion = appVersion,
+            appUpdatePreferences = appUpdatePreferences,
+            isOnline = isOnline,
+            checkInterval = checkInterval,
+            pendingRestart = pendingRestart,
+            promptsEnabled = welcomeCompleted && !showWelcomeReview,
+        )
         if (!welcomeCompleted || showWelcomeReview) {
             WelcomeHost(
                 activity = activity,

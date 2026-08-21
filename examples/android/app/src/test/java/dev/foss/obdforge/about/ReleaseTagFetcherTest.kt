@@ -35,6 +35,26 @@ class ReleaseTagFetcherTest {
     }
 
     @Test
+    fun parseLatestReleaseReadsAssetFilenames() {
+        val parsed = ReleaseTagFetcher.parseLatestRelease(
+            """
+            {
+              "tag_name": "v0.21.0",
+              "html_url": "https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.14",
+              "assets": [
+                {"name": "sbom.cyclonedx.json", "browser_download_url": "https://example.com/sbom"},
+                {"name": "OBDForge-1.2.14.apk", "browser_download_url": "https://example.com/a.apk"}
+              ]
+            }
+            """.trimIndent(),
+        )
+        val asset = requireNotNull(parsed).assets.single { it.name.endsWith(".apk") }
+        assertEquals("OBDForge-1.2.14.apk", asset.name)
+        assertEquals("https://example.com/a.apk", asset.url)
+        assertEquals("1.2.14", ProductUpdate.parseApkVersion(asset.name))
+    }
+
+    @Test
     fun fetchLatestReleaseReturnsNullForInvalidRepo() {
         val result = kotlinx.coroutines.runBlocking {
             ReleaseTagFetcher.fetchLatestRelease("invalid/empty-repo-404")

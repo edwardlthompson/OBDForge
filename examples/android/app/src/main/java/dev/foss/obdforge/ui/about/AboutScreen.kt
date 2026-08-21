@@ -45,15 +45,12 @@ fun AboutScreen(
                 Text(stringResource(R.string.about_update_apply))
             }
         }
-        if (donations.enabled && donations.links.isNotEmpty()) {
-            Text(text = donations.message)
-            donations.links.forEach { link ->
-                Text(
-                    text = link.label,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.clickable { uriHandler.openUri(link.url) },
-                )
-            }
+        donations.links.forEach { link ->
+            Text(
+                text = link.label,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable { uriHandler.openUri(link.url) },
+            )
         }
         Button(onClick = onBack) {
             Text(stringResource(R.string.about_close))

@@ -90,6 +90,14 @@
     <string name="about_format">Installed format: %1$s</string>
     <string name="about_license">Licensed under GPL-3.0-or-later</string>
     <string name="about_donations_message">If this project helps you, consider supporting development.</string>
+    <string name="about_donate">Donate via Venmo</string>
+    <string name="about_not_now">Not now</string>
+    <string name="about_later">Later</string>
+    <string name="about_install">Install</string>
+    <string name="about_donate_nudge_title">Development is still going</string>
+    <string name="about_donate_nudge_body">You just got a new build. If this app helps you, you can support ongoing work on Venmo. This is optional and will not appear again until the next update.</string>
+    <string name="about_update_prompt_title">Update available</string>
+    <string name="about_update_prompt_body">OBDForge %1$s is on GitHub. Install it when you are ready.</string>
     <string name="about_update_current">You are on the latest version.</string>
     <string name="about_update_available">Update available: %1$s</string>
     <string name="about_update_no_compatible">No compatible update for your install format.</string>

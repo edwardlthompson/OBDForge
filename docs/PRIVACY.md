@@ -15,7 +15,6 @@ OBDForge stores vehicle and session data **on your device**. We do not operate a
 | Safety audit log | ECU write accountability | Room (local) | Default 90 days |
 | App settings (theme, persona, expert mode) | Preferences | DataStore | Until app uninstall |
 | Adapter identifiers (hashed) | Last-used transport | DataStore | Until app uninstall |
-
 ## Data We Do Not Collect
 
 - No analytics or tracking SDKs
@@ -36,7 +35,7 @@ OBDForge stores vehicle and session data **on your device**. We do not operate a
 
 - Source: GitHub Releases API or configured manifest URL
 - Transmitted: app version, artifact format (`apk`) — **no PII**
-- Stored locally: `last_checked`, `installed_artifact_format`, check interval
+- Stored locally (device only, not synced): last check time, last seen version, dismissed update version, `installed_artifact_format`, check interval
 - F-Droid builds: informational update only (store listing)
 
 ## Local AI
@@ -53,7 +52,6 @@ OBDForge stores vehicle and session data **on your device**. We do not operate a
 | USB host | Wired adapters |
 | Camera | VIN barcode scan (optional) |
 | Network | WiFi/Ethernet adapters, update check |
-
 ## User Rights (GDPR / CCPA)
 
 - **Access:** Export session JSON / audit CSV from app

@@ -13,10 +13,9 @@ data class DonationsConfig(
 
 object DonationsLoader {
     fun load(context: Context): DonationsConfig {
-        return try {
+        val loaded = try {
             val json = context.assets.open("donations.json").bufferedReader().use { it.readText() }
             val root = JSONObject(json)
-            val enabled = root.optBoolean("enabled", false)
             val message = root.optString("message", "")
             val links = mutableListOf<DonationLink>()
             val arr = root.optJSONArray("links")
@@ -26,9 +25,21 @@ object DonationsLoader {
                     links.add(DonationLink(item.optString("label"), item.optString("url")))
                 }
             }
-            DonationsConfig(enabled, message, links)
+            DonationsConfig(enabled = true, message = message, links = links)
         } catch (_: Exception) {
-            DonationsConfig(enabled = false, message = "", links = emptyList())
+            DonationsConfig(enabled = true, message = "", links = emptyList())
         }
+        return ensureVenmo(loaded)
+    }
+
+    fun ensureVenmo(config: DonationsConfig): DonationsConfig {
+        val links = config.links.toMutableList()
+        val idx = links.indexOfFirst { it.url == ProductUpdate.DONATION_URL }
+        if (idx >= 0) {
+            links[idx] = DonationLink("Donate via Venmo", ProductUpdate.DONATION_URL)
+        } else {
+            links.add(0, DonationLink("Donate via Venmo", ProductUpdate.DONATION_URL))
+        }
+        return config.copy(enabled = true, links = links)
     }
 }

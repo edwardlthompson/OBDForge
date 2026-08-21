@@ -5,6 +5,13 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0](https://github.com/edwardlthompson/OBDForge/compare/v1.2.13...v1.3.0) (2026-08-21)
+
+
+### Added
+
+* **about:** quiet Venmo donate and daily GitHub update check ([ef386ac](https://github.com/edwardlthompson/OBDForge/commit/ef386ace10c8aba96ea0afbcb4e98dfe23a2dd36))
+
 ## [Unreleased]
 
 ### Added

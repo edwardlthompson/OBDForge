@@ -175,6 +175,15 @@
 | **Fix** | Keep Kotlin plugins/`kotlin-test` at **2.4.0**; still take AGP / library bumps (e.g. AGP 9.3.0, usb-serial 3.11.0) |
 | **Prevention** | `.github/dependabot.yml` ignores Kotlin `>=2.4.10` until CodeQL supports them; re-check on CodeQL release notes |
 
+### KB-021 — Release Please puts `[1.x]` above `[Unreleased]`
+
+| Field | Detail |
+|-------|--------|
+| **Symptom** | After a Release Please merge, `check-changelog-unreleased.sh` fails: `## [Unreleased] must be the first version heading` |
+| **Cause** | Release Please prepends the new version section and leaves the old Unreleased block below it |
+| **Fix** | Move empty `## [Unreleased]` back to the top; drop duplicate bullets already recorded under the new version |
+| **Prevention** | Do not use `fix(docs):` for that hygiene — it opens a docs-only product patch (closed [#29](https://github.com/edwardlthompson/OBDForge/pull/29)). Use `docs:` / `chore:` (hidden in `release-please-config.json`) |
+
 ### KB-020 — `weekly-health-check.yml` fails with zero jobs on release push
 
 | Field | Detail |

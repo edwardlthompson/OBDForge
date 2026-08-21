@@ -4,6 +4,7 @@
 
 | Deferred | Sprint | Owner | Task | Reason |
 |----------|--------|-------|------|--------|
+| 2026-08-21 | post-v1.3.0 | ADB | Bump `versionCode` above 25 | v1.3.0 APK still uses code 25 (same as 1.2.13) |
 | 2026-07-21 | post-v1.2.8 | HUMAN | Fill `app-update.json` release-check URL | Product URL decision |
 | 2026-07-21 | post-v1.2.8 | HUMAN | Shop operator review (optional) | Needs human shop workflow |
 | 2026-07-21 | post-v1.2.8 | HUMAN | Post-release monitoring | Ongoing human triage |

@@ -2,6 +2,16 @@
 
 > Archive of finished BUILD_PLAN items.
 
+## OBDForge v1.3.0 release (2026-08-21)
+
+- ✅ [AGENT] Quiet Venmo donate in About + once-per-version optional note
+- ✅ [AGENT] Daily GitHub check of `OBDForge-X.Y.Z.apk` filenames (Install / Later)
+- ✅ [AGENT] `/ship` — pre-release gate, `feat(about)` + changelog heading fix, Release Please [#28](https://github.com/edwardlthompson/OBDForge/pull/28) merged
+- ✅ [AUTO] GitHub Release v1.3.0 + `OBDForge-1.3.0.apk` uploaded (APK-only; no SBOM assets — policy)
+- ✅ [AUTO] Closed docs-only Release Please [#29](https://github.com/edwardlthompson/OBDForge/pull/29) (Unreleased heading hygiene)
+- 🔲 [ADB] F-Droid MR + `versionCode` bump (still 25, same as 1.2.13)
+- 🔲 [HUMAN] Fill `app-update.json` remains optional — fetcher hardcodes `edwardlthompson/OBDForge`
+
 ## OBDForge v1.2.13 release (2026-08-10)
 
 - ✅ [AGENT] `/ship` — pre-release gate, push Sprint 23, CI green, Release Please [#25](https://github.com/edwardlthompson/OBDForge/pull/25) auto-merged

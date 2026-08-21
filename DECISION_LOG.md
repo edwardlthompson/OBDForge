@@ -19,6 +19,13 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-08-21 — /ship v1.3.0 donate + daily updates
+- **Status:** Accepted
+- **Context:** Continuum Calendar donate/update method ported to OBDForge; `/ship` after `feat(about)`
+- **Decision:** Cut **v1.3.0** via Release Please [#28](https://github.com/edwardlthompson/OBDForge/pull/28). Compare `OBDForge-X.Y.Z.apk` filenames, not git tags. Close docs-only [#29](https://github.com/edwardlthompson/OBDForge/pull/29) (changelog heading hygiene is not a product patch). Leave high-refresh display WIP uncommitted
+- **Alternatives considered:** Merge 1.3.1 for Unreleased heading (rejected — docs-only loop); include high-refresh in this ship (rejected — separate slice)
+- **Consequences:** GitHub Release has `OBDForge-1.3.0.apk`. `versionCode` remains **25** (same as 1.2.13) — F-Droid/Android store upgrades need a later versionCode bump `[HUMAN]`/`[ADB]`. Use `docs:`/`chore:` for hygiene so Release Please stays hidden
+
 ### 2026-08-20 — /ship process sync (no product bump)
 - **Status:** Accepted
 - **Context:** `/ship` after bootstrap v0.21.0 alignment; `chore`/`docs` are hidden in Release Please

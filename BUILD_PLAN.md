@@ -25,16 +25,15 @@
 
 ---
 
-## Active board — post v1.2.13
+## Active board — post v1.3.0
 
-> **v1.2.13** shipping 2026-08-10 ([release](https://github.com/edwardlthompson/OBDForge/releases/tag/v1.2.13) · `OBDForge-1.2.13.apk`). Sprint 23 + `/ship` complete. HUMAN/ADB backlog below.
+> **v1.3.0** shipping 2026-08-21 ([release](https://github.com/edwardlthompson/OBDForge/releases/tag/v1.3.0) · `OBDForge-1.3.0.apk`). Donate + daily update check. HUMAN/ADB backlog below.
 
 ### Sequential
 
 1. ❌ [AGENT] Live-data charting / time-series dashboard — blocked: hardware bench required
 2. 🔲 [AGENT] Dependabot bumps; continue OpenSSF Scorecard pin campaign (F-007) — weekly when alerts open
 3. 🔲 [AGENT] Adapter compatibility notes → `KNOWLEDGE_BASE.md` — monthly cadence
-4. ✅ [AUTO] Release Please + Dependabot auto-merge (F-010) — proven through **v1.2.13**; PRs [#24](https://github.com/edwardlthompson/OBDForge/pull/24) + [#25](https://github.com/edwardlthompson/OBDForge/pull/25) merged 2026-08-10
 
 ### Parallel (safe after Sequential schema lock)
 
@@ -48,12 +47,13 @@
 
 > Address after `/build` completes AGENT/AUTO and Parallel work above. Automation failures → [`HUMAN_BACKLOG.md`](HUMAN_BACKLOG.md).
 
-1. 🔲 [HUMAN] Fill `app-update.json` release-check URL (donations done — Venmo)
-2. 🔲 [HUMAN] Shop operator review (optional)
-3. 🔲 [HUMAN] Post-release monitoring — Issues → `KNOWLEDGE_BASE.md`
-4. 🔲 [HUMAN] F-008 — Decide backup/export redaction policy for VIN/shop PII
-5. 🔲 [ADB] F-Droid fdroiddata MR — refresh after Sprint 23 FOSS/version fixes · GitLab submit pending
-6. 🔲 [ADB] Bench connect / flash USB-C on device — F-009/F-010 · `docs/FLASH_HARDWARE.md`
+1. 🔲 [HUMAN] Optional: live `app-update.json` (fetcher already hardcodes `edwardlthompson/OBDForge`)
+2. 🔲 [ADB] Bump `versionCode` above 25 before next F-Droid/store upload (v1.3.0 APK still code 25)
+3. 🔲 [HUMAN] Shop operator review (optional)
+4. 🔲 [HUMAN] Post-release monitoring — Issues → `KNOWLEDGE_BASE.md`
+5. 🔲 [HUMAN] F-008 — Decide backup/export redaction policy for VIN/shop PII
+6. 🔲 [ADB] F-Droid fdroiddata MR — refresh after Sprint 23 FOSS/version fixes · GitLab submit pending
+7. 🔲 [ADB] Bench connect / flash USB-C on device — F-009/F-010 · `docs/FLASH_HARDWARE.md`
 
 ### Blocked — hardware bench (`[ADB]` / `[HUMAN]`)
 

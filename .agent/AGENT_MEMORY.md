@@ -1,0 +1,104 @@
+# Agent Memory
+
+> Centralized index of tech stack, threat models, persistent context, and retrospectives.
+> Update only at session startups, milestone boundaries, or major architectural pivots.
+
+## Tech Stack
+
+| Layer | Technology | Version | Notes |
+|-------|-----------|---------|-------|
+| Platform | Android (API 26+) | — | Android-only; pruned multi-stack template |
+| Language | Kotlin | 2.x | Strict nullability; coroutines + Flow |
+| UI | Jetpack Compose + Material 3 | — | Material You dynamic color; Garage themes |
+| Architecture | Clean Architecture | — | ADR-0001; domain/use-case/data/ui layers |
+| Persistence | Room + DataStore | — | Sessions, DTCs, audit log, preferences |
+| Local AI | MediaPipe LLM + TFLite | — | On-device diagnostics assistant; no cloud inference |
+| Transports | BT SPP, USB serial, WiFi TCP, Ethernet | — | `TransportRegistry` selects adapter |
+| Protocols | ELM327, OBDLink STN/STPX, UDS, KWP, J1939 | — | `ProtocolRegistry` + DiagnosticProtocol SPI |
+| License | GPL-3.0-or-later | — | F-Droid compatible |
+| Distribution | F-Droid + GitHub Releases | — | Reproducible APK builds; no Play Services |
+
+## Active Modules
+
+- ✅ Android / F-Droid (`modules/android/MODULE.md`) — **only active module**
+- ⬜ Web, Python, Node, Lightroom, Rust, Go — pruned at Sprint 0
+
+## OBDLink / STPX Notes
+
+- **OBDLink adapters** expose STN11xx/STN22xx/STPX command sets beyond generic ELM327.
+- Prefer STN/STPX native commands for faster PID streaming, header control, and manufacturer-specific modes.
+- Generic ELM327 clones remain supported via fallback protocol plugin; detect adapter family at connect time.
+- Never assume AT command compatibility across clone firmware — probe and degrade gracefully.
+- USB serial: enumerate via Android USB host API; request permission per device VID/PID allowlist.
+- WiFi/Ethernet: TCP socket to adapter AP or vehicle gateway; timeout and reconnect policy required.
+
+## F-Droid Constraints
+
+- **No proprietary SDKs:** no Google Play Services, Firebase, Crashlytics, or closed telemetry.
+- **Reproducible builds:** `SOURCE_DATE_EPOCH`, pinned Gradle wrapper/deps, CI `verify-reproducible-apk.sh`.
+- **Anti-features:** document network use (adapter WiFi only), no ads, no tracking.
+- **Metadata:** `examples/android/metadata/` + Fastlane stubs; validate with `verify-fdroid-metadata.sh`.
+- **Updates:** F-Droid builds show informational update only; sideload APK path uses GitHub Releases matcher.
+
+## Threat Model Checklist
+
+- ✅ `docs/THREAT_MODEL.md` drafted (STRIDE, MASVS, OBD adapter trust boundary)
+- ✅ No proprietary closed-source SDKs in production path
+- ✅ Opt-in only telemetry (GDPR/CCPA compliant); see `docs/PRIVACY.md`
+- ✅ Secrets excluded from VCS (Gitleaks pre-commit)
+- ✅ Dependency vulnerability scanning enabled (CodeQL + Trivy + Dependabot)
+- ✅ Input validation at all data boundaries (adapter I/O, VIN, barcode, AI prompts)
+- ✅ Bidirectional control interlocks documented (ADR-0003); expert mode gated
+- ✅ Audit log for safety-sensitive ECU writes (Room, local-only)
+- ✅ VIN treated as PII — local storage, no cloud upload by default
+- ✅ `SECURITY.md` and private vulnerability reporting enabled
+- 🔲 `[ADB]` Physical adapter fuzzing on real vehicle bench (post-M8)
+- ✅ `[ADB]` Release v1.0.0 device smoke on CPH2583 — see `docs/ADB_BENCH_RESULTS.md`
+
+## Persistent Context
+
+### Project Purpose
+
+OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter support, live data, DTC read/clear, bidirectional controls with safety interlocks, ECU-first VIN resolution, persona modes (Shop/DIY/Semi-pro/Racing), and on-device AI assistance — distributed via F-Droid under GPL-3.0-or-later.
+
+### Key Constraints
+
+- Max 300 lines per static data file (UI + i18n), 150 lines per pure logic file (`docs/FILE_SIZE_GUIDE.md`)
+- Trunk-based development with Conventional Commits
+- Android-only Golden Path in `examples/android/`
+- Demo mode must run without hardware (deterministic mock transport)
+- Expert/bidirectional features require explicit unlock + audit trail
+- Local-first: no mandatory cloud; AI inference on-device only
+
+## Session Retrospectives
+
+| Date | Milestone | What worked | What to improve |
+|------|-----------|-------------|-----------------|
+| 2026-08-20 | /ship process sync | Rebase onto #26; CI/Security/CodeQL green; no false 1.2.14 | weekly-health (KB-020); v1.2.13 release still APK-only (no SBOM); HUMAN/ADB backlog |
+| 2026-08-20 | Bootstrap align v0.21.0 | Coach/tour/ideas, adapters, verify harness; GPL + child semver split kept | Live bootstrap.config.json (MIT/Apache allowlist); commercial Cursor files |
+| 2026-08-10 | v1.2.13 /ship | RP #25 auto-merged; APK uploaded; child pre-release gate; upgrade sim OK | HUMAN/ADB: F-Droid + PII + hardware; bump versionCode with next product release |
+| 2026-08-10 | Sprint 23 close | PR #24 auto-merged; Scorecard workflow SHA pins; audit fixes committed | HUMAN/ADB: F-Droid + PII policy + hardware; continue pin campaign |
+| 2026-08-09 | Sprint 23 audit | Version sync + RP markers; ZXing replaces ML Kit; flash null voltage default; gates green | Commit/push audit tree; PR #24 auto-merge wait; F-Droid MR; Scorecard pins |
+| 2026-07-22 | v1.2.12 | fix(ci) hide docs/chore in RP; closed docs-only #18; APK shipped | Prefer feat/fix for product bumps; docs hygiene no longer cuts releases |
+| 2026-07-22 | v1.2.11 + RP docs loop fix | Closed docs-only PR #18; hide docs/chore in release-please-config | Prefer feat/fix for product bumps; JAVA_HOME for local android gate |
+| 2026-07-22 | v1.2.10 + release automation | Branch protection job names; RP/Dependabot auto-merge; APK via product-version.sh | HUMAN: app-update URL; ADB: F-Droid + hardware bench |
+| 2026-07-22 | v1.2.9 | First RP PR after F-010 settings; signed APK upload | Tag-gate raced CI (wait lengthened) |
+| 2026-07-21 | Bootstrap align v0.15.1 | FOSS Cursor hooks/skills/agents; GPL wording; BUILD_PLAN reshape; HUMAN_BACKLOG | Prune inactive go/lightroom/rust modules (optional) |
+| 2026-07-12 | v1.2.8 release | Fuel loop (PID 0x03) open/closed status on live dashboard | Monitor-only; no O2 disable toggle |
+| 2026-07-10 | v1.2.7 release | Pairing, O2 PIDs, DID coding, Stage A flash scaffold; pre-release uses stack-selection | HUMAN: merge Dependabot #8/#9; USB flash bench |
+| 2026-07-10 | Sprint 22 audit | Fixed CRLF file-limits + GoldenPathApp line budget; flash voltage floor; Unreleased CHANGELOG | HUMAN merge PR #8 (branch protection); PR #9 CodeQL red; JAVA_HOME for watch-agent-gates Android stage |
+| 2026-06-25 | v1.2.6 release | Vector launcher icon + dark high-contrast background | — |
+| 2026-06-25 | v1.2.5 release | Debug package suffix + install-github-release script (KB-015) | — |
+| 2026-06-25 | v1.2.4 release | One-tap adapter connect UX + gate script fixes | Bench reconnect on OP13 when adapter available |
+| 2026-06-25 | Sprint 21 audit | Connect UX + gate fixes ready to commit; Dependabot PR retitled | Bench connect flow on OP13 when adapter available |
+| 2026-06-25 | Sprint 20 audit | v1.2.3 stable signing + APK-only releases; restored watch-agent-gates.sh | Release Please PR permission still [HUMAN] |
+| 2026-06-24 | v1.2.2 release | Signed sideload APK + ObdScaffold insets | Signing secrets now configured |
+| 2026-06-21 | v1.2.1 release | Icon + signing scripts shipped | Ephemeral CI keystore caused signature rotation (fixed v1.2.3) |
+
+## Template Provenance
+
+- **Source template:** `edwardlthompson/agent-project-bootstrap`
+- **Template version:** `0.21.0` (tracked in `.template-version`)
+- **Product version:** `1.3.0` (`.release-please-manifest.json` / CHANGELOG / `OBDForge-1.3.0.apk` — not `.template-version`)
+- **Aligned:** 2026-08-20 — see `docs/BOOTSTRAP_ALIGNMENT.md` section 11; release automation proven 2026-07-22
+- **Last update check:** See `.template-update.json`

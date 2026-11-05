@@ -134,3 +134,10 @@ Third-party notices: [`THIRD_PARTY_LICENSES.md`](THIRD_PARTY_LICENSES.md)
 See [`CONTRIBUTING.md`](CONTRIBUTING.md). Conventional Commits; trunk-based flow.
 
 GitHub About text: [`docs/GITHUB_ABOUT.md`](docs/GITHUB_ABOUT.md)
+
+## What this is not
+
+- A finished commercial product promise
+- A place for secrets or production credentials
+- An unbounded scope — see README goals above
+

@@ -10,11 +10,11 @@ abstract: >-
   FOSS Android OBD-II diagnostics app (GPL-3.0-or-later) with multi-transport
   adapters, on-device AI, and F-Droid / GitHub Releases.
 keywords:
-  - foss
   - android
   - obd-ii
-  - fdroid
-  - diagnostics
+  - kotlin
+  - jetpack-compose
+  - elm327
 license: GPL-3.0-or-later
 version: 1.2.13
 date-released: 2026-08-10

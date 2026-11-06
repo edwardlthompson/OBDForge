@@ -3,7 +3,6 @@ package dev.foss.obdforge.ui.shell
 import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,11 +22,7 @@ import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.demo.CannedSessions
 import dev.foss.obdforge.data.preferences.DebugPreferences
 import dev.foss.obdforge.data.preferences.DemoPreferences
-import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.data.preferences.WelcomePreferences
-import dev.foss.obdforge.domain.transport.BluetoothLinkKind
-import dev.foss.obdforge.domain.transport.TransportEndpoint
-import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.ui.demo.DemoModeShell
 import dev.foss.obdforge.ui.connect.ConnectDemoCoordinator
@@ -76,20 +71,9 @@ fun GoldenPathApp(
     val mockSessionId by root.debugPreferences.mockSessionId.collectAsStateWithLifecycle(
         initialValue = CannedSessions.DEFAULT_ID,
     )
-    LaunchedEffect(useMockTransport, mockSessionId, root) {
-        // Release builds keep the selector off even if DataStore was set while debugging.
-        root.simulatedTransportSelector.useMockTransport = BuildConfig.DEBUG && useMockTransport
-        root.simulatedTransportSelector.mockSessionId = mockSessionId
-    }
+    GoldenPathMockTransportEffect(root, useMockTransport, mockSessionId)
     val savedTransport by root.transportPreferences.selection.collectAsStateWithLifecycle(
-        initialValue = TransportSelection(
-            type = TransportType.Bluetooth,
-            endpoint = TransportEndpoint.Bluetooth(
-                deviceAddress = "",
-                displayName = null,
-                linkKind = BluetoothLinkKind.Auto,
-            ),
-        ),
+        initialValue = GoldenPathDefaults.bluetoothSelection,
     )
     val adapterConnectUi = rememberAdapterConnectUi(
         context = context,
@@ -111,9 +95,7 @@ fun GoldenPathApp(
         onConnectionStatusChange = { connectionStatus = it },
         onConnectAfterSave = adapterConnectUi.onConnect,
     )
-    val demoSelection = remember {
-        TransportSelection(TransportType.Simulated, TransportEndpoint.Simulated)
-    }
+    val demoSelection = GoldenPathDefaults.demoSelection
     val connectDemo = remember(root, demoModeEnabled, savedTransport) {
         ConnectDemoCoordinator(
             transportRegistry = root.transportRegistry,

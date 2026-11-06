@@ -6,11 +6,13 @@ import dev.foss.obdforge.data.bidirectional.GatedBidirectionalService
 import dev.foss.obdforge.data.bidirectional.ObdBidirectionalExecutor
 import dev.foss.obdforge.data.flash.GatedFlashService
 import dev.foss.obdforge.data.local.ObdForgeDatabase
+import dev.foss.obdforge.data.preferences.DebugPreferences
 import dev.foss.obdforge.data.preferences.DemoPreferences
 import dev.foss.obdforge.data.preferences.DiagnosticLogPreferences
 import dev.foss.obdforge.data.preferences.ExpertUnlockPreferences
 import dev.foss.obdforge.data.preferences.PersonaPreferences
 import dev.foss.obdforge.data.preferences.TransportPreferences
+import dev.foss.obdforge.data.transport.SimulatedTransportSelector
 import dev.foss.obdforge.data.diagnostics.CrashLogHandler
 import dev.foss.obdforge.data.diagnostics.DiagnosticEventRecorder
 import dev.foss.obdforge.data.persistence.AuditLogRepository
@@ -43,6 +45,8 @@ data class ObdForgeCompositionRoot(
     val transportDiscovery: TransportDiscovery,
     val personaPreferences: PersonaPreferences,
     val demoPreferences: DemoPreferences,
+    val debugPreferences: DebugPreferences,
+    val simulatedTransportSelector: SimulatedTransportSelector,
     val expertUnlockPreferences: ExpertUnlockPreferences,
     val sessionRepository: SessionRepository,
     val auditLogRepository: AuditLogRepository,
@@ -90,7 +94,13 @@ data class ObdForgeCompositionRoot(
             val resolveVinUseCase = ResolveVinUseCase(vinProfileRepository)
             val shopRepository = ShopRepository(database)
             val explainDtcUseCase = LocalAiEngineFactory.createExplainDtcUseCase(appContext)
-            val transportRegistry = TransportRegistry.default(appContext, diagnosticEventRecorder)
+            val simulatedTransportSelector = SimulatedTransportSelector()
+            val debugPreferences = DebugPreferences(appContext)
+            val transportRegistry = TransportRegistry.default(
+                appContext,
+                diagnosticEventRecorder,
+                simulatedTransportSelector,
+            )
             val protocolRegistry = ProtocolRegistry.default()
             val transportPreferences = TransportPreferences(appContext)
             val safetyGateUseCase = SafetyGateUseCase(auditLogRepository)
@@ -105,6 +115,8 @@ data class ObdForgeCompositionRoot(
                 transportDiscovery = TransportDiscovery(appContext),
                 personaPreferences = PersonaPreferences(appContext),
                 demoPreferences = DemoPreferences(appContext),
+                debugPreferences = debugPreferences,
+                simulatedTransportSelector = simulatedTransportSelector,
                 expertUnlockPreferences = ExpertUnlockPreferences(appContext),
                 sessionRepository = sessionRepository,
                 auditLogRepository = auditLogRepository,

@@ -3,6 +3,7 @@ package dev.foss.obdforge.ui.shell
 import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,6 +20,8 @@ import dev.foss.obdforge.ui.theme.ThemeMode
 import dev.foss.obdforge.ui.theme.ThemePreferences
 import dev.foss.obdforge.ui.theme.next
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
+import dev.foss.obdforge.data.demo.CannedSessions
+import dev.foss.obdforge.data.preferences.DebugPreferences
 import dev.foss.obdforge.data.preferences.DemoPreferences
 import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.data.preferences.WelcomePreferences
@@ -67,6 +70,17 @@ fun GoldenPathApp(
     val demoModeEnabled by root.demoPreferences.enabled.collectAsStateWithLifecycle(
         initialValue = DemoPreferences.DEFAULT_ENABLED,
     )
+    val useMockTransport by root.debugPreferences.useMockTransport.collectAsStateWithLifecycle(
+        initialValue = DebugPreferences.DEFAULT_USE_MOCK,
+    )
+    val mockSessionId by root.debugPreferences.mockSessionId.collectAsStateWithLifecycle(
+        initialValue = CannedSessions.DEFAULT_ID,
+    )
+    LaunchedEffect(useMockTransport, mockSessionId, root) {
+        // Release builds keep the selector off even if DataStore was set while debugging.
+        root.simulatedTransportSelector.useMockTransport = BuildConfig.DEBUG && useMockTransport
+        root.simulatedTransportSelector.mockSessionId = mockSessionId
+    }
     val savedTransport by root.transportPreferences.selection.collectAsStateWithLifecycle(
         initialValue = TransportSelection(
             type = TransportType.Bluetooth,

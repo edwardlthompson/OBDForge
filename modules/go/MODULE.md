@@ -13,7 +13,7 @@
 - 🔲 Copy or keep `examples/go/` Golden Path stub
 - 🔲 Set Go version in `go.mod` and CI
 - 🔲 Enable vet/fmt/test in CI
-- 🔲 Document Go version in `AGENT_MEMORY.md`
+- 🔲 Document Go version in `.agent/AGENT_MEMORY.md`
 
 ## Golden Path Reference
 

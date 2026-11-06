@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Bring weekly-health-check workflow in line with parent bootstrap v1.12.0 (stack-aware health jobs)
+
 ### Changed
 
 - Align child repo with parent agent-project-bootstrap **v1.12.0** agent surfaces (batch commands, skills, rules, docs, gate scripts)

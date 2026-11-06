@@ -7,8 +7,8 @@
   ],
   "parallel_scope_note": "Android FOSS scope only (`examples/android/**`)",
   "selected_at": "2026-06-21T22:33:30+00:00",
-  "aligned_template_version": "0.21.0",
-  "aligned_at": "2026-08-20T00:00:00+00:00",
+  "aligned_template_version": "1.12.0",
+  "aligned_at": "2026-11-05T00:00:00+00:00",
   "cursor_features_enabled": [
     "rules",
     "commands",
@@ -34,5 +34,5 @@
     "mcp_commercial_example",
     "android_commercial_patterns"
   ],
-  "cursor_features_synced_at": "2026-08-20T21:31:52+00:00"
+  "cursor_features_synced_at": "2026-11-06T02:32:23+00:00"
 }

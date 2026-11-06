@@ -5,6 +5,14 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1](https://github.com/edwardlthompson/OBDForge/compare/v1.4.0...v1.4.1) (2026-11-06)
+
+
+### Fixed
+
+* **ci:** sync weekly-health-check with parent v1.12.0 ([b191c09](https://github.com/edwardlthompson/OBDForge/commit/b191c090c5827e6aa49bb21c02d10898675f51c7))
+* **ci:** sync weekly-health-check with parent v1.12.0 ([ec9318c](https://github.com/edwardlthompson/OBDForge/commit/ec9318c5dfc9ed72c56da56852dc104fe9bbbc8e))
+
 ## [Unreleased]
 
 ### Fixed

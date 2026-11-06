@@ -86,8 +86,11 @@ REQUIRED=(
 
 BATCH_COMMANDS=(
   audit cleanup debug gates triage dependabot push prerelease regress
-  feature fix init prune ci docs upgrade setup plan restore compact scope
-  bootstrap verify build ship maintain coach tour ideas
+  feature fix init prune ci docs upgrade setup plan restore compact resume scope
+  bootstrap verify build ship maintain coach tour ideas allideas
+  codex-review update-deps best-of-n emulator adr shape
+  ux-review ux-apply ui-review ux-audit ui-audit a11y-check redesign compare-ui
+  update-guidelines brand lean balanced speed mode status
 )
 
 for cmd in "${BATCH_COMMANDS[@]}"; do

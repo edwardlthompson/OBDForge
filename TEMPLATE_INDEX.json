@@ -15,6 +15,20 @@
   },
   "files": [
     {
+      "path": ".agent/AGENT_MEMORY.md",
+      "purpose": "Tech stack, threat model, retrospectives index",
+      "read_when": "session_start",
+      "update_when": "milestone_boundary",
+      "owner": "agent+human"
+    },
+    {
+      "path": ".agent/DECISION_LOG.md",
+      "purpose": "Append-only decision register",
+      "read_when": "architectural_decision",
+      "update_when": "architectural_decision",
+      "owner": "agent+human"
+    },
+    {
       "path": ".agent/memory/decisions.md",
       "purpose": "Index to .agent/DECISION_LOG.md (not a second log)",
       "read_when": "session_start",
@@ -302,6 +316,20 @@
       "owner": "maintainer"
     },
     {
+      "path": ".github/workflows/feedback-notify.yml",
+      "purpose": "Synced from parent template (.github/workflows/feedback-notify.yml)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": ".github/workflows/issue-pii-nudge.yml",
+      "purpose": "Synced from parent template (.github/workflows/issue-pii-nudge.yml)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
       "path": ".github/workflows/pages.yml",
       "purpose": "Deploy examples/web to GitHub Pages (no tracking)",
       "read_when": "milestone_boundary",
@@ -330,6 +358,13 @@
       "owner": "maintainer"
     },
     {
+      "path": ".github/workflows/sbom-diff-dependabot.yml",
+      "purpose": "Synced from parent template (.github/workflows/sbom-diff-dependabot.yml)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
       "path": ".github/workflows/scorecard.yml",
       "purpose": "Weekly OpenSSF Scorecard analysis",
       "read_when": "security_triage",
@@ -348,6 +383,13 @@
       "purpose": "Mark stale issues/PRs; exempt template-improvement",
       "read_when": "milestone_boundary",
       "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": ".github/workflows/sync-open-prs-build-plan.yml",
+      "purpose": "Synced from parent template (.github/workflows/sync-open-prs-build-plan.yml)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
       "owner": "maintainer"
     },
     {
@@ -400,13 +442,6 @@
       "owner": "agent+human"
     },
     {
-      "path": ".agent/AGENT_MEMORY.md",
-      "purpose": "Tech stack, threat model, retrospectives index",
-      "read_when": "session_start",
-      "update_when": "milestone_boundary",
-      "owner": "agent+human"
-    },
-    {
       "path": "BUILD_PLAN.md",
       "purpose": "Sprint task board with AGENT/HUMAN/ADB/AUTO labels",
       "read_when": "session_start",
@@ -453,13 +488,6 @@
       "purpose": "Contribution guidelines and PR expectations",
       "read_when": "contributing",
       "update_when": "milestone_boundary",
-      "owner": "agent+human"
-    },
-    {
-      "path": ".agent/DECISION_LOG.md",
-      "purpose": "Append-only decision register",
-      "read_when": "architectural_decision",
-      "update_when": "architectural_decision",
       "owner": "agent+human"
     },
     {
@@ -953,6 +981,13 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/apply-depsonar-gradle.sh",
+      "purpose": "Synced from parent template (scripts/apply-depsonar-gradle.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/apply-suggested-gate-fixes.sh",
       "purpose": "Allowlisted feature-gate failed_stage mechanical fixers",
       "read_when": "milestone_boundary",
@@ -1002,10 +1037,73 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/check-action-workflows.sh",
+      "purpose": "Synced from parent template (scripts/check-action-workflows.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-adr-architecture.sh",
+      "purpose": "Synced from parent template (scripts/check-adr-architecture.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-adr-command.sh",
+      "purpose": "Synced from parent template (scripts/check-adr-command.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/check-agent-adapters.sh",
       "purpose": "Fail if generated adapters drifted from templates",
       "read_when": "milestone_boundary",
       "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-agent-brief.sh",
+      "purpose": "Synced from parent template (scripts/check-agent-brief.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-agent-venue.sh",
+      "purpose": "Synced from parent template (scripts/check-agent-venue.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-android-cmdline-tools.sh",
+      "purpose": "Synced from parent template (scripts/check-android-cmdline-tools.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-android-sdk-licenses.sh",
+      "purpose": "Synced from parent template (scripts/check-android-sdk-licenses.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-android-signing-runbook.sh",
+      "purpose": "Synced from parent template (scripts/check-android-signing-runbook.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-auto-review.sh",
+      "purpose": "Synced from parent template (scripts/check-auto-review.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
       "owner": "maintainer"
     },
     {
@@ -1030,6 +1128,13 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/check-build-plan-tally.sh",
+      "purpose": "Synced from parent template (scripts/check-build-plan-tally.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/check-bundle-size.sh",
       "purpose": "Vite dist JS gzip bundle budget gate",
       "read_when": "release",
@@ -1044,10 +1149,73 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/check-ci-gaps.sh",
+      "purpose": "Synced from parent template (scripts/check-ci-gaps.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-ci-refs.sh",
+      "purpose": "Synced from parent template (scripts/check-ci-refs.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-compose-a11y-lint.sh",
+      "purpose": "Synced from parent template (scripts/check-compose-a11y-lint.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-contributing-agent.sh",
+      "purpose": "Synced from parent template (scripts/check-contributing-agent.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/check-conventional-commit.sh",
       "purpose": "Conventional Commits commit-msg check",
       "read_when": "milestone_boundary",
       "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-crash-inbox.sh",
+      "purpose": "Synced from parent template (scripts/check-crash-inbox.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-crash-payload-allowlist.sh",
+      "purpose": "Synced from parent template (scripts/check-crash-payload-allowlist.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-cursor-automations.sh",
+      "purpose": "Synced from parent template (scripts/check-cursor-automations.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-cursor-canvas.sh",
+      "purpose": "Synced from parent template (scripts/check-cursor-canvas.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-cursor-cli.sh",
+      "purpose": "Synced from parent template (scripts/check-cursor-cli.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
       "owner": "maintainer"
     },
     {
@@ -1062,6 +1230,13 @@
       "purpose": "Validate skills, subagents, hooks, tier compliance",
       "read_when": "validation",
       "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-cursor-marketplace.sh",
+      "purpose": "Synced from parent template (scripts/check-cursor-marketplace.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
       "owner": "maintainer"
     },
     {
@@ -1093,6 +1268,34 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/check-espresso-android16.sh",
+      "purpose": "Synced from parent template (scripts/check-espresso-android16.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-fdroid-metadata-links.sh",
+      "purpose": "Synced from parent template (scripts/check-fdroid-metadata-links.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-fdroid-screenshots.sh",
+      "purpose": "Synced from parent template (scripts/check-fdroid-screenshots.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-feature-specs.sh",
+      "purpose": "Synced from parent template (scripts/check-feature-specs.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/check-file-encoding.py",
       "purpose": "Cross-platform UTF-8/UTF-16 BOM validation",
       "read_when": "bootstrap_session_start",
@@ -1114,6 +1317,13 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/check-first-30-days.sh",
+      "purpose": "Synced from parent template (scripts/check-first-30-days.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/check-github-ci.ps1",
       "purpose": "Windows wrapper to poll GitHub Actions workflow status",
       "read_when": "release",
@@ -1125,6 +1335,34 @@
       "purpose": "Poll GitHub Actions CI/Security/CodeQL status for a commit",
       "read_when": "release",
       "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-github-settings-yml.sh",
+      "purpose": "Synced from parent template (scripts/check-github-settings-yml.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-gitleaks-baseline.sh",
+      "purpose": "Synced from parent template (scripts/check-gitleaks-baseline.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-glossary-links.sh",
+      "purpose": "Synced from parent template (scripts/check-glossary-links.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/check-ideas-discussion.sh",
+      "purpose": "Synced from parent template (scripts/check-ideas-discussion.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
       "owner": "maintainer"
     },
     {
@@ -1692,6 +1930,13 @@
       "purpose": "Simulate child-repo upgrade; assert bootstrap validation",
       "read_when": "milestone_boundary",
       "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
+      "path": "scripts/smoke-sprint.sh",
+      "purpose": "Synced from parent template (scripts/smoke-sprint.sh)",
+      "read_when": "as_needed",
+      "update_when": "template_upgrade",
       "owner": "maintainer"
     },
     {

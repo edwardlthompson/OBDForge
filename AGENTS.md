@@ -1,13 +1,13 @@
 # Agent Router
 
-1. **First read:** `docs/START_HERE.md`
-2. **Cursor modes:** `docs/CURSOR_MODES.md` (Ask / Plan / Agent / Debug routing)
-3. **Why / coach:** `docs/BEST_PRACTICES.md` · 30-day playbook `docs/FIRST_30_DAYS.md` · `/coach` · backlog `/ideas` (`docs/help/IDEAS.md`) · first-run `/tour` (`docs/help/TOUR.md` in other IDEs) · portability `docs/AGENT_PORTABILITY.md`
+1. **First read:** `docs/START_HERE.md` (full tour on first day via `/tour`)
+2. **Cursor modes:** Ask / Plan / Agent / Debug (`docs/CURSOR_MODES.md` when unsure)
+3. **Why / coach:** `/coach` · `/tour` · `/ideas` · `/shape` · `/allideas` · `docs/BEST_PRACTICES.md` · `docs/FIRST_30_DAYS.md`
 4. **Bootstrap mode:** `docs/INITIALIZATION_PROMPT.md` (historical; this repo is already initialized)
-5. **Reference mode:** `docs/FOR_AGENTS.md` + `TEMPLATE_INDEX.json`
+5. **Reference mode:** `docs/FOR_AGENTS.md` + `TEMPLATE_INDEX.json` (do not load whole index unless `/upgrade`)
 6. **Task board:** `BUILD_PLAN.md` (Sequential before Parallel) — status: 🔲 open · ✅ done · ❌ blocked
-7. **Parallel dispatch:** parallel-first BUILD_PLAN; `/build` automates HUMAN/ADB first, backlogs failures to `HUMAN_BACKLOG.md`, never halts on human labels — `scripts/build-sprint-status.sh --lane child`
-8. **Living memory:** update `.agent/AGENT_MEMORY.md` only at milestone boundaries
+7. **Parallel / venue:** `/scope` · `/build` automates HUMAN/ADB then backlogs failures to `HUMAN_BACKLOG.md` · Agent Mode `/lean` `/balanced` `/speed` `/mode` `/status` ([ADR-0010](docs/adr/0010-agent-mode-speed-balanced-lean.md))
+8. **Living memory:** update `.agent/AGENT_MEMORY.md` only at milestone boundaries · template catch-up: `/upgrade` · alignment: `docs/BOOTSTRAP_ALIGNMENT.md`
 
 > Legacy `.cursorrules` is deprecated. Use `.cursor/rules/*.mdc` and this file instead.
 

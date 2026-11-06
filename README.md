@@ -137,7 +137,5 @@ GitHub About text: [`docs/GITHUB_ABOUT.md`](docs/GITHUB_ABOUT.md)
 
 ## What this is not
 
-- A finished commercial product promise
-- A place for secrets or production credentials
-- An unbounded scope — see README goals above
+OBDForge is **not** a dealership-grade OEM scan tool. It targets legislated OBD-II via a working adapter and will **not** clear manufacturer-specific or enhanced codes it does not know. It is also not a place for secrets or production credentials, and it does not claim unbounded vehicle coverage — see Coverage honesty above.
 

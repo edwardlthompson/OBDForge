@@ -13,9 +13,10 @@ object TransportFactory {
         context: Context,
         type: TransportType,
         endpoint: TransportEndpoint,
+        simulatedFactory: (() -> ObdTransport)? = null,
     ): ObdTransport? {
         return when (type) {
-            TransportType.Simulated -> SimulatedObdTransport()
+            TransportType.Simulated -> simulatedFactory?.invoke() ?: SimulatedObdTransport()
             TransportType.WiFi, TransportType.Ethernet -> {
                 val tcp = endpoint as? TransportEndpoint.Tcp ?: return null
                 StreamObdTransport(

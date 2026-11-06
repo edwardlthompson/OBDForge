@@ -103,7 +103,7 @@ Product milestones **M1–M13** in [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLA
 | [`docs/PRIVACY.md`](docs/PRIVACY.md) | VIN privacy, local-first |
 | [`docs/RUNBOOK.md`](docs/RUNBOOK.md) | Release + F-Droid ops |
 | [`docs/FDROID_SUBMISSION.md`](docs/FDROID_SUBMISSION.md) | F-Droid fdroiddata MR checklist |
-| [`AGENT_MEMORY.md`](AGENT_MEMORY.md) | Stack index for agents |
+| [`.agent/AGENT_MEMORY.md`](.agent/AGENT_MEMORY.md) | Stack index for agents |
 | [`HUMAN_BACKLOG.md`](HUMAN_BACKLOG.md) | HUMAN/ADB items automation could not finish |
 ## Security
 
@@ -137,7 +137,5 @@ GitHub About text: [`docs/GITHUB_ABOUT.md`](docs/GITHUB_ABOUT.md)
 
 ## What this is not
 
-- A finished commercial product promise
-- A place for secrets or production credentials
-- An unbounded scope — see README goals above
+OBDForge is **not** a dealership-grade OEM scan tool. It targets legislated OBD-II via a working adapter and will **not** clear manufacturer-specific or enhanced codes it does not know. It is also not a place for secrets or production credentials, and it does not claim unbounded vehicle coverage — see Coverage honesty above.
 

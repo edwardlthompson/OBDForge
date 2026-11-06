@@ -10,6 +10,8 @@ import dev.foss.obdforge.R
 import dev.foss.obdforge.ui.settings.SettingsScreen
 import dev.foss.obdforge.ui.theme.ThemeMode
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
+import dev.foss.obdforge.data.demo.CannedSessions
+import dev.foss.obdforge.data.preferences.DebugPreferences
 import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.domain.persona.PersonaNavigation
 import dev.foss.obdforge.ui.settings.SettingsDiagnosticsCoordinator
@@ -53,6 +55,12 @@ fun GoldenPathSettingsHost(
     val diagnosticExportStatus by diagnosticsCoordinator.exportStatusMessage.collectAsStateWithLifecycle(
         initialValue = null,
     )
+    val useMockTransport by root.debugPreferences.useMockTransport.collectAsStateWithLifecycle(
+        initialValue = DebugPreferences.DEFAULT_USE_MOCK,
+    )
+    val mockSessionId by root.debugPreferences.mockSessionId.collectAsStateWithLifecycle(
+        initialValue = CannedSessions.DEFAULT_ID,
+    )
 
     LaunchedEffect(coordinator, diagnosticsCoordinator) {
         coordinator.refreshAuditCount()
@@ -91,6 +99,15 @@ fun GoldenPathSettingsHost(
         onPersonaSelect = { mode -> scope.launch { onPersonaChange(mode) } },
         onUpdateCheckChange = onUpdateCheckChange,
         onDemoModeChange = onDemoModeChange,
+        useMockTransport = useMockTransport,
+        mockSessionId = mockSessionId,
+        cannedSessions = CannedSessions.all,
+        onUseMockTransportChange = { enabled ->
+            scope.launch { root.debugPreferences.setUseMockTransport(enabled) }
+        },
+        onMockSessionSelect = { sessionId ->
+            scope.launch { root.debugPreferences.setMockSessionId(sessionId) }
+        },
         onExpertUnlock = { pin -> scope.launch { coordinator.unlockExpert(pin) } },
         onExpertLock = { scope.launch { coordinator.lockExpert() } },
         onAuditExport = {

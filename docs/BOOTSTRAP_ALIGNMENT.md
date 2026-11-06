@@ -30,7 +30,7 @@ This is a **migration / cherry-pick alignment**, not a fresh bootstrap. Preserve
 - `AGENTS.md`, `docs/START_HERE.md`, `docs/CURSOR_MODES.md`, `docs/FOR_AGENTS.md`, `docs/INITIALIZATION_PROMPT.md`
 - Batch commands: 25 slash commands under `.cursor/commands/` + `docs/BATCH_COMMANDS.md` + `docs/help/BATCH_COMMANDS.md` + `batch-commands.mdc`
 - Most always-apply rules: `cursor-modes`, `destructive-ops`, `repo-hygiene`, `feature-modules`, `foss-compliance`, `windows-encoding`, `ci-gates`, `security-triage`, etc.
-- Memory / board: `AGENT_MEMORY.md`, `DECISION_LOG.md`, `KNOWLEDGE_BASE.md`, `COMPLETED_TASKS.md`, living `BUILD_PLAN.md`
+- Memory / board: `.agent/AGENT_MEMORY.md`, `.agent/DECISION_LOG.md`, `KNOWLEDGE_BASE.md`, `COMPLETED_TASKS.md`, living `BUILD_PLAN.md`
 - Status markers: 🔲 / ✅ / ❌ (emoji, not GitHub checkboxes)
 - Owner labels: `[AGENT]` `[HUMAN]` `[ADB]` `[AUTO]`
 - Security: `SECURITY.md`, `docs/SECURITY_TRIAGE.md`, `docs/THREAT_MODEL.md`, `docs/PRIVACY.md`
@@ -151,7 +151,7 @@ Wire `.cursor/stack-selection.json` accordingly when adopting upstream Cursor in
 
 ### Phase 4 — Process & memory hygiene `[AGENT]`
 1. Append DECISION_LOG entry for this alignment
-2. Milestone update to `AGENT_MEMORY.md` (template baseline → 0.15.1)
+2. Milestone update to `.agent/AGENT_MEMORY.md` (template baseline → 0.15.1)
 3. Short “How agents should work in this repo” in README (pointer to START_HERE) if missing
 4. Migration notes section at bottom of this file (fill after execution)
 

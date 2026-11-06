@@ -18,7 +18,7 @@
 | android | `examples/android/**` |
 | node | `examples/node/**` |
 | multi | One scope per stack row; no overlap |
-| none | Match `AGENT_MEMORY.md` checked modules |
+| none | Match `.agent/AGENT_MEMORY.md` checked modules |
 
 ## Sprint M13 (template maintainer) — archived
 

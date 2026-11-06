@@ -35,8 +35,8 @@
 
 ## Week 4 — Operate like a maintained project
 
-- 🔲 Update `AGENT_MEMORY.md` at this milestone only
-- 🔲 Append one `DECISION_LOG.md` entry for the first architecture choice
+- 🔲 Update `.agent/AGENT_MEMORY.md` at this milestone only
+- 🔲 Append one `.agent/DECISION_LOG.md` entry for the first architecture choice
 - 🔲 `/maintain` or `/triage` once (Dependabot + Scorecard awareness)
 - 🔲 Bookmark `docs/help/BATCH_COMMANDS.md` (`/verify` before every PR)
 

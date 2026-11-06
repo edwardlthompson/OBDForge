@@ -19,12 +19,10 @@ import dev.foss.obdforge.ui.theme.ThemeMode
 import dev.foss.obdforge.ui.theme.ThemePreferences
 import dev.foss.obdforge.ui.theme.next
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
+import dev.foss.obdforge.data.demo.CannedSessions
+import dev.foss.obdforge.data.preferences.DebugPreferences
 import dev.foss.obdforge.data.preferences.DemoPreferences
-import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.data.preferences.WelcomePreferences
-import dev.foss.obdforge.domain.transport.BluetoothLinkKind
-import dev.foss.obdforge.domain.transport.TransportEndpoint
-import dev.foss.obdforge.domain.transport.TransportType
 import dev.foss.obdforge.domain.livedata.PersonaMode
 import dev.foss.obdforge.ui.demo.DemoModeShell
 import dev.foss.obdforge.ui.connect.ConnectDemoCoordinator
@@ -67,15 +65,15 @@ fun GoldenPathApp(
     val demoModeEnabled by root.demoPreferences.enabled.collectAsStateWithLifecycle(
         initialValue = DemoPreferences.DEFAULT_ENABLED,
     )
+    val useMockTransport by root.debugPreferences.useMockTransport.collectAsStateWithLifecycle(
+        initialValue = DebugPreferences.DEFAULT_USE_MOCK,
+    )
+    val mockSessionId by root.debugPreferences.mockSessionId.collectAsStateWithLifecycle(
+        initialValue = CannedSessions.DEFAULT_ID,
+    )
+    GoldenPathMockTransportEffect(root, useMockTransport, mockSessionId)
     val savedTransport by root.transportPreferences.selection.collectAsStateWithLifecycle(
-        initialValue = TransportSelection(
-            type = TransportType.Bluetooth,
-            endpoint = TransportEndpoint.Bluetooth(
-                deviceAddress = "",
-                displayName = null,
-                linkKind = BluetoothLinkKind.Auto,
-            ),
-        ),
+        initialValue = GoldenPathDefaults.bluetoothSelection,
     )
     val adapterConnectUi = rememberAdapterConnectUi(
         context = context,
@@ -97,9 +95,7 @@ fun GoldenPathApp(
         onConnectionStatusChange = { connectionStatus = it },
         onConnectAfterSave = adapterConnectUi.onConnect,
     )
-    val demoSelection = remember {
-        TransportSelection(TransportType.Simulated, TransportEndpoint.Simulated)
-    }
+    val demoSelection = GoldenPathDefaults.demoSelection
     val connectDemo = remember(root, demoModeEnabled, savedTransport) {
         ConnectDemoCoordinator(
             transportRegistry = root.transportRegistry,

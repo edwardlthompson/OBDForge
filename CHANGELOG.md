@@ -5,6 +5,12 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Align child repo with parent agent-project-bootstrap **v1.12.0** agent surfaces (batch commands, skills, rules, docs, gate scripts)
+
 ## [1.4.0](https://github.com/edwardlthompson/OBDForge/compare/v1.3.0...v1.4.0) (2026-11-06)
 
 
@@ -18,21 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **android:** split composition root and shell helpers for file budgets ([cd15712](https://github.com/edwardlthompson/OBDForge/commit/cd15712180949c6ba2e3291ea56315af2beedc41))
 * **bootstrap:** sync template 1.12.0 markers and index linguist gate ([c20f024](https://github.com/edwardlthompson/OBDForge/commit/c20f0240cc137d4879b865f8d3c0d35c22e5dd63))
 * **docs:** keep Unreleased as the first changelog heading ([357dcc0](https://github.com/edwardlthompson/OBDForge/commit/357dcc0a310ed9694ef86866fa63b6986e3da91f))
-
-## [Unreleased]
-
-### Added
-
-- Mock transport replaying three canned debug sessions (idle / highway / cold-start), gated by a debug-only setting
-- CI job `Android - Mock Transport Suite` for canned mock-transport unit tests
-- `docs/ADAPTERS.md` known-working adapter matrix with untested combinations marked
-
-### Changed
-
-- GitHub About description tightened to under 120 characters; topics drop `foss` / `mit`
-- Agent memory and decision log live under `.agent/`; references updated
-- README “What this is not” clarifies OEM/dealership and manufacturer-code limits
-- `.gitattributes` Linguist child attribution block (`# --- linguist ---`)
 
 ## [1.3.0](https://github.com/edwardlthompson/OBDForge/compare/v1.2.13...v1.3.0) (2026-08-21)
 

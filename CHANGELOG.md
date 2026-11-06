@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Mock transport replaying three canned debug sessions (idle / highway / cold-start), gated by a debug-only setting
+- CI job `Android - Mock Transport Suite` for canned mock-transport unit tests
+- `docs/ADAPTERS.md` known-working adapter matrix with untested combinations marked
+
+### Changed
+
+- GitHub About description tightened to under 120 characters; topics drop `foss` / `mit`
+- Agent memory and decision log live under `.agent/`; references updated
+- README “What this is not” clarifies OEM/dealership and manufacturer-code limits
+- `.gitattributes` Linguist child attribution block (`# --- linguist ---`)
+
 ## [1.3.0](https://github.com/edwardlthompson/OBDForge/compare/v1.2.13...v1.3.0) (2026-08-21)
 
 

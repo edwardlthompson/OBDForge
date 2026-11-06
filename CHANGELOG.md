@@ -5,6 +5,20 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0](https://github.com/edwardlthompson/OBDForge/compare/v1.3.0...v1.4.0) (2026-11-06)
+
+
+### Added
+
+* **android:** add mock transport replaying three canned sessions ([73082d4](https://github.com/edwardlthompson/OBDForge/commit/73082d4b41ed6151566e709d2e71fe42067bdbc6))
+
+
+### Fixed
+
+* **android:** split composition root and shell helpers for file budgets ([cd15712](https://github.com/edwardlthompson/OBDForge/commit/cd15712180949c6ba2e3291ea56315af2beedc41))
+* **bootstrap:** sync template 1.12.0 markers and index linguist gate ([c20f024](https://github.com/edwardlthompson/OBDForge/commit/c20f0240cc137d4879b865f8d3c0d35c22e5dd63))
+* **docs:** keep Unreleased as the first changelog heading ([357dcc0](https://github.com/edwardlthompson/OBDForge/commit/357dcc0a310ed9694ef86866fa63b6986e3da91f))
+
 ## [Unreleased]
 
 ### Added

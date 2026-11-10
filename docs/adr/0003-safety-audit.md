@@ -22,7 +22,7 @@ Bidirectional OBD/UDS commands (actuator tests, coding, clear adaptations) can d
 ### Persona defaults
 
 | Persona | Bidirectional writes | Expert mode |
-|---------|---------------------|-------------|
+| --------- | --------------------- | ------------- |
 | DIY | Blocked | Off |
 | Semi-pro | Read-only + limited tests | Opt-in |
 | Shop | Full with interlocks | On after unlock |
@@ -44,7 +44,7 @@ Bidirectional OBD/UDS commands (actuator tests, coding, clear adaptations) can d
 ## Alternatives Considered
 
 | Approach | Rejected because |
-|----------|------------------|
+| ---------- | ------------------ |
 | No interlocks (Torque-like) | Liability and ADR-0004 shop trust requirements |
 | Cloud audit | Violates local-first privacy |
 | Reversible undo for ECU writes | Not technically feasible on most ECUs |

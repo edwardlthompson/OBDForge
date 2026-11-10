@@ -15,7 +15,7 @@ Implement **four persona modes** persisted in DataStore; switchable from Setting
 ### Personas
 
 | Persona | Primary user | UI density | Key capabilities |
-|---------|--------------|------------|------------------|
+| --------- | -------------- | ------------ | ------------------ |
 | **DIY** | Owner | Simplified | DTC read/clear, basic live PIDs, AI explain |
 | **Semi-pro** | Enthusiast | Standard | Custom dashboards, logging, limited tests |
 | **Shop** | Technician | Dense | Customer/vehicle records, work orders, audit export |
@@ -44,7 +44,7 @@ Implement **four persona modes** persisted in DataStore; switchable from Setting
 ## Alternatives Considered
 
 | Approach | Rejected because |
-|----------|------------------|
+| ---------- | ------------------ |
 | Separate apps per persona | F-Droid maintenance burden |
 | Role-based auth server | Violates offline/local-first |
 | Fixed UI for all | Shop and Racing needs unmet |

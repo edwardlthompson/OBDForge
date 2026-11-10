@@ -78,7 +78,7 @@ bash scripts/bootstrap-lifecycle.sh --sync-adapters
 ```
 
 | Target | File |
-|--------|------|
+| -------- | ------ |
 | Cursor | `.cursor/rules/main.mdc` |
 | Claude Code | `CLAUDE.md` |
 | GitHub Copilot | `.github/copilot-instructions.md` |

@@ -15,7 +15,7 @@ OBDForge is a long-lived Android diagnostics product with multiple transports, p
 ### Layers
 
 | Layer | Responsibility | Examples |
-|-------|----------------|----------|
+| ------- | ---------------- | ---------- |
 | **Domain** | Entities, use cases, repository interfaces | `ObdSession`, `ReadPidUseCase`, `Transport` port |
 | **Data** | Room DAOs, adapter I/O, protocol implementations | `SessionRepository`, `Elm327Protocol`, `AuditLogDao` |
 | **UI** | Compose screens, ViewModels | `LiveDataScreen`, `ConnectViewModel` |
@@ -45,7 +45,7 @@ OBDForge is a long-lived Android diagnostics product with multiple transports, p
 ## Alternatives Considered
 
 | Pattern | Rejected because |
-|---------|------------------|
+| --------- | ------------------ |
 | MVVM-only (no use cases) | Protocol/transport logic would leak into ViewModels |
 | Monolith Activity | Untestable; violates file-size limits |
 | Hexagonal-only naming | Clean Architecture maps cleanly to Android module layout already used in template |

@@ -5,6 +5,43 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.14.0](https://github.com/edwardlthompson/OBDForge/compare/v1.13.0...v1.14.0) (2026-11-10)
+
+
+### Added
+
+* **about:** quiet Venmo donate and daily GitHub update check ([ef386ac](https://github.com/edwardlthompson/OBDForge/commit/ef386ace10c8aba96ea0afbcb4e98dfe23a2dd36))
+* **android:** add launcher icon and automated release signing ([ca11726](https://github.com/edwardlthompson/OBDForge/commit/ca117260b2efff208cab2b733a8491fa1f21ea6e))
+* **android:** add mock transport replaying three canned sessions ([73082d4](https://github.com/edwardlthompson/OBDForge/commit/73082d4b41ed6151566e709d2e71fe42067bdbc6))
+
+
+### Fixed
+
+* add manufacturer catalog string resource ([202e545](https://github.com/edwardlthompson/OBDForge/commit/202e545211efd535aa9d7507444d06c889675f54))
+* **android:** audit sprint — icon, insets, CI hygiene ([ae1f114](https://github.com/edwardlthompson/OBDForge/commit/ae1f114d9148408c5eaf99bd9829cdc53eb5f6fb))
+* **android:** dismiss welcome screen in instrumented UI tests ([8a2ab2f](https://github.com/edwardlthompson/OBDForge/commit/8a2ab2f1272275a74ef7d2ac86d6cb63dffbe8f8))
+* **android:** guard Bluetooth discovery without permission ([32d1e95](https://github.com/edwardlthompson/OBDForge/commit/32d1e952b901c93f3a1076af6a4e737588eb3f73))
+* **android:** prevent debug install blocking release sideload ([d0ee831](https://github.com/edwardlthompson/OBDForge/commit/d0ee83152f35b562f8403e183beaab3994024833))
+* **android:** split composition root and shell helpers for file budgets ([cd15712](https://github.com/edwardlthompson/OBDForge/commit/cd15712180949c6ba2e3291ea56315af2beedc41))
+* **android:** use try/catch for welcome dismiss in UI tests ([723810a](https://github.com/edwardlthompson/OBDForge/commit/723810a31ace791ae7ca316e438f31648fa4e843))
+* **bootstrap:** sync template 1.12.0 markers and index linguist gate ([c20f024](https://github.com/edwardlthompson/OBDForge/commit/c20f0240cc137d4879b865f8d3c0d35c22e5dd63))
+* **ci:** allow release workflow when signing secrets unset ([dc41f9f](https://github.com/edwardlthompson/OBDForge/commit/dc41f9f5741c8a330f691347956f84ab6672716d))
+* **ci:** avoid fromJSON on empty Release Please PR output ([37891e8](https://github.com/edwardlthompson/OBDForge/commit/37891e82b26e4c34ab02f0b814f760bf1626a253))
+* **ci:** child-aware pre-release gate and F-Droid changelog 25 ([05cdf50](https://github.com/edwardlthompson/OBDForge/commit/05cdf50042c9035db455732f5e9e10ce7af9c75d))
+* **ci:** drop Dependabot scans for pruned web/node/python stacks ([1a8b1ef](https://github.com/edwardlthompson/OBDForge/commit/1a8b1ef36792028886d9cd3d5109a26783459be1))
+* **ci:** Release Please automerge without local git checkout ([66143d4](https://github.com/edwardlthompson/OBDForge/commit/66143d4a2369ce3255b8815a857444e4b674bd98))
+* **ci:** Release workflow uses product version, not template-version ([c092483](https://github.com/edwardlthompson/OBDForge/commit/c092483762ffe1a68527f5a29da33d55a21094de))
+* **ci:** resolve product-version.sh relative to repo root ([bcb2f72](https://github.com/edwardlthompson/OBDForge/commit/bcb2f72cae66b967c8d617d5aaa129f3aa0330a4))
+* **ci:** restore design-cohesion scripts and sync template version to 1.1.0 ([400cc7b](https://github.com/edwardlthompson/OBDForge/commit/400cc7ba09013856a88c2d1aa13865bb731532c5))
+* **ci:** stop Release Please docs-only patch loop ([d816d68](https://github.com/edwardlthompson/OBDForge/commit/d816d68b9040cd53e89ba1fc751f56f21f47538a))
+* **ci:** sync weekly-health-check with parent v1.12.0 ([b191c09](https://github.com/edwardlthompson/OBDForge/commit/b191c090c5827e6aa49bb21c02d10898675f51c7))
+* **ci:** sync weekly-health-check with parent v1.12.0 ([ec9318c](https://github.com/edwardlthompson/OBDForge/commit/ec9318c5dfc9ed72c56da56852dc104fe9bbbc8e))
+* complete Sprint 23 audit (version sync, ZXing, flash voltage) ([0bf32bb](https://github.com/edwardlthompson/OBDForge/commit/0bf32bb1a6bd3bae7c264f53651f629e660a6bf4))
+* **deps:** merge Dependabot bumps; ignore Kotlin &gt;=2.4.10 ([c9be8fb](https://github.com/edwardlthompson/OBDForge/commit/c9be8fb56bbd1721fd8ceccce57e06ea38cf4de3))
+* **docs:** keep Unreleased as the first changelog heading ([357dcc0](https://github.com/edwardlthompson/OBDForge/commit/357dcc0a310ed9694ef86866fa63b6986e3da91f))
+* **release:** always attach signed installable APK to GitHub releases ([f6e081d](https://github.com/edwardlthompson/OBDForge/commit/f6e081d1eda039695f04ab44d8ffad018d360d85))
+* **release:** stable signing key and APK-only GitHub releases ([e81088f](https://github.com/edwardlthompson/OBDForge/commit/e81088f97bfd5e9af58cb667abfad43b7698b7ee))
+
 ## [1.4.1](https://github.com/edwardlthompson/OBDForge/compare/v1.4.0...v1.4.1) (2026-11-06)
 
 

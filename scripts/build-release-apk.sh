@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 # Build reproducible release APK with pinned SOURCE_DATE_EPOCH (F-Droid parity).
 # Usage: scripts/build-release-apk.sh [--clean] [--sign]
-# Env: SOURCE_DATE_EPOCH (default 1700000000); signing env for --sign (see sign-release-apk.sh)
+# Env: SOURCE_DATE_EPOCH (default 1700000000); OBDFORGE_FLAVOR=full|foss (default full)
+#      signing env for --sign (see sign-release-apk.sh)
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+# shellcheck source=lib/android-flavor.sh
+. "$ROOT/scripts/lib/android-flavor.sh"
 ANDROID="$ROOT/examples/android"
 SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-1700000000}"
 CLEAN=""
@@ -16,7 +19,7 @@ while [ $# -gt 0 ]; do
     --sign) SIGN=true; shift ;;
     -h|--help)
       echo "Usage: scripts/build-release-apk.sh [--clean] [--sign]"
-      echo "Env: SOURCE_DATE_EPOCH (default 1700000000)"
+      echo "Env: SOURCE_DATE_EPOCH (default 1700000000); OBDFORGE_FLAVOR=full|foss (default full)"
       exit 0
       ;;
     *) echo "Unknown option: $1" >&2; exit 1 ;;
@@ -32,12 +35,14 @@ export SOURCE_DATE_EPOCH
 cd "$ANDROID"
 chmod +x gradlew
 
-echo "Building release APK (SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH})..."
-./gradlew ${CLEAN}assembleRelease --no-daemon
+TASK="$(android_assemble_release_task)"
+echo "Building ${OBDFORGE_FLAVOR} release APK (SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}, task=${TASK})..."
+./gradlew ${CLEAN}${TASK} --no-daemon
 
-APK="$(find app/build/outputs/apk/release -name '*.apk' 2>/dev/null | head -1 || true)"
+APK_DIR="$(android_release_apk_dir "$ANDROID")"
+APK="$(android_find_release_apk "$APK_DIR")"
 if [ -z "$APK" ]; then
-  echo "FAIL: no release APK found"
+  echo "FAIL: no release APK found in $APK_DIR"
   exit 1
 fi
 

@@ -37,8 +37,4 @@ class MediaPipeLlmEngine(
             .build()
         return LlmInference.createFromOptions(context, options)
     }
-
-    companion object {
-        fun resolveModelPath(context: Context): String? = LlmModelProvisioner.resolveModelPath(context)
-    }
 }

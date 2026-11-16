@@ -13,16 +13,16 @@
 
 1. Build release APK: `bash scripts/build-release-apk.sh --clean`
 2. Sign for local install: `bash scripts/build-release-apk.sh --clean --sign` (release keystore) or `pwsh scripts/sign-apk-debug.ps1` (debug smoke only)
-3. Install: `adb install -r examples/android/app/build/outputs/apk/release/app-release-signed.apk`
+3. Install: `adb install -r examples/android/app/build/outputs/apk/full/release/app-release-signed.apk` (GitHub `full`; F-Droid uses `foss`)
 4. Or run: `pwsh scripts/fdroid-device-dry-run.ps1` (Windows) / `bash scripts/fdroid-device-dry-run.sh` (Linux/macOS)
 5. Bench log: `docs/ADB_BENCH_RESULTS.md`
 
 ## fdroiddata merge request
 
 1. Use ready-to-submit payload: `packaging/fdroid/dev.foss.obdforge.yml`
-3. Fastlane paths: point `Fastlane` metadata URL to this repo's `examples/android/metadata/en-US/`
-4. Verify build recipe matches CI: `SOURCE_DATE_EPOCH=1700000000`, subdir `examples/android`
-5. Add screenshots to `examples/android/metadata/en-US/images/` before MR (phone + feature graphic)
+3. Fastlane paths: F-Droid scrapes repo-root `fastlane/metadata/android/en-US/` (keep `examples/android/metadata/en-US/` in sync for local gates)
+4. Verify build recipe matches CI: `SOURCE_DATE_EPOCH=1700000000`, subdir `examples/android`, Gradle flavor `foss`
+5. Add screenshots to `fastlane/metadata/android/en-US/images/phoneScreenshots/` before MR (phone + feature graphic)
 6. Run `fdroid lint` locally if fdroidserver is installed, or rely on MR CI
 7. Open MR; reference GitHub Release `v1.0.0` and reproducible build verification
 

@@ -254,6 +254,21 @@ jobs:
             exit 1
           fi
           echo "FOSS compliance check passed"
+      - name: Foss flavor has no MediaPipe/Gemma
+        run: |
+          if grep -rE "com\.google\.mediapipe|huggingface\.co/.+Gemma|Gemma3-1B" \
+              examples/android/app/src/foss examples/android/app/src/main \
+              --include="*.kt" --include="*.kts" --include="*.xml" \
+              | grep -vE '//|/\*|<!--'; then
+            echo "ERROR: MediaPipe GenAI or Gemma download found in foss/main sources"
+            exit 1
+          fi
+          if grep -E 'implementation\(["'\'']com\.google\.mediapipe:tasks-genai' \
+              examples/android/app/build.gradle.kts; then
+            echo "ERROR: tasks-genai must be fullImplementation only"
+            exit 1
+          fi
+          echo "Foss flavor MediaPipe/Gemma check passed"
       - name: Validate Gradle structure
         run: |
           test -f examples/android/settings.gradle.kts
@@ -280,9 +295,9 @@ jobs:
       - uses: android-actions/setup-android@v4
       - name: Accept Android SDK licenses
         run: yes | sdkmanager --licenses
-      - name: assembleDebug
+      - name: assembleDebug (full + foss) and fossRelease
         working-directory: examples/android
-        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+        run: chmod +x gradlew && ./gradlew assembleDebug assembleFossRelease --no-daemon
 
   mock-transport:
     name: Android - Mock Transport Suite
@@ -297,7 +312,7 @@ jobs:
         working-directory: examples/android
         run: |
           chmod +x gradlew
-          ./gradlew :app:testDebugUnitTest \
+          ./gradlew :app:testFullDebugUnitTest \
             --tests 'dev.foss.obdforge.data.demo.CannedSessionsTest' \
             --tests 'dev.foss.obdforge.data.demo.MockSessionTransportTest' \
             --tests 'dev.foss.obdforge.data.transport.SimulatedTransportSelectorTest' \
@@ -327,7 +342,7 @@ jobs:
           arch: x86_64
           target: default
           disable-animations: true
-          script: cd examples/android && chmod +x gradlew && ./gradlew connectedDebugAndroidTest --no-daemon
+          script: cd examples/android && chmod +x gradlew && ./gradlew connectedFullDebugAndroidTest --no-daemon
 
   coverage-comment:
     name: PR Coverage Summary
@@ -445,6 +460,13 @@ jobs:
               --include="*.kt" --include="*.kts" --include="*.xml" \
               | grep -vE '//|/\*|<!--'; then
             echo "ERROR: Proprietary SDK references found"
+            exit 1
+          fi
+          if grep -rE "com\.google\.mediapipe|huggingface\.co/.+Gemma|Gemma3-1B" \
+              examples/android/app/src/foss examples/android/app/src/main \
+              --include="*.kt" --include="*.kts" --include="*.xml" \
+              | grep -vE '//|/\*|<!--'; then
+            echo "ERROR: MediaPipe GenAI or Gemma download found in foss/main sources"
             exit 1
           fi
       - name: Verify reproducible release APK

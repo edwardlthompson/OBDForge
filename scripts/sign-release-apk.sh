@@ -5,7 +5,10 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-INPUT="${1:-$ROOT/examples/android/app/build/outputs/apk/release/app-release-unsigned.apk}"
+# shellcheck source=lib/android-flavor.sh
+. "$ROOT/scripts/lib/android-flavor.sh"
+DEFAULT_DIR="$(android_release_apk_dir "$ROOT/examples/android")"
+INPUT="${1:-$DEFAULT_DIR/app-${OBDFORGE_FLAVOR}-release-unsigned.apk}"
 OUTPUT="${2:-}"
 
 if [ -z "$OUTPUT" ]; then

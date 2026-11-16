@@ -19,6 +19,13 @@
 
 _Seed template ADR: `docs/adr/0000-template-baseline.md`. Child repos use `docs/adr/0001-core-architecture.md`._
 
+### 2026-11-16 — F-Droid `foss` flavor without Gemma/MediaPipe
+- **Status:** Accepted
+- **Context:** F-Droid eligibility blocked by `com.google.mediapipe:tasks-genai` and Hugging Face Gemma 3 1B IT terms
+- **Decision:** Add `foss` / `full` product flavors. F-Droid builds `assembleFossRelease` (catalog DTC explanations, no GenAI, no Gemma download). GitHub keeps `full`. Root `fastlane/` for store scrape. Signing uses `findByName`/`maybeCreate` so F-Droid needs no prebuild sed
+- **Alternatives considered:** Drop local AI entirely (rejected — GitHub users keep optional LLM); implement llama.cpp now (rejected — propose only)
+- **Consequences:** Same `applicationId`. Tag a new version after merge (`v1.14.0` predates this split). No fdroiddata fork branch yet; proposed YAML in `packaging/fdroid/dev.foss.obdforge.yml`
+
 ### 2026-08-21 — /ship v1.3.0 donate + daily updates
 - **Status:** Accepted
 - **Context:** Continuum Calendar donate/update method ported to OBDForge; `/ship` after `feat(about)`

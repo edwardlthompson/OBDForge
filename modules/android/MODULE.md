@@ -25,7 +25,6 @@
 - 🔲 Rollback procedure documented in docs/RUNBOOK.md
 - 🔲 F-Droid submission checklist reviewed before release
 
-
 ## Design system
 
 - 🔲 Read docs/DESIGN_GUIDE.md before UI work
@@ -43,7 +42,6 @@ Strings are separate from styles. Theme colors and spacing live in `ui/theme/`; 
 | Strings | `res/values/strings.xml` | `stringResource(R.string.*)` in Compose |
 | Styles | `ui/theme/` (generated `Color.kt`, `Type.kt`, `Dimens.kt`) | `MaterialTheme.colorScheme`, `Dimens.kt` |
 | Forbidden | Kotlin string literals in composables | Use `stringResource`, not `Text("...")` |
-
 Default locale: English only (`res/values/strings.xml`). Add `res/values-{lang}/strings.xml` when shipping translations. Plurals: `res/values/plurals.xml` when needed.
 
 Shared key naming with web: `app.title`, `theme.toggle.label`, `theme.mode.*` — see [`docs/DESIGN_GUIDE.md`](../../docs/DESIGN_GUIDE.md). For website folder conventions in multi-stack repos, see [`docs/WEB_PROJECT_LAYOUT.md`](../../docs/WEB_PROJECT_LAYOUT.md).
@@ -60,6 +58,7 @@ Optional emulator job **Android - connectedDebugAndroidTest** in `.github/workfl
 ```bash
 cd examples/android
 ./gradlew connectedDebugAndroidTest
+
 ```
 
 Requires an AVD or USB device (`[ADB]`). Robolectric unit tests remain the default fast path in `feature-gate.sh`.
@@ -71,7 +70,6 @@ After each feature step, `scripts/feature-gate.sh` runs (via `watch-agent-gates.
 | Stage | Command |
 |-------|---------|
 | Unit + compile | `./gradlew test` in `examples/android/` |
-
 Requires `JAVA_HOME` locally; gate exits `2` when Java is missing.
 
 ## Owner Labels for This Module
@@ -82,7 +80,6 @@ Requires `JAVA_HOME` locally; gate exits `2` when Java is missing.
 | Emulator/device testing, F-Droid submit | ADB |
 | FOSS dependency audit approval | HUMAN |
 | CI Gradle compile / structure validation | AUTO |
-
 ## F-Droid Submission Dry-Run Checklist
 
 `[ADB]` dry-run before first F-Droid release. Full metadata lives under `examples/android/metadata/` when present.
@@ -103,7 +100,7 @@ Requires `JAVA_HOME` locally; gate exits `2` when Java is missing.
 
 ### Device verification (ADB)
 
-- 🔲 Install release APK on physical device or emulator: `adb install -r app/build/outputs/apk/release/*.apk`
+- 🔲 Install release APK on physical device or emulator: `adb install -r app/build/outputs/apk/full/release/*.apk`
 - 🔲 Smoke test cold start, core flow, offline behavior, and notification path (if applicable)
 - 🔲 Capture `adb logcat` during smoke test; confirm no crash stack traces
 - 🔲 Uninstall/reinstall upgrade path from previous release version

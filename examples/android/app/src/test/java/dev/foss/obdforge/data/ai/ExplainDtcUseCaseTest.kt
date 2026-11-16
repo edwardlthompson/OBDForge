@@ -29,10 +29,4 @@ class ExplainDtcUseCaseTest {
         assertEquals(ExplainDtcOutcome.InvalidCode, useCase.explain("INVALID", PersonaMode.Diy))
     }
 
-    private object UnavailableLlmEngine : LocalLlmEngine {
-        override val isAvailable: Boolean = false
-        override suspend fun generate(prompt: String): Result<String> =
-            Result.failure(IllegalStateException("offline test engine"))
-        override fun close() = Unit
-    }
 }

@@ -40,6 +40,7 @@ fun DtcExplainScreen(
     snapshot: VehicleHealthSnapshot?,
     selectedCode: String?,
     explanation: DtcExplanation?,
+    localAiEnabled: Boolean,
     llmBundled: Boolean,
     classifierBundled: Boolean,
     llmDownloadProgress: Float?,
@@ -98,8 +99,11 @@ fun DtcExplainScreen(
                 Text(
                     text = stringResource(
                         R.string.ai_engine_status,
-                        if (llmBundled) stringResource(R.string.ai_engine_ready)
-                        else stringResource(R.string.ai_engine_catalog_fallback),
+                        when {
+                            !localAiEnabled -> stringResource(R.string.ai_engine_fdroid_omitted)
+                            llmBundled -> stringResource(R.string.ai_engine_ready)
+                            else -> stringResource(R.string.ai_engine_catalog_fallback)
+                        },
                         if (classifierBundled) stringResource(R.string.ai_engine_ready)
                         else stringResource(R.string.ai_engine_optional_off),
                     ),
@@ -107,13 +111,12 @@ fun DtcExplainScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            if (!llmBundled) {
-                item {
-                    LlmDownloadCard(
-                        downloadProgress = llmDownloadProgress,
-                        onDownload = onDownloadLlm,
-                    )
-                }
+            item {
+                LocalAiBanner(
+                    llmBundled = llmBundled,
+                    llmDownloadProgress = llmDownloadProgress,
+                    onDownloadLlm = onDownloadLlm,
+                )
             }
             item {
                 Text(

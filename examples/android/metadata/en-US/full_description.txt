@@ -13,7 +13,7 @@ OBDForge targets legislated OBD-II through a working adapter. It does not claim 
 <li>ECU-first VIN resolution with barcode scan fallback</li>
 <li>Shop mode: customer intake, work orders, session attach, close-out</li>
 <li>Gated UDS DID coding (Shop/Racing + expert unlock) — not firmware flash</li>
-<li>On-device DTC explanations via optional local AI (no cloud inference)</li>
+<li>Offline DTC catalog explanations on-device (no cloud inference). The F-Droid build does not include an on-device LLM</li>
 <li>Demo mode for full UI flow without hardware</li>
 </ul>
 

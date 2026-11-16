@@ -50,7 +50,7 @@ If upgrade fails with **signatures do not match**, uninstall the old app once, t
 cd examples/android
 ./gradlew assembleDebug
 # Installs dev.foss.obdforge.debug — does not conflict with GitHub release APK
-# Install: adb install app/build/outputs/apk/debug/app-debug.apk
+# Install: adb install app/build/outputs/apk/full/debug/app-full-debug.apk
 
 ```
 
@@ -60,7 +60,7 @@ cd examples/android
 export SOURCE_DATE_EPOCH=1700000000
 bash scripts/build-release-apk.sh --clean
 bash scripts/sign-apk-sideload.sh   # release keystore or debug keystore fallback
-adb install -r examples/android/app/build/outputs/apk/release/app-release-signed.apk
+adb install -r examples/android/app/build/outputs/apk/full/release/app-release-signed.apk
 
 ```
 
@@ -86,6 +86,7 @@ Windows: `.\gradlew.bat assembleDebug`
 
 ```bash
 grep '\[AGENT\]' BUILD_PLAN.md
+
 ```
 
 Product milestones **M1–M13** in [`docs/EXECUTION_PLAN.md`](docs/EXECUTION_PLAN.md). Archived sprints: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md).
@@ -138,4 +139,3 @@ GitHub About text: [`docs/GITHUB_ABOUT.md`](docs/GITHUB_ABOUT.md)
 ## What this is not
 
 OBDForge is **not** a dealership-grade OEM scan tool. It targets legislated OBD-II via a working adapter and will **not** clear manufacturer-specific or enhanced codes it does not know. It is also not a place for secrets or production credentials, and it does not claim unbounded vehicle coverage — see Coverage honesty above.
-

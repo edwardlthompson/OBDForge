@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_llm_foss_note">On-device LLM is not included in this F-Droid build. DTC explanations use the offline catalog.</string>
+</resources>

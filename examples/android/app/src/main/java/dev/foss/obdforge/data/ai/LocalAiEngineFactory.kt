@@ -4,11 +4,10 @@ import android.content.Context
 
 object LocalAiEngineFactory {
     fun createExplainDtcUseCase(context: Context): ExplainDtcUseCase {
-        val llmEngine = MediaPipeLlmEngine(context.applicationContext)
         val classifier = TfliteDtcClassifier(context.applicationContext)
             .takeIf { it.isAvailable } ?: NoOpDtcClassifier
         return ExplainDtcUseCase(
-            llmEngine = llmEngine,
+            llmEngine = LocalLlmEngineFactory.create(context),
             classifier = classifier,
         )
     }

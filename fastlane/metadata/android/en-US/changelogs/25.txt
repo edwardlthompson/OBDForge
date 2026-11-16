@@ -1,0 +1,1 @@
+F-Droid foss flavor: OBD-II diagnostics without MediaPipe GenAI or Gemma download. Catalog DTC explanations stay on-device. GitHub full flavor unchanged.

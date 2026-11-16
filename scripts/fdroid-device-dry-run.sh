@@ -8,8 +8,10 @@ cd "$ROOT"
 
 ADB="${ADB:-adb}"
 LAUNCHER="dev.foss.obdforge/dev.foss.obdforge.MainActivity"
-APK_DIR="$ROOT/examples/android/app/build/outputs/apk/release"
-UNSIGNED="$APK_DIR/app-release-unsigned.apk"
+# shellcheck source=lib/android-flavor.sh
+. "$ROOT/scripts/lib/android-flavor.sh"
+APK_DIR="$(android_release_apk_dir "$ROOT/examples/android")"
+UNSIGNED="$APK_DIR/app-${OBDFORGE_FLAVOR}-release-unsigned.apk"
 SIGNED="$APK_DIR/app-release-adb-smoke.apk"
 LOG="/tmp/fdroid-dry-run-logcat-$$.txt"
 

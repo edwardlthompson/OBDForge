@@ -1,1 +1,1 @@
-FOSS Android OBD-II diagnostics with multi-transport support and local AI
+FOSS Android OBD-II diagnostics with multi-transport adapter support

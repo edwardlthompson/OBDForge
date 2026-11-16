@@ -2,8 +2,8 @@ package dev.foss.obdforge.data.demo
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import dev.foss.obdforge.data.ai.LlmModelProvisioner
 import dev.foss.obdforge.data.ai.LocalAiEngineFactory
-import dev.foss.obdforge.data.ai.MediaPipeLlmEngine
 import dev.foss.obdforge.domain.ai.AiExplanationSource
 import dev.foss.obdforge.domain.ai.ExplainDtcOutcome
 import dev.foss.obdforge.domain.livedata.PersonaMode
@@ -22,7 +22,7 @@ class DemoAiFlowTest {
 
     @Test
     fun airplaneModeExplainDemoDtc_usesOfflineCatalogWithoutModel() = runTest {
-        assertTrue(MediaPipeLlmEngine.resolveModelPath(context) == null)
+        assertTrue(LlmModelProvisioner.resolveModelPath(context) == null)
         val useCase = LocalAiEngineFactory.createExplainDtcUseCase(context)
         val outcome = useCase.explain(DemoObdFixtures.PRIMARY_DTC, PersonaMode.Diy)
         assertTrue(outcome is ExplainDtcOutcome.Success)

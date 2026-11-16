@@ -111,12 +111,14 @@ fun DtcExplainScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            item {
-                LocalAiBanner(
-                    llmBundled = llmBundled,
-                    llmDownloadProgress = llmDownloadProgress,
-                    onDownloadLlm = onDownloadLlm,
-                )
+            if (!localAiEnabled || !llmBundled) {
+                item {
+                    LocalAiBanner(
+                        llmBundled = llmBundled,
+                        llmDownloadProgress = llmDownloadProgress,
+                        onDownloadLlm = onDownloadLlm,
+                    )
+                }
             }
             item {
                 Text(

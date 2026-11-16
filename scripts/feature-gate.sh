@@ -214,7 +214,35 @@ if should_run android && [ -f examples/android/gradlew ]; then
       skip_or_block "Skipping android gate (JAVA_HOME not set)"
     fi
   else
-    run_in_dir examples/android android-test ./gradlew test --quiet
+    pushd examples/android >/dev/null
+    android_log="$(mktemp)"
+    # Serial workers: foss+full unit tests in one `test` otherwise share Room/Robolectric dirs.
+    if ./gradlew --no-parallel test --quiet >"$android_log" 2>&1; then
+      GATES_PASSED+=("android-test")
+      rm -f "$android_log"
+    else
+      $PY - "$android_log" << 'PY' || true
+import sys, xml.etree.ElementTree as ET
+from pathlib import Path
+log_path = Path(sys.argv[1])
+fails = []
+for xml in Path("app/build/test-results").rglob("TEST-*.xml"):
+    root = ET.parse(xml).getroot()
+    for case in root.findall("testcase"):
+        err = case.find("failure")
+        if err is None:
+            err = case.find("error")
+        if err is None:
+            continue
+        msg = (err.get("message") or "").splitlines()[0][:180]
+        fails.append(f"{case.get('classname')}#{case.get('name')}: {msg}")
+with log_path.open("a", encoding="utf-8") as fh:
+    fh.write("\nFailed tests:\n")
+    fh.write("\n".join(fails[:40]) if fails else "(no junit xml failures found)\n")
+PY
+      fail_gate "android-test" "$(tail -n 60 "$android_log")"
+    fi
+    popd >/dev/null
   fi
 fi
 

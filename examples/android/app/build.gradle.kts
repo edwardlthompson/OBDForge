@@ -80,6 +80,16 @@ android {
     }
 }
 
+tasks.withType<Test>().configureEach {
+    maxParallelForks = 1
+    testLogging {
+        events("failed")
+        showCauses = true
+        showStackTraces = true
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
+}
+
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2026.09.00")
     implementation(composeBom)

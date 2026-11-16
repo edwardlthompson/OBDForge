@@ -113,10 +113,22 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
+      - uses: android-actions/setup-android@v4
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses
       - name: Prepare Android wrapper
         run: chmod +x examples/android/gradlew
       - name: Run feature gate (android stack)
         run: bash scripts/feature-gate.sh --stack android --strict --json
+      - name: Upload unit test reports
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: feature-gate-unit-tests
+          path: |
+            examples/android/app/build/test-results/
+            examples/android/app/build/reports/tests/
+          if-no-files-found: ignore
 
   validate-index:
     name: Validate Template Index
@@ -342,7 +354,44 @@ jobs:
           arch: x86_64
           target: default
           disable-animations: true
-          script: cd examples/android && chmod +x gradlew && ./gradlew connectedFullDebugAndroidTest --no-daemon
+          script: |
+            set +e
+            cd examples/android
+            chmod +x gradlew
+            ./gradlew connectedFossDebugAndroidTest connectedFullDebugAndroidTest --no-daemon
+            STATUS=$?
+            python3 - <<'PY'
+            import xml.etree.ElementTree as ET
+            from pathlib import Path
+            root = Path("app/build/outputs/androidTest-results")
+            print("Instrumented results:")
+            if not root.exists():
+                print("(no androidTest-results dir)")
+            for xml in root.rglob("*.xml"):
+                try:
+                    suite = ET.parse(xml).getroot()
+                except ET.ParseError:
+                    continue
+                for case in suite.iter("testcase"):
+                    err = case.find("failure")
+                    if err is None:
+                        err = case.find("error")
+                    if err is None:
+                        continue
+                    msg = (err.get("message") or err.text or "").strip().splitlines()[:8]
+                    print(f"FAIL {case.get('classname')}#{case.get('name')}")
+                    print("\n".join(msg))
+            PY
+            exit $STATUS
+      - name: Upload instrumented test reports
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: connected-android-tests
+          path: |
+            examples/android/app/build/outputs/androidTest-results/
+            examples/android/app/build/reports/androidTests/
+          if-no-files-found: ignore
 
   coverage-comment:
     name: PR Coverage Summary

@@ -19,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import dev.foss.obdforge.BuildConfig
 import dev.foss.obdforge.R
+import dev.foss.obdforge.data.demo.CannedSession
 import dev.foss.obdforge.ui.theme.SpacingMd
 import dev.foss.obdforge.ui.theme.obdBottomGutter
 import dev.foss.obdforge.ui.theme.ThemeMode
@@ -43,10 +45,15 @@ fun SettingsScreen(
     diagnosticEntryCount: Int,
     diagnosticExportPathHint: String,
     diagnosticExportStatusMessage: String?,
+    useMockTransport: Boolean = false,
+    mockSessionId: String = "",
+    cannedSessions: List<CannedSession> = emptyList(),
     onThemeModeSelect: (ThemeMode) -> Unit,
     onPersonaSelect: (PersonaMode) -> Unit,
     onUpdateCheckChange: (Boolean) -> Unit,
     onDemoModeChange: (Boolean) -> Unit,
+    onUseMockTransportChange: (Boolean) -> Unit = {},
+    onMockSessionSelect: (String) -> Unit = {},
     onExpertUnlock: (String) -> Unit,
     onExpertLock: () -> Unit,
     onAuditExport: () -> Unit,
@@ -99,6 +106,34 @@ fun SettingsScreen(
                 modifier = Modifier.weight(1f),
             )
             Switch(checked = demoModeEnabled, onCheckedChange = onDemoModeChange)
+        }
+        if (BuildConfig.DEBUG) {
+            Text(
+                text = stringResource(R.string.settings_debug_section),
+                style = MaterialTheme.typography.titleMedium,
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(SpacingMd),
+            ) {
+                Text(
+                    text = stringResource(R.string.settings_mock_transport_label),
+                    modifier = Modifier.weight(1f),
+                )
+                Switch(checked = useMockTransport, onCheckedChange = onUseMockTransportChange)
+            }
+            if (useMockTransport && cannedSessions.isNotEmpty()) {
+                Text(text = stringResource(R.string.settings_mock_session_label))
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(SpacingMd)) {
+                    cannedSessions.forEach { session ->
+                        FilterChip(
+                            selected = mockSessionId == session.id,
+                            onClick = { onMockSessionSelect(session.id) },
+                            label = { Text(session.label) },
+                        )
+                    }
+                }
+            }
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,

@@ -28,7 +28,7 @@ interface DiagnosticProtocol {
 ### Plugin implementations
 
 | Plugin | Adapter target | Notes |
-|--------|----------------|-------|
+| -------- | ---------------- | ------- |
 | `Elm327Protocol` | Generic clones | AT command subset; slow-path fallback |
 | `StnProtocol` | OBDLink STN11xx/22xx | Native ST commands, faster streaming |
 | `StpxProtocol` | OBDLink STPX | Extended headers, manufacturer modes |
@@ -55,7 +55,7 @@ interface DiagnosticProtocol {
 ## Alternatives Considered
 
 | Approach | Rejected because |
-|----------|------------------|
+| ---------- | ------------------ |
 | Single mega ELM327 class | STN/STPX optimizations impossible; untestable |
 | Transport-level AT commands | Duplicated across BT/USB/WiFi |
 | Runtime downloadable plugins | F-Droid policy complexity; supply-chain risk |

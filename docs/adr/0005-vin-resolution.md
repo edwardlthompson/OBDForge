@@ -15,7 +15,7 @@ Implement **`VinResolver`** with an **ECU-first resolution chain**, falling back
 ### Resolution order
 
 | Step | Source | Method |
-|------|--------|--------|
+| ------ | -------- | -------- |
 | 1 | OBD Mode 09 PID 02 | Standard legislated VIN |
 | 2 | UDS ReadDataByIdentifier | DID `F190` (ISO-TP) |
 | 3 | KWP2000 | OEM-specific VIN request where mapped |
@@ -43,7 +43,7 @@ Implement **`VinResolver`** with an **ECU-first resolution chain**, falling back
 ## Alternatives Considered
 
 | Approach | Rejected because |
-|----------|------------------|
+| ---------- | ------------------ |
 | Barcode-first | ECU mismatch common in replaced modules |
 | NHTSA API lookup only | Requires network; wrong for non-US |
 | VIN optional everywhere | Breaks shop work order integrity |

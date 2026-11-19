@@ -52,10 +52,8 @@ Standing queue for This Computer. Rows: `🔲 [AGENT][LOCAL] … — scope: path
 2. 🔲 [AGENT][LOCAL] Dependabot bumps; continue OpenSSF Scorecard pin campaign (F-007) — weekly when alerts open
 3. 🔲 [AGENT][LOCAL] Adapter compatibility notes → `KNOWLEDGE_BASE.md` — monthly cadence
 - 🔲 [AUTO] `check-security-triage.sh --wait-ci 300`
-- 🔲 [AGENT][LOCAL] Dependabot bumps; continue Scorecard pin campaign (F-007)
 - 🔲 [AUTO] `check-template-updates.sh`
 - 🔲 [AUTO] `check-license-compliance.sh` + SBOM on latest release
-- 🔲 [AGENT][LOCAL] Adapter compatibility notes → `KNOWLEDGE_BASE.md`
 <!-- local-agent-lane:end -->
 
 ### Cloud agent (Cursor Cloud)
@@ -65,6 +63,12 @@ Standing queue for Cursor Cloud. Rows: `🔲 [AGENT][CLOUD] … — scope: path`
 <!-- cloud-agent-lane:begin -->
 _No cloud agent items._
 <!-- cloud-agent-lane:end -->
+
+## Ongoing Maintenance
+
+- 🔲 [AGENT] Dependabot bumps; continue Scorecard pin campaign (F-007)
+- 🔲 [AGENT] Adapter compatibility notes → `KNOWLEDGE_BASE.md`
+
 
 ## Archive
 

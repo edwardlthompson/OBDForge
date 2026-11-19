@@ -27,3 +27,13 @@ A Cursor planning agent should review these items and fold the useful ones into 
 
 - [ ] Evaluate moving off tasks-genai 0.10.35 to MediaPipe 1.x or LiteRT-LM — The pre-1.0 line is aging and option names were unified in 1.2.3. Label: `[AGENT]` · Priority: P3 · https://github.com/google-ai-edge/mediapipe/releases/tag/v1.2.3
 - [ ] Note llama.cpp 1.0 as an alternative engine in the local-AI ADR — A stable API and GGUF make it a credible option for the DTC assistant. Label: `[AGENT]` · Priority: P3 · https://github.com/ggml-org/llama.cpp/releases/tag/v1.0.0
+
+## 2026-11-19
+
+**News and updates**
+
+- Jetpack Compose November '26 release is stable: Compose BOM 2026.11.01 (Compose 1.13) with Material3 1.5.0. The BOM needs Kotlin 2.2+ and compileSdk 37.1. Material3 1.5.0 breaks Slider/RangeSlider source (stateless overloads deprecated, `onValueChange` now required, RangeSliderState activeRangeStart/End renamed to startValue/endValue); SecureTextField now defaults to system obfuscation, and clickables play platform click sounds by default. [source](https://developer.android.com/blog/posts/jetpack-compose-november-2026-release) · [Material3 notes](https://developer.android.com/jetpack/androidx/releases/compose-material3)
+
+**Tasks for the planning agent**
+
+- [x] Bump Compose BOM 2026.09.00 to 2026.11.01 (Compose 1.13 / Material3 1.5.0) and fix Slider/RangeSlider call sites — Material3 1.5.0 makes `onValueChange` required on Slider/RangeSlider (no Slider/RangeSlider calls found, but check other deprecations) and the BOM requires Kotlin 2.2+ and compileSdk 37.1, so a Dependabot/Argus BOM bump will fail unless AGP accepts 37.1 and the call sites are fixed first. Label: `[AGENT]` · Priority: P2 · https://developer.android.com/blog/posts/jetpack-compose-november-2026-release (synced to BUILD_PLAN)

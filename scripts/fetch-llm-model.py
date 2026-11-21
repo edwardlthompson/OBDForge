@@ -2,7 +2,8 @@
 """Fetch Gemma 3 1B IT INT4 MediaPipe model for optional on-device DTC explanations.
 
 Source: https://huggingface.co/litert-community/Gemma3-1B-IT (Gemma license)
-Output: examples/android/app/src/main/assets/ai/llm_model.task (gitignored, ~530 MB)
+Output: examples/android/app/src/full/assets/ai/llm_model.task (gitignored, ~530 MB).
+The F-Droid foss flavor never bundles this file.
 """
 from __future__ import annotations
 
@@ -11,7 +12,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT_DIR = ROOT / "examples" / "android" / "app" / "src" / "main" / "assets" / "ai"
+OUT_DIR = ROOT / "examples" / "android" / "app" / "src" / "full" / "assets" / "ai"
 OUT_FILE = OUT_DIR / "llm_model.task"
 URL = (
     "https://huggingface.co/litert-community/Gemma3-1B-IT/"

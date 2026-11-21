@@ -1,0 +1,1 @@
+OBDForge 1.1.0 — BLE connect, DTC assistant auto-scan, OBDex data import, CSV export, Gemma 3 on-device LLM download, namespace unified to dev.foss.obdforge.

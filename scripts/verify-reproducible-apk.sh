@@ -36,7 +36,9 @@ export SOURCE_DATE_EPOCH
 echo "Building release APK (SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH})..."
 bash "$ROOT/scripts/build-release-apk.sh" --clean
 
-APK="$(find "$ANDROID/app/build/outputs/apk/release" -name '*.apk' 2>/dev/null | head -1 || true)"
+# shellcheck source=lib/android-flavor.sh
+. "$ROOT/scripts/lib/android-flavor.sh"
+APK="$(android_find_release_apk "$(android_release_apk_dir "$ANDROID")")"
 if [ -z "$APK" ]; then
   echo "FAIL: no release APK found"
   exit 1
@@ -55,7 +57,7 @@ echo "Run 1 hash: $HASH1"
 echo "Second clean rebuild..."
 bash "$ROOT/scripts/build-release-apk.sh" --clean
 
-APK2="$(find "$ANDROID/app/build/outputs/apk/release" -name '*.apk' 2>/dev/null | head -1 || true)"
+APK2="$(android_find_release_apk "$(android_release_apk_dir "$ANDROID")")"
 if [ -z "$APK2" ]; then
   echo "FAIL: no release APK after clean rebuild"
   exit 1

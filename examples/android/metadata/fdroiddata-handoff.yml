@@ -1,37 +1,46 @@
 # Draft fdroiddata merge-request handoff for [ADB].
 # Copy/adapt into fdroiddata/metadata/dev.foss.obdforge.yml
-# Fastlane text blocks: examples/android/metadata/en-US/
+# Fastlane text: repo-root fastlane/metadata/android/en-US/
+# There is no fdroiddata fork branch for this app yet.
 
 Categories:
+  - Connectivity
   - System
 License: GPL-3.0-or-later
 AuthorName: Edward Thompson
+WebSite: https://github.com/edwardlthompson/OBDForge
 SourceCode: https://github.com/edwardlthompson/OBDForge
 IssueTracker: https://github.com/edwardlthompson/OBDForge/issues
-WebSite: https://github.com/edwardlthompson/OBDForge
+Changelog: https://github.com/edwardlthompson/OBDForge/blob/HEAD/CHANGELOG.md
 
-# No standard AntiFeatures (Ads, Tracking, NonFreeNet, etc.) — see anti_features.txt.
-# Vehicle ECU interaction risk is documented in full_description.txt (safety section).
-# Note: barcode VIN scan must stay FLOSS (no ML Kit) before GitLab submit — see CODE_REVIEW F-002.
+AutoName: OBDForge
 
 RepoType: git
-Repo: https://github.com/edwardlthompson/OBDForge
+Repo: https://github.com/edwardlthompson/OBDForge.git
 
 Builds:
   - versionName: '1.14.0' # x-release-please-version
     versionCode: 25
-    commit: v1.2.13
+    commit: POST_MERGE_TAG
     subdir: examples/android
+    sudo:
+      - echo "deb https://deb.debian.org/debian trixie main" > /etc/apt/sources.list.d/trixie.list
+      - apt-get update
+      - apt-get install -y -t trixie openjdk-21-jdk-headless
+      - update-java-alternatives --set java-1.21.0-openjdk-amd64
     gradle:
-      - yes
+      - foss
     scandelete:
-      - examples/android/app/build
-    build:
-      - export SOURCE_DATE_EPOCH=1700000000
-      - cd examples/android
-      - ./gradlew assembleRelease
+      - examples/android/app/src/full
+      - scripts/fetch-llm-model.py
 
-AutoUpdateMode: Version v%v
+AntiFeatures:
+  NonFreeNet:
+    en-US: GitHub `full` flavor may check GitHub Releases. The F-Droid foss
+      build skips that auto-check and does not download models.
+
+AutoUpdateMode: None
 UpdateCheckMode: Tags
+UpdateCheckData: examples/android/app/build.gradle.kts|versionCode\s*=\s*(\d+)|.|versionName\s*=\s*"([^"]+)"
 CurrentVersion: '1.14.0' # x-release-please-version
 CurrentVersionCode: 25

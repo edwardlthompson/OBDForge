@@ -9,7 +9,7 @@ $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 
 if ([string]::IsNullOrWhiteSpace($InputApk)) {
-    $InputApk = Join-Path $Root "examples\android\app\build\outputs\apk\release\app-release-unsigned.apk"
+    $InputApk = Join-Path $Root "examples\android\app\build\outputs\apk\full\release\app-full-release-unsigned.apk"
 }
 if ([string]::IsNullOrWhiteSpace($OutputApk)) {
     $OutputApk = Join-Path (Split-Path -Parent $InputApk) "app-release-signed.apk"

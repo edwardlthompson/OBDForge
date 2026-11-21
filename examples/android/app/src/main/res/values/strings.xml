@@ -103,6 +103,7 @@
     <string name="about_update_no_compatible">No compatible update for your install format.</string>
     <string name="about_update_restarting">Restarting to apply update…</string>
     <string name="about_update_apply">Apply update</string>
+    <string name="about_update_fdroid">Updates are delivered by F-Droid.</string>
     <string name="settings_title">Settings</string>
     <string name="settings_open">Settings</string>
     <string name="settings_close">Close settings</string>
@@ -229,9 +230,7 @@
     <string name="ai_engine_ready">bundled</string>
     <string name="ai_engine_catalog_fallback">catalog fallback</string>
     <string name="ai_engine_optional_off">optional (off)</string>
-    <string name="ai_llm_download_note">Optional: download Gemma 3 1B (~530 MB, Wi‑Fi recommended) for richer DTC explanations.</string>
-    <string name="ai_llm_download_button">Download on-device LLM</string>
-    <string name="ai_llm_download_progress">Downloading LLM… %1$d%%</string>
+    <string name="ai_engine_fdroid_omitted">not included in F-Droid build</string>
     <string name="ai_source_catalog">Offline catalog</string>
     <string name="ai_source_manufacturer">Manufacturer catalog</string>
     <string name="ai_source_mediapipe">MediaPipe LLM</string>

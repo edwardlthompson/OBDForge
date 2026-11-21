@@ -1,0 +1,1 @@
+OBDForge 1.2.8 — Live Fuel loop status (open vs closed loop) from Mode 01 PID 0x03 on the dashboard.

@@ -24,15 +24,15 @@ try {
         Write-Host "SKIP verify-fdroid-metadata.sh (bash unavailable; CI gate covers metadata)"
     }
 
-    $unsigned = Join-Path $Root "examples\android\app\build\outputs\apk\release\app-release-unsigned.apk"
+    $unsigned = Join-Path $Root "examples\android\app\build\outputs\apk\full\release\app-full-release-unsigned.apk"
     if (-not (Test-Path $unsigned)) {
         Push-Location (Join-Path $Root "examples\android")
-        .\gradlew.bat clean assembleRelease --no-daemon
+        .\gradlew.bat clean assembleFullRelease --no-daemon
         Pop-Location
     }
 
-    $releaseSigned = Join-Path $Root "examples\android\app\build\outputs\apk\release\app-release-signed.apk"
-    $signed = Join-Path $Root "examples\android\app\build\outputs\apk\release\app-release-adb-smoke.apk"
+    $releaseSigned = Join-Path $Root "examples\android\app\build\outputs\apk\full\release\app-release-signed.apk"
+    $signed = Join-Path $Root "examples\android\app\build\outputs\apk\full\release\app-release-adb-smoke.apk"
     $signScript = Join-Path $Root "scripts\sign-release-apk.ps1"
     if ((Test-Path $signScript) -and $env:OBDFORGE_KEYSTORE_PATH -and (Test-Path $env:OBDFORGE_KEYSTORE_PATH)) {
         & $signScript -InputApk $unsigned -OutputApk $releaseSigned

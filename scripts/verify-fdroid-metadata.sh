@@ -7,6 +7,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 META="$ROOT/examples/android/metadata/en-US"
+FASTLANE="$ROOT/fastlane/metadata/android/en-US"
 GRADLE="$ROOT/examples/android/app/build.gradle.kts"
 RELEASE_SCRIPT="$ROOT/scripts/build-release-apk.sh"
 ERRORS=0
@@ -84,8 +85,30 @@ else
   fail "missing scripts/build-release-apk.sh with SOURCE_DATE_EPOCH"
 fi
 
-if [ -d "$ROOT/examples/android/fastlane/metadata/android/en-US" ]; then
-  ok "fastlane metadata mirror present"
+if [ ! -d "$FASTLANE" ]; then
+  fail "missing $FASTLANE (F-Droid scrapes repo-root fastlane/)"
+else
+  ok "root fastlane metadata present"
+  for f in title.txt short_description.txt full_description.txt; do
+    if [ ! -s "$FASTLANE/$f" ]; then
+      fail "missing or empty $FASTLANE/$f"
+    else
+      ok "fastlane $f present"
+    fi
+  done
+  if [ -n "${VERSION_CODE:-}" ] && [ ! -s "$FASTLANE/changelogs/${VERSION_CODE}.txt" ]; then
+    fail "missing fastlane changelog $FASTLANE/changelogs/${VERSION_CODE}.txt"
+  fi
+  if [ ! -f "$FASTLANE/images/icon.png" ]; then
+    fail "missing $FASTLANE/images/icon.png"
+  else
+    ok "fastlane icon.png present"
+  fi
+  if [ ! -d "$FASTLANE/images/phoneScreenshots" ]; then
+    fail "missing $FASTLANE/images/phoneScreenshots/"
+  else
+    ok "fastlane phoneScreenshots directory present"
+  fi
 fi
 
 echo ""

@@ -30,7 +30,7 @@ cd examples/android && ./gradlew assembleRelease
 
 ```
 
-Confirm `app/build/outputs/apk/release/` is signed (`apksigner verify`). Keep that version's `mapping.txt` with the GitHub Release.
+Confirm `app/build/outputs/apk/full/release/` is signed (`apksigner verify`). Keep that version's `mapping.txt` with the GitHub Release.
 
 ## Continuous integration
 
@@ -44,9 +44,9 @@ When shipping ABI splits (`armeabi-v7a`, `arm64-v8a`, `x86_64`), compare hashes 
 export SOURCE_DATE_EPOCH=1700000000
 cd examples/android
 ./gradlew assembleRelease
-sha256sum app/build/outputs/apk/release/*.apk | tee /tmp/apk-hashes-1.txt
+sha256sum app/build/outputs/apk/full/release/*.apk | tee /tmp/apk-hashes-1.txt
 ./gradlew clean assembleRelease
-sha256sum app/build/outputs/apk/release/*.apk | tee /tmp/apk-hashes-2.txt
+sha256sum app/build/outputs/apk/full/release/*.apk | tee /tmp/apk-hashes-2.txt
 diff -u /tmp/apk-hashes-1.txt /tmp/apk-hashes-2.txt
 
 ```

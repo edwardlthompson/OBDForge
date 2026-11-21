@@ -23,9 +23,42 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions += "distribution"
+    productFlavors {
+        create("full") {
+            dimension = "distribution"
+            isDefault = true
+            buildConfigField("boolean", "LOCAL_AI_ENABLED", "true")
+            buildConfigField("boolean", "FDROID", "false")
+        }
+        create("foss") {
+            dimension = "distribution"
+            buildConfigField("boolean", "LOCAL_AI_ENABLED", "false")
+            buildConfigField("boolean", "FDROID", "true")
+        }
+    }
+
+    // F-Droid may strip this block. findByName/maybeCreate keeps leftover refs valid
+    // and leaves the APK unsigned when no keystore env is set (reproducible CI path).
+    signingConfigs {
+        maybeCreate("release").apply {
+            val storePath = System.getenv("OBDFORGE_KEYSTORE_PATH")
+            if (!storePath.isNullOrBlank()) {
+                storeFile = file(storePath)
+                storePassword = System.getenv("OBDFORGE_KEYSTORE_PASSWORD").orEmpty()
+                keyAlias = System.getenv("OBDFORGE_KEY_ALIAS") ?: "obdforge"
+                keyPassword = System.getenv("OBDFORGE_KEY_PASSWORD")
+                    ?: System.getenv("OBDFORGE_KEYSTORE_PASSWORD").orEmpty()
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfigs.findByName("release")?.takeIf { it.storeFile != null }?.let {
+                signingConfig = it
+            }
         }
         debug {
             applicationIdSuffix = ".debug"
@@ -47,6 +80,16 @@ android {
     }
 }
 
+tasks.withType<Test>().configureEach {
+    maxParallelForks = 1
+    testLogging {
+        events("failed")
+        showCauses = true
+        showStackTraces = true
+        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    }
+}
+
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2026.09.00")
     implementation(composeBom)
@@ -64,7 +107,7 @@ dependencies {
     implementation("androidx.camera:camera-lifecycle:1.6.1")
     implementation("androidx.camera:camera-view:1.6.1")
     implementation("com.google.zxing:core:3.5.4")
-    implementation("com.google.mediapipe:tasks-genai:0.10.35")
+    "fullImplementation"("com.google.mediapipe:tasks-genai:0.10.35")
     implementation("org.tensorflow:tensorflow-lite:2.17.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
     implementation("androidx.room:room-runtime:2.8.5")

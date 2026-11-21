@@ -1835,6 +1835,13 @@
       "owner": "maintainer"
     },
     {
+      "path": "scripts/run-connected-android-tests.sh",
+      "purpose": "Foss+full connectedDebugAndroidTest for CI emulator-runner (single script line)",
+      "read_when": "as_needed",
+      "update_when": "milestone_boundary",
+      "owner": "maintainer"
+    },
+    {
       "path": "scripts/run-maintainer-gates.ps1",
       "purpose": "Windows wrapper for run-maintainer-gates.sh",
       "read_when": "milestone_boundary",

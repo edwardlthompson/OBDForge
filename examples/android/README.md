@@ -13,7 +13,8 @@ examples/android/
       theme/                     # GoldenPathTheme, generated Color.kt / Type.kt / Dimens.kt
       components/                # ThemeToggle, etc. — labels via stringResource()
       screens/                   # GoldenPathScreen, etc.
-  metadata/en-US/                # F-Droid / Fastlane store listing text
+  metadata/en-US/                # local F-Droid listing text (keep in sync with repo-root fastlane/)
+
 ```
 
 **Styles and strings are separate:** theme colors and spacing live in `ui/theme/` (from `design-tokens/`). All copy lives in `strings.xml`, consumed via `stringResource(R.string.*)` in Compose — never `Text("literal")`.
@@ -24,11 +25,20 @@ See [`docs/DESIGN_GUIDE.md`](../../docs/DESIGN_GUIDE.md) and [`docs/WEB_PROJECT_
 
 CI validates Gradle file structure, FOSS compliance markers, and F-Droid metadata via `scripts/verify-fdroid-metadata.sh`.
 
+## Product flavors
+
+| Flavor | Gradle task | LLM |
+|--------|-------------|-----|
+| `full` (default, GitHub) | `assembleFullRelease` | Optional Gemma / MediaPipe |
+| `foss` (F-Droid) | `assembleFossRelease` | Catalog only |
+`assembleDebug` still builds both debug variants. Scripts default to `OBDFORGE_FLAVOR=full`.
+
 ## Local build (ADB / HUMAN tasks)
 
 ```bash
 cd examples/android
 ./gradlew assembleDebug
+
 ```
 
 ## Reproducible release build (F-Droid)
@@ -37,6 +47,7 @@ cd examples/android
 bash scripts/build-release-apk.sh
 # or with clean rebuild:
 bash scripts/build-release-apk.sh --clean
+
 ```
 
 Release builds pin `SOURCE_DATE_EPOCH=1700000000` (fixed project epoch). Verify locally:
@@ -44,6 +55,7 @@ Release builds pin `SOURCE_DATE_EPOCH=1700000000` (fixed project epoch). Verify 
 ```bash
 bash scripts/verify-reproducible-apk.sh
 bash scripts/verify-fdroid-metadata.sh
+
 ```
 
 ## Emulator checklist
@@ -66,6 +78,6 @@ Before running instrumented tests or manual QA:
 
 ## F-Droid notes
 
-- Store listing text: `metadata/en-US/` — validate with `bash scripts/verify-fdroid-metadata.sh`
-- fdroiddata MR draft: `metadata/fdroiddata-handoff.yml`
+- Store listing text: repo-root `fastlane/metadata/android/en-US/` (F-Droid scrape path) — validate with `bash scripts/verify-fdroid-metadata.sh`
+- fdroiddata MR draft: `metadata/fdroiddata-handoff.yml` / `packaging/fdroid/dev.foss.obdforge.yml`
 - Device dry-run: `bash scripts/fdroid-device-dry-run.sh` (`[ADB]`)

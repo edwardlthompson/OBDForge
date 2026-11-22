@@ -35,7 +35,7 @@
 2. Revert `main` to previous tag; rebuild reproducible APK
 3. `[ADB]` Confirm previous APK installs over bad version
 4. `[HUMAN]` Notify F-Droid maintainers if bad build reached repo
-5. Log incident in `DECISION_LOG.md`
+5. Log incident in `.agent/DECISION_LOG.md`
 
 ## Common Failures
 
@@ -148,4 +148,4 @@ Applies to GitHub Actions signing secrets and any future update-manifest tokens:
 1. **`[HUMAN]`** Revoke compromised keys in GitHub Environments
 2. **`[AGENT]`** Rotate keystore only with `[HUMAN]` approval (invalidates F-Droid sig chain)
 3. **`[AUTO]`** Re-run release pipeline; verify APK signature
-4. Log in `DECISION_LOG.md`
+4. Log in `.agent/DECISION_LOG.md`

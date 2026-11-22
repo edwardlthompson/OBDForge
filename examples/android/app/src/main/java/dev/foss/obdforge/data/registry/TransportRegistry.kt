@@ -3,6 +3,7 @@ package dev.foss.obdforge.data.registry
 import android.content.Context
 import dev.foss.obdforge.data.diagnostics.DiagnosticEventRecorder
 import dev.foss.obdforge.data.transport.LoggingObdTransport
+import dev.foss.obdforge.data.transport.SimulatedTransportSelector
 import dev.foss.obdforge.data.transport.TransportFactory
 import dev.foss.obdforge.domain.transport.ObdTransport
 import dev.foss.obdforge.domain.transport.TransportEndpoint
@@ -11,6 +12,7 @@ import dev.foss.obdforge.domain.transport.TransportType
 class TransportRegistry(
     private val context: Context,
     private val eventRecorder: DiagnosticEventRecorder? = null,
+    private val simulatedSelector: SimulatedTransportSelector? = null,
 ) {
     private val supported = setOf(
         TransportType.Simulated,
@@ -22,7 +24,13 @@ class TransportRegistry(
 
     fun create(type: TransportType, endpoint: TransportEndpoint): ObdTransport? {
         if (type !in supported) return null
-        val transport = TransportFactory.create(context, type, endpoint) ?: return null
+        val simulatedFactory = simulatedSelector?.let { selector -> { selector.create() } }
+        val transport = TransportFactory.create(
+            context,
+            type,
+            endpoint,
+            simulatedFactory = simulatedFactory,
+        ) ?: return null
         val recorder = eventRecorder ?: return transport
         return LoggingObdTransport(transport, recorder)
     }
@@ -30,7 +38,11 @@ class TransportRegistry(
     fun availableTypes(): Set<TransportType> = supported
 
     companion object {
-        fun default(context: Context, eventRecorder: DiagnosticEventRecorder? = null): TransportRegistry =
-            TransportRegistry(context.applicationContext, eventRecorder)
+        fun default(
+            context: Context,
+            eventRecorder: DiagnosticEventRecorder? = null,
+            simulatedSelector: SimulatedTransportSelector? = null,
+        ): TransportRegistry =
+            TransportRegistry(context.applicationContext, eventRecorder, simulatedSelector)
     }
 }

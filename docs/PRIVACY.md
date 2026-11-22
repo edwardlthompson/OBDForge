@@ -72,7 +72,7 @@ If distributing in EU with shop features processing customer VIN:
 - 🔲 Document processing purpose (vehicle repair records)
 - 🔲 Assess necessity of VIN retention period
 - 🔲 Identify risks (device theft → data exposure) and mitigations (OS disk encryption)
-- 🔲 Record in `DECISION_LOG.md`
+- 🔲 Record in `.agent/DECISION_LOG.md`
 
 ## Contact
 

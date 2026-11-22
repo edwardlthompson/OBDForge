@@ -1,9 +1,18 @@
 # GitHub About Block
 
-## Description (<=350 chars)
+## Description (<=120 chars)
 
-Free open-source Android OBD-II diagnostics: multi-transport (BT/USB/WiFi/Ethernet), OBDLink STN/STPX, live data, local AI, bidirectional controls. Kotlin, Jetpack Compose, F-Droid FOSS. GPL-3.0.
+Android OBD-II diagnostics: BT/USB/Wi‑Fi adapters, live PIDs, DTC workflows, on-device AI. GPL-3.0-or-later.
 
 ## Topics
 
-android obd2 obd-ii kotlin jetpack-compose fdroid foss vehicle-diagnostics obdlink elm327 automotive diagnostics
+android
+obd-ii
+kotlin
+jetpack-compose
+elm327
+
+## License metadata
+
+- Repo SPDX / About license: **GPL-3.0-or-later** (matches `LICENSE` — GNU GPL Version 3, 29 June 2007, with project “or later” wording)
+- Do not list `mit` or `foss` as GitHub topics

@@ -316,7 +316,7 @@
 
 - ✅ [HUMAN] `gh auth refresh -s security_events` (Dependabot API verified)
 - ✅ [HUMAN] Merge Release Please PR #13 — [v0.10.0](https://github.com/edwardlthompson/agent-project-bootstrap/releases/tag/v0.10.0) published
-- ✅ [AGENT] Sync `.template-version`, `TEMPLATE_INDEX.json`, README badge, `AGENT_MEMORY.md` to 0.10.0 (`36a02e4`)
+- ✅ [AGENT] Sync `.template-version`, `TEMPLATE_INDEX.json`, README badge, `.agent/AGENT_MEMORY.md` to 0.10.0 (`36a02e4`)
 - ✅ [AGENT] Fix `release.yml` SBOM backfill — checkout `main` when `tag` input set
 - ✅ [AGENT] Add `sync-template-version.sh` + `check-template-version-sync.sh` gate
 - ✅ [AGENT] `verify-fdroid-metadata.sh` green; no anti-features in template metadata
@@ -390,13 +390,13 @@
 - ✅ [AGENT] Add `scripts/pre-release-gate.sh` and `scripts/pre-release-gate.ps1` — CI poll, Dependabot Critical/High count, template version/tag match, release dry-run reminder
 - ✅ [AGENT] Add KNOWLEDGE_BASE KB-007 (npm/pip overrides policy for transitive CVEs); document `@lhci/cli` override in DECISION_LOG
 - ✅ [AGENT] Add `npm audit` step to `examples/web` and `uv pip audit` (or equivalent) to weekly `.github/workflows/health-check.yml`
-- ✅ [AGENT] Sync `AGENT_MEMORY.md` seed template version with `.template-version`; fix stale `0.1.0` reference
+- ✅ [AGENT] Sync `.agent/AGENT_MEMORY.md` seed template version with `.template-version`; fix stale `0.1.0` reference
 - ✅ [AGENT] Bump `.template-version` to `0.2.2`; update CHANGELOG, TEMPLATE_INDEX, README
 
 ## Sprint M1 — Template Hardening v0.3.0
 
 - ✅ [AGENT] Extend `init-project.sh` / `.ps1` with interactive stack picker (web / python / android / multi / none) — prune unused `examples/` and `modules/`, never delete LICENSE/CI/scripts
-- ✅ [AGENT] On init: sync `AGENT_MEMORY.md` active modules; emit minimal BUILD_PLAN Parallel section for chosen stack
+- ✅ [AGENT] On init: sync `.agent/AGENT_MEMORY.md` active modules; emit minimal BUILD_PLAN Parallel section for chosen stack
 - ✅ [AGENT] Add `.cursor-session-state.example.json` schema; document restore flow in `docs/FOR_AGENTS.md`
 - ✅ [AGENT] Expand `docs/FOR_AGENTS.md` failure playbook (CI poll, GH_TOKEN, Dependabot conflicts, 3-strike escalation, parallel scope collision grep)
 - ✅ [AGENT] Add `android-release` CI job — `SOURCE_DATE_EPOCH=1700000000 ./gradlew assembleRelease`, FOSS grep, optional two-run APK hash compare with flake tolerance
@@ -468,7 +468,7 @@
 
 - ✅ [AGENT] Create `SECURITY.md`, `CODE_OF_CONDUCT.md`, `docs/THREAT_MODEL.md`, `docs/PRIVACY.md`, `docs/RUNBOOK.md`
 - ✅ [AGENT] Add `.github/CODEOWNERS` and `THIRD_PARTY_LICENSES.md`
-- ✅ [AGENT] Initialize workspace memory files from template seeds (`AGENT_MEMORY.md`, etc.)
+- ✅ [AGENT] Initialize workspace memory files from template seeds (`.agent/AGENT_MEMORY.md`, etc.)
 - ✅ [AGENT] Wire update checker config into devcontainer and README
 - ✅ [HUMAN] Set GitHub repo About description from `docs/GITHUB_ABOUT.md` (via `gh repo edit`)
 - ✅ [AGENT] Commit lockfiles (`package-lock.json`, `uv.lock`) and `.env.example`
@@ -529,7 +529,7 @@
 
 ### Sprint M3 Parallel
 
-- ✅ [HUMAN] Decide which optional modules to ship — all three (Lightroom, Rust, Go); see `DECISION_LOG.md`
+- ✅ [HUMAN] Decide which optional modules to ship — all three (Lightroom, Rust, Go); see `.agent/DECISION_LOG.md`
 - ✅ [AGENT] Lightroom lint/checklist in CI (Lua SDK namespace grep)
 - ✅ [AGENT] Rust CI job (`cargo fmt`, `clippy`, `test`)
 - ✅ [AGENT] Go CI job (`go vet`, `gofmt`, `test`)
@@ -678,7 +678,7 @@
 
 ## Sprint M14 — Post-M13 review remediation (AGENT, 2026-06-15)
 
-- ✅ [AGENT] P0 version coherence: `.template-version`, `TEMPLATE_INDEX.json`, `AGENT_MEMORY.md` → 0.8.0; manifest assert in `pre-release-gate.sh`
+- ✅ [AGENT] P0 version coherence: `.template-version`, `TEMPLATE_INDEX.json`, `.agent/AGENT_MEMORY.md` → 0.8.0; manifest assert in `pre-release-gate.sh`
 - ✅ [AGENT] P0 `init-project.ps1` `2>$null` fix; `-NonInteractive` + Python placeholder replacement in both init scripts
 - ✅ [AGENT] P1 `run-maintainer-gates.sh`: `verify-reproducible-apk.sh` wiring, `--skip-apk`, unknown-flag fail, `--quick` docs
 - ✅ [AGENT] P1 `verify-branch-protection.sh`: `strict` + `allow_force_pushes` asserts; rulesets note in `SECURITY_TRIAGE.md`

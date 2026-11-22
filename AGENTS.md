@@ -1,13 +1,13 @@
 # Agent Router
 
-1. **First read:** `docs/START_HERE.md`
-2. **Cursor modes:** `docs/CURSOR_MODES.md` (Ask / Plan / Agent / Debug routing)
-3. **Why / coach:** `docs/BEST_PRACTICES.md` · 30-day playbook `docs/FIRST_30_DAYS.md` · `/coach` · backlog `/ideas` (`docs/help/IDEAS.md`) · first-run `/tour` (`docs/help/TOUR.md` in other IDEs) · portability `docs/AGENT_PORTABILITY.md`
+1. **First read:** `docs/START_HERE.md` (full tour on first day via `/tour`)
+2. **Cursor modes:** Ask / Plan / Agent / Debug (`docs/CURSOR_MODES.md` when unsure)
+3. **Why / coach:** `/coach` · `/tour` · `/ideas` · `/shape` · `/allideas` · `docs/BEST_PRACTICES.md` · `docs/FIRST_30_DAYS.md`
 4. **Bootstrap mode:** `docs/INITIALIZATION_PROMPT.md` (historical; this repo is already initialized)
-5. **Reference mode:** `docs/FOR_AGENTS.md` + `TEMPLATE_INDEX.json`
+5. **Reference mode:** `docs/FOR_AGENTS.md` + `TEMPLATE_INDEX.json` (do not load whole index unless `/upgrade`)
 6. **Task board:** `BUILD_PLAN.md` (Sequential before Parallel) — status: 🔲 open · ✅ done · ❌ blocked
-7. **Parallel dispatch:** parallel-first BUILD_PLAN; `/build` automates HUMAN/ADB first, backlogs failures to `HUMAN_BACKLOG.md`, never halts on human labels — `scripts/build-sprint-status.sh --lane child`
-8. **Living memory:** update `AGENT_MEMORY.md` only at milestone boundaries
+7. **Parallel / venue:** `/scope` · `/build` automates HUMAN/ADB then backlogs failures to `HUMAN_BACKLOG.md` · Agent Mode `/lean` `/balanced` `/speed` `/mode` `/status` ([ADR-0010](docs/adr/0010-agent-mode-speed-balanced-lean.md))
+8. **Living memory:** update `.agent/AGENT_MEMORY.md` only at milestone boundaries · template catch-up: `/upgrade` · alignment: `docs/BOOTSTRAP_ALIGNMENT.md`
 
 > Legacy `.cursorrules` is deprecated. Use `.cursor/rules/*.mdc` and this file instead.
 
@@ -60,13 +60,13 @@ python3 scripts/agent-run.py watch-agent-gates --once --autofix
 - On session start: read `START_HERE.md`, pick mode via `docs/CURSOR_MODES.md`, then `BUILD_PLAN.md` Sequential lane
 - If your tool has no slash commands, use `docs/help/*.md` (start with `docs/help/TOUR.md`)
 - When creating or significantly changing a file, state one sentence of why (see `docs/BEST_PRACTICES.md` and `/coach`)
-- On milestone end: update `AGENT_MEMORY.md`, append to `DECISION_LOG.md` or `docs/adr/`
+- On milestone end: update `.agent/AGENT_MEMORY.md`, append to `.agent/DECISION_LOG.md` or `docs/adr/`
 - On 3-strike failure: halt and escalate to human
 - On context bloat: write `.cursor-session-state`, ask human to clear chat
 - Sprint 2+ features: after each AGENT step run `scripts/watch-agent-gates.sh --once --autofix` (see `docs/FEATURE_MODULES.md`)
 - Destructive operations require `[HUMAN]` approval (see `.cursor/rules/destructive-ops.mdc`)
 - Repo hygiene: track source only; run `scripts/check-repo-hygiene.sh` before push (see `docs/REPO_HYGIENE.md`)
-- Log significant agent actions in `DECISION_LOG.md` at milestone boundaries
+- Log significant agent actions in `.agent/DECISION_LOG.md` at milestone boundaries
 - Template alignment notes: `docs/BOOTSTRAP_ALIGNMENT.md`
 
 ## Multi-Agent Adapters
@@ -78,7 +78,7 @@ bash scripts/bootstrap-lifecycle.sh --sync-adapters
 ```
 
 | Target | File |
-|--------|------|
+| -------- | ------ |
 | Cursor | `.cursor/rules/main.mdc` |
 | Claude Code | `CLAUDE.md` |
 | GitHub Copilot | `.github/copilot-instructions.md` |

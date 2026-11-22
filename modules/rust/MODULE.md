@@ -13,7 +13,7 @@
 - 🔲 Copy or keep `examples/rust/` Golden Path stub
 - 🔲 Set edition and MSRV in `Cargo.toml`
 - 🔲 Enable `cargo test` and clippy in CI
-- 🔲 Document MSRV in `AGENT_MEMORY.md`
+- 🔲 Document MSRV in `.agent/AGENT_MEMORY.md`
 
 ## Golden Path Reference
 

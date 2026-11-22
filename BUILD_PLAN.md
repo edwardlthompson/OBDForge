@@ -1,5 +1,97 @@
 # Build Plan
 
+<!-- remaining-tally -->
+**Remaining:** AGENT 11 · LOCAL 3 · CLOUD 0 · AUTO 6 · HUMAN 10 · ADB 8 · **35 open**
+<!-- /remaining-tally -->
+
+Live board. Canonical shape: agent-project-bootstrap `BUILD_PLAN_TEMPLATE.md`.
+Finished work: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md).
+
+**Who:** `AGENT` code · `HUMAN` person · `ADB` device · `AUTO` CI/scripts
+**Venue (AGENT only):** `[LOCAL]` This Computer · `[CLOUD]` Cursor Cloud
+**State:** 🔲 open · ✅ done · ❌ blocked
+
+Format: `🔲 [AGENT][LOCAL] Short task — scope: path/prefix`.
+
+### Open PRs (synced)
+
+> Auto-managed. Do not hand-edit inside the markers.
+
+<!-- open-prs-sync:begin -->
+_No open Dependabot or Release Please PRs._
+<!-- open-prs-sync:end -->
+
+### Template gaps (synced)
+
+> Auto-managed. Do not hand-edit inside the markers.
+
+<!-- template-gaps-sync:begin -->
+_No template gaps._
+<!-- template-gaps-sync:end -->
+
+### Waiting on a person
+
+1. 🔲 [HUMAN] Optional: live `app-update.json` (fetcher already hardcodes `edwardlthompson/OBDForge`)
+2. 🔲 [ADB] Bump `versionCode` above 25 before next F-Droid/store upload (v1.3.0 APK still code 25)
+3. 🔲 [HUMAN] Shop operator review (optional)
+4. 🔲 [HUMAN] Post-release monitoring — Issues → `KNOWLEDGE_BASE.md`
+5. 🔲 [HUMAN] F-008 — Decide backup/export redaction policy for VIN/shop PII
+6. 🔲 [ADB] F-Droid fdroiddata MR — refresh after Sprint 23 FOSS/version fixes · GitLab submit pending
+7. 🔲 [ADB] Bench connect / flash USB-C on device — F-009/F-010 · `docs/FLASH_HARDWARE.md`
+- 🔲 [HUMAN] Product URL / shop review / post-release monitoring (see Human & device)
+- 🔲 [ADB] Hardware bench + F-Droid MR when ready
+
+### Local agent (This Computer)
+
+Standing queue for This Computer. Rows: `🔲 [AGENT][LOCAL] … — scope: path`.
+
+<!-- local-agent-lane:begin -->
+- | 🔲 | Open |
+- | ❌ | Blocked — add brief reason |
+1. ❌ [AGENT][LOCAL] Live-data charting / time-series dashboard — blocked: hardware bench required
+2. 🔲 [AGENT][LOCAL] Dependabot bumps; continue OpenSSF Scorecard pin campaign (F-007) — weekly when alerts open
+3. 🔲 [AGENT][LOCAL] Adapter compatibility notes → `KNOWLEDGE_BASE.md` — monthly cadence
+- 🔲 [AUTO] `check-security-triage.sh --wait-ci 300`
+- 🔲 [AUTO] `check-template-updates.sh`
+- 🔲 [AUTO] `check-license-compliance.sh` + SBOM on latest release
+<!-- local-agent-lane:end -->
+
+### Cloud agent (Cursor Cloud)
+
+Standing queue for Cursor Cloud. Rows: `🔲 [AGENT][CLOUD] … — scope: path`.
+
+<!-- cloud-agent-lane:begin -->
+_No cloud agent items._
+<!-- cloud-agent-lane:end -->
+
+## Child Repo Playbook
+
+### Sprint News — News Bot follow-ups
+
+<!-- parallel_exception: independent news follow-ups; run sequentially -->
+
+1. 🔲 [AGENT] Bump Compose BOM 2026.09.00 → 2026.11.01 (Compose 1.13 / Material3 1.5.0; needs Kotlin 2.2+ and compileSdk 37.1, check AGP) and fix Slider/RangeSlider call sites (`onValueChange` now required) — scope: examples/android/ (news P2, 2026-11-19) https://developer.android.com/blog/posts/jetpack-compose-november-2026-release
+2. 🔲 [AGENT] Bump the Gradle wrapper 9.9.1 → 9.9.2 and commit the regenerated wrapper jar and distributionSha256Sum (4 High security fixes: SFTP host keys, snapshot dependency verification, TestKit temp dir, daemon registry) — scope: examples/android/gradle/wrapper/ (news P2, 2026-11-20) https://docs.gradle.org/9.9.2/release-notes.html
+
+## Ongoing Maintenance
+
+- 🔲 [AGENT] Dependabot bumps; continue Scorecard pin campaign (F-007)
+- 🔲 [AGENT] Adapter compatibility notes → `KNOWLEDGE_BASE.md`
+
+
+## Archive
+
+Older sprints: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md).
+
+## Preserved source board
+
+Quoted so no prior task is lost. Prefer the lanes above; do not invent work.
+
+<details>
+<summary>Previous board</summary>
+
+# Build Plan
+
 > OBDForge prioritized task board. Milestones M1–M13: `docs/EXECUTION_PLAN.md`. **Finished work:** [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md) (Sprints 0–23). Template baseline: agent-project-bootstrap **v0.21.0** (`docs/BOOTSTRAP_ALIGNMENT.md`).
 
 ## Owner labels
@@ -99,3 +191,5 @@ No OBD adapter or bench ECU on hand. Pull when hardware is available. Log result
 ## Archive
 
 Sprints **0–23** complete (Sprint 23 AGENT). Detail: [`COMPLETED_TASKS.md`](COMPLETED_TASKS.md). Release notes: [`CHANGELOG.md`](CHANGELOG.md).
+
+</details>

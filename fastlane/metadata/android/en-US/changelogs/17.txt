@@ -1,0 +1,1 @@
+OBDForge 1.2.1 — High-contrast OBD-themed launcher icon, README/F-Droid store icon, and automated release APK signing scripts with optional CI upload.

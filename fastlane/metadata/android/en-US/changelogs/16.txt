@@ -1,0 +1,1 @@
+OBDForge 1.2.0 — Wal33D manufacturer DTC overlay, on-device connection/crash diagnostic log with USB export, first-run permissions welcome screen.

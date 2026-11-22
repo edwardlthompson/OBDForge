@@ -5,15 +5,23 @@ All notable changes to OBDForge are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.14.0](https://github.com/edwardlthompson/OBDForge/compare/v1.13.0...v1.14.0) (2026-11-10)
+## [Unreleased]
 
+### Added
+
+- F-Droid `foss` product flavor without MediaPipe GenAI or Gemma download; GitHub `full` flavor unchanged
+
+### Changed
+
+- Store listing metadata lives at repo-root `fastlane/` so F-Droid can scrape it
+
+## [1.14.0](https://github.com/edwardlthompson/OBDForge/compare/v1.13.0...v1.14.0) (2026-11-10)
 
 ### Added
 
 * **about:** quiet Venmo donate and daily GitHub update check ([ef386ac](https://github.com/edwardlthompson/OBDForge/commit/ef386ace10c8aba96ea0afbcb4e98dfe23a2dd36))
 * **android:** add launcher icon and automated release signing ([ca11726](https://github.com/edwardlthompson/OBDForge/commit/ca117260b2efff208cab2b733a8491fa1f21ea6e))
 * **android:** add mock transport replaying three canned sessions ([73082d4](https://github.com/edwardlthompson/OBDForge/commit/73082d4b41ed6151566e709d2e71fe42067bdbc6))
-
 
 ### Fixed
 
@@ -44,29 +52,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.1](https://github.com/edwardlthompson/OBDForge/compare/v1.4.0...v1.4.1) (2026-11-06)
 
-
 ### Fixed
 
 * **ci:** sync weekly-health-check with parent v1.12.0 ([b191c09](https://github.com/edwardlthompson/OBDForge/commit/b191c090c5827e6aa49bb21c02d10898675f51c7))
 * **ci:** sync weekly-health-check with parent v1.12.0 ([ec9318c](https://github.com/edwardlthompson/OBDForge/commit/ec9318c5dfc9ed72c56da56852dc104fe9bbbc8e))
 
-## [Unreleased]
-
-### Fixed
-
-- Bring weekly-health-check workflow in line with parent bootstrap v1.12.0 (stack-aware health jobs)
-
-### Changed
-
-- Align child repo with parent agent-project-bootstrap **v1.12.0** agent surfaces (batch commands, skills, rules, docs, gate scripts)
-
 ## [1.4.0](https://github.com/edwardlthompson/OBDForge/compare/v1.3.0...v1.4.0) (2026-11-06)
-
 
 ### Added
 
 * **android:** add mock transport replaying three canned sessions ([73082d4](https://github.com/edwardlthompson/OBDForge/commit/73082d4b41ed6151566e709d2e71fe42067bdbc6))
-
 
 ### Fixed
 
@@ -75,7 +70,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * **docs:** keep Unreleased as the first changelog heading ([357dcc0](https://github.com/edwardlthompson/OBDForge/commit/357dcc0a310ed9694ef86866fa63b6986e3da91f))
 
 ## [1.3.0](https://github.com/edwardlthompson/OBDForge/compare/v1.2.13...v1.3.0) (2026-08-21)
-
 
 ### Added
 

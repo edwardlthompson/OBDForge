@@ -113,10 +113,10 @@ jobs:
           OBDFORGE_KEY_PASSWORD: ${{ secrets.OBDFORGE_KEY_PASSWORD }}
         run: |
           bash scripts/ensure-release-signing-secrets.sh
-          UNSIGNED="examples/android/app/build/outputs/apk/release/app-release-unsigned.apk"
-          SIGNED="examples/android/app/build/outputs/apk/release/app-release-signed.apk"
+          UNSIGNED="examples/android/app/build/outputs/apk/full/release/app-full-release-unsigned.apk"
+          SIGNED="examples/android/app/build/outputs/apk/full/release/app-release-signed.apk"
           VERSION="$(bash scripts/product-version.sh)"
-          INSTALLABLE="examples/android/app/build/outputs/apk/release/OBDForge-${VERSION}.apk"
+          INSTALLABLE="examples/android/app/build/outputs/apk/full/release/OBDForge-${VERSION}.apk"
           echo "${OBDFORGE_KEYSTORE_BASE64}" | base64 -d > /tmp/obdforge-release.keystore
           export OBDFORGE_KEYSTORE_PATH=/tmp/obdforge-release.keystore
           export OBDFORGE_KEY_ALIAS="${OBDFORGE_KEY_ALIAS:-obdforge}"
@@ -137,7 +137,7 @@ jobs:
             exit 1
           fi
           VERSION="$(bash scripts/product-version.sh)"
-          INSTALLABLE="examples/android/app/build/outputs/apk/release/OBDForge-${VERSION}.apk"
+          INSTALLABLE="examples/android/app/build/outputs/apk/full/release/OBDForge-${VERSION}.apk"
           if [ ! -f "$INSTALLABLE" ]; then
             echo "FAIL: $INSTALLABLE not found"
             exit 1

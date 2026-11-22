@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ai_llm_download_note">Optional: download Gemma 3 1B (~530 MB, Wi‑Fi recommended) for richer DTC explanations.</string>
+    <string name="ai_llm_download_button">Download on-device LLM</string>
+    <string name="ai_llm_download_progress">Downloading LLM… %1$d%%</string>
+</resources>

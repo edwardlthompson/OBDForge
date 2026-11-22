@@ -51,7 +51,7 @@ run_insets_test() {
   local label="$2"
   echo "=== navigation_mode=$mode ($label) ==="
   "$ADB" shell settings put secure navigation_mode "$mode"
-  (cd "$ANDROID" && chmod +x gradlew && ./gradlew connectedDebugAndroidTest \
+  (cd "$ANDROID" && chmod +x gradlew && ./gradlew connectedFullDebugAndroidTest \
     -Pandroid.testInstrumentationRunnerArguments.class="$TEST_CLASS" --no-daemon)
   if [ "$SCREENCAP" = true ]; then
     local out="/tmp/goldenpath-insets-${label}.png"

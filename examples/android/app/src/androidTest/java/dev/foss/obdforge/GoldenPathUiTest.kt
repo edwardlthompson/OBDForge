@@ -2,6 +2,7 @@ package dev.foss.obdforge
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -19,6 +20,10 @@ class GoldenPathUiTest {
             composeTestRule.waitForIdle()
         } catch (_: AssertionError) {
             // Welcome already completed on this device profile.
+        }
+        composeTestRule.waitUntil(10_000) {
+            composeTestRule.onAllNodesWithContentDescription("Settings")
+                .fetchSemanticsNodes().isNotEmpty()
         }
     }
 

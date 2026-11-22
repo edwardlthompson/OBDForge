@@ -3,8 +3,8 @@ package dev.foss.obdforge.domain.ai
 /**
  * On-device LLM: Gemma 3 1B instruction-tuned INT4 (.task) via MediaPipe GenAI.
  *
- * Rationale: short DTC explanations, ~530 MB download, runs on mid-range phones offline.
- * See docs/LOCAL_AI.md for comparison with alternatives.
+ * GitHub `full` flavor only. The F-Droid `foss` flavor omits this download.
+ * See docs/LOCAL_AI.md.
  */
 object LocalAiConfig {
     const val MODEL_FILE_NAME = "llm_model.task"

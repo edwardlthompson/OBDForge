@@ -1,0 +1,1 @@
+OBDForge 1.2.4 — One-tap connect/reconnect from the home screen (AdapterConnectCard). Unified adapter connect for Bluetooth, Wi‑Fi, USB, and Ethernet. Save & connect in transport picker. Gate script fixes.

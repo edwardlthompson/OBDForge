@@ -7,10 +7,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.foss.obdforge.BuildConfig
 import dev.foss.obdforge.R
 import dev.foss.obdforge.data.ObdForgeCompositionRoot
 import dev.foss.obdforge.data.ai.LlmModelProvisioner
-import dev.foss.obdforge.data.ai.MediaPipeLlmEngine
 import dev.foss.obdforge.data.ai.TfliteDtcClassifier
 import dev.foss.obdforge.data.preferences.TransportSelection
 import dev.foss.obdforge.domain.livedata.PersonaMode
@@ -44,7 +44,10 @@ fun DtcExplainHost(
     val statusKey by coordinator.statusMessage.collectAsStateWithLifecycle(initialValue = null)
     val scanning by coordinator.scanning.collectAsStateWithLifecycle(initialValue = false)
     val loading by coordinator.loading.collectAsStateWithLifecycle(initialValue = false)
-    var llmBundled by remember { mutableStateOf(MediaPipeLlmEngine.resolveModelPath(context) != null) }
+    val localAiEnabled = BuildConfig.LOCAL_AI_ENABLED
+    var llmBundled by remember {
+        mutableStateOf(localAiEnabled && LlmModelProvisioner.isModelPresent(context))
+    }
     var llmDownloadProgress by remember { mutableFloatStateOf(-1f) }
     val classifierBundled = remember { TfliteDtcClassifier.isAssetBundled(context) }
 
@@ -68,10 +71,12 @@ fun DtcExplainHost(
         snapshot = snapshot,
         selectedCode = selectedCode,
         explanation = explanation,
+        localAiEnabled = localAiEnabled,
         llmBundled = llmBundled,
         classifierBundled = classifierBundled,
         llmDownloadProgress = llmDownloadProgress.takeIf { it >= 0f },
         onDownloadLlm = {
+            if (!localAiEnabled) return@DtcExplainScreen
             scope.launch {
                 llmDownloadProgress = 0f
                 LlmModelProvisioner.downloadModel(context) { llmDownloadProgress = it }

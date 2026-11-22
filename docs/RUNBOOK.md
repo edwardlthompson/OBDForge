@@ -11,7 +11,7 @@
 | CI on main | `bash scripts/check-github-ci.sh --wait 300` | CI, CodeQL, Security Scan green |
 | Reproducible APK | `bash scripts/verify-reproducible-apk.sh` | Matching hashes |
 | F-Droid metadata | `bash scripts/verify-fdroid-metadata.sh` | No errors |
-| Device smoke | `adb install -r app/build/outputs/apk/release/app-release-signed.apk` | Cold start, no crash |
+| Device smoke | `adb install -r app/build/outputs/apk/full/release/app-release-signed.apk` | Cold start, no crash |
 ## Structured Logging
 
 - Android: `Log` tags per feature (`ObdTransport`, `VinResolver`, `SafetyGate`)
@@ -91,7 +91,7 @@ CI `android-release` job runs the same verification on tagged builds.
 3. Vehicle safety incident → `[HUMAN]` lead; preserve audit log export
 4. Contact maintainers in `.github/CODEOWNERS`
 
-| Device smoke | `adb install -r app/build/outputs/apk/release/app-release-signed.apk` | Cold start, no crash |
+| Device smoke | `adb install -r app/build/outputs/apk/full/release/app-release-signed.apk` | Cold start, no crash |
 ## Release APK signing
 
 Reproducible builds stay **unsigned** (`app-release-unsigned.apk`). Signing is a **post-build** step so F-Droid hash verification is unchanged.
@@ -119,7 +119,7 @@ export OBDFORGE_KEY_PASSWORD=...
 
 ```bash
 bash scripts/build-release-apk.sh --clean --sign
-# Output: examples/android/app/build/outputs/apk/release/app-release-signed.apk
+# Output: examples/android/app/build/outputs/apk/full/release/app-release-signed.apk
 
 ```
 

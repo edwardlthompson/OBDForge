@@ -59,6 +59,7 @@ examples/web/public/donations.json
 examples/android/app/src/main/assets/app-update.json
 examples/android/app/src/main/assets/donations.json
 examples/android/app/src/main/assets/ai/llm_model.task
+examples/android/app/src/full/assets/ai/llm_model.task
 
 # Rust / Go
 target/

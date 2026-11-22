@@ -6,7 +6,8 @@
       "changelog-path": "CHANGELOG.md",
       "extra-files": [
         "examples/android/app/build.gradle.kts",
-        "examples/android/metadata/fdroiddata-handoff.yml"
+        "examples/android/metadata/fdroiddata-handoff.yml",
+        "packaging/fdroid/dev.foss.obdforge.yml"
       ],
       "include-component-in-tag": false,
       "include-v-in-tag": true

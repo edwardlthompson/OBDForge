@@ -256,4 +256,4 @@ jobs:
           arch: x86_64
           target: default
           disable-animations: true
-          script: cd examples/android && chmod +x gradlew && ./gradlew connectedDebugAndroidTest --no-daemon
+          script: cd examples/android && chmod +x gradlew && ./gradlew connectedFullDebugAndroidTest --no-daemon

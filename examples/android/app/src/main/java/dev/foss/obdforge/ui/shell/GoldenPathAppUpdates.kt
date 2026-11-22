@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import dev.foss.obdforge.BuildConfig
 import dev.foss.obdforge.R
 import dev.foss.obdforge.about.AppUpdatePreferences
 import dev.foss.obdforge.about.ProductUpdate
@@ -62,6 +63,10 @@ fun rememberGoldenPathUpdateUi(
             return@LaunchedEffect
         }
         prefs.markVersionSeen(appVersion)
+        if (BuildConfig.FDROID) {
+            updateStatus = context.getString(R.string.about_update_fdroid)
+            return@LaunchedEffect
+        }
         if (!isOnline) return@LaunchedEffect
         if (!SettingsLogic.isUpdateCheckEnabled(checkInterval)) return@LaunchedEffect
         if (!ProductUpdate.shouldCheckDaily(prefs.lastCheckAt(), System.currentTimeMillis())) {

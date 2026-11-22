@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.Button
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -90,41 +88,4 @@ internal fun sourceLabelRes(source: AiExplanationSource): Int = when (source) {
     AiExplanationSource.Catalog -> R.string.ai_source_catalog
     AiExplanationSource.Manufacturer -> R.string.ai_source_manufacturer
     AiExplanationSource.MediaPipe -> R.string.ai_source_mediapipe
-}
-
-@Composable
-internal fun LlmDownloadCard(
-    downloadProgress: Float?,
-    onDownload: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Card(modifier = modifier.fillMaxWidth()) {
-        Column(
-            modifier = Modifier.padding(SpacingMd),
-            verticalArrangement = Arrangement.spacedBy(SpacingSm),
-        ) {
-            Text(
-                text = stringResource(R.string.ai_llm_download_note),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            if (downloadProgress != null) {
-                LinearProgressIndicator(
-                    progress = { downloadProgress },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    text = stringResource(
-                        R.string.ai_llm_download_progress,
-                        (downloadProgress * 100).toInt(),
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                )
-            } else {
-                Button(onClick = onDownload, modifier = Modifier.fillMaxWidth()) {
-                    Text(stringResource(R.string.ai_llm_download_button))
-                }
-            }
-        }
-    }
 }

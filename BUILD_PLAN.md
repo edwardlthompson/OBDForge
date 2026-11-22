@@ -102,7 +102,6 @@ Quoted so no prior task is lost. Prefer the lanes above; do not invent work.
 | `HUMAN` | Human — approvals, credentials, product decisions |
 | `ADB` | Human (Android) — device/emulator, F-Droid submission |
 | `AUTO` | CI/scripts — Actions, Dependabot, gates |
-
 ## Status markers
 
 | Marker | State |
@@ -110,7 +109,6 @@ Quoted so no prior task is lost. Prefer the lanes above; do not invent work.
 | 🔲 | Open |
 | ✅ | Done — archive to `COMPLETED_TASKS.md` |
 | ❌ | Blocked — add brief reason |
-
 **Agent rule:** Execute all `[AGENT]` **Sequential** items first, then dispatch **Parallel** agents with isolated file scopes (`docs/PARALLEL_AGENT_SCOPES.md`). Shared schema/types are Sequential-only.
 
 **Autonomous `/build`:** Runs `[AGENT]`/`[AUTO]` and Parallel work first, then attempts **Human & device (after automation)** via `scripts/attempt-build-plan-row.sh`. Failures append [`HUMAN_BACKLOG.md`](HUMAN_BACKLOG.md) and continue. Status: `bash scripts/build-sprint-status.sh --json --lane child`.
@@ -134,17 +132,16 @@ Quoted so no prior task is lost. Prefer the lanes above; do not invent work.
 | Agent | Scope | Task |
 |-------|-------|------|
 | — | — | _None open — add non-overlapping `examples/android/**` rows when charting unblocks_ |
-
 ### Human & device (after automation)
 
 > Address after `/build` completes AGENT/AUTO and Parallel work above. Automation failures → [`HUMAN_BACKLOG.md`](HUMAN_BACKLOG.md).
 
 1. 🔲 [HUMAN] Optional: live `app-update.json` (fetcher already hardcodes `edwardlthompson/OBDForge`)
-2. 🔲 [ADB] Bump `versionCode` above 25 before next F-Droid/store upload (v1.3.0 APK still code 25)
+2. 🔲 [ADB] Bump `versionCode` above 25 and tag a post-foss-flavor release before F-Droid/store upload (v1.14.0 is still code 25 and predates the `foss` flavor)
 3. 🔲 [HUMAN] Shop operator review (optional)
 4. 🔲 [HUMAN] Post-release monitoring — Issues → `KNOWLEDGE_BASE.md`
 5. 🔲 [HUMAN] F-008 — Decide backup/export redaction policy for VIN/shop PII
-6. 🔲 [ADB] F-Droid fdroiddata MR — refresh after Sprint 23 FOSS/version fixes · GitLab submit pending
+6. 🔲 [ADB] F-Droid fdroiddata MR — source `foss` flavor is ready; no fork metadata branch yet; proposed YAML is in `packaging/fdroid/dev.foss.obdforge.yml`
 7. 🔲 [ADB] Bench connect / flash USB-C on device — F-009/F-010 · `docs/FLASH_HARDWARE.md`
 
 ### Blocked — hardware bench (`[ADB]` / `[HUMAN]`)
@@ -159,7 +156,6 @@ No OBD adapter or bench ECU on hand. Pull when hardware is available. Log result
 | Bidirectional | Staged bench ECU test (authorized vehicles only) |
 | Connect UX | One-tap reconnect car-to-car (`AdapterConnectCard`) |
 | Flash | USB-C OTG + EX/SX; demo then one ECU family `[HUMAN]` |
-
 ---
 
 ## Ongoing maintenance

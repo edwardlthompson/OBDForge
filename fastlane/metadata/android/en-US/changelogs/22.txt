@@ -1,0 +1,1 @@
+OBDForge 1.2.6 — High-contrast launcher icon with dark background, clean check-engine outline, and crisp OBD-II port (replaces distorted PNG).

@@ -7,6 +7,7 @@ from pathlib import Path
 DUMMY_NAME = ("dummy", "placeholder", "sample", "lorem")
 SCREEN_DIRS = ("phoneScreenshots", "sevenInchScreenshots", "tenInchScreenshots")
 ROOTS = (
+    Path("fastlane") / "metadata" / "android",
     Path("examples") / "android" / "metadata",
     Path("examples") / "android" / "fastlane" / "metadata" / "android",
 )
@@ -51,7 +52,7 @@ def check_tree(root: Path) -> list[str]:
             if not folder.is_dir() or folder.name not in SCREEN_DIRS:
                 continue
             for shot in folder.iterdir():
-                if not shot.is_file() or shot.name.startswith("."):
+                if not shot.is_file() or shot.name.startswith(".") or shot.suffix.lower() == ".md":
                     continue
                 rel = shot.relative_to(root).as_posix()
                 if _is_dummy_name(shot.name):
@@ -70,9 +71,11 @@ def check_completeness(root: Path, *, submit_ready: bool = False) -> list[str]:
     if not submit_ready:
         return []
     errors: list[str] = []
-    meta = root / "examples" / "android" / "metadata" / "en-US" / "images"
+    meta = root / "fastlane" / "metadata" / "android" / "en-US" / "images"
     if not meta.is_dir():
-        return ["missing examples/android/metadata/en-US/images for submit-ready"]
+        meta = root / "examples" / "android" / "metadata" / "en-US" / "images"
+    if not meta.is_dir():
+        return ["missing fastlane or examples/android metadata images for submit-ready"]
     icon = meta / "icon.png"
     if not icon.is_file() or _png_size(icon) is None:
         errors.append("submit-ready requires images/icon.png")

@@ -1,1 +1,1 @@
-OBDForge 1.2.13 — Align APK version with Releases; ZXing VIN barcode (FOSS); require measured battery voltage for non-demo flash; Fastlane/F-Droid metadata refresh; child-aware pre-release gate.
+F-Droid foss flavor: OBD-II diagnostics without MediaPipe GenAI or Gemma download. Catalog DTC explanations stay on-device. GitHub full flavor unchanged.

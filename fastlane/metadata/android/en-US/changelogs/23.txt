@@ -1,0 +1,1 @@
+OBDForge 1.2.7 — MX Bluetooth pairing UX, O2/fuel-trim live PIDs, gated DID coding, Stage A USB flash scaffold (demo only), and gate/hygiene fixes.

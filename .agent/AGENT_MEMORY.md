@@ -12,12 +12,11 @@
 | UI | Jetpack Compose + Material 3 | — | Material You dynamic color; Garage themes |
 | Architecture | Clean Architecture | — | ADR-0001; domain/use-case/data/ui layers |
 | Persistence | Room + DataStore | — | Sessions, DTCs, audit log, preferences |
-| Local AI | MediaPipe LLM + TFLite | — | On-device diagnostics assistant; no cloud inference |
+| Local AI | TFLite classifier + optional MediaPipe LLM | — | `foss` catalog-only; `full` optional Gemma/MediaPipe |
 | Transports | BT SPP, USB serial, WiFi TCP, Ethernet | — | `TransportRegistry` selects adapter |
 | Protocols | ELM327, OBDLink STN/STPX, UDS, KWP, J1939 | — | `ProtocolRegistry` + DiagnosticProtocol SPI |
 | License | GPL-3.0-or-later | — | F-Droid compatible |
 | Distribution | F-Droid + GitHub Releases | — | Reproducible APK builds; no Play Services |
-
 ## Active Modules
 
 - ✅ Android / F-Droid (`modules/android/MODULE.md`) — **only active module**
@@ -74,6 +73,7 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 
 | Date | Milestone | What worked | What to improve |
 |------|-----------|-------------|-----------------|
+| 2026-11-16 | F-Droid foss flavor | Split `foss`/`full`; root fastlane; no Gemma in foss | Tag post-flavor version; screenshots still missing; no fdroiddata fork branch yet |
 | 2026-08-20 | /ship process sync | Rebase onto #26; CI/Security/CodeQL green; no false 1.2.14 | weekly-health (KB-020); v1.2.13 release still APK-only (no SBOM); HUMAN/ADB backlog |
 | 2026-08-20 | Bootstrap align v0.21.0 | Coach/tour/ideas, adapters, verify harness; GPL + child semver split kept | Live bootstrap.config.json (MIT/Apache allowlist); commercial Cursor files |
 | 2026-08-10 | v1.2.13 /ship | RP #25 auto-merged; APK uploaded; child pre-release gate; upgrade sim OK | HUMAN/ADB: F-Droid + PII + hardware; bump versionCode with next product release |
@@ -94,7 +94,6 @@ OBDForge is a FOSS Android OBD-II diagnostics app: multi-transport adapter suppo
 | 2026-06-25 | Sprint 20 audit | v1.2.3 stable signing + APK-only releases; restored watch-agent-gates.sh | Release Please PR permission still [HUMAN] |
 | 2026-06-24 | v1.2.2 release | Signed sideload APK + ObdScaffold insets | Signing secrets now configured |
 | 2026-06-21 | v1.2.1 release | Icon + signing scripts shipped | Ephemeral CI keystore caused signature rotation (fixed v1.2.3) |
-
 ## Template Provenance
 
 - **Source template:** `edwardlthompson/agent-project-bootstrap`

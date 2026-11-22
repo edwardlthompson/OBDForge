@@ -1,0 +1,1 @@
+OBDForge 1.0.0 — first public release with multi-transport diagnostics, safety-gated bidirectional controls, shop workflows, VIN resolution, on-device DTC explain, and F-Droid reproducible builds.
